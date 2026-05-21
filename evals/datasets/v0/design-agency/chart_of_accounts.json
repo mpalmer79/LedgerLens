@@ -1,0 +1,282 @@
+[
+  {
+    "code": "1010",
+    "name": "Cash - Operating Checking",
+    "description": "Primary operating checking account. All Stripe settlements, contractor payments, and vendor charges flow through this account.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1020",
+    "name": "Cash - Tax Reserve",
+    "description": "Separate account holding ~25% of net revenue for estimated quarterly taxes.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1030",
+    "name": "Stripe Settlements Receivable",
+    "description": "Net of card and ACH payments settled by Stripe but not yet deposited. Cleared on each Stripe deposit transaction.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1040",
+    "name": "Accounts Receivable",
+    "description": "Invoiced amounts billed to clients outside Stripe (typically ACH or check) awaiting collection.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1200",
+    "name": "Prepaid Software",
+    "description": "Annual software subscriptions paid up-front, amortized monthly. Used for tools with material annual savings vs. monthly billing.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1500",
+    "name": "Equipment - Computers",
+    "description": "Capitalized computer and display equipment over the de minimis threshold.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "2010",
+    "name": "Accounts Payable",
+    "description": "Vendor invoices received but not yet paid.",
+    "parent_code": null,
+    "type": "liability"
+  },
+  {
+    "code": "2020",
+    "name": "Credit Card Payable",
+    "description": "Outstanding balance on the business credit card, paid monthly.",
+    "parent_code": null,
+    "type": "liability"
+  },
+  {
+    "code": "2030",
+    "name": "Sales Tax Payable",
+    "description": "Sales tax collected on tangible goods (rare) owed to the state.",
+    "parent_code": null,
+    "type": "liability"
+  },
+  {
+    "code": "3010",
+    "name": "Owner's Contributed Capital",
+    "description": "Cash and equipment contributed by the owner at formation.",
+    "parent_code": null,
+    "type": "equity"
+  },
+  {
+    "code": "3020",
+    "name": "Retained Earnings",
+    "description": "Accumulated profits not yet drawn. Closed at year-end.",
+    "parent_code": null,
+    "type": "equity"
+  },
+  {
+    "code": "3030",
+    "name": "Owner Draws",
+    "description": "Cash withdrawals by the owner from a single-member LLC. Not deductible; reduces equity.",
+    "parent_code": null,
+    "type": "equity"
+  },
+  {
+    "code": "4010",
+    "name": "Sales - Web Design",
+    "description": "Website design and build projects. Recognized on milestone billing or completion.",
+    "parent_code": null,
+    "type": "revenue"
+  },
+  {
+    "code": "4020",
+    "name": "Sales - Brand Identity",
+    "description": "Logo, brand-system, and guidelines work. Fixed-price project revenue.",
+    "parent_code": null,
+    "type": "revenue"
+  },
+  {
+    "code": "4030",
+    "name": "Sales - Retainer",
+    "description": "Monthly retainer agreements for ongoing design work. Recognized in the month earned.",
+    "parent_code": null,
+    "type": "revenue"
+  },
+  {
+    "code": "4040",
+    "name": "Sales - Print Design",
+    "description": "Brochures, packaging, and other print-deliverable work.",
+    "parent_code": null,
+    "type": "revenue"
+  },
+  {
+    "code": "6010",
+    "name": "Coworking & Office Rent",
+    "description": "Monthly coworking-space membership. Includes desk, mailing address, and meeting-room credits.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6020",
+    "name": "Owner Salary - N/A",
+    "description": "Placeholder; LLC owner takes draws, not salary. Retained for chart consistency; not used.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6030",
+    "name": "Self-Employment Tax Set-Aside",
+    "description": "Memo account; not a real expense. Tax reserve transfers booked through this account.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6040",
+    "name": "Contract Labor",
+    "description": "Payments to freelance subcontractors: copywriters, illustrators, web developers, motion designers.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6050",
+    "name": "Professional Liability Insurance",
+    "description": "Annual E&O / professional liability policy.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6060",
+    "name": "Health Insurance",
+    "description": "Monthly self-employed health-insurance premium.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6070",
+    "name": "Merchant Processing Fees",
+    "description": "Stripe card and ACH fees.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6080",
+    "name": "Bank Service Charges",
+    "description": "Monthly bank account and wire fees.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6100",
+    "name": "Software - Design Tools",
+    "description": "Adobe Creative Cloud, Figma, Sketch, Procreate, Affinity, plug-ins. Core production tools.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6110",
+    "name": "Software - Hosting & Domains",
+    "description": "Web hosting, domain registration, DNS, CDN, SSL services. Includes test sites for client projects.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6120",
+    "name": "Software - Project Management",
+    "description": "Notion, Linear, Asana, Trello, Harvest. Project tracking and time tracking.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6130",
+    "name": "Software - Communication",
+    "description": "Slack, Loom, Zoom, Calendly, email-hosting fees.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6140",
+    "name": "Software - Other & AI Tools",
+    "description": "Catch-all for smaller-spend software not fitting other software categories. Includes AI-assistant subscriptions, font-licensing services, stock-asset libraries.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6150",
+    "name": "Office Supplies",
+    "description": "Consumable office items: paper, pens, printer ink. Minimal volume given remote work.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6160",
+    "name": "Computer Hardware - Expensed",
+    "description": "Computer accessories and peripherals under the capitalization threshold: keyboards, mice, drawing tablets, external drives, cables.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6170",
+    "name": "Marketing & Advertising",
+    "description": "Portfolio platform fees (Dribbble, Behance Pro), LinkedIn ads, sponsored newsletter slots.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6180",
+    "name": "Professional Services - Accounting",
+    "description": "Bookkeeper monthly fee, annual tax preparation, business-banking advisor consultations.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6190",
+    "name": "Professional Services - Legal",
+    "description": "Contract review, IP filings, business-structure consultations.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6200",
+    "name": "Professional Development",
+    "description": "Online courses, design conferences, book purchases for reference.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6210",
+    "name": "Conferences & Travel",
+    "description": "Travel, lodging, and meals tied to design conferences and client visits.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6220",
+    "name": "Meals & Entertainment",
+    "description": "Client meals and industry meetups. 50% deductible per IRS rules.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6230",
+    "name": "Telephone & Internet",
+    "description": "Business phone line and home-office internet portion.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6240",
+    "name": "Reference Materials",
+    "description": "Books, magazines, design annuals, font licenses purchased outright.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "7010",
+    "name": "Interest Income",
+    "description": "Interest earned on tax-reserve account.",
+    "parent_code": null,
+    "type": "other_income"
+  }
+]

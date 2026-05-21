@@ -1,0 +1,9 @@
+{
+  "id": "design-agency",
+  "name": "Northwind Design Co.",
+  "industry": "Freelance graphic and web design",
+  "description": "Single-principal design studio working remotely from a coworking space. Mix of brand-identity packages, web design, and ongoing-retainer clients. Filing as a single-member LLC, owner draws rather than payroll for the principal.",
+  "fiscal_year_start": "01-01",
+  "typical_monthly_revenue_usd": 14000,
+  "notes": "Designed to exercise software-subscription density, contractor-payment patterns, and service-revenue categorization with no inventory or COGS."
+}
