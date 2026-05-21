@@ -1,0 +1,31 @@
+{
+  "version": "v0",
+  "created": "2026-05-21",
+  "labeler": "claude-code-session-04, pending human review",
+  "businesses": [
+    {
+      "id": "coffee-shop",
+      "name": "Lighthouse Roasters",
+      "industry": "Specialty coffee retail",
+      "transaction_count": 102,
+      "adversarial_count": 10
+    },
+    {
+      "id": "design-agency",
+      "name": "Northwind Design Co.",
+      "industry": "Freelance graphic and web design",
+      "transaction_count": 100,
+      "adversarial_count": 11
+    },
+    {
+      "id": "auto-repair",
+      "name": "Granite State Auto Service",
+      "industry": "Independent auto repair and maintenance",
+      "transaction_count": 100,
+      "adversarial_count": 10
+    }
+  ],
+  "total_transactions": 302,
+  "total_adversarial": 31,
+  "notes": "First-pass dataset. Labels are claude-code-generated proposals awaiting human review and refinement. See evals/datasets/README.md for status."
+}

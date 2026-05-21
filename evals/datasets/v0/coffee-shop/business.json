@@ -1,0 +1,9 @@
+{
+  "id": "coffee-shop",
+  "name": "Lighthouse Roasters",
+  "industry": "Specialty coffee retail",
+  "description": "Single-location specialty coffee shop on the New Hampshire seacoast. Roasts in-house and wholesales to two regional cafes. Owner-operator plus three part-time baristas. Filing as an S-corp.",
+  "fiscal_year_start": "01-01",
+  "typical_monthly_revenue_usd": 35000,
+  "notes": "Designed to exercise food-COGS, payroll-related, small-equipment, and wholesale-vs-retail revenue categorizations."
+}

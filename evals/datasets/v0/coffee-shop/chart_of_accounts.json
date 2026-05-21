@@ -1,0 +1,352 @@
+[
+  {
+    "code": "1010",
+    "name": "Cash - Operating Checking",
+    "description": "Primary operating checking account at Granite National Bank. All Square settlements, payroll outflows, and vendor payments flow through this account.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1020",
+    "name": "Cash - Reserve Savings",
+    "description": "Savings account holding ~2 months of operating expenses as reserve. Periodic transfers from checking.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1030",
+    "name": "Merchant Settlements Receivable",
+    "description": "Net of card sales settled by Square or third-party processors but not yet deposited to checking. Cleared on each settlement transaction.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1040",
+    "name": "Inventory - Green Coffee",
+    "description": "Unroasted green coffee beans held for roasting. Asset until roasted, then converted to roasted coffee inventory or expensed as wholesale COGS.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1050",
+    "name": "Inventory - Roasted Coffee",
+    "description": "Roasted whole-bean coffee held for retail bag sale or wholesale shipment. Built up from green coffee plus a labor-and-overhead allocation.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1070",
+    "name": "Inventory - Retail Goods",
+    "description": "Resale merchandise: t-shirts, mugs, brewing equipment, books. Not consumed in operations.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1080",
+    "name": "Inventory - Cups, Lids & Packaging",
+    "description": "Disposable cups, lids, sleeves, wholesale bags, retail bags, stickers. Consumable, but tracked as inventory until used.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1200",
+    "name": "Prepaid Insurance",
+    "description": "Annual general-liability and property-insurance premiums paid up-front, amortized monthly.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1500",
+    "name": "Equipment - Roasting",
+    "description": "Capitalized roasting equipment: drum roaster, afterburner, destoner. Depreciated over useful life.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1510",
+    "name": "Equipment - Brewing & Espresso",
+    "description": "Capitalized espresso machines, grinders, brewers, water filtration. Depreciated over useful life.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1520",
+    "name": "Equipment - POS & Technology",
+    "description": "Capitalized point-of-sale hardware, tablets, customer-facing displays.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "2010",
+    "name": "Accounts Payable",
+    "description": "Amounts owed to vendors invoiced but not yet paid. Typical terms net 15 or net 30.",
+    "parent_code": null,
+    "type": "liability"
+  },
+  {
+    "code": "2020",
+    "name": "Sales Tax Payable",
+    "description": "Sales tax collected from customers, owed to the state. NH has no general sales tax; populated by occasional out-of-state wholesale shipments.",
+    "parent_code": null,
+    "type": "liability"
+  },
+  {
+    "code": "2030",
+    "name": "Payroll Liabilities",
+    "description": "Withheld federal and state employee taxes pending remittance via Gusto. Cleared on each tax-payment transaction.",
+    "parent_code": null,
+    "type": "liability"
+  },
+  {
+    "code": "2040",
+    "name": "Credit Card Payable",
+    "description": "Outstanding balance on the business credit card, paid monthly.",
+    "parent_code": null,
+    "type": "liability"
+  },
+  {
+    "code": "3010",
+    "name": "Owner's Contributed Capital",
+    "description": "Cash and property contributed by the owner at formation or via subsequent contributions.",
+    "parent_code": null,
+    "type": "equity"
+  },
+  {
+    "code": "3020",
+    "name": "Retained Earnings",
+    "description": "Accumulated profits not yet distributed. Closed at year-end.",
+    "parent_code": null,
+    "type": "equity"
+  },
+  {
+    "code": "3030",
+    "name": "Owner Distributions",
+    "description": "Cash distributions to the S-corp owner. Not deductible; reduces equity.",
+    "parent_code": null,
+    "type": "equity"
+  },
+  {
+    "code": "4010",
+    "name": "Sales - Retail Beverages",
+    "description": "Drip coffee, espresso, latte, tea, and other prepared beverages sold in-store and to-go.",
+    "parent_code": null,
+    "type": "revenue"
+  },
+  {
+    "code": "4020",
+    "name": "Sales - Retail Food",
+    "description": "Pastries, sandwiches, and other prepared food sold in-store. Mostly purchased from local bakery for resale.",
+    "parent_code": null,
+    "type": "revenue"
+  },
+  {
+    "code": "4030",
+    "name": "Sales - Retail Whole Bean",
+    "description": "Bagged whole-bean and ground coffee sold to retail customers in-store.",
+    "parent_code": null,
+    "type": "revenue"
+  },
+  {
+    "code": "4040",
+    "name": "Sales - Wholesale Coffee",
+    "description": "Bulk roasted coffee sold to two regional cafe accounts. Invoiced separately from retail.",
+    "parent_code": null,
+    "type": "revenue"
+  },
+  {
+    "code": "4050",
+    "name": "Sales - Retail Merchandise",
+    "description": "T-shirts, mugs, brewing equipment, and books sold in-store.",
+    "parent_code": null,
+    "type": "revenue"
+  },
+  {
+    "code": "5010",
+    "name": "COGS - Green Coffee",
+    "description": "Cost of green coffee consumed in roasting. Recognized when coffee is roasted, not when purchased.",
+    "parent_code": null,
+    "type": "cogs"
+  },
+  {
+    "code": "5020",
+    "name": "COGS - Dairy & Syrups",
+    "description": "Cost of milk, alt-milk, and syrup consumed in beverage preparation.",
+    "parent_code": null,
+    "type": "cogs"
+  },
+  {
+    "code": "5030",
+    "name": "COGS - Cups, Lids & Packaging",
+    "description": "Cost of disposable cups, lids, sleeves, and bags consumed in service and retail sales.",
+    "parent_code": null,
+    "type": "cogs"
+  },
+  {
+    "code": "5040",
+    "name": "COGS - Food for Resale",
+    "description": "Cost of pastries and prepared food purchased from third parties for resale.",
+    "parent_code": null,
+    "type": "cogs"
+  },
+  {
+    "code": "5050",
+    "name": "COGS - Retail Goods Resold",
+    "description": "Cost of merchandise sold under Sales - Retail Merchandise. Cost basis only; no fabrication.",
+    "parent_code": null,
+    "type": "cogs"
+  },
+  {
+    "code": "6010",
+    "name": "Rent - Storefront",
+    "description": "Monthly rent on the storefront and roasting space. Includes CAM charges per lease.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6020",
+    "name": "Utilities - Electric",
+    "description": "Electric utility billed monthly. High consumption from espresso machines, refrigeration, and roaster afterburner.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6030",
+    "name": "Utilities - Gas & Water",
+    "description": "Natural gas (winter heat) and water/sewer combined into one account due to low volume.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6040",
+    "name": "Wages - Baristas",
+    "description": "Hourly wages paid to part-time barista staff, run through Gusto bi-weekly.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6050",
+    "name": "Wages - Owner",
+    "description": "S-corp reasonable-compensation salary paid to owner, run through Gusto.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6060",
+    "name": "Payroll Taxes",
+    "description": "Employer share of payroll taxes (FICA, FUTA, SUTA) remitted via Gusto.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6070",
+    "name": "Payroll Service Fees",
+    "description": "Monthly Gusto subscription and per-employee fees.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6080",
+    "name": "Workers Compensation Insurance",
+    "description": "State-required workers' comp policy. Quarterly premiums.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6090",
+    "name": "General Liability Insurance",
+    "description": "Annual general-liability policy covering slip-and-fall, product-liability, and basic property.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6100",
+    "name": "Merchant Processing Fees",
+    "description": "Square card-processing fees deducted from settlements. Recognized as expense, gross of fees as revenue.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6110",
+    "name": "Bank Service Charges",
+    "description": "Monthly bank account fees, ACH origination fees, and wire fees.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6120",
+    "name": "Office Supplies",
+    "description": "Consumable office items: paper, pens, printer ink, kitchen supplies for staff break room. Does NOT include cups, lids, or food packaging.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6130",
+    "name": "Cleaning & Sanitation Supplies",
+    "description": "Cleaning chemicals, sanitizer, mop heads, paper towels, restroom supplies.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6140",
+    "name": "Repairs & Maintenance",
+    "description": "Service calls and parts for equipment and facility maintenance under the capitalization threshold.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6150",
+    "name": "Small Tools & Equipment",
+    "description": "Equipment purchases under $500 expensed rather than capitalized: hand grinders, tampers, thermometers, small parts.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6160",
+    "name": "Marketing & Advertising",
+    "description": "Local newspaper ads, Instagram boosts, sponsorship of community events, printed marketing materials.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6170",
+    "name": "Software Subscriptions",
+    "description": "Recurring software: Square, Toast, QuickBooks Online, Mailchimp, scheduling tools.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6180",
+    "name": "Professional Services - Accounting",
+    "description": "Bookkeeper monthly fee, annual tax preparation.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6190",
+    "name": "Permits & Licenses",
+    "description": "City business license, food-service license, weights-and-measures, retail merchant permits.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6200",
+    "name": "Telephone & Internet",
+    "description": "Business phone line and storefront internet. Critical for POS uptime.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6210",
+    "name": "Vehicle & Delivery",
+    "description": "Fuel and minor maintenance for the wholesale-delivery vehicle. Mileage rate alternative not used.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6230",
+    "name": "Training & Continuing Education",
+    "description": "SCA classes, latte-art workshops, food-safety certifications, industry-research trips to peer cafes.",
+    "parent_code": null,
+    "type": "expense"
+  }
+]

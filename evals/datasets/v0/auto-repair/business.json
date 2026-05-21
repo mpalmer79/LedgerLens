@@ -1,0 +1,9 @@
+{
+  "id": "auto-repair",
+  "name": "Granite State Auto Service",
+  "industry": "Independent auto repair and maintenance",
+  "description": "Independent auto-repair shop in central New Hampshire. Two bays, two ASE-certified technicians plus the owner. General mechanical work, state inspections, brake and tire service. NAPA-affiliated parts buying. Filing as an S-corp.",
+  "fiscal_year_start": "01-01",
+  "typical_monthly_revenue_usd": 48000,
+  "notes": "Designed to exercise parts-inventory vs. parts-COGS, shop-supplies vs. office-supplies, and capitalized-tool vs. expensed-tool decisions."
+}

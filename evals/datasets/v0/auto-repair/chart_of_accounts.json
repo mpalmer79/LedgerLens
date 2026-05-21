@@ -1,0 +1,352 @@
+[
+  {
+    "code": "1010",
+    "name": "Cash - Operating Checking",
+    "description": "Primary operating account. All shop-management-system settlements, parts purchases, and payroll outflows.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1020",
+    "name": "Cash - Reserve Savings",
+    "description": "Operating reserve account.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1030",
+    "name": "Merchant Settlements Receivable",
+    "description": "Card sales settled by the shop POS provider but not yet deposited.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1040",
+    "name": "Accounts Receivable",
+    "description": "Invoiced amounts owed by fleet and commercial customers.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1050",
+    "name": "Inventory - Parts (Resale)",
+    "description": "Parts purchased for installation in customer vehicles and resold at marked-up price. Inventory asset until installed.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1060",
+    "name": "Inventory - Fluids & Consumables",
+    "description": "Bulk fluids (oil, coolant, transmission fluid, brake fluid) and consumables held for use across jobs.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1070",
+    "name": "Inventory - Tires (Resale)",
+    "description": "Tire inventory awaiting installation.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1200",
+    "name": "Prepaid Insurance",
+    "description": "Annual policies (garage keepers, general liability) paid up-front and amortized monthly.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1500",
+    "name": "Equipment - Lifts",
+    "description": "Capitalized vehicle lifts in both service bays.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1510",
+    "name": "Equipment - Diagnostic Tools",
+    "description": "Capitalized diagnostic scanners, alignment machine, OBD-II equipment.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "1520",
+    "name": "Equipment - Specialty Tools (Capitalized)",
+    "description": "Specialty tools over the $500 capitalization threshold: hydraulic presses, large torque wrenches, brake-lathe.",
+    "parent_code": null,
+    "type": "asset"
+  },
+  {
+    "code": "2010",
+    "name": "Accounts Payable - NAPA",
+    "description": "Outstanding parts-account balance with NAPA, paid monthly on terms.",
+    "parent_code": null,
+    "type": "liability"
+  },
+  {
+    "code": "2020",
+    "name": "Accounts Payable - Other",
+    "description": "Vendor balances outside of the NAPA parts account.",
+    "parent_code": null,
+    "type": "liability"
+  },
+  {
+    "code": "2040",
+    "name": "Payroll Liabilities",
+    "description": "Withheld employee taxes pending Gusto remittance.",
+    "parent_code": null,
+    "type": "liability"
+  },
+  {
+    "code": "2050",
+    "name": "Credit Card Payable",
+    "description": "Outstanding business credit card balance, paid monthly.",
+    "parent_code": null,
+    "type": "liability"
+  },
+  {
+    "code": "3010",
+    "name": "Owner's Contributed Capital",
+    "description": "Cash and equipment contributed at formation.",
+    "parent_code": null,
+    "type": "equity"
+  },
+  {
+    "code": "3020",
+    "name": "Retained Earnings",
+    "description": "Accumulated profits not yet distributed.",
+    "parent_code": null,
+    "type": "equity"
+  },
+  {
+    "code": "3030",
+    "name": "Owner Distributions",
+    "description": "S-corp owner distributions.",
+    "parent_code": null,
+    "type": "equity"
+  },
+  {
+    "code": "4010",
+    "name": "Sales - Labor",
+    "description": "Hourly labor rate billed on repair-order tickets.",
+    "parent_code": null,
+    "type": "revenue"
+  },
+  {
+    "code": "4020",
+    "name": "Sales - Parts Markup",
+    "description": "Markup on parts billed to customers; calculated as billed price less cost basis (which flows through COGS).",
+    "parent_code": null,
+    "type": "revenue"
+  },
+  {
+    "code": "4040",
+    "name": "Sales - State Inspections",
+    "description": "NH state safety and OBD-II inspections, flat fee per vehicle.",
+    "parent_code": null,
+    "type": "revenue"
+  },
+  {
+    "code": "4050",
+    "name": "Sales - Tire Markup",
+    "description": "Markup on tire sales, separately itemized given different margin structure.",
+    "parent_code": null,
+    "type": "revenue"
+  },
+  {
+    "code": "5010",
+    "name": "COGS - Parts (Resold)",
+    "description": "Cost basis of parts installed in customer vehicles. Recognized at install, not at purchase.",
+    "parent_code": null,
+    "type": "cogs"
+  },
+  {
+    "code": "5030",
+    "name": "COGS - Tires (Resold)",
+    "description": "Cost basis of tires installed.",
+    "parent_code": null,
+    "type": "cogs"
+  },
+  {
+    "code": "5040",
+    "name": "COGS - Towing Subcontracted",
+    "description": "Tow-operator subcontract cost when towing is on-billed to a customer.",
+    "parent_code": null,
+    "type": "cogs"
+  },
+  {
+    "code": "6010",
+    "name": "Rent - Shop",
+    "description": "Monthly rent on the shop building and lot.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6020",
+    "name": "Utilities - Electric",
+    "description": "Monthly electric utility.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6030",
+    "name": "Utilities - Gas & Water",
+    "description": "Heating gas and water/sewer combined.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6040",
+    "name": "Wages - Technicians",
+    "description": "Hourly wages for the two technicians.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6050",
+    "name": "Wages - Owner",
+    "description": "S-corp reasonable-comp salary for the owner.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6060",
+    "name": "Payroll Taxes",
+    "description": "Employer share of payroll taxes.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6070",
+    "name": "Payroll Service Fees",
+    "description": "Monthly Gusto subscription and per-employee fees.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6080",
+    "name": "Workers Compensation Insurance",
+    "description": "Quarterly workers' comp premiums.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6090",
+    "name": "General Liability Insurance",
+    "description": "Annual general-liability policy.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6100",
+    "name": "Garage Keepers Insurance",
+    "description": "Coverage for customer vehicles in the shop's care, custody, and control. Required for the trade.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6110",
+    "name": "Merchant Processing Fees",
+    "description": "Card-processing fees.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6120",
+    "name": "Bank Service Charges",
+    "description": "Bank account and wire fees.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6130",
+    "name": "Shop Supplies",
+    "description": "Shop-floor consumables: shop rags, oil-absorbent, gloves, brake-cleaner spray, threadlocker. Distinct from office supplies.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6140",
+    "name": "Office Supplies",
+    "description": "Office-side consumables: paper, pens, printer ink, receipt rolls. Distinct from shop supplies.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6150",
+    "name": "Small Tools (Expensed)",
+    "description": "Hand tools and specialty tools under the $500 capitalization threshold.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6160",
+    "name": "Repairs & Maintenance - Facility & Equipment",
+    "description": "Service calls and parts for shop building and capitalized equipment.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6170",
+    "name": "Waste Disposal",
+    "description": "Used-oil pickup, used-coolant pickup, scrap-metal removal, tire-disposal fees.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6180",
+    "name": "EPA Compliance & Hazmat Fees",
+    "description": "EPA-mandated fees, hazmat handling fees, state environmental fees.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6190",
+    "name": "Software Subscriptions",
+    "description": "Shop-management system (Mitchell1, AllData), parts-lookup, accounting, scheduling.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6200",
+    "name": "Marketing & Advertising",
+    "description": "Local newspaper ads, Google Local Service ads, sponsorship of community events.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6210",
+    "name": "Uniforms & Laundry Service",
+    "description": "Weekly uniform-and-shop-towel laundry service.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6220",
+    "name": "Professional Services - Accounting",
+    "description": "Bookkeeper monthly fee, annual tax preparation.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6230",
+    "name": "Permits, Licenses & Inspection Fees",
+    "description": "Business license, NH inspection-station license, weights-and-measures, BAR certifications.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6240",
+    "name": "Continuing Education & Certifications",
+    "description": "ASE certification renewals, technician training, hybrid-and-EV training.",
+    "parent_code": null,
+    "type": "expense"
+  },
+  {
+    "code": "6250",
+    "name": "Telephone & Internet",
+    "description": "Business phone and shop internet.",
+    "parent_code": null,
+    "type": "expense"
+  }
+]
