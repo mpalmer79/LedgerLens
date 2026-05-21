@@ -15,6 +15,14 @@ LedgerLens categorizes bank and credit-card transactions against a per-business 
 - AI: Anthropic Claude (Haiku primary, Sonnet fallback)
 - Evals: Pytest-based harness with versioned test sets
 
+## Deployment
+
+All services are deployed to [Railway](https://railway.app) within a single project: the backend FastAPI service from `backend/`, the frontend Next.js service from `frontend/`, and a Postgres add-on with pgvector. Deploys are triggered by pushes to `main`; no GitHub Actions deployment step exists.
+
+Environment variables — `ANTHROPIC_API_KEY`, `DATABASE_URL`, `CORS_ORIGINS`, `NEXT_PUBLIC_API_BASE_URL`, and the model identifiers — are configured in the Railway dashboard, not in this repo. The variables that exist (and their default shape) are documented in [`.env.example`](.env.example).
+
+Rationale for the all-Railway topology, alternatives considered, and the trigger conditions for revisiting are in [`docs/adr/0002-deployment-topology.md`](docs/adr/0002-deployment-topology.md).
+
 ## Repository layout
 
 ```
