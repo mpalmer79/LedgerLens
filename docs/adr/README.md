@@ -9,13 +9,18 @@ An Architecture Decision Record (ADR) captures a single significant architectura
 3. Fill in context, decision, consequences, and alternatives.
 4. Open a PR. On merge, update the status to `Accepted` (or `Rejected`, in which case keep the file for the record).
 
-## Planned v0 ADRs
+## Accepted ADRs
 
-Per [ARCHITECTURE.md §13](../ARCHITECTURE.md):
+- [ADR-0000](0000-record-architecture-decisions.md) — Record architecture decisions
+- [ADR-0001](0001-python-version.md) — Python version requirement
 
-- **ADR-001** — Choice of Anthropic API over multi-provider abstraction.
-- **ADR-002** — Synchronous categorization endpoint over queue-based processing for v0.
-- **ADR-003** — pgvector over a dedicated vector store.
-- **ADR-004** — Separate `corrections` table over an updates column on `transactions`.
-- **ADR-005** — Haiku-primary, Sonnet-fallback model selection over single-model.
-- **ADR-006** — Synthetic eval businesses over real anonymized data.
+## Planned ADRs
+
+The list in [ARCHITECTURE.md §13](../ARCHITECTURE.md) is renumbered here to start at 0002, since 0001 is now the Python version decision. The architecture-driven choices below will be written as work begins on each:
+
+- **ADR-0002** — Choice of Anthropic API over multi-provider abstraction.
+- **ADR-0003** — Synchronous categorization endpoint over queue-based processing for v0.
+- **ADR-0004** — pgvector over a dedicated vector store.
+- **ADR-0005** — Separate `corrections` table over an updates column on `transactions`.
+- **ADR-0006** — Haiku-primary, Sonnet-fallback model selection over single-model.
+- **ADR-0007** — Synthetic eval businesses over real anonymized data.
