@@ -1,58 +1,123 @@
 # LedgerLens
 
-> AI-assisted transaction categorization for bookkeepers. Calibrated confidence, human-in-the-loop review, learns from corrections.
+**AI-assisted transaction categorization for bookkeepers. Calibrated confidence, human-in-the-loop review, eval-gated prompt changes.**
 
-**Status:** Pre-implementation scaffolding. Read [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the design intent.
+[![Live demo](https://img.shields.io/badge/demo-ledgerlens.up.railway.app-2e5f32)](https://ledgerlens.up.railway.app)
+[![Eval results](https://img.shields.io/badge/eval-claude--haiku--4.5-2e5f32)](evals/runs/)
+[![ADRs](https://img.shields.io/badge/ADRs-10-244c27)](docs/adr/)
 
-## What this is
+---
 
-LedgerLens categorizes bank and credit-card transactions against a per-business chart of accounts. Each decision carries a calibrated confidence score and a short reasoning trace; low-confidence and ambiguous decisions route to a human review queue, and corrections feed back as retrieval signal for future categorizations. It is a focused assistive tool for bookkeepers — not a general ledger, tax-filing, or payroll system.
+## The problem
 
-## Stack
+Bookkeepers categorize 100–500 bank transactions per client per month. Most are mechanical ("Starbucks → Meals"), but ~10% are genuinely ambiguous: a Mitchell1 subscription that could be Software or Prepaid Software, a State Farm payment that might be Insurance Expense or a prepaid asset, a Claude API charge that could be Software or Contract Labor depending on context.
 
-- Backend: FastAPI, Python 3.12, Postgres + pgvector, SQLAlchemy, Alembic
-- Frontend: Next.js 14, TypeScript, Tailwind CSS
-- AI: Anthropic Claude (Haiku primary, Sonnet fallback)
-- Evals: Pytest-based harness with versioned test sets
+Mis-categorizations propagate into financial statements, tax filings, and audit risk. The standard playbook — rule engines + manual review — scales linearly with transaction volume and degrades with each new client's chart of accounts.
 
-## Deployment
+## The approach
 
-All services are deployed to [Railway](https://railway.app) within a single project: the backend FastAPI service from `backend/`, the frontend Next.js service from `frontend/`, and a Postgres add-on with pgvector. Deploys are triggered by pushes to `main`; no GitHub Actions deployment step exists.
+LedgerLens treats categorization as a calibrated prediction problem, not a classification problem. Each transaction gets:
 
-Environment variables — `ANTHROPIC_API_KEY`, `DATABASE_URL`, `CORS_ORIGINS`, `NEXT_PUBLIC_API_BASE_URL`, and the model identifiers — are configured in the Railway dashboard, not in this repo. The variables that exist (and their default shape) are documented in [`.env.example`](.env.example).
+- A predicted account from the client's chart of accounts
+- A confidence score between 0 and 1
+- A routing decision (auto-post if confidence ≥ threshold, queue for review otherwise)
+- A rationale field a human reviewer can read in seconds
 
-Rationale for the all-Railway topology, alternatives considered, and the trigger conditions for revisiting are in [`docs/adr/0002-deployment-topology.md`](docs/adr/0002-deployment-topology.md).
+The model can also return `UNCATEGORIZABLE` for transactions outside its training distribution, rather than guess and contaminate downstream books.
 
-## Repository layout
+## Evidence — the eval suite
+
+The project is built around a synthetic evaluation dataset that doesn't exist anywhere else in the bookkeeping-AI space:
+
+- **3 verticals**: coffee shop, design agency, auto repair (140 accounts total)
+- **302 transactions** with ground-truth account assignments
+- **~10% adversarial**: prompts deliberately designed to be ambiguous, including the three highest-difficulty cases that hinge on whether a subscription is software-expense vs. prepaid-asset
+- **Stratified confidence labels** (high / medium / low) so calibration can be measured per-bucket, not just in aggregate
+
+Two categorizers run against this dataset:
+
+| Categorizer | Overall accuracy | Non-adversarial | Adversarial | Cost / 100 tx |
+|---|---|---|---|---|
+| Stub (rent-everything baseline) | 9.3% | 10.3% | 0.0% | $0.00 |
+| Claude Haiku 4.5 | `<HAIKU_ACCURACY>` | `<HAIKU_NON_ADV>` | `<HAIKU_ADV>` | `<HAIKU_COST>` |
+
+Reliability diagrams, slice breakdowns, and full per-transaction outputs live in [`evals/runs/`](evals/runs/). Each run is a committed JSON artifact — no metrics live in a dashboard with no underlying record.
+
+## Architecture
 
 ```
-backend/   FastAPI application source and tests
-frontend/  Next.js 14 + TypeScript review UI
-evals/     Versioned test sets, harness, and run outputs
-docs/      Architecture spec and ADRs
-scripts/   Operational and developer scripts
+Browser (Next.js 14, Tailwind)
+   ↓
+FastAPI backend (Python 3.12)
+   ↓
+[ Categorizer (Protocol) ]
+   ├─ Stub               — baseline, always returns "Rent"
+   └─ ClaudeHaikuCategorizer — tool_use, retry-once on validation
+   ↓
+Anthropic Claude Haiku 4.5
 ```
 
-## Getting started
+Both services deploy via Dockerfile-based builds on Railway. Eval runs execute in GitHub Actions and commit results back to the repo — see [ADR-0009](docs/adr/0009-evals-run-in-ci.md).
 
-### Prerequisites
+Full architecture spec: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md).
 
-- TODO: pin Python and Node versions once `backend/pyproject.toml` and `frontend/package.json` are finalized.
-- TODO: document Postgres + pgvector setup (local Docker vs. hosted).
+## Design decisions, documented
 
-### Backend setup
+This project uses ADRs for every non-trivial decision. The list:
 
-- TODO: virtualenv creation, dependency install, env file, database migration, and run command.
+| # | Decision |
+|---|---|
+| [0000](docs/adr/0000-record-architecture-decisions.md) | Use ADRs |
+| [0001](docs/adr/0001-python-version.md) | Python 3.12+ |
+| [0002](docs/adr/0002-deployment-topology.md) | All services on Railway |
+| [0003](docs/adr/0003-synthetic-eval-data.md) | Synthetic eval over anonymized real data |
+| [0004](docs/adr/0004-categorizer-protocol.md) | Categorizer Protocol, sync v0 |
+| [0005](docs/adr/0005-single-model-v0.md) | Single-model v0, fallback chain deferred |
+| [0006](docs/adr/0006-switch-to-dockerfile-deploys.md) | Dockerfile builds (supersedes part of 0002) |
+| [0007](docs/adr/0007-build-time-env-var-injection.md) | NEXT_PUBLIC_* injected via Docker ARG |
+| [0008](docs/adr/0008-env-var-list-parsing.md) | CSV-tolerant CORS_ORIGINS validator |
+| [0009](docs/adr/0009-evals-run-in-ci.md) | Evals run in CI, not in production API |
+| [0010](docs/adr/0010-design-system-architecture.md) | Design system: forest green, light theme |
 
-### Frontend setup
+## Repo layout
 
-- TODO: dependency install, env file, and dev server command.
+```
+.
+├── backend/         FastAPI + categorizers + eval harness (Python 3.12)
+├── frontend/        Next.js 14 + Tailwind (TypeScript)
+├── evals/           synthetic datasets + run artifacts
+├── design/          token system + brand assets
+├── docs/            ARCHITECTURE.md + 11 ADRs
+└── .github/         CI workflow + manual eval-trigger workflow
+```
 
-## Documentation
+## Running locally
 
-- [Architecture](docs/ARCHITECTURE.md) — system design and rationale
-- [ADRs](docs/adr/) — architecture decision records
+```bash
+# Backend
+cd backend
+pip install -e .
+uvicorn ledgerlens.main:app --reload
 
-## License
+# Frontend
+cd frontend
+npm install
+npm run dev
+```
 
-MIT. See [LICENSE](LICENSE).
+Evals run via the [`Run eval`](.github/workflows/eval.yml) GitHub Actions workflow — manually triggered for cost control.
+
+## What's not in this project (yet)
+
+Calling out gaps because honesty beats overclaiming:
+
+- **No real bookkeeping integration.** The dataset is synthetic. Wiring up QuickBooks or Xero is straightforward but out of scope for v0.
+- **No corrections loop.** The system can route to review, but doesn't yet learn from human corrections. ADR-0011 will cover this.
+- **No multi-tenant deployment.** Single-business in the data model for v0; multi-tenant is a future migration.
+- **Eval harness is synchronous.** Concurrent API calls would cut wall-clock time 5-10×; deferred until eval volume justifies it.
+
+These aren't bugs — they're explicit non-goals documented in the ADRs.
+
+## About
+
+Built by [Michael Palmer](https://linkedin.com/in/michael-palmer) (PalmerAI Solutions) as a portfolio project demonstrating production-quality AI engineering: shipped systems, calibrated metrics, documented decisions, and honest failure modes. See also [VeriFlow](https://github.com/mpalmer79/VeriFlow) (compliance) and [AegisRange](https://github.com/mpalmer79/AegisRange) (SOC simulation).
