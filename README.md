@@ -17,12 +17,14 @@ LedgerLens is a **working prototype** that demonstrates an end-to-end AI bookkee
 | Eval harness (load dataset, run categorizer, persist metrics) | **Shipped** — committed JSON run artifacts under `evals/runs/` |
 | Claude Haiku 4.5 categorizer with tool_use structured output | **Shipped** — `backend/src/ledgerlens/categorizers/claude_haiku.py` |
 | Eval dashboard at `/evals` | **Shipped** — reads latest run JSON at build time |
-| Backend API: transactions, categorize, review queue, ledger export, audit | **Shipped (this PR)** — see "API surface" below |
-| Persistent storage (SQLite for demo, Postgres-ready) | **Shipped (this PR)** — SQLAlchemy 2.0 models, idempotent table creation, seeded chart of accounts |
-| Frontend workflow pages (`/transactions`, `/review`, `/ledger`) | **Next sprint** — backend endpoints exist, UI to drive them is the next PR |
+| Backend API: transactions, categorize, review queue, ledger export, audit | **Shipped** — see "API surface" below |
+| Persistent storage (SQLite for demo, Postgres-ready) | **Shipped** — SQLAlchemy 2.0 models, idempotent table creation, seeded chart of accounts |
+| **Frontend workflow pages** (`/app`, `/transactions`, `/transactions/import`, `/transactions/[id]`, `/review`, `/ledger`) | **Shipped (this PR)** — typed API client, real backend calls |
 | Corrections-driven retrieval ("learns from corrections") | **Planned** — deterministic merchant lookup is the v1 design; pgvector is later |
 | Hybrid rules + model categorizer | **Planned** |
 | Production multi-tenancy, real bank integration | **Not in scope for v0** |
+
+Five-minute reviewer path through the working app: [`docs/DEMO_WALKTHROUGH.md`](docs/DEMO_WALKTHROUGH.md).
 
 Full gap analysis with priorities: [`docs/IMPLEMENTATION_GAP_ANALYSIS.md`](docs/IMPLEMENTATION_GAP_ANALYSIS.md).
 
@@ -191,13 +193,14 @@ Evals run via the [`Run eval`](.github/workflows/eval.yml) GitHub Actions workfl
 
 Calling out gaps because honesty beats overclaiming:
 
-- **No frontend workflow UI.** Backend endpoints exist; the `/transactions`, `/review`, `/ledger` pages are the next session's work. The current frontend is a landing page and an eval dashboard.
 - **No real bank integration.** Synthetic dataset for evaluation, manual CSV import for the product. QuickBooks / Xero is intentionally out of scope for v0.
 - **No corrections loop yet.** Reviewers can correct categories and the corrections are persisted with audit; using them to inform future predictions is the next functional milestone.
-- **No multi-tenancy.** Single-tenant by data model; structurally room to add it without rewriting the persistence layer.
-- **Eval harness is synchronous.** Adequate for v0 dataset size; concurrency is a follow-up when run time becomes a real cost.
+- **No hybrid rules + model categorizer.** A deterministic rule layer in front of the model would lift accuracy on obvious cases at lower cost; planned, not built.
+- **Eval-metric upgrades pending.** Sliced per-category metrics, expected calibration error, baseline rule comparison — all in the gap analysis, none in this PR.
+- **No auth or multi-tenancy.** Single-tenant by data model; structurally room to add it without rewriting the persistence layer.
+- **No security baseline polish.** CSV size/row limits exist; structured logs with request IDs, log redaction utility, and narrow-CORS in prod are planned.
 
-These aren't bugs — they're explicit non-goals documented in [`docs/IMPLEMENTATION_GAP_ANALYSIS.md`](docs/IMPLEMENTATION_GAP_ANALYSIS.md).
+These aren't bugs — they're explicit non-goals documented in [`docs/IMPLEMENTATION_GAP_ANALYSIS.md`](docs/IMPLEMENTATION_GAP_ANALYSIS.md). Each has a position in the priority list.
 
 ## About
 

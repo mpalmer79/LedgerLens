@@ -119,8 +119,33 @@ export default function EvalsPage() {
 
         {run && (
           <>
+            {/* Honesty callout — model isn't production-ready, and that's the point. */}
+            <section className="mt-8 rounded-md border border-amber-200 bg-amber-50 p-4">
+              <p className="text-[14px] font-medium text-amber-900">
+                These numbers are not production-ready — and that&apos;s why the product is
+                designed the way it is.
+              </p>
+              <ul className="mt-2 list-disc space-y-1 pl-5 text-[13px] text-amber-900">
+                <li>
+                  Adversarial accuracy is{" "}
+                  <span className="mono">{pct(run.metrics.adversarial.accuracy)}</span> — by-design
+                  ambiguous cases need a human, not the model alone.
+                </li>
+                <li>
+                  Confidence calibration is the next eval-harness upgrade; high-confidence accuracy
+                  is currently lower than the displayed confidence on a meaningful share of
+                  predictions.
+                </li>
+                <li>
+                  This is exactly why the app routes low- and mid-confidence predictions to the
+                  review queue, and why every prediction is one click from the underlying rationale
+                  on the transaction detail page.
+                </li>
+              </ul>
+            </section>
+
             {/* b. Headline metric cards */}
-            <section className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <section className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               <MetricCard
                 label="Overall accuracy"
                 value={pct(run.metrics.overall.accuracy)}
