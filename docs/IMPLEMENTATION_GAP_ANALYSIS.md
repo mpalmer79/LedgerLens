@@ -1,8 +1,16 @@
 # LedgerLens — Implementation gap analysis
 
-**Status as of 2026-05-22.** Specific to the actual files on `main` at commit `07afb03`.
+**Status as of 2026-05-22.** Most recently updated alongside session 13 (correction memory). Specific to the files on `main` after PRs #23 (backend foundation), #24 (frontend workflow), and #25 (correction memory).
 
 This document maps what is implemented, what is implied but missing, what needs to exist to call LedgerLens a working bookkeeping app, and how the remaining work should be sequenced.
+
+## Status changes since the original draft
+
+- **Backend foundation — shipped (PR #23).** Items #1–#8 and #10 in the priority table below are complete: lazy settings + `/health` + `/ready`, SQLAlchemy persistence layer, transaction intake (single, batch, CSV import), categorize endpoint with confidence routing, review queue (approve / correct / uncategorizable), audit trail on every state change, ledger CSV export.
+- **Frontend workflow pages — shipped (PR #24).** Item #9 in the table: `/app`, `/transactions`, `/transactions/import`, `/transactions/[id]`, `/review`, `/ledger` are real, talk to the typed API client, and surface the live backend.
+- **Correction memory — shipped (PR #25).** Item #12 in the table: deterministic, exact-key correction memory. Human corrections create `CorrectionMemory` rows; future transactions matching the same key categorize from memory at zero model cost; conflicts route to review; generic merchants are explicitly excluded. This is rule lookup over a model categorizer — not training, not fine-tuning, not embeddings.
+
+The priority table below is kept in its original form for traceability — items 1–10 and 12 are now done; items 11 and 13 onward remain as the forward backlog.
 
 ---
 

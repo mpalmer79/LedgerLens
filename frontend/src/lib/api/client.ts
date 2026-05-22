@@ -11,9 +11,13 @@ import type {
   CategorizationResult,
   CategorizeBatchOut,
   Category,
+  CorrectionMemory,
+  CorrectionMemoryList,
+  CorrectionMemoryPatch,
   CsvImportSummary,
   HealthResponse,
   Ledger,
+  MemoryMatch,
   ReadyResponse,
   ReviewDecision,
   ReviewQueue,
@@ -229,3 +233,36 @@ export const listAuditEvents = (params: {
   const qs = q.toString();
   return apiFetch<AuditEvent[]>(`/audit/events${qs ? `?${qs}` : ""}`);
 };
+
+// ── Correction memory ──────────────────────────────────────────────────────
+
+export const listCorrections = (params: {
+  active?: boolean;
+  category_code?: string;
+  q?: string;
+  limit?: number;
+  offset?: number;
+} = {}) => {
+  const q = new URLSearchParams();
+  if (params.active !== undefined) q.set("active", String(params.active));
+  if (params.category_code) q.set("category_code", params.category_code);
+  if (params.q) q.set("q", params.q);
+  if (params.limit !== undefined) q.set("limit", String(params.limit));
+  if (params.offset !== undefined) q.set("offset", String(params.offset));
+  const qs = q.toString();
+  return apiFetch<CorrectionMemoryList>(`/corrections${qs ? `?${qs}` : ""}`);
+};
+
+export const getCorrection = (id: string) => apiFetch<CorrectionMemory>(`/corrections/${id}`);
+
+export const patchCorrection = (id: string, patch: CorrectionMemoryPatch) =>
+  apiFetch<CorrectionMemory>(`/corrections/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify(patch),
+  });
+
+export const deactivateCorrection = (id: string) =>
+  apiFetch<CorrectionMemory>(`/corrections/${id}`, { method: "DELETE" });
+
+export const getMemoryMatches = (transactionId: string) =>
+  apiFetch<MemoryMatch>(`/transactions/${transactionId}/memory-matches`);

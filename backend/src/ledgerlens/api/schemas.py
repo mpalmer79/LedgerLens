@@ -192,3 +192,43 @@ class AuditEventOut(BaseModel):
     action: str
     details: dict[str, object]
     created_at: datetime
+
+
+# ── Correction memory ──────────────────────────────────────────────────────
+
+
+class CorrectionMemoryOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: str
+    merchant_key: str
+    description_key: str
+    selected_category_code: str
+    source_transaction_id: str
+    source_review_decision_id: str
+    match_count: int
+    last_used_at: datetime | None
+    active: bool
+    notes: str | None
+    created_at: datetime
+    updated_at: datetime
+
+
+class CorrectionMemoryListOut(BaseModel):
+    total: int
+    items: list[CorrectionMemoryOut]
+
+
+class CorrectionMemoryPatch(BaseModel):
+    active: bool | None = None
+    selected_category_code: str | None = None
+    notes: str | None = None
+
+
+class MemoryMatchOut(BaseModel):
+    verdict: str  # "apply" | "conflict" | "none"
+    reason: str
+    merchant_key: str
+    description_key: str
+    record: CorrectionMemoryOut | None = None
+    candidates: list[CorrectionMemoryOut] = []

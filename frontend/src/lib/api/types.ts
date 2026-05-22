@@ -149,3 +149,40 @@ export type ReadyResponse = {
     anthropic: { configured: boolean; model_primary: string };
   };
 };
+
+export type CorrectionMemory = {
+  id: string;
+  merchant_key: string;
+  description_key: string;
+  selected_category_code: string;
+  source_transaction_id: string;
+  source_review_decision_id: string;
+  match_count: number;
+  last_used_at: string | null;
+  active: boolean;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type CorrectionMemoryList = {
+  total: number;
+  items: CorrectionMemory[];
+};
+
+export type CorrectionMemoryPatch = {
+  active?: boolean;
+  selected_category_code?: string;
+  notes?: string;
+};
+
+export type MemoryMatchVerdict = "apply" | "conflict" | "none";
+
+export type MemoryMatch = {
+  verdict: MemoryMatchVerdict;
+  reason: string;
+  merchant_key: string;
+  description_key: string;
+  record: CorrectionMemory | null;
+  candidates: CorrectionMemory[];
+};

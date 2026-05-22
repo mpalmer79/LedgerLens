@@ -4,7 +4,16 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from ledgerlens.api import audit, categories, categorize, health, ledger, review, transactions
+from ledgerlens.api import (
+    audit,
+    categories,
+    categorize,
+    corrections,
+    health,
+    ledger,
+    review,
+    transactions,
+)
 from ledgerlens.config import get_settings
 from ledgerlens.db import _get_sessionmaker, init_db
 from ledgerlens.seed import seed_chart_of_accounts
@@ -51,6 +60,8 @@ def create_app() -> FastAPI:
     application.include_router(review.router)
     application.include_router(ledger.router)
     application.include_router(audit.router)
+    application.include_router(corrections.router)
+    application.include_router(corrections.memory_match_router)
 
     return application
 

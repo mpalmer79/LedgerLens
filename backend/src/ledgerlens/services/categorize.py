@@ -16,7 +16,13 @@ from ledgerlens.config import get_settings
 from ledgerlens.errors import MissingProviderConfig
 from ledgerlens.evals.schemas import Account, Business
 from ledgerlens.evals.schemas import Transaction as EvalTransaction
-from ledgerlens.models import CategorizationResult, ResultStatus, Transaction
+from ledgerlens.models import (
+    AccountCategory,
+    CategorizationResult,
+    CorrectionMemory,
+    ResultStatus,
+    Transaction,
+)
 from ledgerlens.repositories import (
     AuditRepo,
     CategorizationRepo,
@@ -111,6 +117,64 @@ def _route_status(
     return ResultStatus.NEEDS_REVIEW
 
 
+CORRECTION_MEMORY_PROVIDER = "correction_memory"
+
+
+def _persist_memory_result(
+    tx: Transaction,
+    memory: CorrectionMemory,
+    matched: AccountCategory | None,
+    db: Session,
+    latency_ms: int,
+    extra_note: str = "",
+) -> CategorizationResult:
+    """Persist a CategorizationResult that came from correction memory.
+
+    Zero cost, full confidence, provider = correction_memory, and an
+    explanation that names the source review decision. Also increments the
+    memory row's `match_count` and `last_used_at`.
+    """
+    from ledgerlens.repositories.correction_memory import CorrectionMemoryRepo
+
+    CorrectionMemoryRepo(db).mark_used(memory)
+
+    explanation = (
+        f"Matched prior human correction for "
+        f"{'merchant ' + memory.merchant_key if memory.merchant_key else 'description'}. "
+        f"Previous reviewer selected [{memory.selected_category_code}] "
+        f"{matched.name if matched else memory.selected_category_code}."
+    )
+    if extra_note:
+        explanation = f"{explanation} {extra_note}"
+
+    result = CategorizationResult(
+        transaction_id=tx.id,
+        predicted_category_code=memory.selected_category_code,
+        predicted_category_name=matched.name if matched else "",
+        confidence=1.0,
+        explanation=explanation[:2000],
+        alternative_category_code=None,
+        model_provider=CORRECTION_MEMORY_PROVIDER,
+        model_name=None,
+        latency_ms=latency_ms,
+        estimated_cost_usd=0.0,
+        status=ResultStatus.AUTO_APPROVED,
+    )
+    CategorizationRepo(db).add(result)
+    AuditRepo(db).record(
+        entity_type="categorization_result",
+        action="categorized_from_memory",
+        entity_id=result.id,
+        details={
+            "transaction_id": tx.id,
+            "memory_id": memory.id,
+            "selected_category_code": memory.selected_category_code,
+            "source_review_decision_id": memory.source_review_decision_id,
+        },
+    )
+    return result
+
+
 def categorize_transaction(
     tx: Transaction,
     db: Session,
@@ -119,11 +183,62 @@ def categorize_transaction(
 ) -> CategorizationResult:
     """Run categorization on a stored transaction and persist the result.
 
+    Order of attempts:
+    1. Correction memory exact match. On `apply`, persist a result with
+       provider `correction_memory`, zero cost, status `auto_approved`.
+       On `conflict`, persist a result with status `needs_review` and
+       an explanation naming the conflicting categories.
+    2. Fall through to the model categorizer (Anthropic). If the model's
+       high-confidence prediction disagrees with a soft memory hint, route
+       to review.
+
     Returns the persisted CategorizationResult. Raises MissingProviderConfig
-    if Anthropic isn't configured. Other exceptions from the categorizer are
-    surfaced; the harness catches API errors internally and returns an
-    UNCATEGORIZABLE PredResult, which is then persisted with status FAILED.
+    if Anthropic isn't configured AND no memory match was found.
     """
+    from ledgerlens.services.correction_memory import find_memory_match
+
+    started = datetime.now().timestamp()
+    match = find_memory_match(tx, db)
+    cat_repo = CategoryRepo(db)
+
+    if match.verdict == "apply" and match.record is not None:
+        matched = cat_repo.get(match.record.selected_category_code)
+        latency_ms = int((datetime.now().timestamp() - started) * 1000)
+        return _persist_memory_result(tx, match.record, matched, db, latency_ms)
+
+    if match.verdict == "conflict":
+        conflicting_codes = sorted({c.selected_category_code for c in match.candidates})
+        latency_ms = int((datetime.now().timestamp() - started) * 1000)
+        result = CategorizationResult(
+            transaction_id=tx.id,
+            predicted_category_code=conflicting_codes[0] if conflicting_codes else "",
+            predicted_category_name="",
+            confidence=0.0,
+            explanation=(
+                "Correction memory has conflicting prior corrections for this "
+                f"transaction ({', '.join(conflicting_codes)}). Routed to review "
+                "instead of auto-applying."
+            )[:2000],
+            alternative_category_code=conflicting_codes[1] if len(conflicting_codes) > 1 else None,
+            model_provider=CORRECTION_MEMORY_PROVIDER,
+            model_name=None,
+            latency_ms=latency_ms,
+            estimated_cost_usd=0.0,
+            status=ResultStatus.NEEDS_REVIEW,
+        )
+        CategorizationRepo(db).add(result)
+        AuditRepo(db).record(
+            entity_type="categorization_result",
+            action="memory_conflict_routed_to_review",
+            entity_id=result.id,
+            details={
+                "transaction_id": tx.id,
+                "conflicting_codes": conflicting_codes,
+            },
+        )
+        return result
+
+    # No memory hit — fall through to the model categorizer.
     if categorizer is None:
         categorizer = get_default_categorizer()
 
