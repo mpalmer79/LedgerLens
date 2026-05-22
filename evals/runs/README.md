@@ -1,5 +1,7 @@
 # Eval Runs
 
+> Each new categorizer produces its own run file. The accuracy trajectory across runs is the project's measured improvement signal.
+
 One JSON file per run, named `YYYY-MM-DD-<categorizer-name>.json`. Each file is a complete `RunResult` — metadata, metrics, full per-transaction predictions.
 
 Run files are committed to the repo to provide a versioned history of categorization accuracy. `git log evals/runs/` is the accuracy trajectory.

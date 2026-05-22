@@ -2,6 +2,10 @@ import argparse
 from collections.abc import Callable
 
 from ledgerlens.categorizers.base import Categorizer
+from ledgerlens.categorizers.claude_haiku import (
+    ClaudeHaikuCategorizer,
+    build_client_from_settings,
+)
 from ledgerlens.categorizers.stub import StubCategorizer
 from ledgerlens.evals.harness import run_eval
 from ledgerlens.evals.loader import load_dataset
@@ -9,6 +13,7 @@ from ledgerlens.evals.writer import write_run
 
 CATEGORIZERS: dict[str, Callable[[], Categorizer]] = {
     "stub": StubCategorizer,
+    "claude-haiku-v1": lambda: ClaudeHaikuCategorizer(client=build_client_from_settings()),
 }
 
 
