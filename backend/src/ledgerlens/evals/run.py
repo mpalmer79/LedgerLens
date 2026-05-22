@@ -1,5 +1,6 @@
 import argparse
 from collections.abc import Callable
+from pathlib import Path
 
 from ledgerlens.categorizers.base import Categorizer
 from ledgerlens.categorizers.claude_haiku import (
@@ -26,12 +27,24 @@ def main(argv: list[str] | None = None) -> int:
         choices=sorted(CATEGORIZERS),
         help="Categorizer to run (default: stub)",
     )
+    parser.add_argument(
+        "--datasets-root",
+        type=Path,
+        default=None,
+        help="Path to evals/datasets directory (default: ./evals/datasets relative to CWD)",
+    )
+    parser.add_argument(
+        "--runs-dir",
+        type=Path,
+        default=None,
+        help="Path to evals/runs directory (default: ./evals/runs relative to CWD)",
+    )
     args = parser.parse_args(argv)
 
-    dataset = load_dataset(args.dataset)
+    dataset = load_dataset(args.dataset, datasets_root=args.datasets_root)
     categorizer = CATEGORIZERS[args.categorizer]()
     result = run_eval(dataset, categorizer)
-    path = write_run(result)
+    path = write_run(result, runs_dir=args.runs_dir)
 
     m = result.metrics
     print(f"Dataset:           {args.dataset}")

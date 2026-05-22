@@ -6,7 +6,14 @@ from ledgerlens.evals.harness import RunResult
 
 
 def _default_runs_dir() -> Path:
-    return Path(__file__).resolve().parents[4] / "evals" / "runs"
+    """Default runs directory, resolved from the current working directory.
+
+    Returns `<cwd>/evals/runs`. Same constraint as loader._default_datasets_root:
+    callers running from outside the repo root must pass `runs_dir` explicitly.
+    Resolving from `__file__` breaks once the package is installed in
+    site-packages.
+    """
+    return Path.cwd() / "evals" / "runs"
 
 
 def _today_utc() -> str:

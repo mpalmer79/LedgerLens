@@ -6,12 +6,30 @@ from pydantic import ValidationError
 
 from ledgerlens.evals.loader import load_dataset
 
+# Path to the v0 dataset, computed from this test file's location so the test
+# works regardless of pytest's CWD and survives the package being installed
+# into site-packages.
+REPO_DATASETS_ROOT = Path(__file__).resolve().parents[3] / "evals" / "datasets"
+
 
 def test_load_v0_dataset_succeeds() -> None:
-    dataset = load_dataset("v0")
+    dataset = load_dataset("v0", datasets_root=REPO_DATASETS_ROOT)
     assert dataset.version == "v0"
     assert set(dataset.businesses) == {"coffee-shop", "design-agency", "auto-repair"}
     assert dataset.total_transactions == 302
+
+
+def test_load_dataset_uses_explicit_datasets_root(tmp_path: Path) -> None:
+    """Demonstrates the fix: loader resolves from the passed root, not from
+    the package install location."""
+    root = tmp_path / "datasets"
+    v0 = root / "v0"
+    v0.mkdir(parents=True)
+    (v0 / "index.json").write_text(json.dumps({"version": "v0", "businesses": []}))
+
+    dataset = load_dataset("v0", datasets_root=root)
+    assert dataset.version == "v0"
+    assert dataset.businesses == {}
 
 
 def test_load_missing_version_raises_filenotfound(tmp_path: Path) -> None:
