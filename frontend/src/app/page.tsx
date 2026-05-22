@@ -9,7 +9,7 @@ import {
 import { CheckApiButton } from "@/components/CheckApiButton";
 import { TransactionCarousel } from "@/components/TransactionCarousel";
 import { Logomark } from "@/components/ui/Logomark";
-import { loadLatestEvalSummary } from "@/lib/evals";
+import { loadLatestEvalRun, loadLatestEvalSummary } from "@/lib/evals";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "unset";
 const REPO_URL = "https://github.com/mpalmer79/LedgerLens";
@@ -27,6 +27,7 @@ function formatAccuracy(value: number): string {
 
 export default function Page() {
   const evalSummary = loadLatestEvalSummary();
+  const evalRun = loadLatestEvalRun();
   const headlineAccuracy = evalSummary
     ? formatAccuracy(evalSummary.accuracy_overall)
     : formatAccuracy(STUB_BASELINE_ACCURACY);
@@ -175,11 +176,21 @@ export default function Page() {
             See the eval results
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-brand-800">
-            Synthetic dataset of 302 transactions across three small-business
-            verticals, with ~10% adversarial cases. Stub baseline establishes the
-            floor; Claude Haiku 4.5 results lift the ceiling. Per-business
-            breakdowns, reliability diagrams, and full per-transaction outputs
-            are all committed JSON artifacts in the repo.
+            {evalRun && evalRun.run_metadata.categorizer_name.includes("haiku") ? (
+              <>
+                Claude Haiku 4.5 lifts accuracy from a {formatAccuracy(STUB_BASELINE_ACCURACY)}{" "}
+                stub baseline to {formatAccuracy(evalRun.metrics.overall.accuracy)} overall, with{" "}
+                {formatAccuracy(evalRun.metrics.non_adversarial.accuracy)} on the standard slice
+                and {formatAccuracy(evalRun.metrics.adversarial.accuracy)} on adversarial cases.
+                Cost: ${evalRun.metrics.overall.cost_per_100.toFixed(2)}/100 transactions.
+              </>
+            ) : (
+              <>
+                Stub baseline of {formatAccuracy(STUB_BASELINE_ACCURACY)} established; Claude Haiku
+                run pending. Per-business breakdowns, reliability diagrams, and full per-transaction
+                outputs are all committed JSON artifacts in the repo.
+              </>
+            )}
           </p>
           <Link
             href="/evals"
