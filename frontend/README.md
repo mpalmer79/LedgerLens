@@ -1,4 +1,4 @@
-# LedgerLens — Frontend
+# LedgerLens Frontend 
 
 Next.js 14 (App Router) review UI for bookkeepers. Stack: TypeScript (strict), Tailwind CSS, ESLint, Prettier.
 
