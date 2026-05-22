@@ -24,6 +24,7 @@ An Architecture Decision Record (ADR) captures a single significant architectura
 - [ADR-0011](0011-build-time-eval-artifact-loading.md) — Build-time eval artifact loading
 - [ADR-0012](0012-landing-page-as-portfolio-artifact.md) — Landing page as portfolio artifact
 - [ADR-0013](0013-3d-hero-animation.md) — 3D hero animation via Three.js
+- [ADR-0014](0014-two-faced-cards.md) — Two-faced transaction cards
 
 ## Planned ADRs
 
