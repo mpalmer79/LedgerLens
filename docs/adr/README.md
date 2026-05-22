@@ -19,13 +19,14 @@ An Architecture Decision Record (ADR) captures a single significant architectura
 - [ADR-0005](0005-single-model-categorizer-v0.md) — Single-model categorizer for v0
 - [ADR-0006](0006-switch-to-dockerfile-deploys.md) — Switch from Nixpacks to Dockerfile builds
 - [ADR-0007](0007-build-time-env-var-injection.md) — Inject NEXT_PUBLIC_* env vars at Docker build time
+- [ADR-0009](0009-evals-run-in-ci.md) — Run evals in CI, not in the production API
 
 ## Planned ADRs
 
 Renumbered from [ARCHITECTURE.md §13](../ARCHITECTURE.md) to reflect actual project trajectory.
 
 - **ADR-0008** — pgvector over a dedicated vector store (alongside the data model).
-- **ADR-0009** — Separate `corrections` table over an updates column on `transactions`.
-- **ADR-0010** — Synchronous categorization endpoint over queue-based processing for v0.
-- **ADR-0011** — Choice of Anthropic API over a multi-provider abstraction.
-- **ADR-0012** — Haiku-primary, Sonnet-fallback model selection (the fallback chain ADR-0005 defers).
+- **ADR-0010** — Separate `corrections` table over an updates column on `transactions`.
+- **ADR-0011** — Synchronous categorization endpoint over queue-based processing for v0.
+- **ADR-0012** — Choice of Anthropic API over a multi-provider abstraction.
+- **ADR-0013** — Haiku-primary, Sonnet-fallback model selection (the fallback chain ADR-0005 defers).
