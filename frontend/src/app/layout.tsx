@@ -8,6 +8,7 @@ const newsreader = Newsreader({
   subsets: ['latin'],
   variable: '--font-display',
   display: 'swap',
+  weight: ['400', '500', '600'],
   // Next.js doesn't ship built-in font-metrics overrides for Newsreader yet.
   // Disabling the override silences a noisy build warning; CLS impact is
   // negligible because the page H1 uses display: swap and the font is small.
