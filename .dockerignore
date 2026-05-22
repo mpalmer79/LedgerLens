@@ -1,0 +1,39 @@
+# Used by the frontend Dockerfile when the build context is the repo root.
+# Excludes everything the frontend doesn't need so the build context stays
+# small. The backend service has its own build context (backend/) and is
+# unaffected.
+
+# Backend: not part of the frontend image.
+backend/
+
+# Docs and design: not consumed by the frontend build.
+docs/
+design/
+
+# Local-dev junk.
+**/node_modules/
+**/.next/
+**/__pycache__/
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+**/.venv/
+**/*.egg-info/
+**/build/
+**/dist/
+
+# VCS and editor metadata.
+.git/
+.github/
+.gitignore
+.gitattributes
+.vscode/
+.idea/
+
+# Misc top-level files not needed in the build.
+LICENSE
+template.md
+
+# Defensive: explicitly include evals/ even if a future broader rule lands.
+!evals/
+!evals/**
