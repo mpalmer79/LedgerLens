@@ -1,12 +1,13 @@
 # LedgerLens frontend.
-# Single-stage Node 20 image. Standard Next.js build → start.
+# Single-stage Node 20 image. Build context = repo root (set in railway.toml
+# at the repo root). All COPY directives are relative to the repo root.
 
 FROM node:20-slim AS runtime
 
 WORKDIR /app
 
 # Copy lockfile and package.json first for layer caching.
-COPY package.json package-lock.json /app/
+COPY frontend/package.json frontend/package-lock.json ./
 
 RUN npm ci
 
@@ -19,8 +20,16 @@ RUN npm ci
 ARG NEXT_PUBLIC_API_BASE_URL
 ENV NEXT_PUBLIC_API_BASE_URL=${NEXT_PUBLIC_API_BASE_URL}
 
-# Now copy the rest and build.
-COPY . /app
+# Copy the frontend source into /app.
+COPY frontend/ ./
+
+# Copy eval artifacts into a sibling /evals/ directory. The build-time eval
+# loader (frontend/src/lib/evals.ts) walks up from process.cwd() = /app
+# looking for an "evals" directory at any ancestor, so /evals/ resolves on
+# the first iteration. See ADR-0011 for the build-time-loading decision.
+COPY evals/runs /evals/runs
+COPY evals/datasets /evals/datasets
+
 RUN npm run build
 
 ENV NODE_ENV=production

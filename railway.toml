@@ -1,0 +1,17 @@
+# Frontend service configuration when Railway uses the repo root as the build
+# context. This file is read when the frontend service's "Root Directory" in
+# the Railway dashboard is set to `/` (empty), which is required for the
+# Dockerfile to COPY evals/ into the image. See ADR-0011.
+#
+# The backend service is unaffected: it keeps Root Directory = backend/ and
+# reads backend/railway.toml.
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "frontend/Dockerfile"
+
+[deploy]
+healthcheckPath = "/"
+healthcheckTimeout = 100
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3
