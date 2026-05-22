@@ -11,6 +11,7 @@ import {
   approveReview,
   categorize,
   correctReview,
+  getMemoryMatches,
   getTransaction,
   listAuditEvents,
   listCategorizationResults,
@@ -21,6 +22,7 @@ import type {
   AuditEvent,
   CategorizationResult,
   Category,
+  MemoryMatch,
   Transaction,
 } from "@/lib/api/types";
 import { formatAmount, formatConfidence, formatTimestamp } from "@/lib/format";
@@ -30,6 +32,7 @@ type State = {
   results: CategorizationResult[];
   categories: Category[];
   events: AuditEvent[];
+  memoryMatch: MemoryMatch | null;
   loading: boolean;
   error: string | null;
 };
@@ -39,6 +42,7 @@ const INITIAL: State = {
   results: [],
   categories: [],
   events: [],
+  memoryMatch: null,
   loading: true,
   error: null,
 };
@@ -57,13 +61,22 @@ export default function TransactionDetailPage() {
   async function load() {
     setState((s) => ({ ...s, loading: true, error: null }));
     try {
-      const [tx, results, categories, events] = await Promise.all([
+      const [tx, results, categories, events, memoryMatch] = await Promise.all([
         getTransaction(txId),
         listCategorizationResults(txId).catch(() => []),
         listCategories().catch(() => []),
         listAuditEvents({ entity_id: txId, limit: 50 }).catch(() => []),
+        getMemoryMatches(txId).catch(() => null as MemoryMatch | null),
       ]);
-      setState({ tx, results, categories, events, loading: false, error: null });
+      setState({
+        tx,
+        results,
+        categories,
+        events,
+        memoryMatch,
+        loading: false,
+        error: null,
+      });
     } catch (err) {
       setState({
         ...INITIAL,
@@ -88,7 +101,11 @@ export default function TransactionDetailPage() {
     setActionMsg(null);
     try {
       await fn();
-      setActionMsg(`${name} complete.`);
+      setActionMsg(
+        name === "Correct"
+          ? "Correction saved and will be reused for similar future transactions."
+          : `${name} complete.`,
+      );
       await load();
     } catch (err) {
       setActionError(
@@ -285,6 +302,67 @@ export default function TransactionDetailPage() {
               <p className="mt-2 text-[13px] text-brand-700">{actionMsg}</p>
             )}
           </section>
+
+          {state.memoryMatch && (
+            <section className="mt-6 rounded-lg border border-brand-200 bg-brand-100 p-4">
+              <p className="field-label">Correction memory</p>
+              {state.memoryMatch.verdict === "apply" && state.memoryMatch.record ? (
+                <div className="mt-2 space-y-1 text-[13px]">
+                  <p className="text-text-primary">
+                    <span className="inline-block rounded bg-brand-200 px-1.5 py-0.5 text-[11px] font-medium text-brand-800">
+                      Apply
+                    </span>{" "}
+                    Matched prior human correction.
+                  </p>
+                  <p className="text-text-secondary">
+                    Merchant key{" "}
+                    <span className="mono text-text-primary">{state.memoryMatch.merchant_key}</span>
+                    {" → "}
+                    <span className="mono text-text-primary">
+                      [{state.memoryMatch.record.selected_category_code}]
+                    </span>
+                  </p>
+                  <p className="text-[12px] text-text-subtle">
+                    Source review:{" "}
+                    <Link
+                      href={`/transactions/${state.memoryMatch.record.source_transaction_id}`}
+                      className="mono hover:text-brand-700"
+                    >
+                      {state.memoryMatch.record.source_transaction_id}
+                    </Link>{" "}
+                    · matches so far:{" "}
+                    <span className="mono">{state.memoryMatch.record.match_count}</span>
+                  </p>
+                </div>
+              ) : state.memoryMatch.verdict === "conflict" ? (
+                <div className="mt-2 space-y-1 text-[13px]">
+                  <p className="text-amber-900">
+                    <span className="inline-block rounded bg-amber-100 px-1.5 py-0.5 text-[11px] font-medium text-amber-900">
+                      Conflict
+                    </span>{" "}
+                    Multiple prior corrections disagree on the category. Future similar
+                    transactions are routed to the review queue.
+                  </p>
+                  <p className="text-text-secondary">{state.memoryMatch.reason}</p>
+                </div>
+              ) : (
+                <div className="mt-2 space-y-1 text-[13px]">
+                  <p className="text-text-secondary">
+                    <span className="inline-block rounded bg-surface-sunken px-1.5 py-0.5 text-[11px] font-medium text-text-subtle">
+                      No match
+                    </span>{" "}
+                    {state.memoryMatch.reason}
+                  </p>
+                  <p className="text-[12px] text-text-subtle">
+                    Checked merchant key{" "}
+                    <span className="mono">{state.memoryMatch.merchant_key || "—"}</span> and
+                    description key{" "}
+                    <span className="mono">{state.memoryMatch.description_key || "—"}</span>.
+                  </p>
+                </div>
+              )}
+            </section>
+          )}
 
           <section className="mt-6 rounded-lg border border-brand-200 bg-brand-100 p-4">
             <p className="field-label">All categorization attempts ({state.results.length})</p>

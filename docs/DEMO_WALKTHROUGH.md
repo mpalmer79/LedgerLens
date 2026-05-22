@@ -59,15 +59,28 @@ Click **Review queue** in the nav, or visit `/review`.
 
 Each pending item shows the predicted category, confidence, explanation, and a correction dropdown populated from the live `/categories` endpoint. Low-confidence cards (< 0.70) get an amber highlight.
 
-### 5. Correct one transaction
+### 5. Correct one transaction (and watch the system learn from it)
 
 Pick the Claude API row (or any other mid-confidence item). In the **Correct to category** dropdown, choose `[6080] Professional Services` (or whatever you think is right). Add a reviewer note. Click **Correct**.
 
-The item drops out of the queue. Visit `/transactions/<the-id>`; the latest categorization now has status `Corrected`, and the audit trail shows the `correct` event with `from` and `to` codes.
+The item drops out of the queue. Visit `/transactions/<the-id>`; the latest categorization now has status `Corrected`, and the audit trail shows the `correct` event with `from` and `to` codes — plus a second event `correction_memory.recorded` showing the merchant key the system extracted.
+
+Click **Learned corrections** in the nav (or visit `/corrections`). The new row is there: merchant key, the category you picked, match count of zero (it hasn't been used yet), source transaction link, and a **Deactivate** button.
+
+Now create a second transaction with the same merchant — for example, on `/transactions/import`, paste:
+
+```csv
+date,description,amount
+2026-03-30,CLAUDE API USAGE,-22.40
+```
+
+Click **Import CSV**, then on `/transactions` select the new row and click **Categorize 1 selected**. The result returns instantly with status `Auto-approved`, model `correction_memory`, confidence `1.000`, cost `$0.00`, and an explanation that begins with *"Matched prior human correction for merchant…"*. The model was not called. On `/corrections`, the row's **Matches** counter is now `1`. The transaction detail page has a **Memory match** panel showing `verdict: apply` and a link back to the source review decision.
+
+This is correction memory. Deterministic exact-key lookup over prior human decisions. It is not model training, it is not fine-tuning — corrections are stored as rules, and the rules are auditable and individually deactivatable.
 
 ### 6. Approve one transaction
 
-Back on `/review`, pick the QuickBooks row. Click **Approve prediction**. Confirm it leaves the queue.
+Back on `/review`, pick the QuickBooks row. Click **Approve prediction**. Confirm it leaves the queue. (Approvals do **not** create memory rows — only explicit corrections do, so the system never claims to have learned something it didn't.)
 
 ### 7. Export the ledger
 
@@ -100,11 +113,14 @@ The dashboard shows real eval metrics from the committed JSON artifact: overall 
 - Confidence routing isn't fake. Mid-confidence predictions go to the review queue. Predictions outside the active chart of accounts are auto-routed to review even at high confidence.
 - The ledger reflects review state. A corrected category replaces the model's pick in the export.
 - The audit trail is real. Every state change writes a row visible on the transaction detail page.
+- Correction memory is real lookup, not fake learning. Step 5 above shows the second transaction categorized at zero model cost from a stored rule, not from the model. Deactivate the rule on `/corrections` and the same transaction would have gone back through the model.
 - The eval page isn't oversold. It explicitly names the accuracy gap and connects it to why the workflow exists.
 
 ## Known limitations
 
 - Single-tenant. No auth, no per-user accounts of categories. Demo prototype.
-- The correction memory loop isn't built yet — the next session will use prior corrections to bias new predictions. Currently every transaction is categorized from scratch.
+- Correction memory is exact-key only — no semantic / fuzzy matching. "Adobe Creative Cloud" and "Adobe CC" are different keys today. Embedding-based retrieval is intentionally deferred until exact matching has proven its hit rate.
+- Generic merchants (`ACH`, `POS`, `TRANSFER`, `PAYMENT`, etc.) are deliberately ignored when building memory keys — a correction on an "ACH DEBIT" row will not create a reusable rule, because the key is not specific enough to be safe.
+- Conflicting corrections route to review. If two reviewers corrected the same merchant to two different categories, the next matching transaction goes to `/review` instead of auto-applying either rule. This is intentional.
 - Eval-harness metric upgrades (ECE, slice-correct per-category, baselines beyond stub) are deferred. See `docs/IMPLEMENTATION_GAP_ANALYSIS.md`.
 - No rate limiting on the backend. Demo only.

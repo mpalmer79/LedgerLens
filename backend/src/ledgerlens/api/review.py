@@ -58,9 +58,7 @@ def list_queue(
     return ReviewQueueOut(total=len(items), items=items)
 
 
-def _latest_or_404(
-    db: Session, tx_id: str
-) -> tuple[Transaction, CategorizationResult]:
+def _latest_or_404(db: Session, tx_id: str) -> tuple[Transaction, CategorizationResult]:
     tx = TransactionRepo(db).get(tx_id)
     if not tx:
         raise NotFound("transaction", tx_id)
@@ -138,6 +136,27 @@ def correct(
             "to": payload.selected_category_code,
         },
     )
+
+    # Capture the correction as a reusable signal for future similar
+    # transactions. No-op when the keys are too generic; see services/
+    # correction_memory.py for the safety rules.
+    from ledgerlens.services.correction_memory import record_correction_memory
+
+    memory = record_correction_memory(tx, decision, db)
+    if memory is not None:
+        AuditRepo(db).record(
+            entity_type="correction_memory",
+            action="recorded",
+            entity_id=memory.id,
+            details={
+                "transaction_id": tx.id,
+                "review_decision_id": decision.id,
+                "merchant_key": memory.merchant_key,
+                "description_key": memory.description_key,
+                "selected_category_code": memory.selected_category_code,
+            },
+        )
+
     db.commit()
     db.refresh(decision)
     return ReviewDecisionOut.model_validate(decision)

@@ -4,8 +4,21 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { AppShell } from "@/components/app/AppShell";
-import { ApiError, getLedger, getReviewQueue, listAuditEvents, listTransactions } from "@/lib/api/client";
-import type { AuditEvent, Ledger, ReviewQueue, TransactionList } from "@/lib/api/types";
+import {
+  ApiError,
+  getLedger,
+  getReviewQueue,
+  listAuditEvents,
+  listCorrections,
+  listTransactions,
+} from "@/lib/api/client";
+import type {
+  AuditEvent,
+  CorrectionMemoryList,
+  Ledger,
+  ReviewQueue,
+  TransactionList,
+} from "@/lib/api/types";
 import { formatAmount, formatDate, formatTimestamp } from "@/lib/format";
 
 type State = {
@@ -13,6 +26,7 @@ type State = {
   queue: ReviewQueue | null;
   ledger: Ledger | null;
   events: AuditEvent[] | null;
+  corrections: CorrectionMemoryList | null;
   error: string | null;
   loading: boolean;
 };
@@ -22,6 +36,7 @@ const INITIAL: State = {
   queue: null,
   ledger: null,
   events: null,
+  corrections: null,
   error: null,
   loading: true,
 };
@@ -33,13 +48,23 @@ export default function DashboardPage() {
     let cancelled = false;
     (async () => {
       try {
-        const [transactions, queue, ledger, events] = await Promise.all([
+        const [transactions, queue, ledger, events, corrections] = await Promise.all([
           listTransactions({ limit: 5 }),
           getReviewQueue({ limit: 5 }),
           getLedger(),
           listAuditEvents({ limit: 8 }),
+          listCorrections({ active: true, limit: 1 }),
         ]);
-        if (!cancelled) setState({ transactions, queue, ledger, events, error: null, loading: false });
+        if (!cancelled)
+          setState({
+            transactions,
+            queue,
+            ledger,
+            events,
+            corrections,
+            error: null,
+            loading: false,
+          });
       } catch (err) {
         if (!cancelled) {
           setState({
@@ -101,7 +126,11 @@ export default function DashboardPage() {
         <Tile label="Corrected" value={counts.corrected} loading={state.loading} />
         <Tile label="Needs review" value={reviewing} loading={state.loading} tone="amber" />
         <Tile label="Pending" value={counts.pending} loading={state.loading} />
-        <Tile label="Uncategorizable" value={counts.uncategorizable} loading={state.loading} />
+        <Tile
+          label="Learned corrections"
+          value={state.corrections?.total ?? 0}
+          loading={state.loading}
+        />
       </section>
 
       <section className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
