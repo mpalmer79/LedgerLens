@@ -21,6 +21,7 @@ An Architecture Decision Record (ADR) captures a single significant architectura
 - [ADR-0007](0007-build-time-env-var-injection.md) — Inject NEXT_PUBLIC_* env vars at Docker build time
 - [ADR-0009](0009-evals-run-in-ci.md) — Run evals in CI, not in the production API
 - [ADR-0010](0010-design-system-architecture.md) — Design system architecture
+- [ADR-0012](0012-landing-page-as-portfolio-artifact.md) — Landing page as portfolio artifact
 
 ## Planned ADRs
 
