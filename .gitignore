@@ -97,8 +97,7 @@ desktop.ini
 *.sqlite
 *.sqlite3
 
-evals/runs/*
-!evals/runs/.gitkeep
+# Eval runs are committed to the repo per ADR-0004 (versioned accuracy history).
 
 data/synthetic/generated/
 prompts/_scratch/

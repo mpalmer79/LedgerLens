@@ -1,0 +1,3843 @@
+{
+  "run_metadata": {
+    "dataset_version": "v0",
+    "categorizer_name": "stub-v1",
+    "model": null,
+    "timestamp_utc": "2026-05-21T21:08:55+00:00",
+    "git_sha": "b54171ee4208921f627bb6219c4650cc8738b155"
+  },
+  "metrics": {
+    "overall": {
+      "accuracy": 0.09271523178807947,
+      "per_category": {
+        "1020": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 2.0
+        },
+        "1030": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 1.0
+        },
+        "1050": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 13.0
+        },
+        "1060": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 3.0
+        },
+        "1070": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "1080": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 2.0
+        },
+        "1200": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 4.0
+        },
+        "1510": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 1.0
+        },
+        "3030": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 8.0
+        },
+        "4010": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 40.0
+        },
+        "4020": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "4030": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 6.0
+        },
+        "4040": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "5010": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "5020": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "5040": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 4.0
+        },
+        "6010": {
+          "precision": 0.09271523178807947,
+          "recall": 1.0,
+          "support": 28.0
+        },
+        "6020": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 12.0
+        },
+        "6030": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 4.0
+        },
+        "6040": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 28.0
+        },
+        "6050": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 1.0
+        },
+        "6060": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "6070": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 7.0
+        },
+        "6080": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 3.0
+        },
+        "6100": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 7.0
+        },
+        "6110": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 17.0
+        },
+        "6120": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 14.0
+        },
+        "6130": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 9.0
+        },
+        "6140": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 9.0
+        },
+        "6150": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 1.0
+        },
+        "6160": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "6170": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 12.0
+        },
+        "6180": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 8.0
+        },
+        "6190": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 4.0
+        },
+        "6200": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "6210": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 9.0
+        },
+        "6220": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 1.0
+        },
+        "6230": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 2.0
+        },
+        "6240": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 2.0
+        }
+      },
+      "reliability_diagram": [
+        {
+          "bucket": "0.0-0.1",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.1-0.2",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.2-0.3",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.3-0.4",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.4-0.5",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.5-0.6",
+          "count": 302,
+          "predicted_confidence_mean": 0.5,
+          "actual_accuracy": 0.09271523178807947
+        },
+        {
+          "bucket": "0.6-0.7",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.7-0.8",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.8-0.9",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.9-1.0",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        }
+      ],
+      "latency_stats": {
+        "p50_ms": 0.0,
+        "p95_ms": 0.0,
+        "mean_ms": 0.0
+      },
+      "total_cost": 0.0,
+      "cost_per_100": 0.0,
+      "transaction_count": 302
+    },
+    "non_adversarial": {
+      "accuracy": 0.1033210332103321,
+      "per_category": {
+        "1020": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 2.0
+        },
+        "1030": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 1.0
+        },
+        "1050": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 13.0
+        },
+        "1060": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 3.0
+        },
+        "1070": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "1080": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 2.0
+        },
+        "1200": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 4.0
+        },
+        "1510": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 1.0
+        },
+        "3030": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 8.0
+        },
+        "4010": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 40.0
+        },
+        "4020": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "4030": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 6.0
+        },
+        "4040": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "5010": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "5020": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "5040": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 4.0
+        },
+        "6010": {
+          "precision": 0.1033210332103321,
+          "recall": 1.0,
+          "support": 28.0
+        },
+        "6020": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 12.0
+        },
+        "6030": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 4.0
+        },
+        "6040": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 28.0
+        },
+        "6050": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 1.0
+        },
+        "6060": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "6070": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 7.0
+        },
+        "6080": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 3.0
+        },
+        "6100": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 7.0
+        },
+        "6110": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 17.0
+        },
+        "6120": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 14.0
+        },
+        "6130": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 9.0
+        },
+        "6140": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 9.0
+        },
+        "6150": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 1.0
+        },
+        "6160": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "6170": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 12.0
+        },
+        "6180": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 8.0
+        },
+        "6190": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 4.0
+        },
+        "6200": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "6210": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 9.0
+        },
+        "6220": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 1.0
+        },
+        "6230": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 2.0
+        },
+        "6240": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 2.0
+        }
+      },
+      "reliability_diagram": [
+        {
+          "bucket": "0.0-0.1",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.1-0.2",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.2-0.3",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.3-0.4",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.4-0.5",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.5-0.6",
+          "count": 271,
+          "predicted_confidence_mean": 0.5,
+          "actual_accuracy": 0.1033210332103321
+        },
+        {
+          "bucket": "0.6-0.7",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.7-0.8",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.8-0.9",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.9-1.0",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        }
+      ],
+      "latency_stats": {
+        "p50_ms": 0.0,
+        "p95_ms": 0.0,
+        "mean_ms": 0.0
+      },
+      "total_cost": 0.0,
+      "cost_per_100": 0.0,
+      "transaction_count": 271
+    },
+    "adversarial": {
+      "accuracy": 0.0,
+      "per_category": {
+        "1020": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 2.0
+        },
+        "1030": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 1.0
+        },
+        "1050": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 13.0
+        },
+        "1060": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 3.0
+        },
+        "1070": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "1080": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 2.0
+        },
+        "1200": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 4.0
+        },
+        "1510": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 1.0
+        },
+        "3030": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 8.0
+        },
+        "4010": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 40.0
+        },
+        "4020": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "4030": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 6.0
+        },
+        "4040": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "5010": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "5020": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "5040": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 4.0
+        },
+        "6010": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 28.0
+        },
+        "6020": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 12.0
+        },
+        "6030": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 4.0
+        },
+        "6040": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 28.0
+        },
+        "6050": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 1.0
+        },
+        "6060": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "6070": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 7.0
+        },
+        "6080": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 3.0
+        },
+        "6100": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 7.0
+        },
+        "6110": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 17.0
+        },
+        "6120": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 14.0
+        },
+        "6130": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 9.0
+        },
+        "6140": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 9.0
+        },
+        "6150": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 1.0
+        },
+        "6160": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "6170": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 12.0
+        },
+        "6180": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 8.0
+        },
+        "6190": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 4.0
+        },
+        "6200": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 5.0
+        },
+        "6210": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 9.0
+        },
+        "6220": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 1.0
+        },
+        "6230": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 2.0
+        },
+        "6240": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "support": 2.0
+        }
+      },
+      "reliability_diagram": [
+        {
+          "bucket": "0.0-0.1",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.1-0.2",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.2-0.3",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.3-0.4",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.4-0.5",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.5-0.6",
+          "count": 31,
+          "predicted_confidence_mean": 0.5,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.6-0.7",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.7-0.8",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.8-0.9",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.9-1.0",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        }
+      ],
+      "latency_stats": {
+        "p50_ms": 0.0,
+        "p95_ms": 0.0,
+        "mean_ms": 0.0
+      },
+      "total_cost": 0.0,
+      "cost_per_100": 0.0,
+      "transaction_count": 31
+    }
+  },
+  "predictions": [
+    {
+      "transaction_id": "auto-repair-tx-001",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-002",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-003",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-004",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-005",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-006",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-007",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-008",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-009",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-010",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-011",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-012",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-013",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-014",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-015",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-016",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-017",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-018",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-019",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-020",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-021",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-022",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-023",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-024",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-025",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-026",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-027",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-028",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-029",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-030",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-031",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-032",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-033",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-034",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-035",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-036",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-037",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-038",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-039",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-040",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-041",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-042",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-043",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-044",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-045",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-046",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-047",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-048",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-049",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-050",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-051",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-052",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-053",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-054",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-055",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-056",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-057",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-058",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-059",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-060",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-061",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-062",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-063",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-064",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-065",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-066",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-067",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-068",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-069",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-070",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-071",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-072",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-073",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-074",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-075",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-076",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-077",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-078",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-079",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-080",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-081",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-082",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-083",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-084",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-085",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-086",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-087",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-088",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-089",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-090",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-091",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-092",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-093",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-094",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-095",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-096",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-097",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-098",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-099",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-100",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-001",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-002",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-003",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-004",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-005",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-006",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-007",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-008",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-009",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-010",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-011",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-012",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-013",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-014",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-015",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-016",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-017",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-018",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-019",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-020",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-021",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-022",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-023",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-024",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-025",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-026",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-027",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-028",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-029",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-030",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-031",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-032",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-033",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-034",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-035",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-036",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-037",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-038",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-039",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-040",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-041",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-042",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-043",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-044",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-045",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-046",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-047",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-048",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-049",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-050",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-051",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-052",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-053",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-054",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-055",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-056",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-057",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-058",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-059",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-060",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-061",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-062",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-063",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-064",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-065",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-066",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-067",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-068",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-069",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-070",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-071",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-072",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-073",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-074",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-075",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-076",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-077",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-078",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-079",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-080",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-081",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-082",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-083",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-084",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-085",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-086",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-087",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-088",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-089",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-090",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-091",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-092",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-093",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-094",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-095",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-096",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-097",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-098",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-099",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-100",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-101",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-102",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-001",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-002",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-003",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-004",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-005",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-006",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-007",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-008",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-009",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-010",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-011",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-012",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-013",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-014",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-015",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-016",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-017",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-018",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-019",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-020",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-021",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-022",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-023",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-024",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-025",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-026",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-027",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-028",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-029",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-030",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-031",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-032",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-033",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-034",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-035",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-036",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-037",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-038",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-039",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-040",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-041",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-042",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-043",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-044",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-045",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-046",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-047",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-048",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-049",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-050",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-051",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-052",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-053",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-054",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-055",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-056",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-057",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-058",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-059",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-060",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-061",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-062",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-063",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-064",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-065",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-066",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-067",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-068",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-069",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-070",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-071",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-072",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-073",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-074",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-075",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-076",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-077",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-078",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-079",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-080",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-081",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-082",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-083",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-084",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-085",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-086",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-087",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-088",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-089",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-090",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-091",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-092",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-093",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-094",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-095",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-096",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-097",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-098",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-099",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    },
+    {
+      "transaction_id": "design-agency-tx-100",
+      "predicted_category_code": "6010",
+      "confidence": 0.5,
+      "reasoning": "Stub categorizer; returns first expense account regardless of transaction content.",
+      "alternative_category_code": "6020",
+      "cost_usd": 0.0,
+      "latency_ms": 0.0,
+      "model": null
+    }
+  ]
+}

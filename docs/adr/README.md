@@ -15,13 +15,14 @@ An Architecture Decision Record (ADR) captures a single significant architectura
 - [ADR-0001](0001-python-version.md) — Python version requirement
 - [ADR-0002](0002-deployment-topology.md) — Deployment topology
 - [ADR-0003](0003-synthetic-eval-data.md) — Synthetic eval data over real anonymized data
+- [ADR-0004](0004-eval-harness-architecture.md) — Eval harness architecture
 
 ## Planned ADRs
 
 Renumbered from [ARCHITECTURE.md §13](../ARCHITECTURE.md) to reflect actual project trajectory.
 
-- **ADR-0004** — pgvector over a dedicated vector store (alongside the data model).
-- **ADR-0005** — Separate `corrections` table over an updates column on `transactions`.
-- **ADR-0006** — Synchronous categorization endpoint over queue-based processing for v0.
-- **ADR-0007** — Choice of Anthropic API over a multi-provider abstraction.
-- **ADR-0008** — Haiku-primary, Sonnet-fallback model selection over single-model.
+- **ADR-0005** — pgvector over a dedicated vector store (alongside the data model).
+- **ADR-0006** — Separate `corrections` table over an updates column on `transactions`.
+- **ADR-0007** — Synchronous categorization endpoint over queue-based processing for v0.
+- **ADR-0008** — Choice of Anthropic API over a multi-provider abstraction.
+- **ADR-0009** — Haiku-primary, Sonnet-fallback model selection over single-model.
