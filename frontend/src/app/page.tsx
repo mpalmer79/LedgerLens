@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { Logomark } from "@/components/ui/Logomark";
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "unset";
 
 export default function Page() {
@@ -21,25 +23,26 @@ export default function Page() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center text-center">
-      <h1 className="text-4xl font-semibold tracking-tight">LedgerLens</h1>
-      <p className="mt-4 text-lg text-gray-600">
+    <main className="bg-surface-page text-text-primary min-h-screen flex flex-col items-center justify-center text-center px-6">
+      <Logomark size={32} className="text-brand-600 mb-4" />
+      <h1 className="font-display text-5xl font-medium tracking-tight">LedgerLens</h1>
+      <p className="mt-4 text-lg text-text-secondary">
         Bank transaction categorization for bookkeepers.
       </p>
-      <p className="mt-6 text-xs text-gray-400">API base URL: {API_BASE_URL}</p>
+      <p className="mt-6 text-xs text-text-subtle mono">API base URL: {API_BASE_URL}</p>
       <button
         type="button"
         onClick={checkApi}
-        className="mt-4 rounded border border-gray-300 px-4 py-2 text-sm hover:bg-gray-50"
+        className="mt-4 rounded-md bg-brand-600 px-4 py-2 text-sm text-white hover:bg-brand-500 transition-colors duration-short ease-out-expo"
       >
         Check API
       </button>
       {response && (
-        <pre className="mt-4 rounded bg-gray-100 p-3 text-left text-xs">{response}</pre>
+        <pre className="mono mt-4 rounded-md bg-surface-sunken p-3 text-left text-xs">
+          {response}
+        </pre>
       )}
-      {error && (
-        <p className="mt-4 text-sm text-red-600">Error: {error}</p>
-      )}
+      {error && <p className="mt-4 text-sm text-severity-critical">Error: {error}</p>}
     </main>
   );
 }

@@ -1,0 +1,74 @@
+/*
+ * LedgerLens design tokens — canonical source.
+ *
+ * This file is the single source of truth for design tokens. The values are
+ * mirrored into frontend/src/app/globals.css so Tailwind can read them via
+ * the var(--token) bridge. When changing a value, update both files.
+ *
+ * See ADR-0010 (Design system architecture) for the rationale on the
+ * two-location pattern.
+ */
+
+:root {
+  /* ───── Surfaces (light theme) ───── */
+  --surface-page:           #fafaf7;  /* page background — warm off-white, not pure white */
+  --surface-panel:          #ffffff;  /* card / panel surfaces */
+  --surface-sunken:         #f5f5f0;  /* inputs, code blocks, low-emphasis fills */
+  --surface-border:         #e5e4dc;  /* hairline borders */
+  --surface-border-strong:  #d4d3c7;  /* emphasized borders, divider beneath header */
+
+  /* ───── Text ───── */
+  --text-primary:    #1a1f1a;  /* body, headings */
+  --text-secondary:  #4a534a;  /* supporting copy */
+  --text-subtle:     #6b756b;  /* metadata, labels */
+  --text-disabled:   #a5aca5;
+
+  /* ───── Brand — forest green ───── */
+  --brand-50:   #f0f7f1;
+  --brand-100:  #dceadd;
+  --brand-200:  #b8d4ba;
+  --brand-300:  #8fb892;
+  --brand-400:  #5e9462;
+  --brand-500:  #3d7841;
+  --brand-600:  #2e5f32;  /* primary CTA — WCAG AA on both white and surface-page */
+  --brand-700:  #244c27;
+  --brand-800:  #1c3b1f;
+  --brand-900:  #142a16;
+
+  /* ───── Accent — warm amber (used sparingly) ───── */
+  --accent-400: #d4a04a;
+  --accent-500: #b8862e;  /* confidence indicators, routing chips */
+  --accent-600: #966c1f;
+
+  /* ───── Severity ramp (light-theme adapted) ───── */
+  --severity-low:       #2e5f32;  /* aliases brand-600 — "all clear" reuses brand */
+  --severity-moderate:  #b8862e;  /* aliases accent-500 */
+  --severity-high:      #c4541a;  /* burnt orange — high attention */
+  --severity-critical:  #a01e1e;  /* deep red — must act */
+
+  /* ───── Typography ───── */
+  --font-display:  'Newsreader', Georgia, serif;
+  --font-ui:       'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono:     'IBM Plex Mono', 'Menlo', Consolas, monospace;
+
+  /* ───── Radii ───── */
+  --radius-sm:    4px;
+  --radius-md:    6px;
+  --radius-lg:    10px;
+  --radius-full:  9999px;
+
+  /* ───── Shadows (restrained, light theme) ───── */
+  --shadow-sm:  0 1px 2px rgba(20, 42, 22, 0.04);
+  --shadow-md:  0 4px 12px rgba(20, 42, 22, 0.06);
+  --shadow-lg:  0 12px 32px rgba(20, 42, 22, 0.08);
+
+  /* ───── Motion ─────
+   * Slightly shorter than VeriFlow's vocabulary. Bookkeeping software
+   * should feel snappy, not contemplative.
+   */
+  --duration-micro:   100ms;
+  --duration-short:   180ms;
+  --duration-medium:  300ms;
+  --duration-long:    500ms;
+  --ease-out-expo:    cubic-bezier(0.22, 1, 0.36, 1);
+}
