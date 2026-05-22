@@ -1,6 +1,6 @@
 # ADR-0002: Deployment topology
 
-**Status:** Accepted
+**Status:** Accepted (partially superseded by [ADR-0006](0006-switch-to-dockerfile-deploys.md))
 **Date:** 2026-05-21
 **Deciders:** Michael Palmer
 
@@ -39,3 +39,7 @@ No Dockerfiles. Nixpacks auto-detects FastAPI via `Procfile` and Next.js via `pa
 - **Vercel for frontend + Railway for backend and Postgres** — rejected: splits the deployment across two platforms, contradicting the single-platform goal. The real loss is Vercel's per-PR previews; Railway PR environments are an acceptable substitute when needed.
 - **Fly.io** — rejected: more powerful (regions, machines, volumes) and more configuration surface than warranted at portfolio scope. Worth revisiting if scale or geography becomes a real concern.
 - **Render** — rejected: comparable feature set to Railway with no compelling differentiator. Railway's Postgres add-on provisioning is slightly cleaner, and the project only needs one of these.
+
+## Update — 2026-05-22
+
+The "no Dockerfile in v0" provision of this ADR is superseded by [ADR-0006](0006-switch-to-dockerfile-deploys.md). All other decisions in this ADR remain in effect.
