@@ -6,7 +6,6 @@ build-backend = "setuptools.build_meta"
 name = "ledgerlens"
 version = "0.0.0"
 description = "AI-assisted transaction categorization for bookkeepers."
-readme = "README.md"
 requires-python = ">=3.12"
 license = { text = "MIT" }
 authors = [{ name = "Michael Palmer" }]
