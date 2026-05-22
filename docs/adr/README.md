@@ -22,6 +22,7 @@ An Architecture Decision Record (ADR) captures a single significant architectura
 - [ADR-0009](0009-evals-run-in-ci.md) — Run evals in CI, not in the production API
 - [ADR-0010](0010-design-system-architecture.md) — Design system architecture
 - [ADR-0012](0012-landing-page-as-portfolio-artifact.md) — Landing page as portfolio artifact
+- [ADR-0013](0013-3d-hero-animation.md) — 3D hero animation via Three.js
 
 ## Planned ADRs
 

@@ -7,7 +7,7 @@ import {
 } from "lucide-react";
 
 import { CheckApiButton } from "@/components/CheckApiButton";
-import { LedgerMotif } from "@/components/ui/LedgerMotif";
+import { TransactionCarousel } from "@/components/TransactionCarousel";
 import { Logomark } from "@/components/ui/Logomark";
 import { loadLatestEvalSummary } from "@/lib/evals";
 
@@ -75,10 +75,9 @@ export default function Page() {
       {/* b. Hero */}
       <section className="relative overflow-hidden px-8 pt-16 pb-12 md:pt-24 md:pb-16">
         <div className="mx-auto max-w-6xl">
-          <LedgerMotif
-            className="pointer-events-none absolute top-6 right-[-2rem] w-[420px] opacity-30 text-brand-300"
-            aria-hidden="true"
-          />
+          <div className="pointer-events-none absolute top-0 right-0 h-full w-full md:w-1/2">
+            <TransactionCarousel className="h-full w-full" />
+          </div>
           <div className="relative">
             <p className="mb-4 text-[12px] font-medium uppercase tracking-[0.5px] text-brand-600">
               AI ENGINEERING · PORTFOLIO PROJECT
