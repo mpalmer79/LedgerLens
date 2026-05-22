@@ -73,8 +73,36 @@ export default function Page() {
         </div>
       </nav>
 
+      {/* a2. "What am I looking at?" intro */}
+      <section className="border-b border-surface-border bg-surface-sunken/40">
+        <div className="mx-auto flex max-w-6xl items-start gap-3 px-8 py-5">
+          <span className="mt-0.5 inline-block whitespace-nowrap rounded bg-brand-100 px-2 py-1 text-[11px] font-medium uppercase tracking-wide text-brand-800">
+            Portfolio project
+          </span>
+          <p className="max-w-3xl text-sm leading-relaxed text-text-secondary">
+            <span className="font-medium text-text-primary">What you&apos;re looking at:</span>{" "}
+            LedgerLens is a working demonstration of an AI-assisted transaction
+            categorization system. The transactions, accounts, and businesses are
+            synthetic — a hand-crafted dataset of 302 entries across three
+            verticals — but the eval pipeline, Claude Haiku 4.5 categorizer,
+            calibrated confidence scoring, and dashboard are all real. The
+            numbers on the eval page come from a JSON artifact committed to the
+            repo, readable by anyone.{" "}
+            <a
+              href="https://github.com/mpalmer79/LedgerLens"
+              className="text-brand-600 underline hover:text-brand-700"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              See the source on GitHub
+            </a>
+            .
+          </p>
+        </div>
+      </section>
+
       {/* b. Hero */}
-      <section className="relative overflow-hidden px-8 pt-16 pb-12 md:pt-24 md:pb-16">
+      <section className="relative overflow-hidden px-8 pt-12 pb-12 md:pt-20 md:pb-16">
         <div className="mx-auto max-w-6xl">
           <div className="pointer-events-none absolute top-0 right-0 h-full w-full md:w-1/2">
             <TransactionCarousel className="h-full w-full" />

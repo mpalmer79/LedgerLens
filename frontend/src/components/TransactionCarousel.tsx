@@ -35,6 +35,10 @@ const RADIUS = 5.4;
 const ROTATION_SPEED = 0.22; // radians/sec
 const CAMERA_HEIGHT = 3.0;
 const CAMERA_DISTANCE = 10.5;
+// Aim the camera below the ring's plane so the ring renders in the upper
+// portion of the frame, vertically aligned with the headline rather than the
+// hero's midpoint. See ADR-0013 / Session 10b polish notes.
+const LOOK_AT_Y = -1.0;
 
 function makeCardTexture(
   vendor: string,
@@ -101,12 +105,25 @@ export function TransactionCarousel({ className }: TransactionCarouselProps) {
   const [useFallback, setUseFallback] = useState<boolean | null>(null);
 
   // Detect prefers-reduced-motion, mobile width, and the document opt-out flag.
+  // Listen for live changes too — some users toggle reduced-motion mid-session.
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const mobileQuery = window.matchMedia("(max-width: 768px)");
     const disabled = document.body.dataset.disable3d === "true";
-    setUseFallback(reducedMotion || isMobile || disabled);
+
+    const evaluate = () => {
+      setUseFallback(motionQuery.matches || mobileQuery.matches || disabled);
+    };
+    evaluate();
+
+    motionQuery.addEventListener("change", evaluate);
+    mobileQuery.addEventListener("change", evaluate);
+    return () => {
+      motionQuery.removeEventListener("change", evaluate);
+      mobileQuery.removeEventListener("change", evaluate);
+    };
   }, []);
 
   useEffect(() => {
@@ -126,12 +143,15 @@ export function TransactionCarousel({ className }: TransactionCarouselProps) {
 
     const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
     camera.position.set(0, CAMERA_HEIGHT, CAMERA_DISTANCE);
-    camera.lookAt(0, 0.2, 0);
+    camera.lookAt(0, LOOK_AT_Y, 0);
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setSize(width, height);
     renderer.setClearColor(0x000000, 0);
+    // Screen readers announce the wrapper (role="img" + aria-label); skip
+    // the raw canvas content.
+    renderer.domElement.setAttribute("aria-hidden", "true");
     container.appendChild(renderer.domElement);
 
     // Lights.
@@ -195,7 +215,7 @@ export function TransactionCarousel({ className }: TransactionCarouselProps) {
       // Subtle camera breathing.
       camera.position.x = Math.sin(elapsed * 0.08) * 0.3;
       camera.position.y = CAMERA_HEIGHT + Math.sin(elapsed * 0.06) * 0.15;
-      camera.lookAt(0, 0.2, 0);
+      camera.lookAt(0, LOOK_AT_Y, 0);
 
       renderer.render(scene, camera);
     };
@@ -227,15 +247,31 @@ export function TransactionCarousel({ className }: TransactionCarouselProps) {
     };
   }, [useFallback]);
 
+  const ariaLabel = "Animated illustration of bank transactions being categorized by LedgerLens";
+
   if (useFallback === null) {
     // First render before detection runs; render nothing to avoid flashing the
     // fallback for users who will get the 3D scene anyway.
-    return <div ref={containerRef} className={className} aria-hidden="true" />;
+    return (
+      <div
+        ref={containerRef}
+        className={className}
+        role="img"
+        aria-label={ariaLabel}
+      />
+    );
   }
 
   if (useFallback) {
     return <TransactionCarouselFallback className={className} />;
   }
 
-  return <div ref={containerRef} className={className} aria-hidden="true" />;
+  return (
+    <div
+      ref={containerRef}
+      className={className}
+      role="img"
+      aria-label={ariaLabel}
+    />
+  );
 }
