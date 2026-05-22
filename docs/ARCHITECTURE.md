@@ -1,9 +1,28 @@
 # LedgerLens — Architecture
 
-> **Status:** Specification (pre-implementation). This document describes the system as it is intended to be built, not as it currently exists. Sections will be revised to descriptive voice as components ship.
+> **Status legend** for each section:
+> - **(implemented)** — code on `main` matches this section.
+> - **(partial)** — some parts shipped, others pending; specifics noted inline.
+> - **(planned)** — design captured here; not yet built. See `docs/IMPLEMENTATION_GAP_ANALYSIS.md` for prioritization.
 >
-> **Last updated:** 2026-05-21
+> **Last updated:** 2026-05-22
 > **Maintainer:** Michael Palmer
+
+## Status overview
+
+- §1 System purpose — **implemented** (synthetic-data scope; real-bank integration out of scope for v0)
+- §2 Architectural drivers — **implemented**
+- §3 High-level structure — **partial** (backend API + persistence shipped; frontend product UI pending)
+- §4 Categorization pipeline — **partial** (single-call Haiku + confidence routing shipped; Sonnet fallback + LLM-as-judge planned)
+- §5 Data model — **partial** (Transaction, CategorizationResult, ReviewDecision, AuditEvent, AccountCategory shipped; corrections + retrieval-source models planned)
+- §6 Retrieval strategy — **planned** (deterministic merchant lookup is the v1 target; pgvector is later)
+- §7 Evaluation — **implemented** (harness, datasets, committed runs, dashboard)
+- §8 State, idempotency, reprocessing — **partial** (categorization status machine shipped; idempotent re-import via transaction hash key planned)
+- §9 Observability — **partial** (audit events shipped; structured logs with request IDs planned)
+- §10 Security & data handling — **partial** (CSV size/row limits shipped; log redaction utility, narrow-CORS in prod, full SECURITY_PRIVACY.md planned)
+- §11 Known limitations — **implemented** (this document)
+- §12 What would change at scale — **implemented** (planning notes)
+- §13 ADR index — see `docs/adr/README.md`
 
 ---
 

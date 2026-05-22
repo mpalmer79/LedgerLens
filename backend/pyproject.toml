@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ledgerlens"
-version = "0.0.0"
+version = "0.2.0"
 description = "AI-assisted transaction categorization for bookkeepers."
 requires-python = ">=3.12"
 license = { text = "MIT" }
@@ -19,6 +19,7 @@ dependencies = [
     "psycopg[binary]",
     "anthropic",
     "python-dotenv",
+    "python-multipart",
 ]
 
 [project.optional-dependencies]
@@ -40,6 +41,13 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "N"]
+
+[tool.ruff.lint.per-file-ignores]
+# FastAPI's Depends/File/Body must be called in argument defaults; B008
+# flags this generically but it's the framework's standard pattern.
+"src/ledgerlens/api/*.py" = ["B008"]
+# SessionLocal is the canonical sessionmaker variable name in SQLAlchemy docs.
+"tests/api/conftest.py" = ["N806"]
 
 [tool.mypy]
 python_version = "3.12"
