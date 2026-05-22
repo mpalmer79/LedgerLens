@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LedgerLens — Design Tokens</title>
+  <link rel="stylesheet" href="../tokens.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 48px;
+      background: var(--surface-page);
+      color: var(--text-primary);
+      font-family: var(--font-ui);
+      font-variant-numeric: tabular-nums;
+      -webkit-font-smoothing: antialiased;
+    }
+    h1, h2, h3 { font-family: var(--font-display); margin: 0; font-weight: 500; }
+    h1 { font-size: 36px; margin-bottom: 8px; }
+    h2 { font-size: 22px; margin: 48px 0 16px 0; padding-bottom: 8px; border-bottom: 1px solid var(--surface-border); }
+    h3 { font-size: 16px; font-family: var(--font-ui); font-weight: 600; margin: 24px 0 8px 0; color: var(--text-secondary); }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .lead { color: var(--text-secondary); margin: 8px 0 0 0; }
+    .row { display: flex; gap: 12px; flex-wrap: wrap; align-items: stretch; }
+    .swatch {
+      width: 120px; height: 96px; border-radius: var(--radius-md);
+      border: 1px solid var(--surface-border);
+      padding: 10px; display: flex; flex-direction: column; justify-content: space-between;
+      font-family: var(--font-mono); font-size: 11px; color: var(--text-primary);
+    }
+    .swatch .name { font-weight: 500; }
+    .swatch .hex { color: var(--text-subtle); }
+    .swatch.dark { color: #ffffff; }
+    .swatch.dark .hex { color: rgba(255,255,255,0.7); }
+    .surface-tile {
+      width: 160px; height: 96px; border-radius: var(--radius-md);
+      border: 1px solid var(--surface-border);
+      padding: 10px; display: flex; flex-direction: column; justify-content: space-between;
+      font-family: var(--font-mono); font-size: 11px;
+    }
+    .text-sample { padding: 10px 0; }
+    .label { font-family: var(--font-mono); font-size: 11px; color: var(--text-subtle); margin-bottom: 4px; }
+    .display-sample { font-family: var(--font-display); }
+    .mono-sample { font-family: var(--font-mono); }
+    .space-tile {
+      background: var(--brand-200); border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono); font-size: 10px; color: var(--brand-900);
+    }
+    .radius-tile {
+      width: 96px; height: 96px;
+      background: var(--brand-100); border: 1px solid var(--brand-200);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono); font-size: 11px; color: var(--brand-800);
+    }
+    .shadow-tile {
+      width: 140px; height: 96px;
+      background: var(--surface-panel); border-radius: var(--radius-md);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono); font-size: 11px; color: var(--text-secondary);
+    }
+    .motion-btn {
+      background: var(--brand-600); color: white; border: none;
+      border-radius: var(--radius-md); padding: 10px 20px;
+      font-family: var(--font-ui); font-size: 14px; cursor: pointer;
+      transition: transform var(--duration-short) var(--ease-out-expo),
+                  background var(--duration-short) var(--ease-out-expo);
+    }
+    .motion-btn:hover { background: var(--brand-500); transform: translateY(-1px); }
+    .motion-btn.short { transition-duration: var(--duration-short); }
+    .motion-btn.medium { transition-duration: var(--duration-medium); }
+    .motion-btn.long { transition-duration: var(--duration-long); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>LedgerLens design tokens</h1>
+    <p class="lead">Visual QA page. Every value here is read from <code>tokens.css</code>. If something looks wrong, the token is the source.</p>
+
+    <h2>Brand — forest green</h2>
+    <div class="row">
+      <div class="swatch" style="background: var(--brand-50);"><span class="name">50</span><span class="hex">#f0f7f1</span></div>
+      <div class="swatch" style="background: var(--brand-100);"><span class="name">100</span><span class="hex">#dceadd</span></div>
+      <div class="swatch" style="background: var(--brand-200);"><span class="name">200</span><span class="hex">#b8d4ba</span></div>
+      <div class="swatch" style="background: var(--brand-300);"><span class="name">300</span><span class="hex">#8fb892</span></div>
+      <div class="swatch dark" style="background: var(--brand-400);"><span class="name">400</span><span class="hex">#5e9462</span></div>
+      <div class="swatch dark" style="background: var(--brand-500);"><span class="name">500</span><span class="hex">#3d7841</span></div>
+      <div class="swatch dark" style="background: var(--brand-600);"><span class="name">600 (CTA)</span><span class="hex">#2e5f32</span></div>
+      <div class="swatch dark" style="background: var(--brand-700);"><span class="name">700</span><span class="hex">#244c27</span></div>
+      <div class="swatch dark" style="background: var(--brand-800);"><span class="name">800</span><span class="hex">#1c3b1f</span></div>
+      <div class="swatch dark" style="background: var(--brand-900);"><span class="name">900</span><span class="hex">#142a16</span></div>
+    </div>
+
+    <h2>Severity & accent</h2>
+    <div class="row">
+      <div class="swatch dark" style="background: var(--severity-low);"><span class="name">severity-low</span><span class="hex">all clear</span></div>
+      <div class="swatch dark" style="background: var(--severity-moderate);"><span class="name">severity-moderate</span><span class="hex">attention</span></div>
+      <div class="swatch dark" style="background: var(--severity-high);"><span class="name">severity-high</span><span class="hex">review</span></div>
+      <div class="swatch dark" style="background: var(--severity-critical);"><span class="name">severity-critical</span><span class="hex">act now</span></div>
+      <div class="swatch dark" style="background: var(--accent-500);"><span class="name">accent-500</span><span class="hex">routing chip</span></div>
+    </div>
+
+    <h2>Surfaces</h2>
+    <div class="row">
+      <div class="surface-tile" style="background: var(--surface-page);"><span>surface-page</span><span style="color: var(--text-subtle);">#fafaf7</span></div>
+      <div class="surface-tile" style="background: var(--surface-panel);"><span>surface-panel</span><span style="color: var(--text-subtle);">#ffffff</span></div>
+      <div class="surface-tile" style="background: var(--surface-sunken);"><span>surface-sunken</span><span style="color: var(--text-subtle);">#f5f5f0</span></div>
+      <div class="surface-tile" style="background: var(--surface-panel); border-color: var(--surface-border);"><span>border</span><span style="color: var(--text-subtle);">hairline</span></div>
+      <div class="surface-tile" style="background: var(--surface-panel); border-color: var(--surface-border-strong);"><span>border-strong</span><span style="color: var(--text-subtle);">emphasized</span></div>
+    </div>
+
+    <h2>Text ramp</h2>
+    <div>
+      <div class="text-sample" style="color: var(--text-primary);">text-primary — body and headings carry the weight here.</div>
+      <div class="text-sample" style="color: var(--text-secondary);">text-secondary — supporting copy that elaborates without competing.</div>
+      <div class="text-sample" style="color: var(--text-subtle);">text-subtle — metadata, field labels, low-emphasis captions.</div>
+      <div class="text-sample" style="color: var(--text-disabled);">text-disabled — only for controls that are actually disabled.</div>
+    </div>
+
+    <h2>Typography</h2>
+    <h3>Display — Newsreader</h3>
+    <div class="display-sample" style="font-size: 48px; line-height: 1.1;">Categorization you can trust.</div>
+    <div class="display-sample" style="font-size: 28px; color: var(--text-secondary);">Calibration you can prove.</div>
+    <h3>UI — Inter</h3>
+    <div style="font-size: 24px; font-weight: 600;">Transactions awaiting review</div>
+    <div style="font-size: 16px;">Body text for paragraphs, list items, and most product copy.</div>
+    <div style="font-size: 13px; color: var(--text-subtle);">Caption / field label / metadata.</div>
+    <h3>Mono — IBM Plex Mono</h3>
+    <div class="mono-sample" style="font-size: 14px;">coffee-shop-tx-001 → 6010 (rent) · conf 0.93 · $0.0021</div>
+
+    <h2>Spacing scale (Tailwind 4px base)</h2>
+    <div class="row" style="align-items: flex-end;">
+      <div class="space-tile" style="width: 4px; height: 24px;">1</div>
+      <div class="space-tile" style="width: 8px; height: 24px;">2</div>
+      <div class="space-tile" style="width: 12px; height: 24px;">3</div>
+      <div class="space-tile" style="width: 16px; height: 24px;">4</div>
+      <div class="space-tile" style="width: 24px; height: 24px;">6</div>
+      <div class="space-tile" style="width: 32px; height: 24px;">8</div>
+      <div class="space-tile" style="width: 48px; height: 24px;">12</div>
+      <div class="space-tile" style="width: 64px; height: 24px;">16</div>
+      <div class="space-tile" style="width: 96px; height: 24px;">24</div>
+    </div>
+
+    <h2>Radii</h2>
+    <div class="row">
+      <div class="radius-tile" style="border-radius: var(--radius-sm);">sm · 4px</div>
+      <div class="radius-tile" style="border-radius: var(--radius-md);">md · 6px</div>
+      <div class="radius-tile" style="border-radius: var(--radius-lg);">lg · 10px</div>
+      <div class="radius-tile" style="border-radius: var(--radius-full);">full</div>
+    </div>
+
+    <h2>Shadows</h2>
+    <div class="row">
+      <div class="shadow-tile" style="box-shadow: var(--shadow-sm);">shadow-sm</div>
+      <div class="shadow-tile" style="box-shadow: var(--shadow-md);">shadow-md</div>
+      <div class="shadow-tile" style="box-shadow: var(--shadow-lg);">shadow-lg</div>
+    </div>
+
+    <h2>Motion (hover the buttons)</h2>
+    <p class="lead">Each button uses a different duration token. The shorter the duration, the snappier the response.</p>
+    <div class="row">
+      <button class="motion-btn short">short (180ms)</button>
+      <button class="motion-btn medium">medium (300ms)</button>
+      <button class="motion-btn long">long (500ms)</button>
+    </div>
+
+    <h2>Bespoke assets</h2>
+    <h3>Logomark</h3>
+    <div style="color: var(--brand-600); padding: 16px 0;">
+      <img src="../assets/logomark.svg" alt="LedgerLens logomark" width="48" height="48" />
+      <img src="../assets/logomark.svg" alt="" width="64" height="64" style="margin-left: 24px;" />
+    </div>
+    <h3>Ledger motif</h3>
+    <div style="color: var(--brand-500); padding: 16px 0; max-width: 560px;">
+      <img src="../assets/ledger-motif.svg" alt="LedgerLens motif" style="width: 100%; height: auto;" />
+    </div>
+  </div>
+</body>
+</html>
