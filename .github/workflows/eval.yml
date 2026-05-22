@@ -57,7 +57,9 @@ jobs:
         run: |
           python -m ledgerlens.evals.run \
             --dataset ${{ inputs.dataset }} \
-            --categorizer ${{ inputs.categorizer }}
+            --categorizer ${{ inputs.categorizer }} \
+            --datasets-root ${{ github.workspace }}/evals/datasets \
+            --runs-dir ${{ github.workspace }}/evals/runs
 
       - name: Upload eval artifact
         uses: actions/upload-artifact@v4

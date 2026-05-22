@@ -1,10 +1,17 @@
+from pathlib import Path
+
 from ledgerlens.categorizers.stub import StubCategorizer
 from ledgerlens.evals.harness import run_eval
 from ledgerlens.evals.loader import load_dataset
 
+# Path to the v0 dataset, computed from this test file's location so the test
+# works regardless of pytest's CWD and survives the package being installed
+# into site-packages.
+REPO_DATASETS_ROOT = Path(__file__).resolve().parents[3] / "evals" / "datasets"
+
 
 def test_stub_harness_runs_end_to_end() -> None:
-    dataset = load_dataset("v0")
+    dataset = load_dataset("v0", datasets_root=REPO_DATASETS_ROOT)
     result = run_eval(dataset, StubCategorizer())
 
     assert len(result.predictions) == dataset.total_transactions == 302
@@ -25,7 +32,7 @@ def test_stub_harness_runs_end_to_end() -> None:
 
 
 def test_stub_accuracy_is_low_but_nonzero() -> None:
-    dataset = load_dataset("v0")
+    dataset = load_dataset("v0", datasets_root=REPO_DATASETS_ROOT)
     result = run_eval(dataset, StubCategorizer())
     # The stub always returns each business's first expense account (6010 in all
     # three businesses' charts of accounts). That happens to be rent in all

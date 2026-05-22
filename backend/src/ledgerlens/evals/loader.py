@@ -5,7 +5,16 @@ from ledgerlens.evals.schemas import Account, Business, BusinessData, Dataset, T
 
 
 def _default_datasets_root() -> Path:
-    return Path(__file__).resolve().parents[4] / "evals" / "datasets"
+    """Default datasets root, resolved from the current working directory.
+
+    Returns `<cwd>/evals/datasets`. This is correct when running from the repo
+    root and incorrect when running from anywhere else; callers that need a
+    different location must pass `datasets_root` explicitly. Resolving from
+    `__file__` was attempted previously but broke once the package was
+    installed via `pip install .` into site-packages, where the walk-up no
+    longer reaches the repo root.
+    """
+    return Path.cwd() / "evals" / "datasets"
 
 
 def load_dataset(version: str, datasets_root: Path | None = None) -> Dataset:
