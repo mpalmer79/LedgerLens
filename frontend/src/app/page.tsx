@@ -199,7 +199,10 @@ export default function Page() {
 
       {/* e. Eval teaser callout */}
       <section className="mx-8 mt-20 md:mx-auto md:max-w-3xl">
-        <div className="rounded-lg border border-brand-200 bg-brand-50 p-8">
+        <div className="rounded-lg border-2 border-brand-600 bg-brand-100 p-8">
+          <span className="mb-3 inline-block rounded-full bg-brand-600 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-white">
+            Featured
+          </span>
           <h2 className="font-display text-[22px] font-medium text-brand-900">
             See the eval results
           </h2>
@@ -303,7 +306,7 @@ type PillarProps = {
 
 function Pillar({ icon, title, body }: PillarProps) {
   return (
-    <div className="rounded-lg border border-surface-border bg-surface-panel p-6">
+    <div className="rounded-lg border border-brand-200 bg-brand-100 p-6">
       {icon}
       <h3 className="mb-2 mt-4 font-display text-[18px] font-medium text-text-primary">
         {title}

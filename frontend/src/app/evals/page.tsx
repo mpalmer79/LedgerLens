@@ -156,7 +156,7 @@ export default function EvalsPage() {
                   {(run.metrics.overall.accuracy / Math.max(stub.metrics.overall.accuracy, 0.001)).toFixed(1)}×
                   and shows real signal on adversarial cases.
                 </p>
-                <div className="mt-6 rounded-lg border border-surface-border bg-surface-panel p-4">
+                <div className="mt-6 rounded-lg border border-brand-200 bg-brand-100 p-4">
                   <ComparisonChart
                     data={[
                       {
@@ -190,7 +190,7 @@ export default function EvalsPage() {
                 and the review-queue threshold (0.60). Bubble size scales with the number of
                 predictions in each bucket.
               </p>
-              <div className="mt-6 rounded-lg border border-surface-border bg-surface-panel p-4">
+              <div className="mt-6 rounded-lg border border-brand-200 bg-brand-100 p-4">
                 <ReliabilityChart data={run.metrics.overall.reliability_diagram} />
               </div>
             </section>
@@ -205,7 +205,7 @@ export default function EvalsPage() {
                   Same model, three distinct charts of accounts. Each business stresses a different
                   categorization corner — COGS-heavy, software-heavy, parts-and-labor.
                 </p>
-                <div className="mt-6 overflow-x-auto rounded-lg border border-surface-border bg-surface-panel">
+                <div className="mt-6 overflow-x-auto rounded-lg border border-brand-200 bg-brand-100">
                   <table className="w-full text-left">
                     <thead className="border-b border-surface-border">
                       <tr>
@@ -323,7 +323,7 @@ function MetricCard({
   caption: string;
 }) {
   return (
-    <div className="rounded-lg border border-brand-100 bg-brand-50 p-6">
+    <div className="rounded-lg border border-brand-200 bg-brand-100 p-6">
       <p className="field-label text-brand-700">{label}</p>
       <p className="mt-2 font-display text-[32px] font-medium text-text-primary">{value}</p>
       <p className="mt-1 text-[12px] text-text-subtle">{caption}</p>
@@ -344,7 +344,7 @@ function AdversarialCard({
         : { label: "Incorrect", className: "bg-red-50 text-red-700" };
 
   return (
-    <div className="rounded-lg border border-surface-border bg-surface-panel p-4">
+    <div className="rounded-lg border border-brand-200 bg-brand-100 p-4">
       <div className="flex items-start justify-between gap-3">
         <div>
           <p className="font-display text-[16px] font-medium text-text-primary">

@@ -28,7 +28,7 @@ export function CheckApiButton({ apiBaseUrl }: Props) {
   }
 
   return (
-    <div className="rounded-lg border border-surface-border bg-surface-panel p-4 max-w-2xl mx-auto">
+    <div className="rounded-lg border border-brand-200 bg-brand-100 p-4 max-w-2xl mx-auto">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="text-left">
           <p className="field-label">API base URL</p>
