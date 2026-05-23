@@ -31,6 +31,47 @@ export type PerCategoryMetrics = {
   support: number;
 };
 
+export type ConfusionPair = {
+  actual: string;
+  predicted: string;
+  count: number;
+  percentage_of_actual: number;
+};
+
+export type RoutingMetrics = {
+  total?: number;
+  auto_approved?: number;
+  needs_review?: number;
+  uncategorizable?: number;
+  failed?: number;
+  auto_approved_rate?: number;
+  review_rate?: number;
+  auto_approved_accuracy?: number;
+  model_called?: number;
+  model_called_rate?: number;
+  zero_cost?: number;
+  zero_cost_rate?: number;
+  by_provider?: Record<string, number>;
+  cost_per_100?: number;
+  cost_per_100_model_only_baseline?: number | null;
+  cost_savings_per_100?: number | null;
+};
+
+export type CalibrationBlock = {
+  label: string;
+  count: number;
+  ece: number;
+  mce: number;
+  buckets: ReliabilityBucket[];
+  warning: string | null;
+};
+
+export type CalibrationMetrics = {
+  overall?: CalibrationBlock;
+  model_only?: CalibrationBlock;
+  deterministic?: CalibrationBlock;
+};
+
 export type MetricsSlice = {
   accuracy: number;
   per_category: Record<string, PerCategoryMetrics>;
@@ -39,6 +80,10 @@ export type MetricsSlice = {
   total_cost: number;
   cost_per_100: number;
   transaction_count: number;
+  top_confusions?: ConfusionPair[];
+  category_coverage?: Record<string, unknown>;
+  routing?: RoutingMetrics;
+  calibration?: CalibrationMetrics;
 };
 
 export type RunMetadata = {
@@ -168,6 +213,41 @@ export function loadStubBaseline(): EvalRun | null {
   const stub = listRuns((n) => n.includes('stub'));
   if (stub.length === 0) return null;
   return loadRunFile(stub[0]);
+}
+
+export type ComparisonRunSummary = {
+  categorizer: string;
+  filename: string;
+  timestamp_utc: string;
+  transactions: number;
+  overall_accuracy: number;
+  non_adversarial_accuracy: number;
+  adversarial_accuracy: number;
+  cost_per_100: number;
+  p95_latency_ms: number;
+  routing: RoutingMetrics;
+  calibration: CalibrationMetrics;
+};
+
+export type ComparisonArtifact = {
+  filename: string;
+  generated_at: string;
+  runs: ComparisonRunSummary[];
+  notes: string[];
+};
+
+export function loadLatestComparison(): ComparisonArtifact | null {
+  const dir = findRunsDir();
+  if (!dir) return null;
+  const files = listRuns((n) => n.includes('comparison'));
+  if (files.length === 0) return null;
+  try {
+    const raw = fs.readFileSync(path.join(dir, files[0]), 'utf8');
+    const parsed = JSON.parse(raw) as Omit<ComparisonArtifact, 'filename'>;
+    return { filename: files[0], ...parsed };
+  } catch {
+    return null;
+  }
 }
 
 // Compact summary used by the landing page; preserves backward compatibility
