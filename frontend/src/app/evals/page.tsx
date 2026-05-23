@@ -126,8 +126,55 @@ export default function EvalsPage() {
 
         {run && (
           <>
+            {/* Trust-boundary callout — placed BEFORE everything else so a reviewer
+                cannot misread raw model accuracy as the product's headline number. */}
+            <section className="mt-8 rounded-lg border-2 border-brand-600 bg-brand-100 p-5">
+              <p className="text-[11px] font-medium uppercase tracking-wide text-brand-700">
+                Trust boundary
+              </p>
+              <h2 className="mt-1 font-display text-[20px] font-medium text-brand-900">
+                Raw model accuracy is not the product trust boundary.
+              </h2>
+              <p className="mt-2 max-w-3xl text-[13px] leading-relaxed text-brand-800">
+                LedgerLens reports model-only accuracy honestly. But financial workflows
+                should not blindly trust model predictions. The product trust boundary is
+                what the system allows to become final without review.
+              </p>
+              <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <div className="rounded-md border border-surface-border bg-surface-panel p-3">
+                  <p className="field-label">Model metric</p>
+                  <p className="mt-1 font-display text-[15px] font-medium text-text-primary">
+                    Raw prediction accuracy
+                  </p>
+                  <p className="mt-1 text-[12px] text-text-secondary">
+                    Measures model behavior on synthetic eval data.
+                  </p>
+                </div>
+                <div className="rounded-md border-2 border-brand-600 bg-surface-panel p-3">
+                  <p className="field-label">Product metric</p>
+                  <p className="mt-1 font-display text-[15px] font-medium text-brand-900">
+                    Verified finalized ledger
+                  </p>
+                  <p className="mt-1 text-[12px] text-text-secondary">
+                    Measures whether finalized ledger rows are backed by human review,
+                    correction memory, or deterministic rules.
+                  </p>
+                </div>
+              </div>
+              <p className="mt-3 text-[12px] text-brand-700">
+                <a
+                  href={`${REPO_URL}/blob/main/docs/TRUST_METRIC.md`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline"
+                >
+                  Read the trust-metric doc →
+                </a>
+              </p>
+            </section>
+
             {/* Layered pipeline summary */}
-            <section className="mt-8 rounded-md border border-brand-200 bg-brand-100 p-4">
+            <section className="mt-6 rounded-md border border-brand-200 bg-brand-100 p-4">
               <p className="text-[14px] font-medium text-text-primary">
                 Production categorization pipeline
               </p>

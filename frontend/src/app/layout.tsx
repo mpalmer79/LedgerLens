@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 import { IBM_Plex_Mono, Inter, Newsreader } from 'next/font/google';
 
+import { SITE_DESCRIPTION, SITE_TITLE } from '@/lib/site';
+
 import './globals.css';
 
 const newsreader = Newsreader({
@@ -29,8 +31,26 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'LedgerLens',
-  description: 'AI-assisted transaction categorization for bookkeepers.',
+  title: {
+    default: SITE_TITLE,
+    template: '%s | LedgerLens',
+  },
+  description: SITE_DESCRIPTION,
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+  },
+  openGraph: {
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    type: 'website',
+    siteName: 'LedgerLens',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+  },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
