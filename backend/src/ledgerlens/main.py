@@ -12,6 +12,7 @@ from ledgerlens.api import (
     health,
     ledger,
     review,
+    rules,
     transactions,
 )
 from ledgerlens.config import get_settings
@@ -62,6 +63,8 @@ def create_app() -> FastAPI:
     application.include_router(audit.router)
     application.include_router(corrections.router)
     application.include_router(corrections.memory_match_router)
+    application.include_router(rules.router)
+    application.include_router(rules.rule_match_router)
 
     return application
 

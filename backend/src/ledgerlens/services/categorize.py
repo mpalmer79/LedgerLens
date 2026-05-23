@@ -7,8 +7,12 @@ works without modification.
 """
 
 from datetime import datetime
+from typing import TYPE_CHECKING
 
 from sqlalchemy.orm import Session
+
+if TYPE_CHECKING:
+    from ledgerlens.services.rule_categorizer import Rule
 
 from ledgerlens.categorizers.base import CategorizationResult as PredResult
 from ledgerlens.categorizers.base import Categorizer
@@ -118,6 +122,7 @@ def _route_status(
 
 
 CORRECTION_MEMORY_PROVIDER = "correction_memory"
+RULE_CATEGORIZER_PROVIDER = "rule_categorizer"
 
 
 def _persist_memory_result(
@@ -175,6 +180,99 @@ def _persist_memory_result(
     return result
 
 
+def _persist_rule_result(
+    tx: Transaction,
+    rule: "Rule",
+    matched: AccountCategory | None,
+    db: Session,
+    latency_ms: int,
+    status: ResultStatus,
+    reason: str = "",
+) -> CategorizationResult:
+    """Persist a CategorizationResult produced by the deterministic rule layer.
+
+    Zero cost. Provider = rule_categorizer. Model name = rule id (so reviewers
+    can trace exactly which rule fired). Explanation cites the rule by id+name.
+    """
+    explanation = (
+        f"Deterministic rule {rule.id} ({rule.name}) matched. "
+        f"Category [{rule.category_code}]"
+        f"{' ' + matched.name if matched else ''}. "
+        f"{rule.explanation}"
+    ).strip()
+    if reason:
+        explanation = f"{explanation} {reason}"
+
+    result = CategorizationResult(
+        transaction_id=tx.id,
+        predicted_category_code=rule.category_code,
+        predicted_category_name=matched.name if matched else "",
+        confidence=float(rule.confidence),
+        explanation=explanation[:2000],
+        alternative_category_code=None,
+        model_provider=RULE_CATEGORIZER_PROVIDER,
+        model_name=rule.id,
+        latency_ms=latency_ms,
+        estimated_cost_usd=0.0,
+        status=status,
+    )
+    CategorizationRepo(db).add(result)
+    AuditRepo(db).record(
+        entity_type="categorization_result",
+        action="categorized_from_rules",
+        entity_id=result.id,
+        details={
+            "transaction_id": tx.id,
+            "rule_id": rule.id,
+            "rule_name": rule.name,
+            "predicted": rule.category_code,
+            "confidence": float(rule.confidence),
+            "status": status.value,
+        },
+    )
+    return result
+
+
+def _persist_rule_conflict(
+    tx: Transaction,
+    candidates: list["Rule"],
+    db: Session,
+    latency_ms: int,
+) -> CategorizationResult:
+    """Persist a needs-review result for two or more disagreeing rules."""
+    conflicting_codes = sorted({c.category_code for c in candidates})
+    explanation = (
+        "Multiple deterministic rules matched with different categories "
+        f"({', '.join(conflicting_codes)}): "
+        f"{', '.join(c.id for c in candidates)}. Routed to review."
+    )
+    result = CategorizationResult(
+        transaction_id=tx.id,
+        predicted_category_code=conflicting_codes[0] if conflicting_codes else "",
+        predicted_category_name="",
+        confidence=0.0,
+        explanation=explanation[:2000],
+        alternative_category_code=conflicting_codes[1] if len(conflicting_codes) > 1 else None,
+        model_provider=RULE_CATEGORIZER_PROVIDER,
+        model_name=None,
+        latency_ms=latency_ms,
+        estimated_cost_usd=0.0,
+        status=ResultStatus.NEEDS_REVIEW,
+    )
+    CategorizationRepo(db).add(result)
+    AuditRepo(db).record(
+        entity_type="categorization_result",
+        action="rule_conflict_routed_to_review",
+        entity_id=result.id,
+        details={
+            "transaction_id": tx.id,
+            "conflicting_codes": conflicting_codes,
+            "rule_ids": [c.id for c in candidates],
+        },
+    )
+    return result
+
+
 def categorize_transaction(
     tx: Transaction,
     db: Session,
@@ -184,16 +282,19 @@ def categorize_transaction(
     """Run categorization on a stored transaction and persist the result.
 
     Order of attempts:
-    1. Correction memory exact match. On `apply`, persist a result with
-       provider `correction_memory`, zero cost, status `auto_approved`.
-       On `conflict`, persist a result with status `needs_review` and
-       an explanation naming the conflicting categories.
-    2. Fall through to the model categorizer (Anthropic). If the model's
-       high-confidence prediction disagrees with a soft memory hint, route
-       to review.
+    1. Correction memory exact match. On `apply` → persist with provider
+       `correction_memory`, zero cost, status `auto_approved`. On `conflict`
+       → persist `needs_review`.
+    2. Deterministic rule layer. On strong match (rule confidence ≥ auto
+       threshold) → persist with provider `rule_categorizer`, zero cost,
+       `auto_approved`. On below-auto rule match → `needs_review`. On
+       multiple disagreeing rules → `needs_review` with a rule_conflict
+       explanation.
+    3. Fall through to the model categorizer (Anthropic). Status is set by
+       the existing confidence-routing rules.
 
     Returns the persisted CategorizationResult. Raises MissingProviderConfig
-    if Anthropic isn't configured AND no memory match was found.
+    if Anthropic isn't configured AND no memory/rule match was found.
     """
     from ledgerlens.services.correction_memory import find_memory_match
 
@@ -238,7 +339,34 @@ def categorize_transaction(
         )
         return result
 
-    # No memory hit — fall through to the model categorizer.
+    # No memory hit — try the deterministic rule layer next.
+    from ledgerlens.services.rule_categorizer import find_rule_match
+
+    settings = get_settings()
+    rule_match = find_rule_match(
+        tx,
+        db,
+        auto_threshold=settings.ledgerlens_auto_queue_threshold,
+        review_threshold=settings.ledgerlens_review_queue_threshold,
+    )
+
+    if rule_match.verdict == "apply" and rule_match.rule is not None:
+        rule = rule_match.rule
+        matched_cat = cat_repo.get(rule.category_code)
+        if rule.confidence >= settings.ledgerlens_auto_queue_threshold:
+            status = ResultStatus.AUTO_APPROVED
+            reason = ""
+        else:
+            status = ResultStatus.NEEDS_REVIEW
+            reason = "Rule confidence below auto-approve threshold; routed to review."
+        latency_ms = int((datetime.now().timestamp() - started) * 1000)
+        return _persist_rule_result(tx, rule, matched_cat, db, latency_ms, status, reason)
+
+    if rule_match.verdict == "conflict":
+        latency_ms = int((datetime.now().timestamp() - started) * 1000)
+        return _persist_rule_conflict(tx, rule_match.candidates, db, latency_ms)
+
+    # No rule hit — fall through to the model categorizer.
     if categorizer is None:
         categorizer = get_default_categorizer()
 

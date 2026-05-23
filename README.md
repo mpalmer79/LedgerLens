@@ -20,9 +20,9 @@ LedgerLens is a **working prototype** that demonstrates an end-to-end AI bookkee
 | Backend API: transactions, categorize, review queue, ledger export, audit | **Shipped** — see "API surface" below |
 | Persistent storage (SQLite for demo, Postgres-ready) | **Shipped** — SQLAlchemy 2.0 models, idempotent table creation, seeded chart of accounts |
 | Frontend workflow pages (`/app`, `/transactions`, `/transactions/import`, `/transactions/[id]`, `/review`, `/ledger`) | **Shipped** — typed API client, real backend calls |
-| **Correction memory** (deterministic merchant-keyed lookup) | **Shipped (this PR)** — `/corrections` page, `services/correction_memory.py`, future similar transactions categorize from prior human corrections at zero model cost |
+| **Correction memory** (deterministic merchant-keyed lookup) | **Shipped** — `/corrections` page, `services/correction_memory.py`, future similar transactions categorize from prior human corrections at zero model cost |
+| **Hybrid rules + model categorizer** (deterministic rule layer before the model) | **Shipped (this PR)** — `/rules` page, `services/rule_categorizer.py`, ~25 curated rules in `data/category_rules.json`; obvious transactions categorize at zero model cost; ambiguous rules route to review |
 | Pgvector / semantic retrieval | **Planned** — exact-key match is the v1 design; embeddings later |
-| Hybrid rules + model categorizer | **Planned** |
 | Production multi-tenancy, real bank integration | **Not in scope for v0** |
 
 Five-minute reviewer path through the working app: [`docs/DEMO_WALKTHROUGH.md`](docs/DEMO_WALKTHROUGH.md).
@@ -45,6 +45,18 @@ LedgerLens treats categorization as a calibrated prediction problem, not a class
 - A rationale field a human reviewer can read in seconds
 
 The model can also return `UNCATEGORIZABLE` for transactions outside its training distribution, rather than guess and contaminate downstream books.
+
+## Categorization order
+
+A transaction passes through three deterministic layers before it reaches the model. The model only fires when none of the earlier layers can decide safely:
+
+1. **Correction memory** — exact-key lookup over rules built from prior human corrections. Zero cost. (See [`docs/CORRECTION_MEMORY_PLAN.md`](docs/CORRECTION_MEMORY_PLAN.md).)
+2. **Deterministic rule layer** — a curated table of merchant / keyword rules in [`backend/src/ledgerlens/data/category_rules.json`](backend/src/ledgerlens/data/category_rules.json), validated against the active chart of accounts at server startup. Zero cost. (See [`docs/HYBRID_CATEGORIZER_PLAN.md`](docs/HYBRID_CATEGORIZER_PLAN.md).)
+3. **Claude Haiku** — the model categorizer with tool-use structured output. Real per-call cost.
+
+Then the existing routing applies: confidence ≥ auto-threshold → auto-approved; mid confidence → review queue; sentinel → uncategorizable. Every state change writes an `AuditEvent` identifying which layer produced the result.
+
+Rules never override correction memory. Rules with confidence below the auto-threshold never auto-apply (they route to review). When two rules match the same input but disagree on the category, the transaction routes to review instead of either auto-applying.
 
 ## Evidence — the eval suite
 
@@ -91,6 +103,10 @@ All endpoints are mounted on the FastAPI app at `backend/src/ledgerlens/main.py`
 | `GET` | `/ledger` | Finalized ledger view (corrected > approved > pending) |
 | `GET` | `/ledger/export.csv` | CSV export of the ledger |
 | `GET` | `/audit/events` | Audit trail; filter by entity type and id |
+| `GET` | `/corrections` | List learned correction-memory rules |
+| `GET` | `/rules` | List active deterministic rules |
+| `GET` | `/transactions/{id}/memory-matches` | Show what correction-memory would apply |
+| `GET` | `/transactions/{id}/rule-matches` | Show what the rule layer would apply |
 
 Example:
 
@@ -196,8 +212,8 @@ Calling out gaps because honesty beats overclaiming:
 
 - **No real bank integration.** Synthetic dataset for evaluation, manual CSV import for the product. QuickBooks / Xero is intentionally out of scope for v0.
 - **Correction memory is exact-key, not semantic.** Future transactions categorize from memory only on an exact merchant-or-description match. Embedding-based / fuzzy retrieval is a deliberate v2 — the false-positive risk on financial data is not worth the lift until exact matching has proven its hit rate in practice. This is rule lookup over a model categorizer, not model fine-tuning.
-- **No hybrid rules + model categorizer.** A deterministic rule layer in front of the model would lift accuracy on obvious cases at lower cost; planned, not built.
-- **Eval-metric upgrades pending.** Sliced per-category metrics, expected calibration error, baseline rule comparison — all in the gap analysis, none in this PR.
+- **Rules are tenant-agnostic and manually curated.** The bundled rule set targets the default seed chart of accounts. A multi-tenant deployment will need per-tenant rules — that abstraction does not exist yet. Auto-learning rules from corrections is intentionally out of scope: corrections live in `CorrectionMemory`, rules live in the JSON file, and the two layers are deliberately separate.
+- **Eval-metric upgrades pending.** Sliced per-category metrics, expected calibration error, and a baseline-rule comparison are partially addressed (rules-only run committed under `evals/runs/`, with a methodology caveat: the bundled rules target the default COA, so cross-business code mismatch against the synthetic dataset is expected). Full per-COA rule sets for the eval businesses are next-sprint work.
 - **No auth or multi-tenancy.** Single-tenant by data model; structurally room to add it without rewriting the persistence layer.
 - **No security baseline polish.** CSV size/row limits exist; structured logs with request IDs, log redaction utility, and narrow-CORS in prod are planned.
 

@@ -82,8 +82,44 @@ export type CategorizeBatchOut = {
   needs_review: number;
   uncategorizable: number;
   failed: number;
+  zero_cost?: number;
   total_cost_usd: number;
   results: CategorizationResult[];
+};
+
+export type Rule = {
+  id: string;
+  name: string;
+  active: boolean;
+  priority: number;
+  match_type:
+    | "exact_merchant"
+    | "merchant_contains"
+    | "description_contains"
+    | "keyword_any"
+    | "keyword_all";
+  merchant_patterns: string[];
+  description_patterns: string[];
+  category_code: string;
+  category_name: string;
+  confidence: number;
+  explanation: string;
+};
+
+export type RuleList = {
+  total: number;
+  items: Rule[];
+};
+
+export type RuleVerdict = "apply" | "conflict" | "none";
+
+export type RuleMatch = {
+  verdict: RuleVerdict;
+  reason: string;
+  merchant_text: string;
+  description_text: string;
+  rule: Rule | null;
+  candidates: Rule[];
 };
 
 export type ReviewQueueItem = {

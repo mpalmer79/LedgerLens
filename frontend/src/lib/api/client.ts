@@ -21,6 +21,8 @@ import type {
   ReadyResponse,
   ReviewDecision,
   ReviewQueue,
+  RuleList,
+  RuleMatch,
   Transaction,
   TransactionBatchOut,
   TransactionCreate,
@@ -266,3 +268,10 @@ export const deactivateCorrection = (id: string) =>
 
 export const getMemoryMatches = (transactionId: string) =>
   apiFetch<MemoryMatch>(`/transactions/${transactionId}/memory-matches`);
+
+// ── Deterministic rules ────────────────────────────────────────────────────
+
+export const listRules = () => apiFetch<RuleList>("/rules");
+
+export const getRuleMatches = (transactionId: string) =>
+  apiFetch<RuleMatch>(`/transactions/${transactionId}/rule-matches`);

@@ -11,7 +11,7 @@ from ledgerlens.db import get_db
 from ledgerlens.errors import NotFound
 from ledgerlens.models import ResultStatus
 from ledgerlens.repositories import CategorizationRepo, TransactionRepo
-from ledgerlens.services.categorize import categorize_transaction, get_default_categorizer
+from ledgerlens.services.categorize import categorize_transaction
 
 router = APIRouter(tags=["categorize"])
 
@@ -31,9 +31,9 @@ def categorize(payload: CategorizeRequest, db: Session = Depends(get_db)) -> Cat
 def categorize_batch(
     payload: CategorizeBatchRequest, db: Session = Depends(get_db)
 ) -> CategorizeBatchOut:
-    # Build the categorizer once for the whole batch.
-    categorizer = get_default_categorizer()
-
+    # Each call into `categorize_transaction` builds the model categorizer
+    # lazily only when memory + rules fail to decide. Construction is cheap
+    # (just an SDK client init); the network cost is the per-call API request.
     tx_repo = TransactionRepo(db)
     results = []
     counts = {
@@ -43,16 +43,19 @@ def categorize_batch(
         ResultStatus.FAILED: 0,
     }
     total_cost = 0.0
+    zero_cost = 0
 
     for tx_id in payload.transaction_ids:
         tx = tx_repo.get(tx_id)
         if not tx:
             continue
-        result = categorize_transaction(tx, db, categorizer=categorizer)
+        result = categorize_transaction(tx, db)
         results.append(result)
         if result.status in counts:
             counts[result.status] += 1
         total_cost += float(result.estimated_cost_usd)
+        if result.estimated_cost_usd == 0:
+            zero_cost += 1
 
     db.commit()
     for r in results:
@@ -64,6 +67,7 @@ def categorize_batch(
         needs_review=counts[ResultStatus.NEEDS_REVIEW],
         uncategorizable=counts[ResultStatus.UNCATEGORIZABLE],
         failed=counts[ResultStatus.FAILED],
+        zero_cost=zero_cost,
         total_cost_usd=round(total_cost, 6),
         results=[CategorizationOut.model_validate(r) for r in results],
     )

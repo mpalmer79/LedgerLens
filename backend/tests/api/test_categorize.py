@@ -39,11 +39,14 @@ def _fake_cat(code: str, confidence: float, *, reasoning: str = "test") -> Magic
 
 
 def _create_tx(client: TestClient) -> str:
+    # An unbranded description so neither correction memory nor the bundled
+    # rule layer matches — the model path is exercised in this test module.
     res = client.post(
         "/transactions",
         json={
             "transaction_date": "2026-03-14",
-            "description": "QuickBooks Online subscription",
+            "description": "Generic Vendor Invoice 4421",
+            "merchant": "GenericVendor",
             "amount_cents": -7000,
             "currency": "USD",
         },

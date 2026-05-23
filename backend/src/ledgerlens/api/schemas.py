@@ -114,6 +114,7 @@ class CategorizeBatchOut(BaseModel):
     needs_review: int
     uncategorizable: int
     failed: int
+    zero_cost: int = 0
     total_cost_usd: float
     results: list[CategorizationOut]
 
@@ -232,3 +233,34 @@ class MemoryMatchOut(BaseModel):
     description_key: str
     record: CorrectionMemoryOut | None = None
     candidates: list[CorrectionMemoryOut] = []
+
+
+# ── Rule categorizer ───────────────────────────────────────────────────────
+
+
+class RuleOut(BaseModel):
+    id: str
+    name: str
+    active: bool
+    priority: int
+    match_type: str
+    merchant_patterns: list[str]
+    description_patterns: list[str]
+    category_code: str
+    category_name: str
+    confidence: float
+    explanation: str
+
+
+class RuleListOut(BaseModel):
+    total: int
+    items: list[RuleOut]
+
+
+class RuleMatchOut(BaseModel):
+    verdict: str  # "apply" | "conflict" | "none"
+    reason: str
+    merchant_text: str
+    description_text: str
+    rule: RuleOut | None = None
+    candidates: list[RuleOut] = []

@@ -216,13 +216,22 @@ def test_conflicting_memories_route_to_review(client: TestClient, fake_factory: 
 def test_inactive_memory_falls_through_to_model(
     client: TestClient, fake_factory: MagicMock
 ) -> None:
-    _categorize_and_correct(client, fake_factory)
+    # Use a vendor that isn't covered by either correction memory or the
+    # bundled rule layer, so deactivating memory really does reach the model.
+    _categorize_and_correct(
+        client,
+        fake_factory,
+        tx_kwargs={
+            "description": "NICHE VENDOR INV 99812",
+            "merchant": "NicheVendor",
+        },
+    )
     memory_id = client.get("/corrections").json()["items"][0]["id"]
     client.delete(f"/corrections/{memory_id}")  # soft deactivate
 
     # The model is called now; it returns 6010 (Rent).
     fake_factory.return_value = _fake_cat("6010", confidence=0.95)
-    new_tx = _create_tx(client, description="ADOBE CC MONTHLY", merchant="Adobe")
+    new_tx = _create_tx(client, description="NICHE VENDOR INV 99999", merchant="NicheVendor")
     res = client.post("/categorize", json={"transaction_id": new_tx})
     body = res.json()
     assert body["predicted_category_code"] == "6010"

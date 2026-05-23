@@ -15,6 +15,7 @@ const NAV: NavItem[] = [
   { href: "/transactions", label: "Transactions" },
   { href: "/review", label: "Review queue" },
   { href: "/corrections", label: "Learned corrections" },
+  { href: "/rules", label: "Rules" },
   { href: "/ledger", label: "Ledger" },
   { href: "/evals", label: "Eval evidence" },
 ];
