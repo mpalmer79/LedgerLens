@@ -48,15 +48,25 @@ The model can also return `UNCATEGORIZABLE` for transactions outside its trainin
 
 ## Categorization order
 
-A transaction passes through three deterministic layers before it reaches the model. The model only fires when none of the earlier layers can decide safely:
+A transaction passes through three deterministic layers before any model can fire. Which categorizer sits in the fallback slot is controlled by `CATEGORIZER_MODE`.
+
+**Demo mode (default, `CATEGORIZER_MODE=demo_stub`)** — the portfolio deploy. Zero paid-API spend.
 
 1. **Correction memory** — exact-key lookup over rules built from prior human corrections. Zero cost. (See [`docs/CORRECTION_MEMORY_PLAN.md`](docs/CORRECTION_MEMORY_PLAN.md).)
 2. **Deterministic rule layer** — a curated table of merchant / keyword rules in [`backend/src/ledgerlens/data/category_rules.json`](backend/src/ledgerlens/data/category_rules.json), validated against the active chart of accounts at server startup. Zero cost. (See [`docs/HYBRID_CATEGORIZER_PLAN.md`](docs/HYBRID_CATEGORIZER_PLAN.md).)
-3. **Claude Haiku** — the model categorizer with tool-use structured output. Real per-call cost.
+3. **Demo stub** — implemented in `backend/src/ledgerlens/categorizers/demo_stub.py`. Returns `UNCATEGORIZABLE` with provider `demo_stub`, zero cost, and an explanation noting that the transaction was routed to review instead of calling a paid model. The `anthropic` SDK is **not** imported in this mode.
+4. **Human review queue.**
+
+**Anthropic mode (`CATEGORIZER_MODE=anthropic`)** — local / private testing.
+
+1. Correction memory (unchanged).
+2. Deterministic rule layer (unchanged).
+3. **Claude Haiku 4.5** — real model categorizer with tool-use structured output. Per-call cost.
+4. Confidence routing → human review.
 
 Then the existing routing applies: confidence ≥ auto-threshold → auto-approved; mid confidence → review queue; sentinel → uncategorizable. Every state change writes an `AuditEvent` identifying which layer produced the result.
 
-Rules never override correction memory. Rules with confidence below the auto-threshold never auto-apply (they route to review). When two rules match the same input but disagree on the category, the transaction routes to review instead of either auto-applying.
+Rules never override correction memory. Rules with confidence below the auto-threshold never auto-apply (they route to review). When two rules match the same input but disagree on the category, the transaction routes to review instead of either auto-applying. The demo stub never auto-approves anything.
 
 ## Evidence — the eval suite
 
@@ -202,7 +212,7 @@ The backend defaults to an in-memory SQLite database. For a persistent local dat
 DATABASE_URL=sqlite:///./ledgerlens.db uvicorn ledgerlens.main:app --reload
 ```
 
-The categorize endpoints require `ANTHROPIC_API_KEY`. The rest of the workflow (intake, review, ledger, audit) works without it.
+The categorize endpoints run in **portfolio demo mode** by default (`CATEGORIZER_MODE=demo_stub`). In demo mode the pipeline is `correction memory → deterministic rules → demo stub → human review` and the app never imports or calls Anthropic. To use the real model fallback locally, set `CATEGORIZER_MODE=anthropic` and `ANTHROPIC_API_KEY=...`. See [`docs/PORTFOLIO_DEPLOYMENT.md`](docs/PORTFOLIO_DEPLOYMENT.md) for the recommended Railway configuration.
 
 Evals run via the [`Run eval`](.github/workflows/eval.yml) GitHub Actions workflow — manually triggered for cost control.
 

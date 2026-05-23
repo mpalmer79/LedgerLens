@@ -18,11 +18,19 @@ npm run dev
 # → http://localhost:3000
 ```
 
-The categorize endpoint needs `ANTHROPIC_API_KEY`. The rest of the workflow works without it.
+By default the app runs in **portfolio demo mode** (`CATEGORIZER_MODE=demo_stub`).
+The full workflow — intake, correction memory, rules, review, ledger, audit — is
+zero-cost and needs no API keys. Unmatched transactions are routed to human
+review by a deterministic stub instead of a paid model.
+
+To use the real Anthropic model fallback for private testing, set both:
 
 ```bash
+export CATEGORIZER_MODE=anthropic
 export ANTHROPIC_API_KEY=sk-ant-...
 ```
+
+In demo mode an Anthropic key is intentionally ignored.
 
 ## The path
 
