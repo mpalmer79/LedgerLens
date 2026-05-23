@@ -7,6 +7,7 @@ import { Logomark } from "@/components/ui/Logomark";
 import {
   adversarialDeepDive,
   loadDataset,
+  loadLatestComparison,
   loadLatestEvalRun,
   loadStubBaseline,
   summarizePerBusiness,
@@ -32,6 +33,12 @@ export default function EvalsPage() {
   const run = loadLatestEvalRun();
   const stub = loadStubBaseline();
   const dataset = run ? loadDataset(run.run_metadata.dataset_version) : null;
+  const comparison = loadLatestComparison();
+  const routing = run?.metrics.overall.routing;
+  const calibration = run?.metrics.overall.calibration;
+  const calibrationWarning =
+    calibration?.model_only?.warning ?? calibration?.overall?.warning ?? null;
+  const topConfusions = run?.metrics.overall.top_confusions ?? [];
 
   return (
     <div className="bg-surface-page text-text-primary min-h-screen">
@@ -119,6 +126,163 @@ export default function EvalsPage() {
 
         {run && (
           <>
+            {/* Layered pipeline summary */}
+            <section className="mt-8 rounded-md border border-brand-200 bg-brand-100 p-4">
+              <p className="text-[14px] font-medium text-text-primary">
+                Production categorization pipeline
+              </p>
+              <ol className="mono mt-2 list-decimal space-y-1 pl-5 text-[12px] text-text-secondary">
+                <li>
+                  correction memory <span className="text-text-subtle">(zero cost, exact-key)</span>
+                </li>
+                <li>
+                  deterministic rules <span className="text-text-subtle">(zero cost, curated)</span>
+                </li>
+                <li>
+                  model fallback <span className="text-text-subtle">(Claude Haiku 4.5)</span>
+                </li>
+                <li>
+                  confidence routing → human review → audit
+                </li>
+              </ol>
+              <p className="mt-2 text-[12px] text-text-subtle">
+                The eval below scores categorizer modes against the synthetic v0 dataset. Rule
+                accuracy on this dataset is bounded by tenant-COA mismatch (see notes below) — the
+                rule layer&apos;s value in production is cost reduction, not accuracy on this
+                benchmark.
+              </p>
+            </section>
+
+            {/* Mode comparison */}
+            {comparison && comparison.runs.length > 0 && (
+              <section className="mt-6 rounded-lg border border-surface-border bg-surface-panel p-4">
+                <div className="mb-2 flex items-baseline justify-between">
+                  <h2 className="font-display text-[18px] font-medium text-text-primary">
+                    Mode comparison
+                  </h2>
+                  <span className="text-[11px] text-text-subtle">
+                    generated {comparison.generated_at}
+                  </span>
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-[13px]">
+                    <thead className="border-b border-surface-border">
+                      <tr>
+                        <th className="field-label py-1.5 pr-3">Mode</th>
+                        <th className="field-label py-1.5 pr-3 text-right">Overall</th>
+                        <th className="field-label py-1.5 pr-3 text-right">Non-adv</th>
+                        <th className="field-label py-1.5 pr-3 text-right">Adv</th>
+                        <th className="field-label py-1.5 pr-3 text-right">Cost / 100</th>
+                        <th className="field-label py-1.5 pr-3 text-right">Auto-approve</th>
+                        <th className="field-label py-1.5 pr-3 text-right">Auto acc</th>
+                        <th className="field-label py-1.5 text-right">Review</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {comparison.runs.map((r) => (
+                        <tr key={r.categorizer} className="border-b border-surface-border/40 last:border-0">
+                          <td className="mono py-1.5 pr-3 text-text-primary">{r.categorizer}</td>
+                          <td className="mono py-1.5 pr-3 text-right">{pct(r.overall_accuracy)}</td>
+                          <td className="mono py-1.5 pr-3 text-right">{pct(r.non_adversarial_accuracy)}</td>
+                          <td className="mono py-1.5 pr-3 text-right">{pct(r.adversarial_accuracy)}</td>
+                          <td className="mono py-1.5 pr-3 text-right">{dollars(r.cost_per_100, 4)}</td>
+                          <td className="mono py-1.5 pr-3 text-right">
+                            {r.routing?.auto_approved_rate !== undefined
+                              ? pct(r.routing.auto_approved_rate)
+                              : "—"}
+                          </td>
+                          <td className="mono py-1.5 pr-3 text-right">
+                            {r.routing?.auto_approved_accuracy !== undefined
+                              ? pct(r.routing.auto_approved_accuracy)
+                              : "—"}
+                          </td>
+                          <td className="mono py-1.5 text-right">
+                            {r.routing?.review_rate !== undefined
+                              ? pct(r.routing.review_rate)
+                              : "—"}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                {comparison.notes?.length > 0 && (
+                  <ul className="mt-3 space-y-1 pl-5 text-[11px] text-text-subtle list-disc">
+                    {comparison.notes.map((n, i) => (
+                      <li key={i}>{n}</li>
+                    ))}
+                  </ul>
+                )}
+              </section>
+            )}
+
+            {/* Routing summary for the latest run */}
+            {routing && routing.total ? (
+              <section className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                <MetricCard
+                  label="Auto-approved"
+                  value={pct(routing.auto_approved_rate ?? 0)}
+                  caption={`${routing.auto_approved ?? 0} / ${routing.total}`}
+                />
+                <MetricCard
+                  label="Auto-approved accuracy"
+                  value={pct(routing.auto_approved_accuracy ?? 0)}
+                  caption="trust ceiling for this run"
+                />
+                <MetricCard
+                  label="Review rate"
+                  value={pct(routing.review_rate ?? 0)}
+                  caption={`${routing.needs_review ?? 0} need review`}
+                />
+                <MetricCard
+                  label="Zero-cost share"
+                  value={pct(routing.zero_cost_rate ?? 0)}
+                  caption={`${routing.zero_cost ?? 0} predictions cost $0`}
+                />
+              </section>
+            ) : null}
+
+            {/* Calibration warning */}
+            {calibrationWarning && (
+              <section className="mt-6 rounded-md border border-severity-high/40 bg-severity-high/10 p-4">
+                <p className="text-[14px] font-medium text-severity-high">Calibration warning</p>
+                <p className="mt-1 text-[13px] text-text-primary">{calibrationWarning}</p>
+                {calibration?.model_only && calibration.model_only.count > 0 && (
+                  <p className="mt-2 text-[12px] text-text-secondary">
+                    Model-only ECE{" "}
+                    <span className="mono">{calibration.model_only.ece.toFixed(3)}</span> ·
+                    MCE <span className="mono">{calibration.model_only.mce.toFixed(3)}</span>{" "}
+                    (n = <span className="mono">{calibration.model_only.count}</span>).
+                    Deterministic-layer confidence is rule-curated, not a probability, and is
+                    reported separately.
+                  </p>
+                )}
+              </section>
+            )}
+
+            {/* Top confusions */}
+            {topConfusions.length > 0 && (
+              <section className="mt-6 rounded-lg border border-surface-border bg-surface-panel p-4">
+                <h2 className="font-display text-[16px] font-medium text-text-primary">
+                  Top category confusions
+                </h2>
+                <p className="mt-1 text-[12px] text-text-subtle">
+                  Off-diagonal cells from the confusion matrix, ranked by count. These are the
+                  cases the categorizer most often misroutes — and where rules / human review pay
+                  off.
+                </p>
+                <ul className="mt-3 space-y-1 text-[13px]">
+                  {topConfusions.slice(0, 5).map((c, i) => (
+                    <li key={i} className="mono text-text-secondary">
+                      [{c.actual}] → [{c.predicted}]:{" "}
+                      <span className="text-text-primary">{c.count}</span> ·{" "}
+                      {pct(c.percentage_of_actual)} of actual {c.actual}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
             {/* Honesty callout — model isn't production-ready, and that's the point. */}
             <section className="mt-8 rounded-md border border-amber-200 bg-amber-50 p-4">
               <p className="text-[14px] font-medium text-amber-900">

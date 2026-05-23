@@ -14,6 +14,19 @@ cd backend && python -m ledgerlens.evals.run --dataset v0 --categorizer <name>
 
 See [ARCHITECTURE.md §7](../../docs/ARCHITECTURE.md) for metric definitions and [ADR-0004](../../docs/adr/0004-eval-harness-architecture.md) for design.
 
+## Session 15 — eval harness upgrade
+
+The harness now emits four new metric blocks per slice (`overall / non_adversarial / adversarial`):
+
+- `top_confusions` — top off-diagonal confusion-matrix cells (largest mis-routes).
+- `category_coverage` — categories in truth, predicted, never predicted, zero recall.
+- `routing` — auto-approved / needs-review / uncategorizable / failed counts, auto-approved accuracy, model-call rate, zero-cost rate, provider split, and cost-savings vs an optional model-only baseline.
+- `calibration` — `overall / model_only / deterministic` sub-blocks each with ECE, MCE, the bucket table, and a high-confidence warning when applicable.
+
+A sliced-metric bug was also fixed: the harness previously passed the full ground-truth dict to per-category metrics on every slice, inflating support for non-adversarial / adversarial subsets. Sliced calls now pass a sliced ground truth (and the legacy `per_category` numbers in older committed runs reflect the pre-fix behaviour).
+
+The `evals/compare.py` CLI rolls existing run artifacts into a side-by-side report at `evals/runs/YYYY-MM-DD-comparison.{json,md}`. The Markdown report is reviewer-readable and includes the honest-framing notes about tenant-specific COA mismatch and the meaning of auto-approved accuracy vs raw accuracy.
+
 ## Methodology caveat: `rule-categorizer-v1`
 
 The `2026-05-23-rule-categorizer-v1.json` run is the deterministic rule layer scored against the synthetic v0 dataset. Coverage is roughly **24% (72 of 302 transactions matched at least one bundled rule)**, but ground-truth **accuracy is 0%** on the matched subset. This is the expected outcome, not a defect:

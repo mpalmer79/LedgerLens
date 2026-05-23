@@ -73,6 +73,17 @@ Latest run, committed at `evals/runs/2026-05-22-claude-haiku-v1.json`:
 |---|---|---|---|---|
 | Stub (first-expense baseline) | 9.3% | 10.3% | 0.0% | $0.00 |
 | Claude Haiku 4.5 | **62.9%** | **65.3%** | **41.9%** | **$0.34** |
+| Deterministic rules only | 0.0% (see note) | 0.0% | 0.0% | $0.00 |
+
+The eval harness now also emits **routing metrics** (auto-approved rate + auto-approved accuracy + review rate + zero-cost share), **calibration** (ECE / MCE, separated for model-only vs deterministic predictions), and **top confusion pairs**. The frontend `/evals` page surfaces the layered pipeline order, a side-by-side mode comparison, and a calibration warning when high-confidence accuracy materially undershoots its claim. The `evals.compare` CLI rolls existing run artifacts into a reviewer-readable Markdown report (`evals/runs/YYYY-MM-DD-comparison.md`).
+
+The rules-only 0.0% line is a **methodology finding, not a defect**. The bundled rule set targets the default seed COA; the three synthetic eval businesses each use a different COA numbering, so rule predictions that are correct merchant→category mappings score 0% against this dataset's ground truth. The value of the rule layer in production is *cost reduction* (zero model spend on matched rows), not accuracy on this benchmark. Per-tenant rule sets translated against each synthetic business's COA are next-PR work.
+
+What reviewers should look at first:
+- **Auto-approved accuracy** — the accuracy of predictions the system would post without a human looking. This is the trust ceiling for the deployed product.
+- **Review rate** — the fraction of predictions routed to a human. Lower is cheaper, but only if auto-approved accuracy stays high.
+- **Cost per 100** — how much model spend each mode incurs to cover the same workload.
+- **Calibration warning** — emitted when the 0.9–1.0 bucket's actual accuracy is materially below 90%. Raw confidence is not a probability without this check.
 
 Reliability diagrams, slice breakdowns, and full per-transaction outputs live in [`evals/runs/`](evals/runs/). Each run is a committed JSON artifact — no metrics live in a dashboard with no underlying record.
 

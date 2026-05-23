@@ -1,0 +1,502 @@
+{
+  "generated_at": "2026-05-23T01:19:25+00:00",
+  "runs": [
+    {
+      "categorizer": "claude-haiku-v1",
+      "filename": "2026-05-22-claude-haiku-v1.json",
+      "timestamp_utc": "2026-05-22T20:26:18+00:00",
+      "transactions": 302,
+      "overall_accuracy": 0.6291390728476821,
+      "non_adversarial_accuracy": 0.6531365313653137,
+      "adversarial_accuracy": 0.41935483870967744,
+      "cost_per_100": 0.33508940397350995,
+      "p95_latency_ms": 5952.3651250000285,
+      "routing": {},
+      "calibration": {}
+    },
+    {
+      "categorizer": "rule-categorizer-v1",
+      "filename": "2026-05-23-rule-categorizer-v1.json",
+      "timestamp_utc": "2026-05-23T01:19:08+00:00",
+      "transactions": 302,
+      "overall_accuracy": 0.0,
+      "non_adversarial_accuracy": 0.0,
+      "adversarial_accuracy": 0.0,
+      "cost_per_100": 0.0,
+      "p95_latency_ms": 0.04440800000793388,
+      "routing": {
+        "total": 302,
+        "auto_approved": 27,
+        "needs_review": 45,
+        "uncategorizable": 230,
+        "failed": 0,
+        "auto_approved_rate": 0.08940397350993377,
+        "review_rate": 0.1490066225165563,
+        "auto_approved_accuracy": 0.0,
+        "model_called": 0,
+        "model_called_rate": 0.0,
+        "zero_cost": 302,
+        "zero_cost_rate": 1.0,
+        "by_provider": {
+          "deterministic_other": 230,
+          "rule_categorizer": 72
+        },
+        "cost_per_100": 0.0,
+        "cost_per_100_model_only_baseline": null,
+        "cost_savings_per_100": null
+      },
+      "calibration": {
+        "overall": {
+          "label": "overall",
+          "count": 302,
+          "ece": 0.2074,
+          "mce": 0.9256,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 230,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 4,
+              "predicted_confidence_mean": 0.4,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 41,
+              "predicted_confidence_mean": 0.8792682926829268,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 27,
+              "predicted_confidence_mean": 0.9255555555555556,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": "High-confidence bucket (0.9-1.0, n=27) actual accuracy 0.00% is materially below the 90% expectation. Auto-approved predictions in this range cannot be trusted blindly."
+        },
+        "model_only": {
+          "label": "model_only",
+          "count": 0,
+          "ece": 0.0,
+          "mce": 0.0,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": null
+        },
+        "deterministic": {
+          "label": "deterministic",
+          "count": 302,
+          "ece": 0.2074,
+          "mce": 0.9256,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 230,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 4,
+              "predicted_confidence_mean": 0.4,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 41,
+              "predicted_confidence_mean": 0.8792682926829268,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 27,
+              "predicted_confidence_mean": 0.9255555555555556,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": "High-confidence bucket (0.9-1.0, n=27) actual accuracy 0.00% is materially below the 90% expectation. Auto-approved predictions in this range cannot be trusted blindly."
+        }
+      }
+    },
+    {
+      "categorizer": "stub-v1",
+      "filename": "2026-05-23-stub-v1.json",
+      "timestamp_utc": "2026-05-23T01:19:07+00:00",
+      "transactions": 302,
+      "overall_accuracy": 0.09271523178807947,
+      "non_adversarial_accuracy": 0.1033210332103321,
+      "adversarial_accuracy": 0.0,
+      "cost_per_100": 0.0,
+      "p95_latency_ms": 0.0,
+      "routing": {
+        "total": 302,
+        "auto_approved": 0,
+        "needs_review": 302,
+        "uncategorizable": 0,
+        "failed": 0,
+        "auto_approved_rate": 0.0,
+        "review_rate": 1.0,
+        "auto_approved_accuracy": 0.0,
+        "model_called": 0,
+        "model_called_rate": 0.0,
+        "zero_cost": 302,
+        "zero_cost_rate": 1.0,
+        "by_provider": {
+          "unknown": 302
+        },
+        "cost_per_100": 0.0,
+        "cost_per_100_model_only_baseline": null,
+        "cost_savings_per_100": null
+      },
+      "calibration": {
+        "overall": {
+          "label": "overall",
+          "count": 302,
+          "ece": 0.4073,
+          "mce": 0.4073,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 302,
+              "predicted_confidence_mean": 0.5,
+              "actual_accuracy": 0.09271523178807947
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": null
+        },
+        "model_only": {
+          "label": "model_only",
+          "count": 0,
+          "ece": 0.0,
+          "mce": 0.0,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": null
+        },
+        "deterministic": {
+          "label": "deterministic",
+          "count": 0,
+          "ece": 0.0,
+          "mce": 0.0,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": null
+        }
+      }
+    }
+  ],
+  "notes": [
+    "Note: `rules-only` and `hybrid-rules-model` accuracy on the synthetic dataset is bounded by a known methodology limitation: the bundled rule set targets the default seed chart of accounts, while the three synthetic eval businesses each use their own COA numbering. Many rule predictions are correct merchant\u2192category mappings but score 0% against the eval ground truth because `6070` means different things in each business's COA. The value of the rule layer in production is cost reduction (zero model spend on matched rows), not accuracy on this benchmark."
+  ]
+}
