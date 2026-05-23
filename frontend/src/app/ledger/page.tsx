@@ -50,6 +50,21 @@ export default function LedgerPage() {
     (r) => r.categorization_status === "uncategorizable",
   );
 
+  const hasUnverified = (ledger?.trust.unverified_finalized_count ?? 0) > 0;
+
+  const handleExport = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!hasUnverified) return;
+    const ok = window.confirm(
+      "This ledger contains finalized rows that have not been verified by review, " +
+        "correction memory, or a deterministic rule. Export anyway?\n\n" +
+        "Recommended: review the unverified rows before treating this CSV as final " +
+        "bookkeeping output.",
+    );
+    if (!ok) {
+      e.preventDefault();
+    }
+  };
+
   return (
     <AppShell>
       <header className="flex flex-wrap items-end justify-between gap-3">
@@ -67,11 +82,29 @@ export default function LedgerPage() {
         <a
           href={getLedgerExportUrl()}
           download
-          className="rounded-md bg-brand-600 px-4 py-2 text-[13px] font-medium text-white hover:bg-brand-500"
+          onClick={handleExport}
+          className={`rounded-md px-4 py-2 text-[13px] font-medium text-white ${
+            hasUnverified ? "bg-amber-600 hover:bg-amber-500" : "bg-brand-600 hover:bg-brand-500"
+          }`}
         >
-          Export CSV ↓
+          {hasUnverified ? "Export CSV (warning) ↓" : "Export CSV ↓"}
         </a>
       </header>
+
+      {hasUnverified && ledger && (
+        <section className="mt-4 rounded-md border-2 border-amber-400 bg-amber-50 p-4">
+          <p className="text-[14px] font-medium text-amber-900">
+            This ledger contains{" "}
+            <span className="mono">{ledger.trust.unverified_finalized_count}</span> unverified
+            finalized row{ledger.trust.unverified_finalized_count === 1 ? "" : "s"}.
+          </p>
+          <p className="mt-1 text-[13px] text-amber-900">
+            Recommended: review unverified rows before treating this export as final
+            bookkeeping output. The CSV still exports — every row carries a per-row{" "}
+            <span className="mono">verified</span> column so downstream tooling can filter.
+          </p>
+        </section>
+      )}
 
       {error && (
         <div className="mt-6 rounded-md border border-red-200 bg-red-50 p-4 text-[14px] text-red-700">

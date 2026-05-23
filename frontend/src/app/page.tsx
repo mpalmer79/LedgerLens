@@ -10,12 +10,18 @@ import {
 } from "lucide-react";
 
 import { CheckApiButton } from "@/components/CheckApiButton";
+import { TrustPipeline } from "@/components/TrustPipeline";
+import { VideoDemo } from "@/components/VideoDemo";
 import { Logomark } from "@/components/ui/Logomark";
+import {
+  ARCHITECTURE_URL,
+  GITHUB_PROFILE_URL,
+  LINKEDIN_URL,
+  REPO_URL,
+  TRUST_METRIC_DOC_URL,
+} from "@/lib/site";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "unset";
-const REPO_URL = "https://github.com/mpalmer79/LedgerLens";
-const ARCHITECTURE_URL = `${REPO_URL}/blob/main/docs/ARCHITECTURE.md`;
-const LINKEDIN_URL = "https://linkedin.com/in/michael-palmer";
 
 export default function Page() {
   return (
@@ -27,28 +33,28 @@ export default function Page() {
             <Logomark size={24} className="text-brand-600" />
             <span className="font-display text-[18px] font-medium">LedgerLens</span>
           </Link>
-          <div className="flex items-center gap-6 text-[13px]">
+          <div className="flex items-center gap-5 text-[13px]">
             <Link
               href="/demo"
               className="rounded-md bg-brand-600 px-3 py-1.5 font-medium text-white hover:bg-brand-500"
             >
               Start the 3-minute demo →
             </Link>
-            <Link
-              href="/app"
-              className="text-text-secondary transition-colors hover:text-text-primary"
-            >
-              Open app
+            <Link href="/technical-story" className="text-text-secondary hover:text-text-primary">
+              Technical story
             </Link>
-            <Link
-              href="/evals"
-              className="text-text-secondary transition-colors hover:text-text-primary"
-            >
-              Eval evidence
+            <Link href="/evals" className="text-text-secondary hover:text-text-primary">
+              Evals
+            </Link>
+            <Link href="/app" className="text-text-secondary hover:text-text-primary">
+              App
+            </Link>
+            <Link href="/about" className="text-text-secondary hover:text-text-primary">
+              About
             </Link>
             <a
               href={REPO_URL}
-              className="text-text-secondary transition-colors hover:text-text-primary"
+              className="text-text-secondary hover:text-text-primary"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -66,52 +72,101 @@ export default function Page() {
           </span>
           <p className="max-w-3xl text-sm leading-relaxed text-text-secondary">
             <span className="font-medium text-text-primary">What you&apos;re looking at:</span>{" "}
-            a working full-stack prototype of an AI-assisted bookkeeping workflow. The data is
-            synthetic and the deployed instance runs in zero-cost demo mode (no paid API spend);
-            every other layer — the backend pipeline, the review workflow, the audit trail, the
-            eval harness — is real.
+            a working full-stack prototype of an AI-assisted bookkeeping workflow. The data
+            is synthetic; the deployed instance runs in zero-cost demo mode (no paid API
+            spend). The backend pipeline, review workflow, audit trail, and eval harness are
+            all real.
           </p>
         </div>
       </section>
 
-      {/* Hero — business-first */}
-      <section className="px-8 pt-12 pb-12 md:pt-20 md:pb-16">
-        <div className="mx-auto max-w-4xl">
-          <p className="mb-4 text-[12px] font-medium uppercase tracking-[0.5px] text-brand-600">
-            For small-business bookkeeping cleanup
-          </p>
-          <h1 className="font-display text-4xl font-medium leading-[1.15] text-text-primary md:text-5xl">
-            Turn messy bank transactions into a{" "}
-            <span className="text-brand-600">reviewed small-business ledger.</span>
-          </h1>
-          <p className="mt-5 max-w-2xl text-[17px] leading-relaxed text-text-secondary">
-            LedgerLens helps small-business owners categorize expenses, flag uncertain
-            transactions, remember human corrections, and export a clean ledger — without
-            blindly trusting AI.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              href="/demo"
-              className="inline-flex items-center rounded-md bg-brand-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-500"
-            >
-              Start the 3-minute demo →
-            </Link>
-            <a
-              href={ARCHITECTURE_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-md border border-surface-border-strong bg-transparent px-5 py-2.5 text-sm font-medium text-text-primary transition-colors hover:bg-surface-sunken"
-            >
-              View the technical architecture
-              <ExternalLink size={14} className="text-text-subtle" />
-            </a>
+      {/* Hero — business-first + premium trust card */}
+      <section className="px-8 pt-16 pb-12 md:pt-20">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-5">
+          <div className="lg:col-span-3">
+            <p className="mb-4 text-[12px] font-medium uppercase tracking-[0.5px] text-brand-600">
+              For small-business bookkeeping cleanup
+            </p>
+            <h1 className="font-display text-4xl font-medium leading-[1.1] text-text-primary md:text-5xl">
+              Turn messy bank transactions into a{" "}
+              <span className="text-brand-600">verified small-business ledger.</span>
+            </h1>
+            <p className="mt-5 max-w-2xl text-[17px] leading-relaxed text-text-secondary">
+              LedgerLens helps small business owners categorize expenses, route uncertainty
+              to review, remember human corrections, and export a reviewed ledger — without
+              blindly trusting AI.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href="/demo"
+                className="inline-flex items-center rounded-md bg-brand-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-500"
+              >
+                Start the 3-minute demo →
+              </Link>
+              <Link
+                href="/technical-story"
+                className="inline-flex items-center gap-1.5 rounded-md border border-surface-border-strong bg-transparent px-5 py-2.5 text-sm font-medium text-text-primary transition-colors hover:bg-surface-sunken"
+              >
+                See the engineering story
+              </Link>
+              <Link
+                href="/app"
+                className="inline-flex items-center text-sm font-medium text-text-secondary hover:text-text-primary"
+              >
+                Open live app →
+              </Link>
+            </div>
           </div>
+
+          {/* Premium trust card — replaces the old raw-accuracy stat. */}
+          <aside className="lg:col-span-2">
+            <div className="relative overflow-hidden rounded-xl border-2 border-brand-600 bg-gradient-to-br from-brand-100 via-surface-panel to-brand-100 p-6 shadow-sm">
+              <div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-brand-600/10 blur-2xl" />
+              <p className="inline-block rounded bg-brand-600 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-white">
+                Trust boundary
+              </p>
+              <p className="mt-4 font-display text-[28px] font-medium leading-tight text-brand-900">
+                100% verified finalized demo ledger
+              </p>
+              <p className="mt-3 text-[13px] leading-relaxed text-brand-800">
+                Finalized rows are verified by human review, correction memory, or
+                deterministic rules before export.
+              </p>
+              <p className="mt-3 text-[11px] text-text-subtle">
+                Raw model performance is still measured separately on the{" "}
+                <Link href="/evals" className="underline hover:text-text-primary">
+                  evals page
+                </Link>
+                .
+              </p>
+            </div>
+          </aside>
         </div>
+      </section>
+
+      {/* Visual pipeline — the system story in one row */}
+      <section className="mx-auto mt-12 max-w-6xl px-8">
+        <h2 className="font-display text-[22px] font-medium text-text-primary">
+          The pipeline in one row
+        </h2>
+        <p className="mt-2 max-w-3xl text-[14px] text-text-secondary">
+          Every transaction passes through the same layered workflow. The fallback layer is
+          configurable: the public deploy uses a zero-cost demo stub; private development
+          switches it to the real Anthropic model with one env-var change.
+        </p>
+        <div className="mt-5">
+          <TrustPipeline />
+        </div>
+      </section>
+
+      {/* 30-second walkthrough */}
+      <section className="mt-16">
+        <VideoDemo />
       </section>
 
       {/* Three business value cards */}
-      <section className="mx-auto max-w-6xl px-8">
-        <h2 className="font-display text-[26px] font-medium text-text-primary">
+      <section className="mx-auto mt-20 max-w-6xl px-8">
+        <h2 className="font-display text-[24px] font-medium text-text-primary">
           Why a small-business owner cares
         </h2>
         <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
@@ -133,39 +188,9 @@ export default function Page() {
         </div>
       </section>
 
-      {/* The bookkeeping mess (problem statement) */}
-      <section className="mx-auto mt-20 max-w-5xl px-8">
-        <div className="rounded-lg border border-surface-border bg-surface-panel p-6">
-          <h2 className="font-display text-[22px] font-medium text-text-primary">
-            The monthly cleanup problem
-          </h2>
-          <p className="mt-2 max-w-3xl text-[14px] text-text-secondary">
-            Every month a small-business owner sees lines like these — some obvious, others
-            ambiguous, several risky. A blind AI guess on a payroll run or a State Farm payment
-            can quietly land in the wrong account and stay there until tax season.
-          </p>
-          <ul className="mono mt-4 grid grid-cols-1 gap-y-1 text-[12px] text-text-secondary sm:grid-cols-2">
-            <li>COMCAST BUSINESS INTERNET MAR</li>
-            <li>QUICKBOOKS ONLINE PLUS</li>
-            <li>ADP PAYROLL BI-WEEKLY</li>
-            <li>STATE FARM POLICY 49KF-NH</li>
-            <li>STRIPE PROCESSING FEE</li>
-            <li>STAPLES STORE 4471</li>
-            <li>AMAZON BUSINESS ORDER 113-44</li>
-            <li>ACH TRANSFER VENDOR REF 99812</li>
-          </ul>
-          <p className="mt-4 text-[13px] text-text-secondary">
-            <Link href="/demo" className="text-brand-700 underline">
-              Walk through the demo →
-            </Link>{" "}
-            to see how the layered pipeline handles each one.
-          </p>
-        </div>
-      </section>
-
       {/* Recruiter-facing technical credibility */}
       <section className="mx-auto mt-20 max-w-6xl px-8">
-        <h2 className="font-display text-[26px] font-medium text-text-primary">
+        <h2 className="font-display text-[24px] font-medium text-text-primary">
           Built like an AI workflow system, not an LLM wrapper.
         </h2>
         <p className="mt-2 max-w-3xl text-[14px] text-text-secondary">
@@ -205,51 +230,74 @@ export default function Page() {
           />
         </div>
         <p className="mt-6 text-[13px] text-text-secondary">
-          <Link href="/evals" className="text-brand-700 underline">
-            See the eval evidence →
+          <Link href="/technical-story" className="text-brand-700 underline">
+            Full engineering story →
           </Link>{" "}
-          for raw model performance and calibration. The product&apos;s headline number
-          isn&apos;t raw model accuracy — it&apos;s{" "}
-          <strong>finalized rows verified before export</strong>, the topic of the next
-          section.
+          ·{" "}
+          <Link href="/evals" className="text-brand-700 underline">
+            eval evidence →
+          </Link>{" "}
+          ·{" "}
+          <a
+            href={TRUST_METRIC_DOC_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-brand-700 underline"
+          >
+            trust metric doc →
+          </a>
         </p>
       </section>
 
-      {/* Trust boundary — the product's headline number */}
+      {/* About-Michael strip */}
       <section className="mx-auto mt-20 max-w-5xl px-8">
-        <div className="rounded-lg border-2 border-brand-600 bg-brand-100 p-6">
-          <p className="mb-2 inline-block rounded bg-brand-600 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-white">
-            Trust metric
-          </p>
-          <h2 className="font-display text-[24px] font-medium text-brand-900">
-            100% of finalized guided-demo ledger rows are verified before export.
-          </h2>
-          <p className="mt-3 max-w-3xl text-[14px] leading-relaxed text-brand-800">
-            That&apos;s not a claim about raw model accuracy. Raw AI accuracy on adversarial
-            bookkeeping data is not the right trust boundary for financial workflows — the eval
-            page reports it honestly (model-only ≈ 63% on the synthetic dataset). The number
-            above is what the product actually guarantees: a finalized row is only counted
-            when its category came from a deterministic rule auto-approval, a correction-memory
-            replay of a prior human decision, or an explicit human review on this row.
-          </p>
-          <ul className="mt-4 space-y-1 text-[13px] text-brand-900">
-            <li>· Uncertain transactions silently finalized: <strong>0</strong></li>
-            <li>· Demo-stub results are never finalized — they route to review.</li>
-            <li>· Unreviewed model auto-approvals are never finalized — they require sign-off.</li>
-            <li>· The CSV export carries a per-row <span className="mono">verified</span> column for downstream filtering.</li>
-          </ul>
-          <p className="mt-4 text-[12px] text-brand-700">
-            <Link href="/demo" className="underline">
-              Walk the guided demo →
-            </Link>{" "}
-            to see the trust panel update in real time as the pipeline runs.
-          </p>
+        <div className="rounded-lg border border-surface-border bg-surface-panel p-6">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+            <div className="sm:col-span-2">
+              <p className="text-[12px] font-medium uppercase tracking-[0.5px] text-brand-600">
+                About the builder
+              </p>
+              <h2 className="mt-2 font-display text-[20px] font-medium text-text-primary">
+                Michael Palmer
+              </h2>
+              <p className="mt-2 text-[13px] leading-relaxed text-text-secondary">
+                Computer Science student and software/AI developer with 25 years of
+                automotive retail and operations experience, including enterprise
+                implementation work at CDK Global. Building practical AI workflow systems
+                with guardrails, auditability, and human oversight.
+              </p>
+            </div>
+            <div className="flex flex-col gap-2 sm:items-end">
+              <Link
+                href="/about"
+                className="inline-flex items-center justify-center rounded-md bg-brand-600 px-4 py-2 text-[13px] font-medium text-white hover:bg-brand-500"
+              >
+                Read more about Michael →
+              </Link>
+              <a
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-[13px] text-text-secondary hover:text-text-primary"
+              >
+                LinkedIn <ExternalLink size={12} />
+              </a>
+              <a
+                href={GITHUB_PROFILE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-[13px] text-text-secondary hover:text-text-primary"
+              >
+                GitHub <ExternalLink size={12} />
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Live API health */}
       <section className="mx-auto mt-20 max-w-3xl px-8">
-        <h2 className="mb-6 text-center font-display text-[18px] font-medium text-text-primary">
+        <h2 className="mb-6 text-center font-display text-[16px] font-medium text-text-primary">
           Live API health
         </h2>
         <CheckApiButton apiBaseUrl={API_BASE_URL} />
@@ -260,37 +308,37 @@ export default function Page() {
         <div className="mx-auto max-w-6xl">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
             <div>
-              <p className="text-sm text-text-primary">
-                Built by{" "}
+              <p className="text-sm text-text-primary">LedgerLens</p>
+              <p className="mt-1 text-[13px] text-text-subtle">
+                Portfolio project by{" "}
                 <a
                   href={LINKEDIN_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-brand-600 hover:text-brand-500"
+                  className="text-brand-700 hover:text-brand-500"
                 >
                   Michael Palmer
                 </a>
+                . PalmerAI Solutions is Michael&apos;s personal portfolio brand for
+                practical AI workflow systems — not a commercial SaaS.
               </p>
-              <p className="mt-1 text-[13px] text-text-subtle">PalmerAI Solutions</p>
             </div>
             <div className="flex flex-col gap-2 text-[13px] sm:items-end">
               <Link href="/demo" className="text-text-secondary hover:text-text-primary">
                 Guided demo
               </Link>
-              <Link href="/app" className="text-text-secondary hover:text-text-primary">
-                Open the app
+              <Link
+                href="/technical-story"
+                className="text-text-secondary hover:text-text-primary"
+              >
+                Technical story
               </Link>
               <Link href="/evals" className="text-text-secondary hover:text-text-primary">
                 Eval evidence
               </Link>
-              <a
-                href={ARCHITECTURE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-text-secondary hover:text-text-primary"
-              >
-                Architecture
-              </a>
+              <Link href="/about" className="text-text-secondary hover:text-text-primary">
+                About Michael
+              </Link>
               <a
                 href={REPO_URL}
                 target="_blank"
@@ -299,12 +347,36 @@ export default function Page() {
               >
                 GitHub repo
               </a>
+              <a
+                href={GITHUB_PROFILE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-text-secondary hover:text-text-primary"
+              >
+                GitHub profile
+              </a>
+              <a
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-text-secondary hover:text-text-primary"
+              >
+                LinkedIn
+              </a>
+              <a
+                href={ARCHITECTURE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-text-secondary hover:text-text-primary"
+              >
+                Architecture
+              </a>
             </div>
           </div>
           <p className="mt-8 border-t border-surface-border pt-6 text-[11px] text-text-subtle">
-            © {new Date().getFullYear()} PalmerAI Solutions. LedgerLens is a portfolio project
-            built to demonstrate AI-systems engineering practice. No financial data leaves your
-            environment.
+            © {new Date().getFullYear()} Michael Palmer. LedgerLens is a portfolio project
+            built to demonstrate AI-systems engineering practice. No financial data leaves
+            your environment.
           </p>
         </div>
       </footer>

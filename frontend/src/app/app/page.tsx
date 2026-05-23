@@ -128,32 +128,41 @@ export default function DashboardPage() {
 
       {/* Empty state — first-time visitor needs direction, not a status dump */}
       {total === 0 && !state.error && (
-        <section className="mt-6 rounded-lg border border-brand-200 bg-brand-100 p-5">
-          <h2 className="font-display text-[17px] font-medium text-text-primary">
-            Start here
+        <section className="mt-6 rounded-lg border-2 border-brand-600 bg-brand-100 p-5">
+          <h2 className="font-display text-[18px] font-medium text-text-primary">
+            Start with a guided bookkeeping cleanup demo.
           </h2>
-          <p className="mt-1 text-[13px] text-text-secondary">
-            The database is empty. Two ways forward:
+          <p className="mt-2 max-w-3xl text-[13px] text-text-secondary">
+            LedgerLens needs transactions to show the workflow. Load the guided demo to see
+            rules, correction memory, review routing, and verified ledger export in action.
+            Real backend calls, no mocked state.
           </p>
-          <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
             <Link
               href="/demo"
               className="rounded border-2 border-brand-600 bg-surface-panel p-3 text-[13px] font-medium text-brand-700 hover:bg-brand-50"
             >
-              Run the 3-minute guided demo →
+              Start guided demo →
               <p className="mt-1 text-[12px] font-normal text-text-secondary">
-                The fastest way to understand the product. Real backend calls, real
-                pipeline, no manual clicking.
+                Three minutes. Ends at a verified ledger export.
               </p>
             </Link>
             <Link
               href="/transactions/import"
               className="rounded border border-surface-border bg-surface-panel p-3 text-[13px] font-medium text-text-primary hover:bg-surface-sunken"
             >
-              Import your own CSV →
+              Import transactions →
               <p className="mt-1 text-[12px] font-normal text-text-secondary">
-                Bring a real bank export. The sample is on the import page if you don&apos;t
-                have one.
+                Bring a real bank export. Sample CSV is on the import page.
+              </p>
+            </Link>
+            <Link
+              href="/technical-story"
+              className="rounded border border-surface-border bg-surface-panel p-3 text-[13px] font-medium text-text-primary hover:bg-surface-sunken"
+            >
+              View technical story →
+              <p className="mt-1 text-[12px] font-normal text-text-secondary">
+                Architecture, trust model, and what this project demonstrates.
               </p>
             </Link>
           </div>

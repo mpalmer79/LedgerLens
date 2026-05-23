@@ -448,12 +448,14 @@ export default function DemoPage() {
       {/* Step 6: ledger */}
       <Step
         n={6}
-        title="The final output is a reviewed ledger, not an AI answer"
+        title="The final output is a verified ledger, not an AI answer"
         explainer={
           <>
-            Auto-approved and corrected transactions are finalized. Unresolved review items are
-            explicitly flagged and excluded from the finalized count. The export is the actual
-            deliverable a bookkeeper sends downstream.
+            LedgerLens does not claim the model is perfect.{" "}
+            <strong>It verifies what becomes final.</strong> Auto-approved and corrected
+            transactions are finalized; unresolved review items are explicitly flagged and
+            excluded. The trust panel below reflects the persisted database — no mocked
+            numbers.
           </>
         }
       >
@@ -466,6 +468,7 @@ export default function DemoPage() {
         {state.ledger && (
           <>
             <TrustPanel trust={state.ledger.trust} variant="demo" />
+            <DemoOutcome ledger={state.ledger} />
             <div className="mt-3 rounded border border-surface-border bg-surface-panel p-3 text-[13px]">
               <p>
                 Finalized rows:{" "}
@@ -660,5 +663,35 @@ function ProofCard({ title, body }: { title: string; body: string }) {
       <p className="font-medium text-text-primary">{title}</p>
       <p className="mt-1 text-text-secondary">{body}</p>
     </li>
+  );
+}
+
+function DemoOutcome({ ledger }: { ledger: Ledger }) {
+  const trust = ledger.trust;
+  const allVerified = trust.unverified_finalized_count === 0 && trust.finalized_count > 0;
+  const tone = allVerified
+    ? "border-brand-600 bg-brand-100"
+    : trust.finalized_count === 0
+      ? "border-surface-border bg-surface-panel"
+      : "border-amber-400 bg-amber-50";
+  return (
+    <div className={`mt-3 rounded-lg border-2 p-4 ${tone}`}>
+      <p className="font-display text-[15px] font-medium text-text-primary">
+        {allVerified
+          ? "Every finalized row in this demo ledger is verified before export."
+          : trust.finalized_count === 0
+            ? "Nothing finalized yet."
+            : "Finish review to reach a fully verified demo ledger."}
+      </p>
+      <p className="mt-1 text-[12px] text-text-secondary">
+        {allVerified
+          ? "Verification rate is 100% — every row is backed by a deterministic rule, a correction-memory replay, or a human review."
+          : trust.finalized_count === 0
+            ? "Run categorization and review the uncertain items above to populate the verified ledger."
+            : `${trust.unverified_finalized_count} finalized row${
+                trust.unverified_finalized_count === 1 ? "" : "s"
+              } still need human sign-off before the ledger can be considered verified.`}
+      </p>
+    </div>
   );
 }

@@ -1,19 +1,23 @@
 # LedgerLens
 
-**An AI-assisted bookkeeping workflow prototype for small businesses.** Turns messy bank transactions into a reviewed, categorized ledger by combining deterministic rules, human correction memory, review routing, and an audit trail.
+**An AI-assisted bookkeeping workflow prototype for small businesses.** Turns messy bank transactions into a **verified** categorized ledger by combining deterministic rules, human correction memory, review routing, audit trails, and ledger export.
 
 [![Live demo](https://img.shields.io/badge/demo-ledgerlens.up.railway.app-2e5f32)](https://ledgerlens.up.railway.app)
 [![Guided demo](https://img.shields.io/badge/3--minute-guided%20demo-244c27)](https://ledgerlens.up.railway.app/demo)
-[![Eval results](https://img.shields.io/badge/eval-claude--haiku--4.5-2e5f32)](evals/runs/)
+[![Trust metric](https://img.shields.io/badge/trust-100%25%20verified%20before%20export-2e5f32)](docs/TRUST_METRIC.md)
 
 ## TL;DR
 
 - **Who it's for** — small-business owners doing monthly bookkeeping cleanup; the engineering audience evaluating an AI-systems portfolio.
 - **The problem** — bank exports are full of cryptic merchant strings. A wrong category propagates into financial statements and tax filings. Pure AI guessing isn't good enough.
 - **The approach** — a layered pipeline (`correction memory → deterministic rules → fallback → confidence routing → human review → audit`) that only calls the model when the earlier layers can't decide safely.
-- **The headline number** — **100% of finalized guided-demo ledger rows are verified before export.** Not a claim about raw AI accuracy (that's reported honestly on `/evals` at ≈ 63%). A finalized row counts as verified only when it came through a deterministic rule auto-approval, a correction-memory replay of a prior human decision, or an explicit human review. See [`docs/TRUST_METRIC.md`](docs/TRUST_METRIC.md).
+- **The headline number** — **100% of finalized guided-demo ledger rows are verified before export.** This is a workflow-level guarantee, not a claim about raw AI accuracy. A finalized row counts as verified only when it came through a deterministic rule auto-approval, a correction-memory replay of a prior human decision, or an explicit human review. See [`docs/TRUST_METRIC.md`](docs/TRUST_METRIC.md).
 - **The deployed instance** — runs in **zero-cost demo mode**. The `anthropic` SDK is never imported. A regression test asserts that.
 - **Start here** — the [3-minute guided demo](https://ledgerlens.up.railway.app/demo) walks through the full story using real backend calls.
+
+## Why not claim 100% AI accuracy?
+
+Because ambiguous bookkeeping data requires business context, and adversarial cases exist precisely because a junior bookkeeper would forward them. Pretending the model gets every case right is dishonest. LedgerLens instead verifies *what becomes final*: finalized rows must be backed by human review, correction memory, or deterministic rules. Raw model accuracy on the synthetic eval dataset is around **63% overall** and **42% on the adversarial slice** — and that's reported honestly on [`/evals`](https://ledgerlens.up.railway.app/evals) and the committed run artifacts in `evals/runs/`.
 
 ## Current product status
 
