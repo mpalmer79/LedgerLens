@@ -275,3 +275,45 @@ export const listRules = () => apiFetch<RuleList>("/rules");
 
 export const getRuleMatches = (transactionId: string) =>
   apiFetch<RuleMatch>(`/transactions/${transactionId}/rule-matches`);
+
+// ── Guided demo ───────────────────────────────────────────────────────────
+
+export type DemoStatus = {
+  demo_mode: boolean;
+  categorizer_mode: string;
+  transaction_count: number;
+  demo_transaction_count: number;
+  categorization_result_count: number;
+  review_decision_count: number;
+  correction_memory_count: number;
+};
+
+export type DemoSampleTransaction = {
+  transaction_date: string;
+  description: string;
+  merchant: string | null;
+  amount_cents: number;
+};
+
+export type DemoSeedResult = {
+  count: number;
+  created: Transaction[];
+};
+
+export type DemoResetResult = {
+  deleted_transactions: number;
+  deleted_results?: number;
+  deleted_decisions?: number;
+  deleted_memories?: number;
+};
+
+export const getDemoStatus = () => apiFetch<DemoStatus>("/demo/status");
+
+export const getDemoSampleTransactions = () =>
+  apiFetch<DemoSampleTransaction[]>("/demo/sample-transactions");
+
+export const seedDemo = () =>
+  apiFetch<DemoSeedResult>("/demo/seed", { method: "POST" });
+
+export const resetDemo = () =>
+  apiFetch<DemoResetResult>("/demo/reset", { method: "POST" });

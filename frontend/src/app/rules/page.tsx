@@ -40,13 +40,19 @@ export default function RulesPage() {
     <AppShell>
       <header>
         <h1 className="font-display text-[28px] font-medium text-text-primary">
-          Deterministic rules
+          Obvious vendors should not require AI.
         </h1>
         <p className="mt-1 max-w-3xl text-[14px] text-text-secondary">
-          The rule layer runs after correction memory and before the model. When a transaction
-          matches a high-confidence rule, it is categorized deterministically at zero model cost.
-          Ambiguous rules with confidence below the auto-approve threshold route to the review
-          queue rather than auto-applying. These rules are not AI — they are a curated table.
+          LedgerLens uses deterministic rules for vendors that are safe to classify — QuickBooks,
+          Zoom, Staples, Shell, Stripe fees, and similar known accounts. Matches at high
+          confidence auto-approve at zero cost. Ambiguous vendors like Amazon are intentionally
+          routed to review instead. The rule layer reduces model calls and keeps frequent vendors
+          consistent across months.
+        </p>
+        <p className="mt-2 max-w-3xl text-[12px] text-text-subtle">
+          <strong>Tenant note:</strong> the bundled rule set targets the default seed chart of
+          accounts. A real multi-tenant deployment needs per-business rules — that abstraction
+          isn&apos;t in v0 and is documented in the gap analysis.
         </p>
       </header>
 

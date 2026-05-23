@@ -9,6 +9,7 @@ from ledgerlens.api import (
     categories,
     categorize,
     corrections,
+    demo,
     health,
     ledger,
     review,
@@ -65,6 +66,7 @@ def create_app() -> FastAPI:
     application.include_router(corrections.memory_match_router)
     application.include_router(rules.router)
     application.include_router(rules.rule_match_router)
+    application.include_router(demo.router)
 
     return application
 

@@ -53,10 +53,14 @@ export default function LedgerPage() {
     <AppShell>
       <header className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="font-display text-[28px] font-medium text-text-primary">Ledger</h1>
-          <p className="mt-1 text-[14px] text-text-secondary">
-            Finalized categorized transactions. Corrected categories take precedence over the
-            model&apos;s prediction.
+          <h1 className="font-display text-[28px] font-medium text-text-primary">
+            Reviewed ledger export.
+          </h1>
+          <p className="mt-1 max-w-3xl text-[14px] text-text-secondary">
+            The final product is not an AI response. It is a categorized transaction ledger with
+            reviewed decisions and traceable status. Corrected categories take precedence over
+            any model prediction; unresolved review items are explicitly flagged and excluded
+            from the finalized count.
           </p>
         </div>
         <a

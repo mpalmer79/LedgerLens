@@ -106,11 +106,12 @@ export default function DashboardPage() {
     <AppShell>
       <header>
         <h1 className="font-display text-[28px] font-medium text-text-primary">
-          Workflow dashboard
+          Small-business bookkeeping cleanup, with human oversight.
         </h1>
-        <p className="mt-1 text-[14px] text-text-secondary">
-          Import bank transactions, run the categorizer, review uncertain cases, export a
-          finalized ledger.
+        <p className="mt-1 max-w-3xl text-[14px] text-text-secondary">
+          Import messy bank activity, classify obvious vendors automatically, review uncertain
+          items, remember corrections, and export a categorized ledger. AI is one layer in the
+          pipeline — not the whole answer.
         </p>
       </header>
 
@@ -118,9 +119,56 @@ export default function DashboardPage() {
         <div className="mt-4 rounded-md border border-brand-200 bg-brand-100 px-4 py-2 text-[12px] text-brand-800">
           <span className="font-medium">Portfolio demo mode.</span> Correction memory and
           deterministic rules run normally; unmatched transactions are routed to review by a
-          zero-cost stub instead of a paid model provider.
+          zero-cost stub instead of a paid model provider.{" "}
+          <Link href="/demo" className="underline">
+            Walk the 3-minute guided demo →
+          </Link>
         </div>
       )}
+
+      {/* Empty state — first-time visitor needs direction, not a status dump */}
+      {total === 0 && !state.error && (
+        <section className="mt-6 rounded-lg border border-brand-200 bg-brand-100 p-5">
+          <h2 className="font-display text-[17px] font-medium text-text-primary">
+            Start here
+          </h2>
+          <p className="mt-1 text-[13px] text-text-secondary">
+            The database is empty. Two ways forward:
+          </p>
+          <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <Link
+              href="/demo"
+              className="rounded border-2 border-brand-600 bg-surface-panel p-3 text-[13px] font-medium text-brand-700 hover:bg-brand-50"
+            >
+              Run the 3-minute guided demo →
+              <p className="mt-1 text-[12px] font-normal text-text-secondary">
+                The fastest way to understand the product. Real backend calls, real
+                pipeline, no manual clicking.
+              </p>
+            </Link>
+            <Link
+              href="/transactions/import"
+              className="rounded border border-surface-border bg-surface-panel p-3 text-[13px] font-medium text-text-primary hover:bg-surface-sunken"
+            >
+              Import your own CSV →
+              <p className="mt-1 text-[12px] font-normal text-text-secondary">
+                Bring a real bank export. The sample is on the import page if you don&apos;t
+                have one.
+              </p>
+            </Link>
+          </div>
+        </section>
+      )}
+
+      {/* Why this matters — explain the product, not just the tabs */}
+      <section className="mt-6 rounded-lg border border-surface-border bg-surface-panel p-4">
+        <p className="text-[13px] font-medium text-text-primary">Why this matters</p>
+        <ul className="mt-2 list-disc space-y-1 pl-5 text-[12px] text-text-secondary">
+          <li>Bookkeeping cleanup is repetitive but risky — a wrong category propagates to financial statements and tax filings.</li>
+          <li>AI guesses alone are not enough. A model that hallucinates an account number can quietly contaminate the books.</li>
+          <li>LedgerLens combines rules, correction memory, review routing, and audit trails so the system stays explainable.</li>
+        </ul>
+      </section>
 
       {state.error && (
         <div className="mt-6 rounded-md border border-red-200 bg-red-50 p-4 text-[14px] text-red-700">
