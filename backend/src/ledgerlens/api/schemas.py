@@ -173,12 +173,44 @@ class LedgerRow(BaseModel):
     reviewed: bool
     reviewer_note: str | None
     source: str
+    # Which layer produced the latest result. None when the transaction has
+    # never been categorized. Used by the trust-metric panel to distinguish
+    # deterministic (memory / rule) decisions from model fallback.
+    model_provider: str | None = None
+
+
+class LedgerTrust(BaseModel):
+    """Trust-boundary view of a ledger.
+
+    A row counts as `verified` when its final category was decided through a
+    path a bookkeeper can defend:
+
+    - The row was reviewed (approved or corrected) by a human, OR
+    - The row was categorized from `correction_memory` (every memory row was
+      seeded by a real human correction), OR
+    - The row was auto-approved by `rule_categorizer` (a curated rule at or
+      above the configured auto-threshold).
+
+    `unverified_finalized` counts rows that ended in `auto_approved` /
+    `corrected` without one of those guarantees — for example, an
+    `anthropic`-mode model auto-approval that nobody reviewed. The product
+    goal is to keep this number at zero on a finalized demo ledger.
+    """
+
+    finalized_count: int
+    verified_count: int
+    unverified_finalized_count: int
+    review_required_count: int
+    deterministic_count: int
+    human_reviewed_count: int
+    verification_rate: float
 
 
 class LedgerOut(BaseModel):
     total: int
     unresolved: int
     rows: list[LedgerRow]
+    trust: LedgerTrust
 
 
 # ── Audit ───────────────────────────────────────────────────────────────────

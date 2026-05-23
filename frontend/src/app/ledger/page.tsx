@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 import { AppShell } from "@/components/app/AppShell";
 import { StatusBadge } from "@/components/app/StatusBadge";
+import { TrustPanel } from "@/components/app/TrustPanel";
 import { ApiError, getLedger, getLedgerExportUrl } from "@/lib/api/client";
 import type { Ledger } from "@/lib/api/types";
 import { formatAmount, formatConfidence, formatDate } from "@/lib/format";
@@ -82,6 +83,7 @@ export default function LedgerPage() {
 
       {ledger && (
         <>
+          <TrustPanel trust={ledger.trust} />
           {ledger.unresolved > 0 && (
             <div className="mt-6 rounded-md border border-amber-200 bg-amber-50 p-4">
               <p className="text-[14px] font-medium text-amber-900">

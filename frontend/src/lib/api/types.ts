@@ -155,12 +155,24 @@ export type LedgerRow = {
   reviewed: boolean;
   reviewer_note: string | null;
   source: string;
+  model_provider: string | null;
+};
+
+export type LedgerTrust = {
+  finalized_count: number;
+  verified_count: number;
+  unverified_finalized_count: number;
+  review_required_count: number;
+  deterministic_count: number;
+  human_reviewed_count: number;
+  verification_rate: number;
 };
 
 export type Ledger = {
   total: number;
   unresolved: number;
   rows: LedgerRow[];
+  trust: LedgerTrust;
 };
 
 export type AuditEvent = {
