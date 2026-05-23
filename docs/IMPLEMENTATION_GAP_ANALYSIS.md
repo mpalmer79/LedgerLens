@@ -9,8 +9,9 @@ This document maps what is implemented, what is implied but missing, what needs 
 - **Backend foundation — shipped (PR #23).** Items #1–#8 and #10 in the priority table below are complete: lazy settings + `/health` + `/ready`, SQLAlchemy persistence layer, transaction intake (single, batch, CSV import), categorize endpoint with confidence routing, review queue (approve / correct / uncategorizable), audit trail on every state change, ledger CSV export.
 - **Frontend workflow pages — shipped (PR #24).** Item #9 in the table: `/app`, `/transactions`, `/transactions/import`, `/transactions/[id]`, `/review`, `/ledger` are real, talk to the typed API client, and surface the live backend.
 - **Correction memory — shipped (PR #25).** Item #12 in the table: deterministic, exact-key correction memory. Human corrections create `CorrectionMemory` rows; future transactions matching the same key categorize from memory at zero model cost; conflicts route to review; generic merchants are explicitly excluded. This is rule lookup over a model categorizer — not training, not fine-tuning, not embeddings.
+- **Hybrid rules + model categorizer — shipped (PR #26).** Item #13 in the table: a deterministic rule layer sits between correction memory and the model. ~25 curated rules in `backend/src/ledgerlens/data/category_rules.json` validated against the active chart of accounts at load time. Strong matches (rule confidence ≥ auto threshold) auto-approve with `provider = rule_categorizer`, zero cost, and an explanation citing the matched rule id. Below-auto matches route to review. Conflicting matches route to review. New endpoints `GET /rules` and `GET /transactions/{id}/rule-matches`; new frontend page `/rules`. The pipeline order is now: **memory → rules → model → confidence routing → human review → audit.**
 
-The priority table below is kept in its original form for traceability — items 1–10 and 12 are now done; items 11 and 13 onward remain as the forward backlog.
+The priority table below is kept in its original form for traceability — items 1–10, 12, and 13 are now done; items 11 and 14 onward remain as the forward backlog.
 
 ---
 

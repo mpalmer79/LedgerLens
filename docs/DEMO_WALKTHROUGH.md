@@ -46,11 +46,18 @@ The summary shows `Received rows: 12`, `Created: 12`, `Errors: 0`, and lists eve
 
 Click **View imported transactions →**, or visit `/transactions`.
 
-The list shows 12 rows with status `Pending`. Click **Select all (12)** and then **Categorize 12 selected**. Each row gets a real Claude Haiku prediction, a confidence number, and a status badge.
+The list shows 12 rows with status `Pending`. Click **Select all (12)** and then **Categorize 12 selected**. Each row passes through the pipeline:
+
+1. Correction memory — empty on first run, so nothing matches yet.
+2. Deterministic rule layer (`/rules`) — vendors in the bundled rule set (Adobe, QuickBooks, Zoom, Staples, Uber, Shell, …) categorize **at zero model cost** with provider `rule_categorizer`.
+3. Claude Haiku — runs only on the transactions neither layer could classify.
+
+Open the detail page for a few rows to see the "Source" tag on the latest-categorization card: `Rule` (with the rule id), `Memory`, or `Model`. The audit trail records `categorized_from_rules` for rule hits and the matched rule id for traceability.
 
 Likely outcomes:
-- 6–9 transactions → `Auto-approved` (confidence ≥ 0.90)
-- 3–6 → `Needs review` (mid confidence)
+- Several transactions → `Auto-approved` via the rule layer (zero cost, confidence equal to the rule's confidence)
+- A few → `Auto-approved` via the model (≥ 0.90)
+- Some → `Needs review` (mid-confidence model results, or rule conflicts)
 - 0–1 → `Uncategorizable` if the model refuses
 
 ### 4. Visit the review queue
@@ -109,11 +116,13 @@ The dashboard shows real eval metrics from the committed JSON artifact: overall 
 
 ## What the reviewer should notice
 
-- The categorize button isn't a demo button. It calls Claude Haiku and persists the result.
+- The categorize button isn't a demo button. It calls Claude Haiku and persists the result — but only when memory and the rule layer can't decide on their own.
+- The pipeline is three deterministic layers + a model fallback: memory → rules → model. Each layer is auditable, and each result names which layer produced it. The model is the *last* resort, not the first.
 - Confidence routing isn't fake. Mid-confidence predictions go to the review queue. Predictions outside the active chart of accounts are auto-routed to review even at high confidence.
 - The ledger reflects review state. A corrected category replaces the model's pick in the export.
 - The audit trail is real. Every state change writes a row visible on the transaction detail page.
-- Correction memory is real lookup, not fake learning. Step 5 above shows the second transaction categorized at zero model cost from a stored rule, not from the model. Deactivate the rule on `/corrections` and the same transaction would have gone back through the model.
+- Correction memory is real lookup, not fake learning. Step 5 above shows the second transaction categorized at zero model cost from a stored rule, not from the model. Deactivate the rule on `/corrections` and the same transaction would have gone back through the pipeline.
+- The rule layer is real lookup, not AI. Step 3 above shows Adobe / Zoom / Staples / Uber categorized from `/rules` at zero model cost. Confidence below the auto-approve threshold routes to review (see the Amazon entry — confidence 0.4, intentionally never auto-applied).
 - The eval page isn't oversold. It explicitly names the accuracy gap and connects it to why the workflow exists.
 
 ## Known limitations
@@ -122,5 +131,6 @@ The dashboard shows real eval metrics from the committed JSON artifact: overall 
 - Correction memory is exact-key only — no semantic / fuzzy matching. "Adobe Creative Cloud" and "Adobe CC" are different keys today. Embedding-based retrieval is intentionally deferred until exact matching has proven its hit rate.
 - Generic merchants (`ACH`, `POS`, `TRANSFER`, `PAYMENT`, etc.) are deliberately ignored when building memory keys — a correction on an "ACH DEBIT" row will not create a reusable rule, because the key is not specific enough to be safe.
 - Conflicting corrections route to review. If two reviewers corrected the same merchant to two different categories, the next matching transaction goes to `/review` instead of auto-applying either rule. This is intentional.
-- Eval-harness metric upgrades (ECE, slice-correct per-category, baselines beyond stub) are deferred. See `docs/IMPLEMENTATION_GAP_ANALYSIS.md`.
+- The bundled rule set is manually curated and tenant-agnostic. It targets the default seed chart of accounts. Per-tenant rules — and rule auto-learning from corrections — are deliberately out of scope for v0.
+- Eval-harness metric upgrades (ECE, slice-correct per-category, baselines beyond stub) are partially addressed. A rules-only run is committed under `evals/runs/`; because the bundled rules target the default COA and the synthetic eval businesses use different code mappings, ground-truth accuracy is 0% — that is the *methodology finding*, not a bug.
 - No rate limiting on the backend. Demo only.

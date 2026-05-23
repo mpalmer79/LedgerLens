@@ -12,6 +12,7 @@ import {
   categorize,
   correctReview,
   getMemoryMatches,
+  getRuleMatches,
   getTransaction,
   listAuditEvents,
   listCategorizationResults,
@@ -23,6 +24,7 @@ import type {
   CategorizationResult,
   Category,
   MemoryMatch,
+  RuleMatch,
   Transaction,
 } from "@/lib/api/types";
 import { formatAmount, formatConfidence, formatTimestamp } from "@/lib/format";
@@ -33,6 +35,7 @@ type State = {
   categories: Category[];
   events: AuditEvent[];
   memoryMatch: MemoryMatch | null;
+  ruleMatch: RuleMatch | null;
   loading: boolean;
   error: string | null;
 };
@@ -43,6 +46,7 @@ const INITIAL: State = {
   categories: [],
   events: [],
   memoryMatch: null,
+  ruleMatch: null,
   loading: true,
   error: null,
 };
@@ -61,12 +65,13 @@ export default function TransactionDetailPage() {
   async function load() {
     setState((s) => ({ ...s, loading: true, error: null }));
     try {
-      const [tx, results, categories, events, memoryMatch] = await Promise.all([
+      const [tx, results, categories, events, memoryMatch, ruleMatch] = await Promise.all([
         getTransaction(txId),
         listCategorizationResults(txId).catch(() => []),
         listCategories().catch(() => []),
         listAuditEvents({ entity_id: txId, limit: 50 }).catch(() => []),
         getMemoryMatches(txId).catch(() => null as MemoryMatch | null),
+        getRuleMatches(txId).catch(() => null as RuleMatch | null),
       ]);
       setState({
         tx,
@@ -74,6 +79,7 @@ export default function TransactionDetailPage() {
         categories,
         events,
         memoryMatch,
+        ruleMatch,
         loading: false,
         error: null,
       });
@@ -195,6 +201,7 @@ export default function TransactionDetailPage() {
                     </span>
                   </p>
                   <p className="text-text-secondary">{latest.explanation}</p>
+                  <ProviderTag provider={latest.model_provider} modelName={latest.model_name} />
                   <p className="text-[11px] text-text-subtle">
                     Model: <span className="mono">{latest.model_name ?? "—"}</span> · Latency{" "}
                     <span className="mono">{latest.latency_ms} ms</span> · Cost{" "}
@@ -302,6 +309,62 @@ export default function TransactionDetailPage() {
               <p className="mt-2 text-[13px] text-brand-700">{actionMsg}</p>
             )}
           </section>
+
+          {state.ruleMatch && (
+            <section className="mt-6 rounded-lg border border-brand-200 bg-brand-100 p-4">
+              <p className="field-label">Deterministic rule layer</p>
+              {state.ruleMatch.verdict === "apply" && state.ruleMatch.rule ? (
+                <div className="mt-2 space-y-1 text-[13px]">
+                  <p className="text-text-primary">
+                    <span className="inline-block rounded bg-brand-200 px-1.5 py-0.5 text-[11px] font-medium text-brand-800">
+                      Apply
+                    </span>{" "}
+                    Rule{" "}
+                    <span className="mono text-text-primary">{state.ruleMatch.rule.id}</span>{" "}
+                    ({state.ruleMatch.rule.name}) →{" "}
+                    <span className="mono text-text-primary">
+                      [{state.ruleMatch.rule.category_code}]
+                    </span>{" "}
+                    {state.ruleMatch.rule.category_name}
+                  </p>
+                  <p className="text-text-secondary">{state.ruleMatch.rule.explanation}</p>
+                  <p className="text-[12px] text-text-subtle">
+                    Match type{" "}
+                    <span className="mono">{state.ruleMatch.rule.match_type}</span> ·
+                    confidence{" "}
+                    <span className="mono">
+                      {state.ruleMatch.rule.confidence.toFixed(2)}
+                    </span>{" "}
+                    · deterministic, zero model cost
+                  </p>
+                </div>
+              ) : state.ruleMatch.verdict === "conflict" ? (
+                <div className="mt-2 space-y-1 text-[13px]">
+                  <p className="text-amber-900">
+                    <span className="inline-block rounded bg-amber-100 px-1.5 py-0.5 text-[11px] font-medium text-amber-900">
+                      Conflict
+                    </span>{" "}
+                    Multiple rules matched but disagree on the category — routed to review.
+                  </p>
+                  <ul className="ml-4 list-disc text-text-secondary">
+                    {state.ruleMatch.candidates.map((r) => (
+                      <li key={r.id} className="text-[12px]">
+                        <span className="mono">{r.id}</span> →{" "}
+                        <span className="mono">[{r.category_code}]</span> {r.category_name}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : (
+                <p className="mt-2 text-[13px] text-text-secondary">
+                  <span className="inline-block rounded bg-surface-sunken px-1.5 py-0.5 text-[11px] font-medium text-text-subtle">
+                    No match
+                  </span>{" "}
+                  {state.ruleMatch.reason}
+                </p>
+              )}
+            </section>
+          )}
 
           {state.memoryMatch && (
             <section className="mt-6 rounded-lg border border-brand-200 bg-brand-100 p-4">
@@ -423,6 +486,44 @@ export default function TransactionDetailPage() {
         </>
       )}
     </AppShell>
+  );
+}
+
+function ProviderTag({
+  provider,
+  modelName,
+}: {
+  provider: string;
+  modelName: string | null;
+}) {
+  if (provider === "correction_memory") {
+    return (
+      <p className="text-[12px] text-brand-800">
+        <span className="inline-block rounded bg-brand-200 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide">
+          Memory
+        </span>{" "}
+        From a prior human correction · zero model cost
+      </p>
+    );
+  }
+  if (provider === "rule_categorizer") {
+    return (
+      <p className="text-[12px] text-brand-800">
+        <span className="inline-block rounded bg-brand-200 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide">
+          Rule
+        </span>{" "}
+        Deterministic rule {modelName ? <span className="mono">{modelName}</span> : ""} · zero
+        model cost
+      </p>
+    );
+  }
+  return (
+    <p className="text-[12px] text-text-subtle">
+      <span className="inline-block rounded bg-surface-sunken px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide">
+        Model
+      </span>{" "}
+      Anthropic model fallback
+    </p>
   );
 }
 
