@@ -10,6 +10,7 @@ import { ApiError, getHealth } from "@/lib/api/client";
 type NavItem = { href: string; label: string };
 
 const NAV: NavItem[] = [
+  { href: "/demo", label: "Guided demo" },
   { href: "/app", label: "Dashboard" },
   { href: "/transactions/import", label: "Import" },
   { href: "/transactions", label: "Transactions" },

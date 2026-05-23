@@ -1,45 +1,37 @@
 import Link from "next/link";
 import {
+  Database,
   ExternalLink,
-  Fingerprint,
-  HelpCircle,
-  TrendingUp,
+  ListChecks,
+  ShieldCheck,
+  Sparkles,
+  Wallet,
+  Workflow,
 } from "lucide-react";
 
 import { CheckApiButton } from "@/components/CheckApiButton";
-import { TransactionCarousel } from "@/components/TransactionCarousel";
 import { Logomark } from "@/components/ui/Logomark";
-import { loadLatestEvalRun, loadLatestEvalSummary } from "@/lib/evals";
+import { loadLatestEvalRun } from "@/lib/evals";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "unset";
 const REPO_URL = "https://github.com/mpalmer79/LedgerLens";
 const ARCHITECTURE_URL = `${REPO_URL}/blob/main/docs/ARCHITECTURE.md`;
-const ADRS_URL = `${REPO_URL}/tree/main/docs/adr`;
 const LINKEDIN_URL = "https://linkedin.com/in/michael-palmer";
-
-// Stub-baseline default if no eval JSON is readable at build time.
-// Real value: 9.27% from the 2026-05-21 stub run on v0.
-const STUB_BASELINE_ACCURACY = 0.0927;
 
 function formatAccuracy(value: number): string {
   return `${(value * 100).toFixed(1)}%`;
 }
 
 export default function Page() {
-  const evalSummary = loadLatestEvalSummary();
   const evalRun = loadLatestEvalRun();
-  const headlineAccuracy = evalSummary
-    ? formatAccuracy(evalSummary.accuracy_overall)
-    : formatAccuracy(STUB_BASELINE_ACCURACY);
-  const headlineCaption = evalSummary
-    ? evalSummary.categorizer.includes("haiku")
-      ? "claude haiku 4.5"
-      : `${evalSummary.categorizer} (baseline — haiku run pending)`
-    : "stub categorizer (baseline — haiku run pending)";
+  const haikuAccuracy =
+    evalRun && evalRun.run_metadata.categorizer_name.includes("haiku")
+      ? formatAccuracy(evalRun.metrics.overall.accuracy)
+      : null;
 
   return (
     <div className="bg-surface-page text-text-primary min-h-screen">
-      {/* a. Top nav */}
+      {/* Top nav */}
       <nav className="border-b border-surface-border px-8 py-4">
         <div className="mx-auto flex max-w-6xl items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-text-primary">
@@ -48,28 +40,26 @@ export default function Page() {
           </Link>
           <div className="flex items-center gap-6 text-[13px]">
             <Link
-              href="/app"
+              href="/demo"
               className="rounded-md bg-brand-600 px-3 py-1.5 font-medium text-white hover:bg-brand-500"
             >
-              Open the app →
+              Start the 3-minute demo →
+            </Link>
+            <Link
+              href="/app"
+              className="text-text-secondary transition-colors hover:text-text-primary"
+            >
+              Open app
             </Link>
             <Link
               href="/evals"
-              className="text-text-secondary transition-colors duration-short ease-out-expo hover:text-text-primary"
+              className="text-text-secondary transition-colors hover:text-text-primary"
             >
-              Eval results
+              Eval evidence
             </Link>
             <a
-              href={ARCHITECTURE_URL}
-              className="text-text-secondary transition-colors duration-short ease-out-expo hover:text-text-primary"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Architecture
-            </a>
-            <a
               href={REPO_URL}
-              className="text-text-secondary transition-colors duration-short ease-out-expo hover:text-text-primary"
+              className="text-text-secondary transition-colors hover:text-text-primary"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -79,174 +69,174 @@ export default function Page() {
         </div>
       </nav>
 
-      {/* a2. "What am I looking at?" intro */}
+      {/* Portfolio-demo chip */}
       <section className="border-b border-surface-border bg-surface-sunken/40">
-        <div className="mx-auto flex max-w-6xl items-start gap-3 px-8 py-5">
+        <div className="mx-auto flex max-w-6xl items-start gap-3 px-8 py-4">
           <span className="mt-0.5 inline-block whitespace-nowrap rounded bg-brand-100 px-2 py-1 text-[11px] font-medium uppercase tracking-wide text-brand-800">
-            Portfolio project
+            Portfolio demo
           </span>
           <p className="max-w-3xl text-sm leading-relaxed text-text-secondary">
             <span className="font-medium text-text-primary">What you&apos;re looking at:</span>{" "}
-            LedgerLens is a working demonstration of an AI-assisted transaction
-            categorization system. The transactions, accounts, and businesses are
-            synthetic — a hand-crafted dataset of 302 entries across three
-            verticals — but the eval pipeline, Claude Haiku 4.5 categorizer,
-            calibrated confidence scoring, and dashboard are all real. The
-            numbers on the eval page come from a JSON artifact committed to the
-            repo, readable by anyone.{" "}
+            a working full-stack prototype of an AI-assisted bookkeeping workflow. The data is
+            synthetic and the deployed instance runs in zero-cost demo mode (no paid API spend);
+            every other layer — the backend pipeline, the review workflow, the audit trail, the
+            eval harness — is real.
+          </p>
+        </div>
+      </section>
+
+      {/* Hero — business-first */}
+      <section className="px-8 pt-12 pb-12 md:pt-20 md:pb-16">
+        <div className="mx-auto max-w-4xl">
+          <p className="mb-4 text-[12px] font-medium uppercase tracking-[0.5px] text-brand-600">
+            For small-business bookkeeping cleanup
+          </p>
+          <h1 className="font-display text-4xl font-medium leading-[1.15] text-text-primary md:text-5xl">
+            Turn messy bank transactions into a{" "}
+            <span className="text-brand-600">reviewed small-business ledger.</span>
+          </h1>
+          <p className="mt-5 max-w-2xl text-[17px] leading-relaxed text-text-secondary">
+            LedgerLens helps small-business owners categorize expenses, flag uncertain
+            transactions, remember human corrections, and export a clean ledger — without
+            blindly trusting AI.
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link
+              href="/demo"
+              className="inline-flex items-center rounded-md bg-brand-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-500"
+            >
+              Start the 3-minute demo →
+            </Link>
             <a
-              href="https://github.com/mpalmer79/LedgerLens"
-              className="text-brand-600 underline hover:text-brand-700"
+              href={ARCHITECTURE_URL}
               target="_blank"
               rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-md border border-surface-border-strong bg-transparent px-5 py-2.5 text-sm font-medium text-text-primary transition-colors hover:bg-surface-sunken"
             >
-              See the source on GitHub
+              View the technical architecture
+              <ExternalLink size={14} className="text-text-subtle" />
             </a>
-            .
-          </p>
-        </div>
-      </section>
-
-      {/* b. Hero */}
-      <section className="relative overflow-hidden px-8 pt-12 pb-12 md:pt-20 md:pb-16">
-        <div className="mx-auto max-w-6xl">
-          <div className="pointer-events-none absolute top-0 right-0 h-full w-full md:w-1/2">
-            <TransactionCarousel className="h-full w-full" />
-          </div>
-          <div className="relative">
-            <p className="mb-4 text-[12px] font-medium uppercase tracking-[0.5px] text-brand-600">
-              AI ENGINEERING · PORTFOLIO PROJECT
-            </p>
-            <h1 className="max-w-[580px] font-display text-4xl font-medium leading-[1.15] text-text-primary md:text-5xl">
-              Categorization you can trust.
-              <br />
-              <span className="text-brand-600">Calibration you can prove.</span>
-            </h1>
-            <p className="mt-4 max-w-[520px] text-[16px] leading-relaxed text-text-secondary">
-              A bookkeeper-facing copilot that categorizes bank transactions with
-              calibrated confidence, routes the uncertain ones to human review, and
-              learns from corrections. Backed by an adversarial eval suite.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href="/evals"
-                className="inline-flex items-center rounded-md bg-brand-600 px-5 py-2.5 text-sm font-medium text-white transition-colors duration-short ease-out-expo hover:bg-brand-500"
-              >
-                See the eval results →
-              </Link>
-              <a
-                href={ARCHITECTURE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-md border border-surface-border-strong bg-transparent px-5 py-2.5 text-sm font-medium text-text-primary transition-colors duration-short ease-out-expo hover:bg-surface-sunken"
-              >
-                Read the architecture
-                <ExternalLink size={14} className="text-text-subtle" />
-              </a>
-            </div>
-
-            {/* c. Stat row */}
-            <div className="mt-10 grid grid-cols-1 gap-8 border-t border-surface-border pt-6 sm:grid-cols-3">
-              <div>
-                <p className="field-label">Current baseline</p>
-                <p className="mt-1 font-display text-[24px] font-medium text-text-primary">
-                  {headlineAccuracy}
-                </p>
-                <p className="mt-1 text-[11px] text-text-subtle">
-                  {headlineCaption}
-                </p>
-              </div>
-              <div>
-                <p className="field-label">Dataset size</p>
-                <p className="mt-1 font-display text-[24px] font-medium text-text-primary">
-                  302
-                </p>
-                <p className="mt-1 text-[11px] text-text-subtle">
-                  transactions, ~10% adversarial
-                </p>
-              </div>
-              <div>
-                <p className="field-label">Verticals</p>
-                <p className="mt-1 font-display text-[24px] font-medium text-text-primary">
-                  3
-                </p>
-                <p className="mt-1 text-[11px] text-text-subtle">
-                  coffee, agency, auto repair
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* d. Three-pillar section */}
-      <section className="mx-auto mt-20 max-w-5xl px-8">
-        <h2 className="mb-12 font-display text-[28px] font-medium text-text-primary">
-          How it works
+      {/* Three business value cards */}
+      <section className="mx-auto max-w-6xl px-8">
+        <h2 className="font-display text-[26px] font-medium text-text-primary">
+          Why a small-business owner cares
         </h2>
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-          <Pillar
-            icon={<TrendingUp size={24} className="text-brand-600" />}
-            title="Calibrated, not just accurate"
-            body="Every prediction returns a confidence score. Below threshold, transactions route to human review instead of contaminating the books. Reliability diagrams live alongside the accuracy numbers."
+        <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-3">
+          <ValueCard
+            icon={<Wallet size={22} className="text-brand-600" />}
+            title="Save bookkeeping cleanup time"
+            body="Obvious vendors — QuickBooks, Zoom, Staples, Stripe fees, fuel — are categorized automatically by deterministic rules. No prompt engineering, no waiting on a model."
           />
-          <Pillar
-            icon={<Fingerprint size={24} className="text-brand-600" />}
-            title="Auditable, by design"
-            body="Each categorization includes a rationale a reviewer can read in seconds. ADRs document every non-trivial decision. Eval runs are committed JSON artifacts, not metrics in a dashboard with no underlying record."
+          <ValueCard
+            icon={<ShieldCheck size={22} className="text-brand-600" />}
+            title="Reduce expensive mistakes"
+            body="Ambiguous transactions — Amazon orders, vague ACH transfers, unfamiliar vendors — are routed to a review queue instead of guessed. Wrong categories cost real money at tax time."
           />
-          <Pillar
-            icon={<HelpCircle size={24} className="text-brand-600" />}
-            title="Honest about failure modes"
-            body="The model returns UNCATEGORIZABLE rather than guess on transactions outside its training distribution. Known limitations and non-goals are documented, not hidden."
+          <ValueCard
+            icon={<ListChecks size={22} className="text-brand-600" />}
+            title="Improve with every correction"
+            body="When a reviewer corrects a transaction, that decision becomes reusable memory. The next similar vendor is categorized from the prior correction at zero cost — auditable, not opaque."
           />
         </div>
       </section>
 
-      {/* e. Eval teaser callout */}
-      <section className="mx-8 mt-20 md:mx-auto md:max-w-3xl">
-        <div className="rounded-lg border-2 border-brand-600 bg-brand-100 p-8">
-          <span className="mb-3 inline-block rounded-full bg-brand-600 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-white">
-            Featured
-          </span>
-          <h2 className="font-display text-[22px] font-medium text-brand-900">
-            See the eval results
+      {/* The bookkeeping mess (problem statement) */}
+      <section className="mx-auto mt-20 max-w-5xl px-8">
+        <div className="rounded-lg border border-surface-border bg-surface-panel p-6">
+          <h2 className="font-display text-[22px] font-medium text-text-primary">
+            The monthly cleanup problem
           </h2>
-          <p className="mt-3 text-[15px] leading-relaxed text-brand-800">
-            {evalRun && evalRun.run_metadata.categorizer_name.includes("haiku") ? (
-              <>
-                Claude Haiku 4.5 lifts accuracy from a {formatAccuracy(STUB_BASELINE_ACCURACY)}{" "}
-                stub baseline to {formatAccuracy(evalRun.metrics.overall.accuracy)} overall, with{" "}
-                {formatAccuracy(evalRun.metrics.non_adversarial.accuracy)} on the standard slice
-                and {formatAccuracy(evalRun.metrics.adversarial.accuracy)} on adversarial cases.
-                Cost: ${evalRun.metrics.overall.cost_per_100.toFixed(2)}/100 transactions.
-              </>
-            ) : (
-              <>
-                Stub baseline of {formatAccuracy(STUB_BASELINE_ACCURACY)} established; Claude Haiku
-                run pending. Per-business breakdowns, reliability diagrams, and full per-transaction
-                outputs are all committed JSON artifacts in the repo.
-              </>
-            )}
+          <p className="mt-2 max-w-3xl text-[14px] text-text-secondary">
+            Every month a small-business owner sees lines like these — some obvious, others
+            ambiguous, several risky. A blind AI guess on a payroll run or a State Farm payment
+            can quietly land in the wrong account and stay there until tax season.
           </p>
-          <Link
-            href="/evals"
-            className="mt-5 inline-flex items-center rounded-md bg-brand-600 px-5 py-2.5 text-sm font-medium text-white transition-colors duration-short ease-out-expo hover:bg-brand-500"
-          >
-            View the dashboard →
-          </Link>
+          <ul className="mono mt-4 grid grid-cols-1 gap-y-1 text-[12px] text-text-secondary sm:grid-cols-2">
+            <li>COMCAST BUSINESS INTERNET MAR</li>
+            <li>QUICKBOOKS ONLINE PLUS</li>
+            <li>ADP PAYROLL BI-WEEKLY</li>
+            <li>STATE FARM POLICY 49KF-NH</li>
+            <li>STRIPE PROCESSING FEE</li>
+            <li>STAPLES STORE 4471</li>
+            <li>AMAZON BUSINESS ORDER 113-44</li>
+            <li>ACH TRANSFER VENDOR REF 99812</li>
+          </ul>
+          <p className="mt-4 text-[13px] text-text-secondary">
+            <Link href="/demo" className="text-brand-700 underline">
+              Walk through the demo →
+            </Link>{" "}
+            to see how the layered pipeline handles each one.
+          </p>
         </div>
       </section>
 
-      {/* f. Live API health */}
+      {/* Recruiter-facing technical credibility */}
+      <section className="mx-auto mt-20 max-w-6xl px-8">
+        <h2 className="font-display text-[26px] font-medium text-text-primary">
+          Built like an AI workflow system, not an LLM wrapper.
+        </h2>
+        <p className="mt-2 max-w-3xl text-[14px] text-text-secondary">
+          The product story is bookkeeping. The engineering story is layered AI design with
+          cost control and auditability built in.
+        </p>
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <TechCard
+            icon={<Workflow size={20} className="text-brand-600" />}
+            title="Layered decision logic"
+            body="Correction memory → deterministic rules → demo stub (or real model) → confidence routing → human review."
+          />
+          <TechCard
+            icon={<Database size={20} className="text-brand-600" />}
+            title="Full-stack persistence"
+            body="FastAPI + SQLAlchemy 2.0 + Postgres-ready (SQLite for demo). Idempotent migrations, seeded chart of accounts, lazy provider config."
+          />
+          <TechCard
+            icon={<ShieldCheck size={20} className="text-brand-600" />}
+            title="Audit trail on every state change"
+            body="Categorize, correct, approve, reject, demo seed/reset — each writes an AuditEvent with provider attribution. The model never claims authorship of a stub decision."
+          />
+          <TechCard
+            icon={<Sparkles size={20} className="text-brand-600" />}
+            title="Demo-safe zero-cost mode"
+            body="CATEGORIZER_MODE=demo_stub guarantees no paid API calls. The anthropic SDK is never imported in demo mode (regression-tested)."
+          />
+          <TechCard
+            icon={<ListChecks size={20} className="text-brand-600" />}
+            title="Honest evaluation"
+            body="Routing + calibration + confusion-pair metrics. ECE and high-confidence warning. Rules-only and hybrid eval modes. Tenant-COA caveat called out, not hidden."
+          />
+          <TechCard
+            icon={<Workflow size={20} className="text-brand-600" />}
+            title="Typed contract end-to-end"
+            body="Next.js 14 App Router with a typed API client. Vitest on the client; pytest, ruff, mypy --strict on the backend. CI gates per PR."
+          />
+        </div>
+        <p className="mt-6 text-[13px] text-text-secondary">
+          <Link href="/evals" className="text-brand-700 underline">
+            See the eval evidence →
+          </Link>{" "}
+          {haikuAccuracy && (
+            <>
+              · current Claude Haiku 4.5 run: <span className="mono">{haikuAccuracy}</span>{" "}
+              overall accuracy
+            </>
+          )}
+        </p>
+      </section>
+
+      {/* Live API health */}
       <section className="mx-auto mt-20 max-w-3xl px-8">
-        <h2 className="mb-6 text-center font-display text-[22px] font-medium text-text-primary">
+        <h2 className="mb-6 text-center font-display text-[18px] font-medium text-text-primary">
           Live API health
         </h2>
         <CheckApiButton apiBaseUrl={API_BASE_URL} />
       </section>
 
-      {/* g. Footer */}
+      {/* Footer */}
       <footer className="mt-24 border-t border-surface-border px-8 py-12">
         <div className="mx-auto max-w-6xl">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
@@ -265,8 +255,14 @@ export default function Page() {
               <p className="mt-1 text-[13px] text-text-subtle">PalmerAI Solutions</p>
             </div>
             <div className="flex flex-col gap-2 text-[13px] sm:items-end">
+              <Link href="/demo" className="text-text-secondary hover:text-text-primary">
+                Guided demo
+              </Link>
+              <Link href="/app" className="text-text-secondary hover:text-text-primary">
+                Open the app
+              </Link>
               <Link href="/evals" className="text-text-secondary hover:text-text-primary">
-                Eval results
+                Eval evidence
               </Link>
               <a
                 href={ARCHITECTURE_URL}
@@ -275,14 +271,6 @@ export default function Page() {
                 className="text-text-secondary hover:text-text-primary"
               >
                 Architecture
-              </a>
-              <a
-                href={ADRS_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-text-secondary hover:text-text-primary"
-              >
-                ADRs
               </a>
               <a
                 href={REPO_URL}
@@ -295,8 +283,9 @@ export default function Page() {
             </div>
           </div>
           <p className="mt-8 border-t border-surface-border pt-6 text-[11px] text-text-subtle">
-            © {new Date().getFullYear()} PalmerAI Solutions. LedgerLens is a
-            portfolio project. No financial data leaves your environment.
+            © {new Date().getFullYear()} PalmerAI Solutions. LedgerLens is a portfolio project
+            built to demonstrate AI-systems engineering practice. No financial data leaves your
+            environment.
           </p>
         </div>
       </footer>
@@ -304,20 +293,32 @@ export default function Page() {
   );
 }
 
-type PillarProps = {
+type CardProps = {
   icon: React.ReactNode;
   title: string;
   body: string;
 };
 
-function Pillar({ icon, title, body }: PillarProps) {
+function ValueCard({ icon, title, body }: CardProps) {
   return (
     <div className="rounded-lg border border-brand-200 bg-brand-100 p-6">
       {icon}
-      <h3 className="mb-2 mt-4 font-display text-[18px] font-medium text-text-primary">
+      <h3 className="mb-2 mt-4 font-display text-[17px] font-medium text-text-primary">
         {title}
       </h3>
       <p className="text-[14px] leading-relaxed text-text-secondary">{body}</p>
+    </div>
+  );
+}
+
+function TechCard({ icon, title, body }: CardProps) {
+  return (
+    <div className="rounded-lg border border-surface-border bg-surface-panel p-5">
+      <div className="flex items-center gap-2">
+        {icon}
+        <h3 className="font-display text-[15px] font-medium text-text-primary">{title}</h3>
+      </div>
+      <p className="mt-2 text-[13px] leading-relaxed text-text-secondary">{body}</p>
     </div>
   );
 }

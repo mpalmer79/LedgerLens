@@ -88,16 +88,30 @@ export default function ReviewPage() {
     <AppShell>
       <header className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="font-display text-[28px] font-medium text-text-primary">Review queue</h1>
-          <p className="mt-1 text-[14px] text-text-secondary">
-            Transactions whose latest categorization needs a human. Approve, correct, or mark
-            uncategorizable.
+          <h1 className="font-display text-[28px] font-medium text-text-primary">
+            Review is the safety layer.
+          </h1>
+          <p className="mt-1 max-w-3xl text-[14px] text-text-secondary">
+            LedgerLens does not silently guess on uncertain financial transactions. Items land
+            here when correction memory, deterministic rules, and the configured fallback
+            cannot safely finalize them. Approve to accept the predicted category, correct to
+            override, or mark uncategorizable to exclude the row from the ledger.
           </p>
         </div>
         <span className="rounded-full bg-amber-100 px-3 py-1 text-[12px] font-medium text-amber-900">
           {items?.length ?? 0} pending
         </span>
       </header>
+
+      <aside className="mt-4 rounded border border-brand-200 bg-brand-100 p-3 text-[12px] text-brand-800">
+        <p className="font-medium">What happens when you correct?</p>
+        <ul className="mt-1 list-disc space-y-0.5 pl-5 text-text-secondary">
+          <li>The correction is stored as a deterministic memory rule.</li>
+          <li>Similar future transactions are categorized from memory at zero cost.</li>
+          <li>The audit trail records the decision with reviewer and timestamp.</li>
+          <li>The final ledger export uses your reviewed category, not the prediction.</li>
+        </ul>
+      </aside>
 
       {error && (
         <div className="mt-6 rounded-md border border-red-200 bg-red-50 p-4 text-[14px] text-red-700">

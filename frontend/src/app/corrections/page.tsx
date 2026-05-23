@@ -78,16 +78,26 @@ export default function CorrectionsPage() {
     <AppShell>
       <header>
         <h1 className="font-display text-[28px] font-medium text-text-primary">
-          Learned corrections
+          Human corrections become reusable bookkeeping memory.
         </h1>
         <p className="mt-1 max-w-3xl text-[14px] text-text-secondary">
-          Deterministic correction memory. When a reviewer corrects a transaction,
-          LedgerLens records a <span className="mono">(merchant, description)</span>{" "}
-          → category rule. Future transactions matching the same key are categorized
-          from memory at zero model cost. This is rule lookup, not model training —
-          deactivate any row whose category is wrong and the system stops applying it.
+          When a reviewer corrects a transaction, LedgerLens stores a deterministic{" "}
+          <span className="mono">(merchant, description) → category</span> rule. The next
+          matching vendor or description is categorized from this memory at{" "}
+          <strong>zero model cost</strong>. This is rule lookup, not model training — and
+          deactivating any row stops it from being applied.
         </p>
       </header>
+
+      <aside className="mt-4 rounded border border-surface-border bg-surface-panel p-3 text-[12px] text-text-secondary">
+        <p className="font-medium text-text-primary">Why this matters</p>
+        <ul className="mt-1 list-disc space-y-0.5 pl-5">
+          <li>Reduces repeated cleanup — Adobe corrected once stays corrected for future Adobe charges.</li>
+          <li>Keeps humans in control — every memory row is editable and one click from deactivation.</li>
+          <li>Makes learning auditable — each row points back to the source transaction and review decision.</li>
+          <li>Avoids opaque model retraining — the memory is a SQL table you can read, not a fine-tuned weight you can&apos;t.</li>
+        </ul>
+      </aside>
 
       <section className="mt-6 flex flex-wrap items-center gap-3">
         <div className="flex flex-wrap gap-1">
