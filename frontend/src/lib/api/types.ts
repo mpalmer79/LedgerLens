@@ -182,7 +182,15 @@ export type ReadyResponse = {
   version: string;
   checks: {
     database: { ok: boolean; error?: string };
-    anthropic: { configured: boolean; model_primary: string };
+    anthropic: {
+      configured: boolean;
+      model_primary: string;
+      required_for_current_mode?: boolean;
+    };
+    categorizer?: {
+      mode: "demo_stub" | "anthropic";
+      demo_mode: boolean;
+    };
   };
 };
 

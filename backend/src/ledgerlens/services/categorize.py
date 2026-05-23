@@ -37,18 +37,31 @@ UNCATEGORIZABLE_SENTINEL = "UNCATEGORIZABLE"
 
 
 def get_default_categorizer() -> Categorizer:
-    """Construct the configured production categorizer.
+    """Construct the configured production fallback categorizer.
 
-    Raises MissingProviderConfig if Anthropic isn't set up. Callers should
-    catch and convert to a 503 — this is the boundary where missing config
-    becomes a user-facing error.
+    Returns the categorizer selected by `CATEGORIZER_MODE`:
+
+    - `demo_stub` (portfolio-safe default) — `DemoStubCategorizer`. No external
+      calls, no API keys, no cost. Unmatched transactions land in review.
+    - `anthropic` — `ClaudeHaikuCategorizer`. Requires `ANTHROPIC_API_KEY`; if
+      the key is missing this raises `MissingProviderConfig`, which the
+      categorize routes convert to a structured 503.
     """
     settings = get_settings()
+
+    if settings.categorizer_mode == "demo_stub":
+        # Local import keeps the categorizer module self-contained and skips
+        # the import on the (much rarer) Anthropic path.
+        from ledgerlens.categorizers.demo_stub import DemoStubCategorizer
+
+        return DemoStubCategorizer()
+
+    # categorizer_mode == "anthropic"
     if not settings.anthropic_configured:
         raise MissingProviderConfig("Anthropic", "ANTHROPIC_API_KEY")
 
     # Lazy import — keeps the anthropic SDK out of cold-start paths that
-    # don't need it.
+    # don't need it (every demo-mode deploy).
     import anthropic
 
     from ledgerlens.categorizers.claude_haiku import ClaudeHaikuCategorizer
@@ -390,6 +403,20 @@ def categorize_transaction(
     if pred.predicted_category_code == UNCATEGORIZABLE_SENTINEL and "API" in pred.reasoning:
         status = ResultStatus.FAILED
 
+    # Provider attribution: identify the demo stub explicitly so the UI and
+    # the audit trail never claim a stub result came from Anthropic.
+    from ledgerlens.categorizers.demo_stub import (
+        DEMO_STUB_MODEL_NAME,
+        DEMO_STUB_PROVIDER,
+    )
+
+    if pred.model == DEMO_STUB_MODEL_NAME:
+        model_provider = DEMO_STUB_PROVIDER
+        audit_action = "categorized_by_demo_stub"
+    else:
+        model_provider = "anthropic"
+        audit_action = "categorized"
+
     result = CategorizationResult(
         transaction_id=tx.id,
         predicted_category_code=pred.predicted_category_code,
@@ -397,7 +424,7 @@ def categorize_transaction(
         confidence=pred.confidence,
         explanation=pred.reasoning[:2000],
         alternative_category_code=pred.alternative_category_code,
-        model_provider="anthropic",
+        model_provider=model_provider,
         model_name=pred.model,
         latency_ms=max(elapsed_ms, int(pred.latency_ms)),
         estimated_cost_usd=pred.cost_usd,
@@ -406,7 +433,7 @@ def categorize_transaction(
     CategorizationRepo(db).add(result)
     AuditRepo(db).record(
         entity_type="categorization_result",
-        action="categorized",
+        action=audit_action,
         entity_id=result.id,
         details={
             "transaction_id": tx.id,
@@ -415,6 +442,7 @@ def categorize_transaction(
             "status": status.value,
             "cost_usd": pred.cost_usd,
             "model": pred.model,
+            "provider": model_provider,
         },
     )
     return result

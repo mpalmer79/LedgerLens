@@ -167,6 +167,7 @@ export default function ReviewPage() {
                       {formatConfidence(r.confidence)}
                     </span>
                   </p>
+                  <SourceTag provider={r.model_provider} />
                   {r.explanation && (
                     <p className="mt-1 text-[12px] italic text-text-secondary">{r.explanation}</p>
                   )}
@@ -241,5 +242,24 @@ export default function ReviewPage() {
         </ul>
       )}
     </AppShell>
+  );
+}
+
+function SourceTag({ provider }: { provider: string }) {
+  const map: Record<string, { label: string; tone: string }> = {
+    correction_memory: { label: "Memory", tone: "bg-brand-200 text-brand-800" },
+    rule_categorizer: { label: "Rule", tone: "bg-brand-200 text-brand-800" },
+    demo_stub: { label: "Demo Stub", tone: "bg-surface-sunken text-text-secondary" },
+    anthropic: { label: "Model", tone: "bg-surface-sunken text-text-subtle" },
+  };
+  const entry = map[provider] ?? { label: provider, tone: "bg-surface-sunken text-text-subtle" };
+  return (
+    <p className="mt-1 text-[11px] text-text-subtle">
+      <span
+        className={`inline-block rounded px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide ${entry.tone}`}
+      >
+        {entry.label}
+      </span>
+    </p>
   );
 }

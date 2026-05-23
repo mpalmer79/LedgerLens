@@ -7,6 +7,7 @@ import { AppShell } from "@/components/app/AppShell";
 import {
   ApiError,
   getLedger,
+  getReady,
   getReviewQueue,
   listAuditEvents,
   listCorrections,
@@ -16,6 +17,7 @@ import type {
   AuditEvent,
   CorrectionMemoryList,
   Ledger,
+  ReadyResponse,
   ReviewQueue,
   TransactionList,
 } from "@/lib/api/types";
@@ -27,6 +29,7 @@ type State = {
   ledger: Ledger | null;
   events: AuditEvent[] | null;
   corrections: CorrectionMemoryList | null;
+  ready: ReadyResponse | null;
   error: string | null;
   loading: boolean;
 };
@@ -37,6 +40,7 @@ const INITIAL: State = {
   ledger: null,
   events: null,
   corrections: null,
+  ready: null,
   error: null,
   loading: true,
 };
@@ -48,15 +52,17 @@ export default function DashboardPage() {
     let cancelled = false;
     (async () => {
       try {
-        const [transactions, queue, ledger, events, corrections] = await Promise.all([
+        const [transactions, queue, ledger, events, corrections, ready] = await Promise.all([
           listTransactions({ limit: 5 }),
           getReviewQueue({ limit: 5 }),
           getLedger(),
           listAuditEvents({ limit: 8 }),
           listCorrections({ active: true, limit: 1 }),
+          getReady().catch(() => null as ReadyResponse | null),
         ]);
         if (!cancelled)
           setState({
+            ready,
             transactions,
             queue,
             ledger,
@@ -107,6 +113,14 @@ export default function DashboardPage() {
           finalized ledger.
         </p>
       </header>
+
+      {state.ready?.checks.categorizer?.demo_mode && (
+        <div className="mt-4 rounded-md border border-brand-200 bg-brand-100 px-4 py-2 text-[12px] text-brand-800">
+          <span className="font-medium">Portfolio demo mode.</span> Correction memory and
+          deterministic rules run normally; unmatched transactions are routed to review by a
+          zero-cost stub instead of a paid model provider.
+        </div>
+      )}
 
       {state.error && (
         <div className="mt-6 rounded-md border border-red-200 bg-red-50 p-4 text-[14px] text-red-700">

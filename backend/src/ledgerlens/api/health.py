@@ -32,13 +32,26 @@ def ready(db: Session = Depends(get_db)) -> dict[str, object]:
     except Exception as exc:  # noqa: BLE001 — surface the SQL error class
         checks["database"] = {"ok": False, "error": type(exc).__name__}
 
-    # Provider credential (presence, not validity).
+    # Categorizer mode + provider credential state. In demo_stub mode the
+    # missing Anthropic key is not an error — it's the expected portfolio
+    # configuration.
+    checks["categorizer"] = {
+        "mode": settings.categorizer_mode,
+        "demo_mode": settings.is_demo_mode,
+    }
     checks["anthropic"] = {
         "configured": settings.anthropic_configured,
         "model_primary": settings.anthropic_model_primary,
+        # In demo mode the app never calls Anthropic, so a missing key is
+        # explicitly NOT a readiness blocker.
+        "required_for_current_mode": settings.categorizer_mode == "anthropic",
     }
 
     ready_flag = bool(checks["database"]["ok"])
+    if settings.categorizer_mode == "anthropic" and not settings.anthropic_configured:
+        # In anthropic mode the key is required for the categorize endpoint.
+        # Surface that as not-ready without crashing the process.
+        ready_flag = False
 
     return {
         "ready": ready_flag,

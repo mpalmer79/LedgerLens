@@ -517,6 +517,17 @@ function ProviderTag({
       </p>
     );
   }
+  if (provider === "demo_stub") {
+    return (
+      <p className="text-[12px] text-text-secondary">
+        <span className="inline-block rounded bg-surface-sunken px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-text-secondary">
+          Demo Stub
+        </span>{" "}
+        Demo stub routed this unmatched transaction to review without using a paid model
+        provider · zero cost
+      </p>
+    );
+  }
   return (
     <p className="text-[12px] text-text-subtle">
       <span className="inline-block rounded bg-surface-sunken px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide">
