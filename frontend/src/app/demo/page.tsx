@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { AppShell } from "@/components/app/AppShell";
+import { TrustPanel } from "@/components/app/TrustPanel";
 import {
   ApiError,
   categorize,
@@ -463,21 +464,28 @@ export default function DemoPage() {
           disabled={state.steps.ledger.status === "done"}
         />
         {state.ledger && (
-          <div className="mt-3 rounded border border-surface-border bg-surface-panel p-3 text-[13px]">
-            <p>
-              Finalized rows:{" "}
-              <span className="mono">{state.ledger.total - state.ledger.unresolved}</span>{" "}
-              · Unresolved:{" "}
-              <span className="mono text-amber-800">{state.ledger.unresolved}</span> · Total:{" "}
-              <span className="mono">{state.ledger.total}</span>
-            </p>
-            <a
-              href={getLedgerExportUrl()}
-              className="mt-2 inline-block rounded bg-brand-600 px-3 py-1.5 text-[13px] font-medium text-white hover:bg-brand-500"
-            >
-              Export ledger CSV ↓
-            </a>
-          </div>
+          <>
+            <TrustPanel trust={state.ledger.trust} variant="demo" />
+            <div className="mt-3 rounded border border-surface-border bg-surface-panel p-3 text-[13px]">
+              <p>
+                Finalized rows:{" "}
+                <span className="mono">{state.ledger.total - state.ledger.unresolved}</span>{" "}
+                · Unresolved:{" "}
+                <span className="mono text-amber-800">{state.ledger.unresolved}</span> · Total:{" "}
+                <span className="mono">{state.ledger.total}</span>
+              </p>
+              <p className="mt-1 text-[12px] text-text-secondary">
+                The CSV export carries the same verification status per row, so a
+                bookkeeper downstream can filter unverified rows before posting.
+              </p>
+              <a
+                href={getLedgerExportUrl()}
+                className="mt-2 inline-block rounded bg-brand-600 px-3 py-1.5 text-[13px] font-medium text-white hover:bg-brand-500"
+              >
+                Export ledger CSV ↓
+              </a>
+            </div>
+          </>
         )}
       </Step>
 

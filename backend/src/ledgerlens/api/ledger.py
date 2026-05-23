@@ -5,7 +5,8 @@ from fastapi import APIRouter, Depends
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 
-from ledgerlens.api.schemas import LedgerOut, LedgerRow
+from ledgerlens.api.schemas import LedgerOut, LedgerRow, LedgerTrust
+from ledgerlens.config import get_settings
 from ledgerlens.db import get_db
 from ledgerlens.models import ResultStatus
 from ledgerlens.repositories import (
@@ -52,6 +53,7 @@ def _build_rows(db: Session) -> list[LedgerRow]:
                         reviewed=False,
                         reviewer_note=None,
                         source=tx.source,
+                        model_provider=None,
                     )
                 )
                 continue
@@ -85,6 +87,7 @@ def _build_rows(db: Session) -> list[LedgerRow]:
                     reviewed=latest_review is not None,
                     reviewer_note=(latest_review.reviewer_note if latest_review else None),
                     source=tx.source,
+                    model_provider=latest.model_provider,
                 )
             )
         page += 1
@@ -96,15 +99,65 @@ def _unresolved_count(rows: list[LedgerRow]) -> int:
     return sum(1 for r in rows if r.categorization_status in ("needs_review", "pending", "failed"))
 
 
+def _is_finalized(row: LedgerRow) -> bool:
+    """A row is finalized when it has a category and is not in a review or
+    error state. Uncategorizable rows are intentionally excluded — they were
+    explicitly removed from the bookkeeping output by a human or by the
+    pipeline's safety check."""
+    return row.categorization_status in {"auto_approved", "corrected"}
+
+
+def _is_verified(row: LedgerRow) -> bool:
+    """A finalized row counts as verified iff it came through a defensible
+    path: human review, correction memory, or a rule-layer auto-approval.
+    Auto-approved demo-stub / anthropic rows that were never touched by a
+    human are explicitly NOT verified."""
+    if not _is_finalized(row):
+        return False
+    if row.reviewed:
+        return True
+    provider = row.model_provider or ""
+    if provider == "correction_memory":
+        return True
+    if provider == "rule_categorizer" and row.categorization_status == "auto_approved":
+        return True
+    return False
+
+
+def _compute_trust(rows: list[LedgerRow]) -> LedgerTrust:
+    finalized = [r for r in rows if _is_finalized(r)]
+    verified = [r for r in finalized if _is_verified(r)]
+    review_required = sum(1 for r in rows if r.categorization_status == "needs_review")
+    deterministic = sum(
+        1 for r in rows if (r.model_provider or "") in {"correction_memory", "rule_categorizer"}
+    )
+    human_reviewed = sum(1 for r in rows if r.reviewed)
+    return LedgerTrust(
+        finalized_count=len(finalized),
+        verified_count=len(verified),
+        unverified_finalized_count=len(finalized) - len(verified),
+        review_required_count=review_required,
+        deterministic_count=deterministic,
+        human_reviewed_count=human_reviewed,
+        verification_rate=(len(verified) / len(finalized)) if finalized else 1.0,
+    )
+
+
 @router.get("", response_model=LedgerOut)
 def get_ledger(db: Session = Depends(get_db)) -> LedgerOut:
     rows = _build_rows(db)
-    return LedgerOut(total=len(rows), unresolved=_unresolved_count(rows), rows=rows)
+    return LedgerOut(
+        total=len(rows),
+        unresolved=_unresolved_count(rows),
+        rows=rows,
+        trust=_compute_trust(rows),
+    )
 
 
 @router.get("/export.csv")
 def export_csv(db: Session = Depends(get_db)) -> StreamingResponse:
     rows = _build_rows(db)
+    trust = _compute_trust(rows)
     buf = io.StringIO()
     writer = csv.writer(buf)
     writer.writerow(
@@ -117,6 +170,8 @@ def export_csv(db: Session = Depends(get_db)) -> StreamingResponse:
             "category_name",
             "categorization_status",
             "confidence",
+            "model_provider",
+            "verified",
             "source",
             "reviewed",
             "reviewer_note",
@@ -133,16 +188,26 @@ def export_csv(db: Session = Depends(get_db)) -> StreamingResponse:
                 r.category_name or "",
                 r.categorization_status,
                 "" if r.confidence is None else f"{r.confidence:.4f}",
+                r.model_provider or "",
+                "true" if _is_verified(r) else "false",
                 r.source,
                 "true" if r.reviewed else "false",
                 r.reviewer_note or "",
             ]
         )
 
+    settings = get_settings()
     AuditRepo(db).record(
         entity_type="ledger",
         action="exported",
-        details={"row_count": len(rows), "unresolved": _unresolved_count(rows)},
+        details={
+            "row_count": len(rows),
+            "unresolved": _unresolved_count(rows),
+            "finalized": trust.finalized_count,
+            "verified": trust.verified_count,
+            "verification_rate": round(trust.verification_rate, 4),
+            "categorizer_mode": settings.categorizer_mode,
+        },
     )
     db.commit()
 

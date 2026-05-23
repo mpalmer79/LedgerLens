@@ -286,8 +286,14 @@ export default function EvalsPage() {
             {/* Honesty callout — model isn't production-ready, and that's the point. */}
             <section className="mt-8 rounded-md border border-amber-200 bg-amber-50 p-4">
               <p className="text-[14px] font-medium text-amber-900">
-                These numbers are not production-ready — and that&apos;s why the product is
-                designed the way it is.
+                Raw model accuracy is not the product&apos;s trust boundary.
+              </p>
+              <p className="mt-2 text-[13px] text-amber-900">
+                Numbers on this page describe how a single model fallback layer behaves on the
+                synthetic eval dataset. They are intentionally <em>not</em> the headline metric
+                anywhere else in the product. The trust boundary the app actually enforces is
+                described as the verified-ledger metric — finalized rows backed by a rule
+                auto-approval, a correction-memory replay, or an explicit human review.
               </p>
               <ul className="mt-2 list-disc space-y-1 pl-5 text-[13px] text-amber-900">
                 <li>
@@ -302,8 +308,9 @@ export default function EvalsPage() {
                 </li>
                 <li>
                   This is exactly why the app routes low- and mid-confidence predictions to the
-                  review queue, and why every prediction is one click from the underlying rationale
-                  on the transaction detail page.
+                  review queue, why demo-stub results never auto-finalize, and why every
+                  prediction is one click from the underlying rationale on the transaction
+                  detail page.
                 </li>
               </ul>
             </section>

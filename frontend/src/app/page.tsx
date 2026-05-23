@@ -11,24 +11,13 @@ import {
 
 import { CheckApiButton } from "@/components/CheckApiButton";
 import { Logomark } from "@/components/ui/Logomark";
-import { loadLatestEvalRun } from "@/lib/evals";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "unset";
 const REPO_URL = "https://github.com/mpalmer79/LedgerLens";
 const ARCHITECTURE_URL = `${REPO_URL}/blob/main/docs/ARCHITECTURE.md`;
 const LINKEDIN_URL = "https://linkedin.com/in/michael-palmer";
 
-function formatAccuracy(value: number): string {
-  return `${(value * 100).toFixed(1)}%`;
-}
-
 export default function Page() {
-  const evalRun = loadLatestEvalRun();
-  const haikuAccuracy =
-    evalRun && evalRun.run_metadata.categorizer_name.includes("haiku")
-      ? formatAccuracy(evalRun.metrics.overall.accuracy)
-      : null;
-
   return (
     <div className="bg-surface-page text-text-primary min-h-screen">
       {/* Top nav */}
@@ -219,13 +208,43 @@ export default function Page() {
           <Link href="/evals" className="text-brand-700 underline">
             See the eval evidence →
           </Link>{" "}
-          {haikuAccuracy && (
-            <>
-              · current Claude Haiku 4.5 run: <span className="mono">{haikuAccuracy}</span>{" "}
-              overall accuracy
-            </>
-          )}
+          for raw model performance and calibration. The product&apos;s headline number
+          isn&apos;t raw model accuracy — it&apos;s{" "}
+          <strong>finalized rows verified before export</strong>, the topic of the next
+          section.
         </p>
+      </section>
+
+      {/* Trust boundary — the product's headline number */}
+      <section className="mx-auto mt-20 max-w-5xl px-8">
+        <div className="rounded-lg border-2 border-brand-600 bg-brand-100 p-6">
+          <p className="mb-2 inline-block rounded bg-brand-600 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-white">
+            Trust metric
+          </p>
+          <h2 className="font-display text-[24px] font-medium text-brand-900">
+            100% of finalized guided-demo ledger rows are verified before export.
+          </h2>
+          <p className="mt-3 max-w-3xl text-[14px] leading-relaxed text-brand-800">
+            That&apos;s not a claim about raw model accuracy. Raw AI accuracy on adversarial
+            bookkeeping data is not the right trust boundary for financial workflows — the eval
+            page reports it honestly (model-only ≈ 63% on the synthetic dataset). The number
+            above is what the product actually guarantees: a finalized row is only counted
+            when its category came from a deterministic rule auto-approval, a correction-memory
+            replay of a prior human decision, or an explicit human review on this row.
+          </p>
+          <ul className="mt-4 space-y-1 text-[13px] text-brand-900">
+            <li>· Uncertain transactions silently finalized: <strong>0</strong></li>
+            <li>· Demo-stub results are never finalized — they route to review.</li>
+            <li>· Unreviewed model auto-approvals are never finalized — they require sign-off.</li>
+            <li>· The CSV export carries a per-row <span className="mono">verified</span> column for downstream filtering.</li>
+          </ul>
+          <p className="mt-4 text-[12px] text-brand-700">
+            <Link href="/demo" className="underline">
+              Walk the guided demo →
+            </Link>{" "}
+            to see the trust panel update in real time as the pipeline runs.
+          </p>
+        </div>
       </section>
 
       {/* Live API health */}
