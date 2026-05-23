@@ -3,8 +3,8 @@
     "dataset_version": "v0",
     "categorizer_name": "rule-categorizer-v1",
     "model": "deterministic_rules_v1",
-    "timestamp_utc": "2026-05-23T00:06:22+00:00",
-    "git_sha": "b0cc486c27efa813bc4d559f6884a60ff729a214"
+    "timestamp_utc": "2026-05-23T01:19:08+00:00",
+    "git_sha": "ad2e436060286567c9fb665e70084097c3f6b0a6"
   },
   "metrics": {
     "overall": {
@@ -13,202 +13,322 @@
         "1020": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 2.0
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
         },
         "1030": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 1.0
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
         },
         "1050": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 13.0
+          "f1": 0.0,
+          "support": 13.0,
+          "false_positives": 0.0,
+          "false_negatives": 13.0
         },
         "1060": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 3.0
+          "f1": 0.0,
+          "support": 3.0,
+          "false_positives": 0.0,
+          "false_negatives": 3.0
         },
         "1070": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 5.0
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
         },
         "1080": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 2.0
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
         },
         "1200": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 4.0
+          "f1": 0.0,
+          "support": 4.0,
+          "false_positives": 0.0,
+          "false_negatives": 4.0
         },
         "1510": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 1.0
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
         },
         "3030": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 8.0
+          "f1": 0.0,
+          "support": 8.0,
+          "false_positives": 0.0,
+          "false_negatives": 8.0
         },
         "4010": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 40.0
+          "f1": 0.0,
+          "support": 40.0,
+          "false_positives": 0.0,
+          "false_negatives": 40.0
         },
         "4020": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 5.0
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
         },
         "4030": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 6.0
+          "f1": 0.0,
+          "support": 6.0,
+          "false_positives": 0.0,
+          "false_negatives": 6.0
         },
         "4040": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 5.0
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
         },
         "5010": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 5.0
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
         },
         "5020": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 5.0
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
         },
         "5040": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 4.0
+          "f1": 0.0,
+          "support": 4.0,
+          "false_positives": 0.0,
+          "false_negatives": 4.0
         },
         "6010": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 28.0
+          "f1": 0.0,
+          "support": 28.0,
+          "false_positives": 0.0,
+          "false_negatives": 28.0
         },
         "6020": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 12.0
+          "f1": 0.0,
+          "support": 12.0,
+          "false_positives": 0.0,
+          "false_negatives": 12.0
         },
         "6030": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 4.0
+          "f1": 0.0,
+          "support": 4.0,
+          "false_positives": 0.0,
+          "false_negatives": 4.0
         },
         "6040": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 28.0
+          "f1": 0.0,
+          "support": 28.0,
+          "false_positives": 0.0,
+          "false_negatives": 28.0
         },
         "6050": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 1.0
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
         },
         "6060": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 5.0
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 6.0,
+          "false_negatives": 5.0
         },
         "6070": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 7.0
+          "f1": 0.0,
+          "support": 7.0,
+          "false_positives": 25.0,
+          "false_negatives": 7.0
         },
         "6080": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 3.0
+          "f1": 0.0,
+          "support": 3.0,
+          "false_positives": 0.0,
+          "false_negatives": 3.0
         },
         "6100": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 7.0
+          "f1": 0.0,
+          "support": 7.0,
+          "false_positives": 40.0,
+          "false_negatives": 7.0
         },
         "6110": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 17.0
+          "f1": 0.0,
+          "support": 17.0,
+          "false_positives": 0.0,
+          "false_negatives": 17.0
         },
         "6120": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 14.0
+          "f1": 0.0,
+          "support": 14.0,
+          "false_positives": 1.0,
+          "false_negatives": 14.0
         },
         "6130": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 9.0
+          "f1": 0.0,
+          "support": 9.0,
+          "false_positives": 0.0,
+          "false_negatives": 9.0
         },
         "6140": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 9.0
+          "f1": 0.0,
+          "support": 9.0,
+          "false_positives": 0.0,
+          "false_negatives": 9.0
         },
         "6150": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 1.0
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
         },
         "6160": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 5.0
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
         },
         "6170": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 12.0
+          "f1": 0.0,
+          "support": 12.0,
+          "false_positives": 0.0,
+          "false_negatives": 12.0
         },
         "6180": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 8.0
+          "f1": 0.0,
+          "support": 8.0,
+          "false_positives": 0.0,
+          "false_negatives": 8.0
         },
         "6190": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 4.0
+          "f1": 0.0,
+          "support": 4.0,
+          "false_positives": 0.0,
+          "false_negatives": 4.0
         },
         "6200": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 5.0
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
         },
         "6210": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 9.0
+          "f1": 0.0,
+          "support": 9.0,
+          "false_positives": 0.0,
+          "false_negatives": 9.0
         },
         "6220": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 1.0
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
         },
         "6230": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 2.0
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
         },
         "6240": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 2.0
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
         },
         "UNCATEGORIZABLE": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 0.0
+          "f1": 0.0,
+          "support": 0.0,
+          "false_positives": 230.0,
+          "false_negatives": 0.0
         }
       },
       "reliability_diagram": [
@@ -274,13 +394,435 @@
         }
       ],
       "latency_stats": {
-        "p50_ms": 0.017600000091988477,
-        "p95_ms": 0.03336300005685189,
-        "mean_ms": 0.02049732780876443
+        "p50_ms": 0.015105000045423367,
+        "p95_ms": 0.04440800000793388,
+        "mean_ms": 0.019172254964614513
       },
       "total_cost": 0.0,
       "cost_per_100": 0.0,
-      "transaction_count": 302
+      "transaction_count": 302,
+      "top_confusions": [
+        {
+          "actual": "6010",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 28,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "6040",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 28,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "4010",
+          "predicted": "6100",
+          "count": 26,
+          "percentage_of_actual": 0.65
+        },
+        {
+          "actual": "4010",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 14,
+          "percentage_of_actual": 0.35
+        },
+        {
+          "actual": "1050",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 13,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "6020",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 12,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "6120",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 12,
+          "percentage_of_actual": 0.8571428571428571
+        },
+        {
+          "actual": "6110",
+          "predicted": "6070",
+          "count": 9,
+          "percentage_of_actual": 0.5294117647058824
+        },
+        {
+          "actual": "6170",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 9,
+          "percentage_of_actual": 0.75
+        },
+        {
+          "actual": "6210",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 9,
+          "percentage_of_actual": 1.0
+        }
+      ],
+      "category_coverage": {
+        "categories_in_truth": [
+          "1020",
+          "1030",
+          "1050",
+          "1060",
+          "1070",
+          "1080",
+          "1200",
+          "1510",
+          "3030",
+          "4010",
+          "4020",
+          "4030",
+          "4040",
+          "5010",
+          "5020",
+          "5040",
+          "6010",
+          "6020",
+          "6030",
+          "6040",
+          "6050",
+          "6060",
+          "6070",
+          "6080",
+          "6100",
+          "6110",
+          "6120",
+          "6130",
+          "6140",
+          "6150",
+          "6160",
+          "6170",
+          "6180",
+          "6190",
+          "6200",
+          "6210",
+          "6220",
+          "6230",
+          "6240"
+        ],
+        "categories_in_truth_count": 39,
+        "categories_predicted": [
+          "6060",
+          "6070",
+          "6100",
+          "6120",
+          "UNCATEGORIZABLE"
+        ],
+        "categories_predicted_count": 5,
+        "never_predicted": [
+          "1020",
+          "1030",
+          "1050",
+          "1060",
+          "1070",
+          "1080",
+          "1200",
+          "1510",
+          "3030",
+          "4010",
+          "4020",
+          "4030",
+          "4040",
+          "5010",
+          "5020",
+          "5040",
+          "6010",
+          "6020",
+          "6030",
+          "6040",
+          "6050",
+          "6080",
+          "6110",
+          "6130",
+          "6140",
+          "6150",
+          "6160",
+          "6170",
+          "6180",
+          "6190",
+          "6200",
+          "6210",
+          "6220",
+          "6230",
+          "6240"
+        ],
+        "zero_recall": [
+          "1020",
+          "1030",
+          "1050",
+          "1060",
+          "1070",
+          "1080",
+          "1200",
+          "1510",
+          "3030",
+          "4010",
+          "4020",
+          "4030",
+          "4040",
+          "5010",
+          "5020",
+          "5040",
+          "6010",
+          "6020",
+          "6030",
+          "6040",
+          "6050",
+          "6060",
+          "6070",
+          "6080",
+          "6100",
+          "6110",
+          "6120",
+          "6130",
+          "6140",
+          "6150",
+          "6160",
+          "6170",
+          "6180",
+          "6190",
+          "6200",
+          "6210",
+          "6220",
+          "6230",
+          "6240"
+        ]
+      },
+      "routing": {
+        "total": 302,
+        "auto_approved": 27,
+        "needs_review": 45,
+        "uncategorizable": 230,
+        "failed": 0,
+        "auto_approved_rate": 0.08940397350993377,
+        "review_rate": 0.1490066225165563,
+        "auto_approved_accuracy": 0.0,
+        "model_called": 0,
+        "model_called_rate": 0.0,
+        "zero_cost": 302,
+        "zero_cost_rate": 1.0,
+        "by_provider": {
+          "deterministic_other": 230,
+          "rule_categorizer": 72
+        },
+        "cost_per_100": 0.0,
+        "cost_per_100_model_only_baseline": null,
+        "cost_savings_per_100": null
+      },
+      "calibration": {
+        "overall": {
+          "label": "overall",
+          "count": 302,
+          "ece": 0.2074,
+          "mce": 0.9256,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 230,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 4,
+              "predicted_confidence_mean": 0.4,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 41,
+              "predicted_confidence_mean": 0.8792682926829268,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 27,
+              "predicted_confidence_mean": 0.9255555555555556,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": "High-confidence bucket (0.9-1.0, n=27) actual accuracy 0.00% is materially below the 90% expectation. Auto-approved predictions in this range cannot be trusted blindly."
+        },
+        "model_only": {
+          "label": "model_only",
+          "count": 0,
+          "ece": 0.0,
+          "mce": 0.0,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": null
+        },
+        "deterministic": {
+          "label": "deterministic",
+          "count": 302,
+          "ece": 0.2074,
+          "mce": 0.9256,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 230,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 4,
+              "predicted_confidence_mean": 0.4,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 41,
+              "predicted_confidence_mean": 0.8792682926829268,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 27,
+              "predicted_confidence_mean": 0.9255555555555556,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": "High-confidence bucket (0.9-1.0, n=27) actual accuracy 0.00% is materially below the 90% expectation. Auto-approved predictions in this range cannot be trusted blindly."
+        }
+      }
     },
     "non_adversarial": {
       "accuracy": 0.0,
@@ -288,202 +830,306 @@
         "1020": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 2.0
-        },
-        "1030": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "support": 1.0
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
         },
         "1050": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 13.0
+          "f1": 0.0,
+          "support": 13.0,
+          "false_positives": 0.0,
+          "false_negatives": 13.0
         },
         "1060": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 3.0
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
         },
         "1070": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 5.0
+          "f1": 0.0,
+          "support": 4.0,
+          "false_positives": 0.0,
+          "false_negatives": 4.0
         },
         "1080": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 2.0
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
         },
         "1200": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 4.0
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
         },
         "1510": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 1.0
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
         },
         "3030": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 8.0
+          "f1": 0.0,
+          "support": 4.0,
+          "false_positives": 0.0,
+          "false_negatives": 4.0
         },
         "4010": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 40.0
+          "f1": 0.0,
+          "support": 38.0,
+          "false_positives": 0.0,
+          "false_negatives": 38.0
         },
         "4020": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 5.0
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
         },
         "4030": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 6.0
+          "f1": 0.0,
+          "support": 6.0,
+          "false_positives": 0.0,
+          "false_negatives": 6.0
         },
         "4040": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 5.0
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
         },
         "5010": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 5.0
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
         },
         "5020": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 5.0
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
         },
         "5040": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 4.0
+          "f1": 0.0,
+          "support": 4.0,
+          "false_positives": 0.0,
+          "false_negatives": 4.0
         },
         "6010": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 28.0
+          "f1": 0.0,
+          "support": 28.0,
+          "false_positives": 0.0,
+          "false_negatives": 28.0
         },
         "6020": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 12.0
+          "f1": 0.0,
+          "support": 12.0,
+          "false_positives": 0.0,
+          "false_negatives": 12.0
         },
         "6030": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 4.0
+          "f1": 0.0,
+          "support": 4.0,
+          "false_positives": 0.0,
+          "false_negatives": 4.0
         },
         "6040": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 28.0
+          "f1": 0.0,
+          "support": 26.0,
+          "false_positives": 0.0,
+          "false_negatives": 26.0
         },
         "6050": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 1.0
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
         },
         "6060": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 5.0
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 1.0,
+          "false_negatives": 5.0
         },
         "6070": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 7.0
+          "f1": 0.0,
+          "support": 7.0,
+          "false_positives": 23.0,
+          "false_negatives": 7.0
         },
         "6080": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 3.0
+          "f1": 0.0,
+          "support": 3.0,
+          "false_positives": 0.0,
+          "false_negatives": 3.0
         },
         "6100": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 7.0
+          "f1": 0.0,
+          "support": 7.0,
+          "false_positives": 38.0,
+          "false_negatives": 7.0
         },
         "6110": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 17.0
+          "f1": 0.0,
+          "support": 14.0,
+          "false_positives": 0.0,
+          "false_negatives": 14.0
         },
         "6120": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 14.0
+          "f1": 0.0,
+          "support": 12.0,
+          "false_positives": 0.0,
+          "false_negatives": 12.0
         },
         "6130": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 9.0
+          "f1": 0.0,
+          "support": 6.0,
+          "false_positives": 0.0,
+          "false_negatives": 6.0
         },
         "6140": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 9.0
-        },
-        "6150": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "support": 1.0
+          "f1": 0.0,
+          "support": 3.0,
+          "false_positives": 0.0,
+          "false_negatives": 3.0
         },
         "6160": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 5.0
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
         },
         "6170": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 12.0
+          "f1": 0.0,
+          "support": 12.0,
+          "false_positives": 0.0,
+          "false_negatives": 12.0
         },
         "6180": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 8.0
+          "f1": 0.0,
+          "support": 8.0,
+          "false_positives": 0.0,
+          "false_negatives": 8.0
         },
         "6190": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 4.0
+          "f1": 0.0,
+          "support": 3.0,
+          "false_positives": 0.0,
+          "false_negatives": 3.0
         },
         "6200": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 5.0
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
         },
         "6210": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 9.0
+          "f1": 0.0,
+          "support": 8.0,
+          "false_positives": 0.0,
+          "false_negatives": 8.0
         },
         "6220": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 1.0
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
         },
         "6230": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 2.0
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
         },
         "6240": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 2.0
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
         },
         "UNCATEGORIZABLE": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 0.0
+          "f1": 0.0,
+          "support": 0.0,
+          "false_positives": 209.0,
+          "false_negatives": 0.0
         }
       },
       "reliability_diagram": [
@@ -549,216 +1195,584 @@
         }
       ],
       "latency_stats": {
-        "p50_ms": 0.017607000017960672,
-        "p95_ms": 0.03409399994325213,
-        "mean_ms": 0.02066849076930161
+        "p50_ms": 0.01505699998460841,
+        "p95_ms": 0.04437299998016897,
+        "mean_ms": 0.0185941033184775
       },
       "total_cost": 0.0,
       "cost_per_100": 0.0,
-      "transaction_count": 271
+      "transaction_count": 271,
+      "top_confusions": [
+        {
+          "actual": "6010",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 28,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "6040",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 26,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "4010",
+          "predicted": "6100",
+          "count": 25,
+          "percentage_of_actual": 0.6578947368421053
+        },
+        {
+          "actual": "1050",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 13,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "4010",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 13,
+          "percentage_of_actual": 0.34210526315789475
+        },
+        {
+          "actual": "6020",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 12,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "6120",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 12,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "6170",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 9,
+          "percentage_of_actual": 0.75
+        },
+        {
+          "actual": "6180",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 8,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "6210",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 8,
+          "percentage_of_actual": 1.0
+        }
+      ],
+      "category_coverage": {
+        "categories_in_truth": [
+          "1020",
+          "1050",
+          "1060",
+          "1070",
+          "1080",
+          "1200",
+          "1510",
+          "3030",
+          "4010",
+          "4020",
+          "4030",
+          "4040",
+          "5010",
+          "5020",
+          "5040",
+          "6010",
+          "6020",
+          "6030",
+          "6040",
+          "6050",
+          "6060",
+          "6070",
+          "6080",
+          "6100",
+          "6110",
+          "6120",
+          "6130",
+          "6140",
+          "6160",
+          "6170",
+          "6180",
+          "6190",
+          "6200",
+          "6210",
+          "6220",
+          "6230",
+          "6240"
+        ],
+        "categories_in_truth_count": 37,
+        "categories_predicted": [
+          "6060",
+          "6070",
+          "6100",
+          "UNCATEGORIZABLE"
+        ],
+        "categories_predicted_count": 4,
+        "never_predicted": [
+          "1020",
+          "1050",
+          "1060",
+          "1070",
+          "1080",
+          "1200",
+          "1510",
+          "3030",
+          "4010",
+          "4020",
+          "4030",
+          "4040",
+          "5010",
+          "5020",
+          "5040",
+          "6010",
+          "6020",
+          "6030",
+          "6040",
+          "6050",
+          "6080",
+          "6110",
+          "6120",
+          "6130",
+          "6140",
+          "6160",
+          "6170",
+          "6180",
+          "6190",
+          "6200",
+          "6210",
+          "6220",
+          "6230",
+          "6240"
+        ],
+        "zero_recall": [
+          "1020",
+          "1050",
+          "1060",
+          "1070",
+          "1080",
+          "1200",
+          "1510",
+          "3030",
+          "4010",
+          "4020",
+          "4030",
+          "4040",
+          "5010",
+          "5020",
+          "5040",
+          "6010",
+          "6020",
+          "6030",
+          "6040",
+          "6050",
+          "6060",
+          "6070",
+          "6080",
+          "6100",
+          "6110",
+          "6120",
+          "6130",
+          "6140",
+          "6160",
+          "6170",
+          "6180",
+          "6190",
+          "6200",
+          "6210",
+          "6220",
+          "6230",
+          "6240"
+        ]
+      },
+      "routing": {
+        "total": 271,
+        "auto_approved": 24,
+        "needs_review": 38,
+        "uncategorizable": 209,
+        "failed": 0,
+        "auto_approved_rate": 0.08856088560885608,
+        "review_rate": 0.14022140221402213,
+        "auto_approved_accuracy": 0.0,
+        "model_called": 0,
+        "model_called_rate": 0.0,
+        "zero_cost": 271,
+        "zero_cost_rate": 1.0,
+        "by_provider": {
+          "deterministic_other": 209,
+          "rule_categorizer": 62
+        },
+        "cost_per_100": 0.0,
+        "cost_per_100_model_only_baseline": null,
+        "cost_savings_per_100": null
+      },
+      "calibration": {
+        "overall": {
+          "label": "overall",
+          "count": 271,
+          "ece": 0.2055,
+          "mce": 0.9271,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 209,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 38,
+              "predicted_confidence_mean": 0.88,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 24,
+              "predicted_confidence_mean": 0.9270833333333334,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": "High-confidence bucket (0.9-1.0, n=24) actual accuracy 0.00% is materially below the 90% expectation. Auto-approved predictions in this range cannot be trusted blindly."
+        },
+        "model_only": {
+          "label": "model_only",
+          "count": 0,
+          "ece": 0.0,
+          "mce": 0.0,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": null
+        },
+        "deterministic": {
+          "label": "deterministic",
+          "count": 271,
+          "ece": 0.2055,
+          "mce": 0.9271,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 209,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 38,
+              "predicted_confidence_mean": 0.88,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 24,
+              "predicted_confidence_mean": 0.9270833333333334,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": "High-confidence bucket (0.9-1.0, n=24) actual accuracy 0.00% is materially below the 90% expectation. Auto-approved predictions in this range cannot be trusted blindly."
+        }
+      }
     },
     "adversarial": {
       "accuracy": 0.0,
       "per_category": {
-        "1020": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "support": 2.0
-        },
         "1030": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 1.0
-        },
-        "1050": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "support": 13.0
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
         },
         "1060": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 3.0
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
         },
         "1070": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 5.0
-        },
-        "1080": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "support": 2.0
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
         },
         "1200": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 4.0
-        },
-        "1510": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "support": 1.0
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
         },
         "3030": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 8.0
+          "f1": 0.0,
+          "support": 4.0,
+          "false_positives": 0.0,
+          "false_negatives": 4.0
         },
         "4010": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 40.0
-        },
-        "4020": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "support": 5.0
-        },
-        "4030": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "support": 6.0
-        },
-        "4040": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "support": 5.0
-        },
-        "5010": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "support": 5.0
-        },
-        "5020": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "support": 5.0
-        },
-        "5040": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "support": 4.0
-        },
-        "6010": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "support": 28.0
-        },
-        "6020": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "support": 12.0
-        },
-        "6030": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "support": 4.0
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
         },
         "6040": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 28.0
-        },
-        "6050": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "support": 1.0
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
         },
         "6060": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 5.0
+          "f1": 0.0,
+          "support": 0.0,
+          "false_positives": 5.0,
+          "false_negatives": 0.0
         },
         "6070": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 7.0
-        },
-        "6080": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "support": 3.0
+          "f1": 0.0,
+          "support": 0.0,
+          "false_positives": 2.0,
+          "false_negatives": 0.0
         },
         "6100": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 7.0
+          "f1": 0.0,
+          "support": 0.0,
+          "false_positives": 2.0,
+          "false_negatives": 0.0
         },
         "6110": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 17.0
+          "f1": 0.0,
+          "support": 3.0,
+          "false_positives": 0.0,
+          "false_negatives": 3.0
         },
         "6120": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 14.0
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 1.0,
+          "false_negatives": 2.0
         },
         "6130": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 9.0
+          "f1": 0.0,
+          "support": 3.0,
+          "false_positives": 0.0,
+          "false_negatives": 3.0
         },
         "6140": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 9.0
+          "f1": 0.0,
+          "support": 6.0,
+          "false_positives": 0.0,
+          "false_negatives": 6.0
         },
         "6150": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 1.0
-        },
-        "6160": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "support": 5.0
-        },
-        "6170": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "support": 12.0
-        },
-        "6180": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "support": 8.0
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
         },
         "6190": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 4.0
-        },
-        "6200": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "support": 5.0
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
         },
         "6210": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 9.0
-        },
-        "6220": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "support": 1.0
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
         },
         "6230": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 2.0
-        },
-        "6240": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "support": 2.0
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
         },
         "UNCATEGORIZABLE": {
           "precision": 0.0,
           "recall": 0.0,
-          "support": 0.0
+          "f1": 0.0,
+          "support": 0.0,
+          "false_positives": 21.0,
+          "false_negatives": 0.0
         }
       },
       "reliability_diagram": [
@@ -824,13 +1838,366 @@
         }
       ],
       "latency_stats": {
-        "p50_ms": 0.017459999980928842,
-        "p95_ms": 0.029810000000907166,
-        "mean_ms": 0.01900103225052003
+        "p50_ms": 0.016042000027027825,
+        "p95_ms": 0.0485359999515822,
+        "mean_ms": 0.024226419355038102
       },
       "total_cost": 0.0,
       "cost_per_100": 0.0,
-      "transaction_count": 31
+      "transaction_count": 31,
+      "top_confusions": [
+        {
+          "actual": "6140",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 6,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "3030",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 3,
+          "percentage_of_actual": 0.75
+        },
+        {
+          "actual": "6130",
+          "predicted": "6060",
+          "count": 3,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "1200",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 2,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "6040",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 2,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "6110",
+          "predicted": "6070",
+          "count": 2,
+          "percentage_of_actual": 0.6666666666666666
+        },
+        {
+          "actual": "6120",
+          "predicted": "6060",
+          "count": 2,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "1030",
+          "predicted": "6100",
+          "count": 1,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "1060",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 1,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "1070",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 1,
+          "percentage_of_actual": 1.0
+        }
+      ],
+      "category_coverage": {
+        "categories_in_truth": [
+          "1030",
+          "1060",
+          "1070",
+          "1200",
+          "3030",
+          "4010",
+          "6040",
+          "6110",
+          "6120",
+          "6130",
+          "6140",
+          "6150",
+          "6190",
+          "6210",
+          "6230"
+        ],
+        "categories_in_truth_count": 15,
+        "categories_predicted": [
+          "6060",
+          "6070",
+          "6100",
+          "6120",
+          "UNCATEGORIZABLE"
+        ],
+        "categories_predicted_count": 5,
+        "never_predicted": [
+          "1030",
+          "1060",
+          "1070",
+          "1200",
+          "3030",
+          "4010",
+          "6040",
+          "6110",
+          "6130",
+          "6140",
+          "6150",
+          "6190",
+          "6210",
+          "6230"
+        ],
+        "zero_recall": [
+          "1030",
+          "1060",
+          "1070",
+          "1200",
+          "3030",
+          "4010",
+          "6040",
+          "6110",
+          "6120",
+          "6130",
+          "6140",
+          "6150",
+          "6190",
+          "6210",
+          "6230"
+        ]
+      },
+      "routing": {
+        "total": 31,
+        "auto_approved": 3,
+        "needs_review": 7,
+        "uncategorizable": 21,
+        "failed": 0,
+        "auto_approved_rate": 0.0967741935483871,
+        "review_rate": 0.22580645161290322,
+        "auto_approved_accuracy": 0.0,
+        "model_called": 0,
+        "model_called_rate": 0.0,
+        "zero_cost": 31,
+        "zero_cost_rate": 1.0,
+        "by_provider": {
+          "deterministic_other": 21,
+          "rule_categorizer": 10
+        },
+        "cost_per_100": 0.0,
+        "cost_per_100_model_only_baseline": null,
+        "cost_savings_per_100": null
+      },
+      "calibration": {
+        "overall": {
+          "label": "overall",
+          "count": 31,
+          "ece": 0.2242,
+          "mce": 0.9133,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 21,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 4,
+              "predicted_confidence_mean": 0.4,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 3,
+              "predicted_confidence_mean": 0.87,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 3,
+              "predicted_confidence_mean": 0.9133333333333333,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": null
+        },
+        "model_only": {
+          "label": "model_only",
+          "count": 0,
+          "ece": 0.0,
+          "mce": 0.0,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": null
+        },
+        "deterministic": {
+          "label": "deterministic",
+          "count": 31,
+          "ece": 0.2242,
+          "mce": 0.9133,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 21,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 4,
+              "predicted_confidence_mean": 0.4,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 3,
+              "predicted_confidence_mean": 0.87,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 3,
+              "predicted_confidence_mean": 0.9133333333333333,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": null
+        }
+      }
     }
   },
   "predictions": [
@@ -841,7 +2208,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.03182199998263968,
+      "latency_ms": 0.027346999956989748,
       "model": "deterministic_rules_v1"
     },
     {
@@ -851,7 +2218,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.020544999983940215,
+      "latency_ms": 0.017686000035155303,
       "model": "deterministic_rules_v1"
     },
     {
@@ -861,7 +2228,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018812999996953295,
+      "latency_ms": 0.015872000005856535,
       "model": "deterministic_rules_v1"
     },
     {
@@ -871,7 +2238,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01836399997046101,
+      "latency_ms": 0.020422000034159282,
       "model": "deterministic_rules_v1"
     },
     {
@@ -881,7 +2248,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.06471199992574839,
+      "latency_ms": 0.015229999974053499,
       "model": "deterministic_rules_v1"
     },
     {
@@ -891,7 +2258,7 @@
       "reasoning": "rule_categorizer: matched rule.amazon.review (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01871400002073642,
+      "latency_ms": 0.015367000003152498,
       "model": "rule.amazon.review"
     },
     {
@@ -901,7 +2268,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017913000078806363,
+      "latency_ms": 0.014719999967383046,
       "model": "deterministic_rules_v1"
     },
     {
@@ -911,7 +2278,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01742999995713035,
+      "latency_ms": 0.01465899998720488,
       "model": "deterministic_rules_v1"
     },
     {
@@ -921,7 +2288,7 @@
       "reasoning": "rule_categorizer: matched rule.dunkin.meals (keyword_any)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01729199993860675,
+      "latency_ms": 0.01455500000702159,
       "model": "rule.dunkin.meals"
     },
     {
@@ -931,7 +2298,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01714200004698796,
+      "latency_ms": 0.014433999979246437,
       "model": "deterministic_rules_v1"
     },
     {
@@ -941,7 +2308,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01923000002079789,
+      "latency_ms": 0.016042000027027825,
       "model": "deterministic_rules_v1"
     },
     {
@@ -951,7 +2318,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02104099996813602,
+      "latency_ms": 0.01943500001289067,
       "model": "deterministic_rules_v1"
     },
     {
@@ -961,7 +2328,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.05107599997700163,
+      "latency_ms": 0.04471099998681893,
       "model": "deterministic_rules_v1"
     },
     {
@@ -971,7 +2338,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018574000023363624,
+      "latency_ms": 0.020989000006466085,
       "model": "deterministic_rules_v1"
     },
     {
@@ -981,7 +2348,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01869200002602156,
+      "latency_ms": 0.016433000041615742,
       "model": "deterministic_rules_v1"
     },
     {
@@ -991,7 +2358,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.019131999920318776,
+      "latency_ms": 0.01613000000588727,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1001,7 +2368,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017784999954528757,
+      "latency_ms": 0.04440800000793388,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1011,7 +2378,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018836999970517354,
+      "latency_ms": 0.016086999949038727,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1021,7 +2388,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017638999906921526,
+      "latency_ms": 0.019704999999703432,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1031,7 +2398,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017157000002043787,
+      "latency_ms": 0.020678999987921998,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1041,7 +2408,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017607000017960672,
+      "latency_ms": 0.01586700000189012,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1051,7 +2418,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018400999920231698,
+      "latency_ms": 0.01562500000318323,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1061,7 +2428,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018381000018052873,
+      "latency_ms": 0.015701999984685244,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1071,7 +2438,7 @@
       "reasoning": "rule_categorizer: matched rule.intuit.software (keyword_any)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018839999938791152,
+      "latency_ms": 0.015767000036248646,
       "model": "rule.intuit.software"
     },
     {
@@ -1081,7 +2448,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01741599999149912,
+      "latency_ms": 0.015157000007093302,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1091,7 +2458,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01813599999422877,
+      "latency_ms": 0.01531800000975636,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1101,7 +2468,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01869200002602156,
+      "latency_ms": 0.015374999975392711,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1111,7 +2478,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01735900002586277,
+      "latency_ms": 0.020101000018257764,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1121,7 +2488,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.0180109999519118,
+      "latency_ms": 0.015469000004486588,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1131,7 +2498,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02150899990738253,
+      "latency_ms": 0.014666999959445093,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1141,7 +2508,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018084999965140014,
+      "latency_ms": 0.015367999992577097,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1151,7 +2518,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017505999949207762,
+      "latency_ms": 0.01495499998327432,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1161,7 +2528,7 @@
       "reasoning": "rule_categorizer: matched rule.staples.office (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01783999994131591,
+      "latency_ms": 0.015271999984634022,
       "model": "rule.staples.office"
     },
     {
@@ -1171,7 +2538,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01759799999945244,
+      "latency_ms": 0.014786999997795647,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1181,7 +2548,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01697100003639207,
+      "latency_ms": 0.04318700001704201,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1191,7 +2558,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018335999925511715,
+      "latency_ms": 0.015300000029583316,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1201,7 +2568,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01751899992541439,
+      "latency_ms": 0.01475999999911437,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1211,7 +2578,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016911999978219683,
+      "latency_ms": 0.014719999967383046,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1221,7 +2588,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016657999935887347,
+      "latency_ms": 0.014426999996430823,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1231,7 +2598,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01767900005233969,
+      "latency_ms": 0.01482900000837617,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1241,7 +2608,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016650000020490552,
+      "latency_ms": 0.020194000001083623,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1251,7 +2618,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018275000002176967,
+      "latency_ms": 0.014812000017627724,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1261,7 +2628,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017978999949264107,
+      "latency_ms": 0.018947999990359676,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1271,7 +2638,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017983000020649342,
+      "latency_ms": 0.015565000012429664,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1281,7 +2648,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01724499998090323,
+      "latency_ms": 0.014387999954124098,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1291,7 +2658,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01713100004963053,
+      "latency_ms": 0.014563999968686403,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1301,7 +2668,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01734800002850534,
+      "latency_ms": 0.01465700000835568,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1311,7 +2678,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.019247000068389752,
+      "latency_ms": 0.014820999979292537,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1321,7 +2688,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01689199996235402,
+      "latency_ms": 0.014103000012255507,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1331,7 +2698,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.04421099993123789,
+      "latency_ms": 0.014604999989842327,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1341,7 +2708,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02053900004739262,
+      "latency_ms": 0.018382999996902072,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1351,7 +2718,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01757500001531298,
+      "latency_ms": 0.014694000014969788,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1361,7 +2728,7 @@
       "reasoning": "rule_categorizer: matched rule.amazon.review (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01693500007604598,
+      "latency_ms": 0.04170800002611941,
       "model": "rule.amazon.review"
     },
     {
@@ -1371,7 +2738,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.019025000028705108,
+      "latency_ms": 0.016393999999309017,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1381,7 +2748,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017482999965068302,
+      "latency_ms": 0.015018999988569703,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1391,7 +2758,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01825099991492607,
+      "latency_ms": 0.015270000005784823,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1401,7 +2768,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017129999946519092,
+      "latency_ms": 0.01907000000755943,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1411,7 +2778,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02217199994447583,
+      "latency_ms": 0.015176999966115545,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1421,7 +2788,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017878999983622634,
+      "latency_ms": 0.014972999963447364,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1431,7 +2798,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018130000057681173,
+      "latency_ms": 0.015027000017653336,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1441,7 +2808,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017809000041779655,
+      "latency_ms": 0.014764000013656187,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1451,7 +2818,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016725000023143366,
+      "latency_ms": 0.01416800000697549,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1461,7 +2828,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018017000002146233,
+      "latency_ms": 0.01466899999513771,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1471,7 +2838,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017329000002064276,
+      "latency_ms": 0.018797999985054048,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1481,7 +2848,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01703999998881045,
+      "latency_ms": 0.022017999981471803,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1491,7 +2858,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.019403999999667576,
+      "latency_ms": 0.014744999987215124,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1501,7 +2868,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01798899995719694,
+      "latency_ms": 0.015464000000520173,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1511,7 +2878,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017533999994157057,
+      "latency_ms": 0.07232999996631406,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1521,7 +2888,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.0165749999041509,
+      "latency_ms": 0.01459099996736768,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1531,7 +2898,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016955000091911643,
+      "latency_ms": 0.014740999972673308,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1541,7 +2908,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017230000025847403,
+      "latency_ms": 0.04268899999715359,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1551,7 +2918,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017657000057624828,
+      "latency_ms": 0.045689999979003915,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1561,7 +2928,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017445000025873014,
+      "latency_ms": 0.0467759999764894,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1571,7 +2938,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017298999978265783,
+      "latency_ms": 0.02110799999854862,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1581,7 +2948,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016780000009930518,
+      "latency_ms": 0.014853000038783648,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1591,7 +2958,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017334999938611872,
+      "latency_ms": 0.014937999992525874,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1601,7 +2968,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018025000031229865,
+      "latency_ms": 0.015097000016339734,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1611,7 +2978,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017332999959762674,
+      "latency_ms": 0.014989000021614629,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1621,7 +2988,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016557999970245874,
+      "latency_ms": 0.01417800001490832,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1631,7 +2998,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01746199995977804,
+      "latency_ms": 0.01480600002423671,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1641,7 +3008,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016861000062817766,
+      "latency_ms": 0.014476999979251559,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1651,7 +3018,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016705999996702303,
+      "latency_ms": 0.018678999992971512,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1661,7 +3028,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017453999930694408,
+      "latency_ms": 0.014904000011028984,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1671,7 +3038,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018309999973098456,
+      "latency_ms": 0.01425800002152755,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1681,7 +3048,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01796200001535908,
+      "latency_ms": 0.015646000008473493,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1691,7 +3058,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017570000068189984,
+      "latency_ms": 0.014354000029470626,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1701,7 +3068,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016817999949125806,
+      "latency_ms": 0.014501999999083637,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1711,7 +3078,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016865000020516163,
+      "latency_ms": 0.014313999997739302,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1721,7 +3088,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.04115000001547742,
+      "latency_ms": 0.04481500002384564,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1731,7 +3098,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018903000068348774,
+      "latency_ms": 0.021219999950972124,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1741,7 +3108,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01696000003903464,
+      "latency_ms": 0.01434900002550421,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1751,7 +3118,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017943999978342617,
+      "latency_ms": 0.018743999987691495,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1761,7 +3128,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017786000057640194,
+      "latency_ms": 0.01501000002690489,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1771,7 +3138,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017225000078724406,
+      "latency_ms": 0.014222000004338042,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1781,7 +3148,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017124999999396096,
+      "latency_ms": 0.014261999979225948,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1791,7 +3158,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016627999912088853,
+      "latency_ms": 0.013953000006949878,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1801,7 +3168,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.022322999939206056,
+      "latency_ms": 0.01930900003799252,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1811,7 +3178,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01714399991215032,
+      "latency_ms": 0.014457000020229316,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1821,7 +3188,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01720099999147351,
+      "latency_ms": 0.014652000004389265,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1831,7 +3198,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01699200004168233,
+      "latency_ms": 0.014273000033426797,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1841,7 +3208,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016931999994085345,
+      "latency_ms": 0.0547559999972691,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1851,7 +3218,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.019464999923002324,
+      "latency_ms": 0.017253999999411462,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1861,7 +3228,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01706399996237451,
+      "latency_ms": 0.01460199996472511,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1871,7 +3238,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018228000044473447,
+      "latency_ms": 0.046531999998933316,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1881,7 +3248,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01747299995713547,
+      "latency_ms": 0.02009500002486675,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1891,7 +3258,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017605000039111474,
+      "latency_ms": 0.01506799998196584,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1901,7 +3268,7 @@
       "reasoning": "rule_categorizer: matched rule.amazon.review (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017023999930643186,
+      "latency_ms": 0.04319499998928222,
       "model": "rule.amazon.review"
     },
     {
@@ -1911,7 +3278,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017432000049666385,
+      "latency_ms": 0.015356000005795067,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1921,7 +3288,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017077000052267977,
+      "latency_ms": 0.01469199997927717,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1931,7 +3298,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01770100004705455,
+      "latency_ms": 0.01525199996876836,
       "model": "rule.stripe.fees"
     },
     {
@@ -1941,7 +3308,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017356999933326733,
+      "latency_ms": 0.014919999955509411,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1951,7 +3318,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01729299992803135,
+      "latency_ms": 0.01929600000494247,
       "model": "rule.square.fees"
     },
     {
@@ -1961,7 +3328,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01797599998099031,
+      "latency_ms": 0.019860999998400075,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1971,7 +3338,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017558999957145716,
+      "latency_ms": 0.01570899996750086,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1981,7 +3348,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016780999999355117,
+      "latency_ms": 0.01817800000480929,
       "model": "deterministic_rules_v1"
     },
     {
@@ -1991,7 +3358,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018469999986336916,
+      "latency_ms": 0.015930000017760904,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2001,7 +3368,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017071999991458142,
+      "latency_ms": 0.014700999997785402,
       "model": "rule.square.fees"
     },
     {
@@ -2011,7 +3378,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017396000089320296,
+      "latency_ms": 0.01513699999122764,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2021,7 +3388,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01874099996257428,
+      "latency_ms": 0.01489700002821337,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2031,7 +3398,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018609999983709713,
+      "latency_ms": 0.014308000004348287,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2041,7 +3408,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01713900007871416,
+      "latency_ms": 0.020898999991914025,
       "model": "rule.square.fees"
     },
     {
@@ -2051,7 +3418,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016759999994064856,
+      "latency_ms": 0.0147049999554838,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2061,7 +3428,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016798999922684743,
+      "latency_ms": 0.014375999967342068,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2071,7 +3438,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01681300000200281,
+      "latency_ms": 0.01437399998849287,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2081,7 +3448,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01790700002857193,
+      "latency_ms": 0.04426699996429306,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2091,7 +3458,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017021000076056225,
+      "latency_ms": 0.01531999998860556,
       "model": "rule.square.fees"
     },
     {
@@ -2101,7 +3468,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.03740599993307114,
+      "latency_ms": 0.015674999986003968,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2111,7 +3478,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02260399992337625,
+      "latency_ms": 0.01872899997579225,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2121,7 +3488,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01855899995462096,
+      "latency_ms": 0.015189999999165593,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2131,7 +3498,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017379000041728432,
+      "latency_ms": 0.014747000022907741,
       "model": "rule.square.fees"
     },
     {
@@ -2141,7 +3508,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01837199999954464,
+      "latency_ms": 0.02285499999743479,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2151,7 +3518,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017099000046982837,
+      "latency_ms": 0.014877000012347708,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2161,7 +3528,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01692200009983935,
+      "latency_ms": 0.019998000027499074,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2171,7 +3538,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017009999965011957,
+      "latency_ms": 0.014985999996497412,
       "model": "rule.square.fees"
     },
     {
@@ -2181,7 +3548,7 @@
       "reasoning": "rule_categorizer: matched rule.intuit.software (keyword_any)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01841899995724816,
+      "latency_ms": 0.04297800001040741,
       "model": "rule.intuit.software"
     },
     {
@@ -2191,7 +3558,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01740699997299089,
+      "latency_ms": 0.019132999966586794,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2201,7 +3568,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017088000049625407,
+      "latency_ms": 0.014776999989862816,
       "model": "rule.square.fees"
     },
     {
@@ -2211,7 +3578,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017514999967715994,
+      "latency_ms": 0.01458899998851848,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2221,7 +3588,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016762000086600892,
+      "latency_ms": 0.014138999972601596,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2231,7 +3598,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018012000055023236,
+      "latency_ms": 0.0147049999554838,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2241,7 +3608,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017093999986173003,
+      "latency_ms": 0.014073000045300432,
       "model": "rule.square.fees"
     },
     {
@@ -2251,7 +3618,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01782799995453388,
+      "latency_ms": 0.015290000021650485,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2261,7 +3628,7 @@
       "reasoning": "rule_categorizer: matched rule.staples.office (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018047000025944726,
+      "latency_ms": 0.04497399999081608,
       "model": "rule.staples.office"
     },
     {
@@ -2271,7 +3638,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016794999964986346,
+      "latency_ms": 0.022166000007928233,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2281,7 +3648,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017966000086744316,
+      "latency_ms": 0.015230999963478098,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2291,7 +3658,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017991999925470736,
+      "latency_ms": 0.01496599998063175,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2301,7 +3668,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01711099992007803,
+      "latency_ms": 0.014472000032128562,
       "model": "rule.square.fees"
     },
     {
@@ -2311,7 +3678,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017129999946519092,
+      "latency_ms": 0.01461299996208254,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2321,7 +3688,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018404999991616933,
+      "latency_ms": 0.01534199998332042,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2331,7 +3698,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016996999988805328,
+      "latency_ms": 0.013886999965961877,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2341,7 +3708,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01675899989095342,
+      "latency_ms": 0.018388000000868487,
       "model": "rule.square.fees"
     },
     {
@@ -2351,7 +3718,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017180999975607847,
+      "latency_ms": 0.020693999999821244,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2361,7 +3728,7 @@
       "reasoning": "rule_categorizer: matched rule.intuit.software (keyword_any)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01819399994928972,
+      "latency_ms": 0.015619999999216816,
       "model": "rule.intuit.software"
     },
     {
@@ -2371,7 +3738,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017459999980928842,
+      "latency_ms": 0.014654999972663063,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2381,7 +3748,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02419999998437561,
+      "latency_ms": 0.014729000042734697,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2391,7 +3758,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.029892000043219014,
+      "latency_ms": 0.014297999996415456,
       "model": "rule.square.fees"
     },
     {
@@ -2401,7 +3768,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016944999970291974,
+      "latency_ms": 0.014120999992428551,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2411,7 +3778,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017752999951881065,
+      "latency_ms": 0.014528999997764913,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2421,7 +3788,7 @@
       "reasoning": "rule_categorizer: matched rule.amazon.review (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018553000018073362,
+      "latency_ms": 0.020602000006419985,
       "model": "rule.amazon.review"
     },
     {
@@ -2431,7 +3798,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018185999920206086,
+      "latency_ms": 0.01576299996486341,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2441,7 +3808,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01759700001002784,
+      "latency_ms": 0.0485359999515822,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2451,7 +3818,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.03618800008098333,
+      "latency_ms": 0.015340000004471221,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2461,7 +3828,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.022702000023855362,
+      "latency_ms": 0.041380999959983455,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2471,7 +3838,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018425999996907194,
+      "latency_ms": 0.01661799996099944,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2481,7 +3848,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01686999996763916,
+      "latency_ms": 0.014263999958075146,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2491,7 +3858,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01761199996508367,
+      "latency_ms": 0.014606999968691525,
       "model": "rule.square.fees"
     },
     {
@@ -2501,7 +3868,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017013000046972593,
+      "latency_ms": 0.019189999989066564,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2511,7 +3878,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01865900003394927,
+      "latency_ms": 0.020470999970712,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2521,7 +3888,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.030897999977241852,
+      "latency_ms": 0.014825999983258953,
       "model": "rule.square.fees"
     },
     {
@@ -2531,7 +3898,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.0214969999206005,
+      "latency_ms": 0.01934199997322139,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2541,7 +3908,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.06601999996291852,
+      "latency_ms": 0.01566200000979734,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2551,7 +3918,7 @@
       "reasoning": "rule_categorizer: matched rule.intuit.software (keyword_any)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018218999912278377,
+      "latency_ms": 0.01504599998725098,
       "model": "rule.intuit.software"
     },
     {
@@ -2561,7 +3928,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.024511999981768895,
+      "latency_ms": 0.013994000028105802,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2571,7 +3938,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02910800003519398,
+      "latency_ms": 0.014469999996435945,
       "model": "rule.square.fees"
     },
     {
@@ -2581,7 +3948,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016601999959675595,
+      "latency_ms": 0.018228999977054627,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2591,7 +3958,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018619999991642544,
+      "latency_ms": 0.014340000006995979,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2601,7 +3968,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017092999996748404,
+      "latency_ms": 0.014732000011008495,
       "model": "rule.square.fees"
     },
     {
@@ -2611,7 +3978,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017190999983540678,
+      "latency_ms": 0.01474800001233234,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2621,7 +3988,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016893000065465458,
+      "latency_ms": 0.04057499995724356,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2631,7 +3998,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01687199994648836,
+      "latency_ms": 0.015105000045423367,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2641,7 +4008,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.020057000028828043,
+      "latency_ms": 0.014603000010993128,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2651,7 +4018,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018435000015415426,
+      "latency_ms": 0.01466999998456231,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2661,7 +4028,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01755200003117352,
+      "latency_ms": 0.018565000004855392,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2671,7 +4038,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016765999930612452,
+      "latency_ms": 0.01421300004267323,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2681,7 +4048,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017116999970312463,
+      "latency_ms": 0.014659999976629479,
       "model": "rule.square.fees"
     },
     {
@@ -2691,7 +4058,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01829500001804263,
+      "latency_ms": 0.014789999966069445,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2701,7 +4068,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017091000017899205,
+      "latency_ms": 0.01421399997525441,
       "model": "rule.square.fees"
     },
     {
@@ -2711,7 +4078,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016624999943815055,
+      "latency_ms": 0.013980999995055754,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2721,7 +4088,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016693000020495674,
+      "latency_ms": 0.0140660000056414,
       "model": "rule.square.fees"
     },
     {
@@ -2731,7 +4098,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017600000091988477,
+      "latency_ms": 0.01837299998896924,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2741,7 +4108,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017455000033805845,
+      "latency_ms": 0.014996000004430243,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2751,7 +4118,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01850099999956001,
+      "latency_ms": 0.018787999977121217,
       "model": "rule.square.fees"
     },
     {
@@ -2761,7 +4128,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01767500009464129,
+      "latency_ms": 0.01457899998058565,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2771,7 +4138,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01788200006558327,
+      "latency_ms": 0.01462300002685879,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2781,7 +4148,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016829000060170074,
+      "latency_ms": 0.04042599999820595,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2791,7 +4158,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016933999972934544,
+      "latency_ms": 0.016178000009858806,
       "model": "rule.square.fees"
     },
     {
@@ -2801,7 +4168,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.023817999931452505,
+      "latency_ms": 0.019984999994449026,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2811,7 +4178,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01752099990426359,
+      "latency_ms": 0.019620999978542386,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2821,7 +4188,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018686000089473964,
+      "latency_ms": 0.044776000038382335,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2831,7 +4198,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017217999925378535,
+      "latency_ms": 0.01545699996086114,
       "model": "rule.square.fees"
     },
     {
@@ -2841,7 +4208,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01797599998099031,
+      "latency_ms": 0.01532999999653839,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2851,7 +4218,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017708999962451344,
+      "latency_ms": 0.01512500000444561,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2861,7 +4228,7 @@
       "reasoning": "rule_categorizer: matched rule.adobe.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017468999999437074,
+      "latency_ms": 0.014940000028218492,
       "model": "rule.adobe.software"
     },
     {
@@ -2871,7 +4238,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.021755000034318073,
+      "latency_ms": 0.014732000011008495,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2881,7 +4248,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016910999988795083,
+      "latency_ms": 0.014228999987153657,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2891,7 +4258,7 @@
       "reasoning": "rule_categorizer: matched rule.github.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017368999920108763,
+      "latency_ms": 0.019200999986423994,
       "model": "rule.github.software"
     },
     {
@@ -2901,7 +4268,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016417000097135315,
+      "latency_ms": 0.01505699998460841,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2911,7 +4278,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01797499999156571,
+      "latency_ms": 0.014995000015005644,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2921,7 +4288,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016528000060134218,
+      "latency_ms": 0.0202219999891895,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2931,7 +4298,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01881899993350089,
+      "latency_ms": 0.01564899997674729,
       "model": "rule.stripe.fees"
     },
     {
@@ -2941,7 +4308,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01612999994904385,
+      "latency_ms": 0.013857999988431402,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2951,7 +4318,7 @@
       "reasoning": "rule_categorizer: matched rule.adobe.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017044000060195685,
+      "latency_ms": 0.014730000032159296,
       "model": "rule.adobe.software"
     },
     {
@@ -2961,7 +4328,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01716600002055202,
+      "latency_ms": 0.014582999995127466,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2971,7 +4338,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01899700009744265,
+      "latency_ms": 0.019213999962630623,
       "model": "rule.stripe.fees"
     },
     {
@@ -2981,7 +4348,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01700600000731356,
+      "latency_ms": 0.0211330000183807,
       "model": "deterministic_rules_v1"
     },
     {
@@ -2991,7 +4358,7 @@
       "reasoning": "rule_categorizer: matched rule.github.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016883000057532627,
+      "latency_ms": 0.045804000023963454,
       "model": "rule.github.software"
     },
     {
@@ -3001,7 +4368,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016236999954344356,
+      "latency_ms": 0.023756000018693157,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3011,7 +4378,7 @@
       "reasoning": "rule_categorizer: matched rule.dropbox.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017025999909492384,
+      "latency_ms": 0.09476700000732308,
       "model": "rule.dropbox.software"
     },
     {
@@ -3021,7 +4388,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02493900001354632,
+      "latency_ms": 0.020407000022260036,
       "model": "rule.stripe.fees"
     },
     {
@@ -3031,7 +4398,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.0247579999950176,
+      "latency_ms": 0.014990000011039228,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3041,7 +4408,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.028935000045748893,
+      "latency_ms": 0.020490999986577663,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3051,7 +4418,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02776700000595156,
+      "latency_ms": 0.015493000034894067,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3061,7 +4428,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.026907999995273713,
+      "latency_ms": 0.01447599998982696,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3071,7 +4438,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02956699995593226,
+      "latency_ms": 0.014393000014933932,
       "model": "rule.stripe.fees"
     },
     {
@@ -3081,7 +4448,7 @@
       "reasoning": "rule_categorizer: matched rule.zoom.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.032206000014411984,
+      "latency_ms": 0.014290000024175242,
       "model": "rule.zoom.software"
     },
     {
@@ -3091,7 +4458,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.032625000017105776,
+      "latency_ms": 0.015667000013763754,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3101,7 +4468,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.030031999926904973,
+      "latency_ms": 0.01400799999373703,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3111,7 +4478,7 @@
       "reasoning": "rule_categorizer: matched rule.adobe.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.07463300005383644,
+      "latency_ms": 0.014165000038701692,
       "model": "rule.adobe.software"
     },
     {
@@ -3121,7 +4488,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.03680500003611087,
+      "latency_ms": 0.019020000024738692,
       "model": "rule.stripe.fees"
     },
     {
@@ -3131,7 +4498,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.033027999961632304,
+      "latency_ms": 0.014734999979282293,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3141,7 +4508,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.029541000003519002,
+      "latency_ms": 0.01595800000586678,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3151,7 +4518,7 @@
       "reasoning": "rule_categorizer: matched rule.github.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.038633000031040865,
+      "latency_ms": 0.01463600000306542,
       "model": "rule.github.software"
     },
     {
@@ -3161,7 +4528,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.03336300005685189,
+      "latency_ms": 0.018531999955939682,
       "model": "rule.stripe.fees"
     },
     {
@@ -3171,7 +4538,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.031465000006392074,
+      "latency_ms": 0.014434000036089856,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3181,7 +4548,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.03350999998019688,
+      "latency_ms": 0.0147049999554838,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3191,7 +4558,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.029810000000907166,
+      "latency_ms": 0.014398000018900348,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3201,7 +4568,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.03243699995891802,
+      "latency_ms": 0.018629000010150776,
       "model": "rule.stripe.fees"
     },
     {
@@ -3211,7 +4578,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.032671999974809296,
+      "latency_ms": 0.014813999996476923,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3221,7 +4588,7 @@
       "reasoning": "rule_categorizer: matched rule.zoom.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.03212299998267554,
+      "latency_ms": 0.01454400000966416,
       "model": "rule.zoom.software"
     },
     {
@@ -3231,7 +4598,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.03309099997750309,
+      "latency_ms": 0.01488600003085594,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3241,7 +4608,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.03409399994325213,
+      "latency_ms": 0.015221000012388686,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3251,7 +4618,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.03282200009380176,
+      "latency_ms": 0.01444100001890547,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3261,7 +4628,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.032991000011861615,
+      "latency_ms": 0.014788000044063665,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3271,7 +4638,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.03242899992983439,
+      "latency_ms": 0.013949999981832661,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3281,7 +4648,7 @@
       "reasoning": "rule_categorizer: matched rule.adobe.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.033320000056846766,
+      "latency_ms": 0.01971900002217808,
       "model": "rule.adobe.software"
     },
     {
@@ -3291,7 +4658,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.031066000019563944,
+      "latency_ms": 0.014656000018931081,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3301,7 +4668,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.020500999994510494,
+      "latency_ms": 0.014423999971313606,
       "model": "rule.stripe.fees"
     },
     {
@@ -3311,7 +4678,7 @@
       "reasoning": "rule_categorizer: matched rule.github.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017251000031137664,
+      "latency_ms": 0.022177000005285663,
       "model": "rule.github.software"
     },
     {
@@ -3321,7 +4688,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.0183949999836841,
+      "latency_ms": 0.02103099996020319,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3331,7 +4698,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.05940200003351492,
+      "latency_ms": 0.01453300001230673,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3341,7 +4708,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02095000002100278,
+      "latency_ms": 0.07084399999257585,
       "model": "rule.stripe.fees"
     },
     {
@@ -3351,7 +4718,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017706999983602145,
+      "latency_ms": 0.02154000003429246,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3361,7 +4728,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017012999933285755,
+      "latency_ms": 0.014764000013656187,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3371,7 +4738,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017319999983556045,
+      "latency_ms": 0.014727999996466679,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3381,7 +4748,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018710999938775785,
+      "latency_ms": 0.015583000049446127,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3391,7 +4758,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017207000041707943,
+      "latency_ms": 0.014495000016268023,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3401,7 +4768,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.023356000042440428,
+      "latency_ms": 0.014581999948859448,
       "model": "rule.stripe.fees"
     },
     {
@@ -3411,7 +4778,7 @@
       "reasoning": "rule_categorizer: matched rule.zoom.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016816999959701207,
+      "latency_ms": 0.014222000004338042,
       "model": "rule.zoom.software"
     },
     {
@@ -3421,7 +4788,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01880599995729426,
+      "latency_ms": 0.014720000024226465,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3431,7 +4798,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017509000031168398,
+      "latency_ms": 0.018915999987711984,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3441,7 +4808,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017755000044417102,
+      "latency_ms": 0.015591000021686341,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3451,7 +4818,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.0169840000125987,
+      "latency_ms": 0.014598999996451312,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3461,7 +4828,7 @@
       "reasoning": "rule_categorizer: matched rule.adobe.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017272999912165687,
+      "latency_ms": 0.014506000013625453,
       "model": "rule.adobe.software"
     },
     {
@@ -3471,7 +4838,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017049000007318682,
+      "latency_ms": 0.042829999983950984,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3481,7 +4848,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016968999943856033,
+      "latency_ms": 0.01572899998336652,
       "model": "rule.stripe.fees"
     },
     {
@@ -3491,7 +4858,7 @@
       "reasoning": "rule_categorizer: matched rule.github.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016920000007303315,
+      "latency_ms": 0.014576999944893032,
       "model": "rule.github.software"
     },
     {
@@ -3501,7 +4868,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.020039000105498417,
+      "latency_ms": 0.015873999984705733,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3511,7 +4878,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017031999959726818,
+      "latency_ms": 0.020704999997178675,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3521,7 +4888,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016964999986157636,
+      "latency_ms": 0.04437299998016897,
       "model": "rule.stripe.fees"
     },
     {
@@ -3531,7 +4898,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017054999943866278,
+      "latency_ms": 0.015372000007118913,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3541,7 +4908,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017052000089279318,
+      "latency_ms": 0.014914000018961815,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3551,7 +4918,7 @@
       "reasoning": "rule_categorizer: matched rule.dropbox.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01740300001529249,
+      "latency_ms": 0.014926000005743845,
       "model": "rule.dropbox.software"
     },
     {
@@ -3561,7 +4928,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016864999906829325,
+      "latency_ms": 0.014150000026802445,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3571,7 +4938,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01674399993589759,
+      "latency_ms": 0.014120999992428551,
       "model": "rule.stripe.fees"
     },
     {
@@ -3581,7 +4948,7 @@
       "reasoning": "rule_categorizer: matched rule.zoom.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016565000009904907,
+      "latency_ms": 0.014194000016232167,
       "model": "rule.zoom.software"
     },
     {
@@ -3591,7 +4958,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.056266999990839395,
+      "latency_ms": 0.019327999950746744,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3601,7 +4968,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02087299992581393,
+      "latency_ms": 0.015214000029573072,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3611,7 +4978,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017947999936041015,
+      "latency_ms": 0.014653000050657283,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3621,7 +4988,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01712399989628466,
+      "latency_ms": 0.019123000015497382,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3631,7 +4998,7 @@
       "reasoning": "rule_categorizer: matched rule.adobe.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017352999975628336,
+      "latency_ms": 0.025332999996408034,
       "model": "rule.adobe.software"
     },
     {
@@ -3641,7 +5008,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01713299991479289,
+      "latency_ms": 0.054739999995945254,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3651,7 +5018,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01894199999696866,
+      "latency_ms": 0.025926999967396114,
       "model": "rule.stripe.fees"
     },
     {
@@ -3661,7 +5028,7 @@
       "reasoning": "rule_categorizer: matched rule.github.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017139999954451923,
+      "latency_ms": 0.01893000001018663,
       "model": "rule.github.software"
     },
     {
@@ -3671,7 +5038,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01680200000464538,
+      "latency_ms": 0.014981999981955596,
       "model": "rule.stripe.fees"
     },
     {
@@ -3681,7 +5048,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.043419000007816066,
+      "latency_ms": 0.014543999952820741,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3691,7 +5058,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.019437999981164467,
+      "latency_ms": 0.014400999987174146,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3701,7 +5068,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017368000044371,
+      "latency_ms": 0.04268200001433797,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3711,7 +5078,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016895000044314656,
+      "latency_ms": 0.015140000016344857,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3721,7 +5088,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017069999898922106,
+      "latency_ms": 0.014375000034760888,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3731,7 +5098,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017224000089299807,
+      "latency_ms": 0.014251999971293117,
       "model": "rule.stripe.fees"
     },
     {
@@ -3741,7 +5108,7 @@
       "reasoning": "rule_categorizer: matched rule.zoom.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016733000052227,
+      "latency_ms": 0.01840899994931533,
       "model": "rule.zoom.software"
     },
     {
@@ -3751,7 +5118,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01855400000749796,
+      "latency_ms": 0.01759899998887704,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3761,7 +5128,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.022018999970896402,
+      "latency_ms": 0.014621999980590772,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3771,7 +5138,7 @@
       "reasoning": "rule_categorizer: matched rule.adobe.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017008999975587358,
+      "latency_ms": 0.014233000001695473,
       "model": "rule.adobe.software"
     },
     {
@@ -3781,7 +5148,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017224000089299807,
+      "latency_ms": 0.014296000017566257,
       "model": "rule.stripe.fees"
     },
     {
@@ -3791,7 +5158,7 @@
       "reasoning": "rule_categorizer: matched rule.github.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017066000054910546,
+      "latency_ms": 0.014374999977917469,
       "model": "rule.github.software"
     },
     {
@@ -3801,7 +5168,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01722499996503757,
+      "latency_ms": 0.06676900000002206,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3811,7 +5178,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016998999967654527,
+      "latency_ms": 0.014695999993818987,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3821,7 +5188,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017159999970317585,
+      "latency_ms": 0.019016999999621476,
       "model": "rule.stripe.fees"
     },
     {
@@ -3831,7 +5198,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016838999954416067,
+      "latency_ms": 0.014661999955478677,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3841,7 +5208,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01708600007077621,
+      "latency_ms": 0.014576000012311852,
       "model": "deterministic_rules_v1"
     },
     {
@@ -3851,7 +5218,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016727999991417164,
+      "latency_ms": 0.014093000004322676,
       "model": "deterministic_rules_v1"
     }
   ]
