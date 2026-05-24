@@ -2,7 +2,7 @@ import enum
 import uuid
 from datetime import UTC, datetime
 
-from sqlalchemy import DateTime, Enum, ForeignKey, String
+from sqlalchemy import Boolean, DateTime, Enum, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column
 
 from ledgerlens.db import Base
@@ -19,7 +19,15 @@ def _new_id() -> str:
 
 
 class ReviewDecision(Base):
-    """A human review action against a categorization result."""
+    """A human review action against a categorization result.
+
+    Owner-answer fields (v2) are nullable additions on top of the original
+    v1 columns. v1 free-text answers continue to live in `reviewer_note`;
+    v2 captures the structured question key + labelled answer + optional
+    free-text owner note + accountant-follow-up flag so the handoff can
+    render a labelled "Questions answered by owner" section without
+    pattern-matching note text.
+    """
 
     __tablename__ = "review_decisions"
 
@@ -36,6 +44,16 @@ class ReviewDecision(Base):
     )
     selected_category_code: Mapped[str | None] = mapped_column(String(16), nullable=True)
     reviewer_note: Mapped[str | None] = mapped_column(String(1024), nullable=True)
+
+    # ── Owner Answers v2 (all nullable; v1 rows are unaffected) ──
+    owner_question_key: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    owner_question_text: Mapped[str | None] = mapped_column(String(256), nullable=True)
+    owner_answer_label: Mapped[str | None] = mapped_column(String(128), nullable=True)
+    owner_note: Mapped[str | None] = mapped_column(String(1024), nullable=True)
+    suggested_resolution: Mapped[str | None] = mapped_column(String(64), nullable=True)
+    accountant_follow_up_required: Mapped[bool] = mapped_column(
+        Boolean, nullable=False, default=False, server_default="false"
+    )
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(UTC)

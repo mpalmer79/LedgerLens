@@ -288,7 +288,7 @@ export default function HandoffPage() {
           {/* Owner answers */}
           <Section
             title="Questions answered by owner"
-            subtitle="Plain-English notes captured during review. Forward these along with the export so the accountant has context."
+            subtitle="Plain-English answers captured during review. v2 answers show the question, the chosen answer, and the optional free-text note. Forward these with the export so the accountant has context."
             count={handoff.owner_answers.length}
           >
             {handoff.owner_answers.length === 0 ? (
@@ -297,28 +297,85 @@ export default function HandoffPage() {
               </p>
             ) : (
               <ul className="space-y-2">
-                {handoff.owner_answers.map((a) => (
-                  <li
-                    key={a.transaction_id + a.answer}
-                    className="rounded border border-surface-border bg-surface-page p-3 text-[13px]"
-                  >
-                    <p className="font-medium text-text-primary">
-                      {a.transaction_description}
-                    </p>
-                    <p className="mt-1 text-text-secondary">
-                      {a.selected_category_code ? (
-                        <>
-                          <span className="mono text-text-subtle">
-                            [{a.selected_category_code}]
+                {handoff.owner_answers.map((a) => {
+                  const isV2 = a.owner_question_key != null;
+                  const followUp = a.accountant_follow_up_required;
+                  return (
+                    <li
+                      key={a.transaction_id + (a.owner_question_key ?? a.answer)}
+                      className={
+                        followUp
+                          ? "rounded border border-amber-300 bg-amber-50 p-3 text-[13px]"
+                          : "rounded border border-surface-border bg-surface-page p-3 text-[13px]"
+                      }
+                    >
+                      <div className="flex flex-wrap items-baseline justify-between gap-2">
+                        <p className="font-medium text-text-primary">
+                          <span className="mono text-[11px] text-text-subtle">
+                            {a.transaction_date}
                           </span>{" "}
-                          {a.selected_category_name}{" "}
-                          <span className="text-text-subtle">·</span>{" "}
+                          {a.transaction_description}
+                        </p>
+                        <p className="mono text-[12px] text-text-primary">
+                          {formatAmount(a.amount_cents, a.currency)}
+                        </p>
+                      </div>
+                      {followUp && (
+                        <p className="mt-1 text-[11px] font-medium uppercase tracking-wide text-amber-700">
+                          Needs accountant follow-up
+                        </p>
+                      )}
+                      {isV2 ? (
+                        <>
+                          {a.owner_question_text && (
+                            <p className="mt-1 text-[12px] text-text-secondary">
+                              <span className="font-medium">Question:</span>{" "}
+                              {a.owner_question_text}
+                            </p>
+                          )}
+                          {a.owner_answer_label && (
+                            <p className="mt-1 text-[13px] text-text-primary">
+                              <span className="font-medium">Owner answer:</span>{" "}
+                              {a.owner_answer_label}
+                            </p>
+                          )}
+                          {a.owner_note && a.owner_note.trim() && (
+                            <p className="mt-1 text-[12px] text-text-secondary">
+                              <span className="font-medium">Owner note:</span>{" "}
+                              {a.owner_note}
+                            </p>
+                          )}
+                          {a.suggested_resolution && (
+                            <p className="mt-1 text-[11px] text-text-subtle">
+                              Suggested resolution:{" "}
+                              <span className="mono">{a.suggested_resolution}</span>
+                            </p>
+                          )}
+                          {a.selected_category_code && (
+                            <p className="mt-1 text-[11px] text-text-subtle">
+                              Resolved category:{" "}
+                              <span className="mono">[{a.selected_category_code}]</span>{" "}
+                              {a.selected_category_name}
+                            </p>
+                          )}
                         </>
-                      ) : null}
-                      <em>{a.answer}</em>
-                    </p>
-                  </li>
-                ))}
+                      ) : (
+                        <p className="mt-1 text-text-secondary">
+                          {a.selected_category_code ? (
+                            <>
+                              <span className="mono text-text-subtle">
+                                [{a.selected_category_code}]
+                              </span>{" "}
+                              {a.selected_category_name}{" "}
+                              <span className="text-text-subtle">·</span>{" "}
+                            </>
+                          ) : null}
+                          <em>{a.answer}</em>
+                        </p>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             )}
           </Section>

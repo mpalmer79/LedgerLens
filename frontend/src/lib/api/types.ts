@@ -104,11 +104,28 @@ export type Rule = {
   category_name: string;
   confidence: number;
   explanation: string;
+  // Per-business rule intent mapping — null when the rule has no intent.
+  intent: string | null;
+  mapped_category_code: string | null;
+  mapped_category_name: string | null;
+};
+
+export type BusinessRuleMapEntry = {
+  intent: string;
+  category_code: string;
+  category_name: string | null;
+};
+
+export type BusinessRuleMap = {
+  business_id: string;
+  business_name: string | null;
+  entries: BusinessRuleMapEntry[];
 };
 
 export type RuleList = {
   total: number;
   items: Rule[];
+  mapping: BusinessRuleMap | null;
 };
 
 export type RuleVerdict = "apply" | "conflict" | "none";

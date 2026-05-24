@@ -425,6 +425,34 @@ describe("questions page content", () => {
     expect(QUESTIONS).toContain("Building repair");
   });
 
+  it("ships Owner Answers v2 structured templates with stable keys", () => {
+    // Stable question keys the backend receives + persists.
+    expect(QUESTIONS).toContain('key: "unknown_ach_transfer"');
+    expect(QUESTIONS).toContain('key: "marketplace_purchase"');
+    expect(QUESTIONS).toContain('key: "home_improvement_store"');
+    expect(QUESTIONS).toContain('key: "owner_transfer"');
+    expect(QUESTIONS).toContain('key: "parts_vendor"');
+    expect(QUESTIONS).toContain('key: "customer_deposit"');
+    expect(QUESTIONS).toContain('key: "default_uncertain_transaction"');
+    // accountantFollowUp + suggestedResolution are surfaced.
+    expect(QUESTIONS).toContain("accountantFollowUp");
+    expect(QUESTIONS).toContain("suggestedResolution");
+  });
+
+  it("renders the optional owner-note field + handoff helper copy", () => {
+    expect(QUESTIONS).toContain("Optional note for your accountant");
+    expect(QUESTIONS).toContain("Add context for your accountant");
+    expect(QUESTIONS).toContain("Your answer will be saved in the accountant handoff package");
+    expect(QUESTIONS).toContain("does not blindly finalize the accounting category");
+  });
+
+  it("flags accountant-review answers with an inline warning treatment", () => {
+    // "Needs accountant review" answers carry `accountantFollowUp: true` and
+    // the JSX swaps to the amber-toned button class.
+    expect(QUESTIONS).toContain("accountant review");
+    expect(QUESTIONS).toContain("border-amber-300");
+  });
+
   it("records owner answers as reviewer notes via existing endpoints", () => {
     expect(QUESTIONS).toContain("correctReview");
     expect(QUESTIONS).toContain("approveReview");
@@ -516,5 +544,45 @@ describe("handoff page content", () => {
     expect(HANDOFF).toContain('method: "HEAD"');
     expect(HANDOFF).toContain("Could not download the markdown handoff");
     expect(HANDOFF).toContain("Could not download the ledger CSV");
+  });
+
+  it("renders the Owner Answers v2 structured fields", () => {
+    // v1 / v2 split — the page checks `a.owner_question_key != null` to
+    // decide which rendering to use.
+    expect(HANDOFF).toContain("owner_question_key");
+    expect(HANDOFF).toContain("owner_answer_label");
+    expect(HANDOFF).toContain("owner_note");
+    expect(HANDOFF).toContain("Needs accountant follow-up");
+    expect(HANDOFF).toContain("Suggested resolution");
+  });
+});
+
+// ── Rules (per-business intent mapping) ──────────────────────────────────
+
+
+const RULES = readPage("rules/page.tsx");
+
+describe("rules page content", () => {
+  it("explains the per-business mapping layer", () => {
+    expect(RULES).toContain("Per-business mapping");
+    expect(RULES).toContain("parts_inventory");
+    expect(RULES).toContain("Active business mapping");
+  });
+
+  it("renders rule intent + mapped category columns", () => {
+    expect(RULES).toContain("Intent");
+    expect(RULES).toContain("Mapped category");
+    expect(RULES).toContain("mapped_category_code");
+    expect(RULES).toContain("mapped_category_name");
+  });
+
+  it("uses the shared loading/error states", () => {
+    expect(RULES).toContain("LoadingState");
+    expect(RULES).toContain("ErrorState");
+  });
+
+  it("calls out unmapped-intent fallback behavior", () => {
+    expect(RULES.toLowerCase()).toContain("safe fallback");
+    expect(RULES).toContain("business_rule_maps");
   });
 });
