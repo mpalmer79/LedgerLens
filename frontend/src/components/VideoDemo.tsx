@@ -1,5 +1,6 @@
-import { PlayCircle } from "lucide-react";
+import Link from "next/link";
 
+import { GeneratedWalkthrough } from "@/components/marketing/GeneratedWalkthrough";
 import { LOOM_URL } from "@/lib/site";
 
 const STORYBOARD: { step: number; label: string }[] = [
@@ -17,11 +18,18 @@ export function VideoDemo() {
     <section className="mx-auto max-w-5xl px-8">
       <div className="rounded-lg border border-surface-border bg-surface-panel p-6">
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-5">
-          {/* Video / placeholder takes 3/5; storyboard takes 2/5. */}
+          {/* Video / generated walkthrough takes 3/5; storyboard takes 2/5. */}
           <div className="lg:col-span-3">
-            <h2 className="font-display text-[22px] font-medium text-text-primary">
-              Watch LedgerLens in 30 seconds
-            </h2>
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <h2 className="font-display text-[22px] font-medium text-text-primary">
+                Watch LedgerLens in 30 seconds
+              </h2>
+              {!hasLoom && (
+                <span className="inline-flex items-center rounded-full border border-surface-border bg-surface-page px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-text-subtle">
+                  Generated walkthrough
+                </span>
+              )}
+            </div>
             <p className="mt-1 text-[13px] text-text-secondary">
               See messy transactions move through rules, review routing, correction memory,
               and verified ledger export.
@@ -36,8 +44,28 @@ export function VideoDemo() {
                   className="h-full w-full"
                 />
               ) : (
-                <Placeholder />
+                <GeneratedWalkthrough />
               )}
+            </div>
+            {!hasLoom && (
+              <p className="mt-2 text-[11px] text-text-subtle">
+                A real Loom recording can replace this when{" "}
+                <span className="mono">NEXT_PUBLIC_LOOM_URL</span> is set on the deploy.
+              </p>
+            )}
+            <div className="mt-4 flex flex-wrap gap-3">
+              <Link
+                href="/demo"
+                className="inline-flex items-center rounded-md bg-brand-600 px-4 py-2 text-[13px] font-medium text-white hover:bg-brand-500"
+              >
+                Start the live demo →
+              </Link>
+              <Link
+                href="/technical-story"
+                className="inline-flex items-center rounded-md border border-surface-border-strong px-4 py-2 text-[13px] font-medium text-text-primary hover:bg-surface-sunken"
+              >
+                Read the technical story
+              </Link>
             </div>
           </div>
           <div className="lg:col-span-2">
@@ -55,34 +83,14 @@ export function VideoDemo() {
                 </li>
               ))}
             </ol>
-            {!hasLoom && (
-              <p className="mt-3 text-[11px] text-text-subtle">
-                Recording on its way. The storyboard above matches the guided demo
-                exactly — you can walk the live workflow instead.
-              </p>
-            )}
+            <p className="mt-3 text-[11px] text-text-subtle">
+              {hasLoom
+                ? "The storyboard matches the recording and the live /demo workflow."
+                : "Storyboard matches the live /demo workflow. Walk it for real to see the trust panel update from the persisted database."}
+            </p>
           </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function Placeholder() {
-  return (
-    <div
-      role="img"
-      aria-label="30-second walkthrough coming soon"
-      className="flex h-full w-full flex-col items-center justify-center bg-gradient-to-br from-brand-100 via-surface-panel to-brand-100 text-center"
-    >
-      <PlayCircle size={48} className="text-brand-600" aria-hidden="true" />
-      <p className="mt-3 font-display text-[16px] font-medium text-text-primary">
-        30-second walkthrough coming soon
-      </p>
-      <p className="mt-1 max-w-sm px-6 text-[12px] text-text-secondary">
-        Until the recording is up, walk the live demo — every step in the storyboard
-        is wired through the real backend.
-      </p>
-    </div>
   );
 }

@@ -1,0 +1,429 @@
+/* GeneratedWalkthrough — a six-scene 30-second loop driven by pure CSS.
+ *
+ * Each scene panel is absolutely positioned inside `.stage` and starts
+ * invisible. The keyframes below fade scenes in for their window, then
+ * out. The progress bar runs the full 30 seconds.
+ *
+ * Reduced-motion users see the final "verified ledger" frame as a
+ * static image (no animation, no loop) so the punchline still lands.
+ */
+
+.root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 85% 15%, rgba(93, 181, 104, 0.18), transparent 55%),
+    linear-gradient(135deg, #0e2014 0%, #15331c 60%, #244c27 100%);
+  color: #ffffff;
+  font-family: var(--font-ui), 'Inter', system-ui, sans-serif;
+}
+
+/* Subtle grid background to read as "high-tech panel." */
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(93, 181, 104, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(93, 181, 104, 0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+}
+
+/* Wordmark + scene counter pinned top-left and top-right. */
+.brand {
+  position: absolute;
+  top: 18px;
+  left: 22px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 5;
+}
+
+.brandDot {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: #5db568;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #0e2014;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.brandText {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.stepBadge {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(93, 181, 104, 0.35);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #c9e2cd;
+  z-index: 5;
+}
+
+/* The scene stage. Scenes layer on top of each other inside this box. */
+.stage {
+  position: absolute;
+  inset: 56px 22px 36px 22px;
+  display: grid;
+  place-items: center;
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(8px);
+  will-change: opacity, transform;
+}
+
+/* Six 30-s scene timelines.
+ * Each scene takes its window, eased in/out around the entry/exit edges.
+ * windows:
+ *  0–5 / 5–10 / 10–16 / 16–22 / 22–27 / 27–30  (5+5+6+6+5+3 = 30)
+ */
+.scene1 {
+  animation: walkthrough-scene-1 30s infinite;
+}
+.scene2 {
+  animation: walkthrough-scene-2 30s infinite;
+}
+.scene3 {
+  animation: walkthrough-scene-3 30s infinite;
+}
+.scene4 {
+  animation: walkthrough-scene-4 30s infinite;
+}
+.scene5 {
+  animation: walkthrough-scene-5 30s infinite;
+}
+.scene6 {
+  animation: walkthrough-scene-6 30s infinite;
+}
+
+.sceneTitle {
+  font-family: var(--font-display), 'Newsreader', Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(20px, 3.4vw, 32px);
+  line-height: 1.15;
+  letter-spacing: -0.3px;
+  color: #ffffff;
+  max-width: 86%;
+}
+
+.sceneSub {
+  margin-top: 12px;
+  font-size: clamp(12px, 1.6vw, 14px);
+  color: #c9e2cd;
+  max-width: 78%;
+  line-height: 1.4;
+}
+
+.txList {
+  margin-top: 22px;
+  width: min(520px, 86%);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tx {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-family: var(--font-mono), 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 12px;
+  color: #e6f3e8;
+}
+
+.txAmount {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/* Pipeline (scene 3) */
+.pipeline {
+  margin-top: 22px;
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  width: min(620px, 92%);
+}
+
+.pipeNode {
+  flex: 1;
+  border: 1.5px solid rgba(93, 181, 104, 0.45);
+  border-radius: 8px;
+  padding: 10px 8px;
+  background: rgba(28, 61, 34, 0.6);
+  text-align: left;
+}
+
+.pipeNode b {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  color: #9bd2a4;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.pipeNode span {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  color: #ffffff;
+}
+
+.pipeArrow {
+  align-self: center;
+  color: #5db568;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* Review card (scene 4) */
+.reviewCard {
+  margin-top: 22px;
+  width: min(420px, 90%);
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(217, 164, 74, 0.6);
+  background: rgba(70, 50, 18, 0.4);
+  text-align: left;
+  font-family: var(--font-mono), monospace;
+}
+
+.reviewLine {
+  font-size: 12px;
+  color: #f0d39b;
+}
+
+.reviewLineMain {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.pill {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #d9a44a;
+  color: #2a1d05;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  font-family: var(--font-ui), system-ui, sans-serif;
+}
+
+/* Memory card (scene 5) */
+.memoryCard {
+  margin-top: 22px;
+  width: min(460px, 90%);
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1.5px solid #5db568;
+  background: rgba(28, 61, 34, 0.6);
+  text-align: left;
+}
+
+.memLabel {
+  font-size: 10px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: #9bd2a4;
+  font-weight: 600;
+}
+
+.memMapping {
+  margin-top: 6px;
+  font-family: var(--font-mono), monospace;
+  font-size: 13px;
+  color: #ffffff;
+}
+
+.memArrow {
+  color: #5db568;
+  margin: 0 6px;
+}
+
+.memNote {
+  margin-top: 8px;
+  font-size: 11px;
+  color: #c9e2cd;
+}
+
+/* Trust card (scene 6) */
+.trustCard {
+  margin-top: 18px;
+  width: min(520px, 92%);
+  padding: 18px 22px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #5db568, #2e5f32);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  text-align: left;
+}
+
+.trustLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.trustNumber {
+  margin-top: 4px;
+  font-family: var(--font-display), 'Newsreader', Georgia, serif;
+  font-size: clamp(38px, 6vw, 58px);
+  font-weight: 600;
+  line-height: 1;
+  color: #ffffff;
+}
+
+.trustHeadline {
+  margin-top: 4px;
+  font-size: clamp(13px, 1.8vw, 15px);
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.trustNote {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #e6f3e8;
+}
+
+/* Progress bar pinned to the bottom edge of the stage. */
+.progressTrack {
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 18px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  z-index: 5;
+}
+
+.progressFill {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #5db568, #c9e2cd);
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  animation: walkthrough-progress 30s infinite linear;
+}
+
+/* Keyframes
+ * Each scene fades in over ~0.5s, holds, then fades out over ~0.5s.
+ * Window edges (percent of 30s):
+ *   scene1:  0–17%   (0–5s)
+ *   scene2: 17–33%   (5–10s)
+ *   scene3: 33–53%   (10–16s)
+ *   scene4: 53–73%   (16–22s)
+ *   scene5: 73–90%   (22–27s)
+ *   scene6: 90–100%  (27–30s)
+ */
+@keyframes walkthrough-scene-1 {
+  0% { opacity: 0; transform: translateY(8px); }
+  3% { opacity: 1; transform: translateY(0); }
+  15% { opacity: 1; transform: translateY(0); }
+  18% { opacity: 0; transform: translateY(-6px); }
+  100% { opacity: 0; transform: translateY(8px); }
+}
+
+@keyframes walkthrough-scene-2 {
+  0%, 17% { opacity: 0; transform: translateY(8px); }
+  20% { opacity: 1; transform: translateY(0); }
+  31% { opacity: 1; transform: translateY(0); }
+  34% { opacity: 0; transform: translateY(-6px); }
+  100% { opacity: 0; transform: translateY(8px); }
+}
+
+@keyframes walkthrough-scene-3 {
+  0%, 33% { opacity: 0; transform: translateY(8px); }
+  37% { opacity: 1; transform: translateY(0); }
+  51% { opacity: 1; transform: translateY(0); }
+  54% { opacity: 0; transform: translateY(-6px); }
+  100% { opacity: 0; transform: translateY(8px); }
+}
+
+@keyframes walkthrough-scene-4 {
+  0%, 53% { opacity: 0; transform: translateY(8px); }
+  57% { opacity: 1; transform: translateY(0); }
+  71% { opacity: 1; transform: translateY(0); }
+  74% { opacity: 0; transform: translateY(-6px); }
+  100% { opacity: 0; transform: translateY(8px); }
+}
+
+@keyframes walkthrough-scene-5 {
+  0%, 73% { opacity: 0; transform: translateY(8px); }
+  76% { opacity: 1; transform: translateY(0); }
+  88% { opacity: 1; transform: translateY(0); }
+  91% { opacity: 0; transform: translateY(-6px); }
+  100% { opacity: 0; transform: translateY(8px); }
+}
+
+@keyframes walkthrough-scene-6 {
+  0%, 89% { opacity: 0; transform: translateY(8px); }
+  93% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes walkthrough-progress {
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
+/* Reduced-motion: show the trust card as a static frame, no loop. */
+@media (prefers-reduced-motion: reduce) {
+  .scene1, .scene2, .scene3, .scene4, .scene5,
+  .progressFill {
+    animation: none;
+  }
+  .scene1, .scene2, .scene3, .scene4, .scene5 {
+    opacity: 0;
+  }
+  .scene6 {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .progressFill {
+    transform: scaleX(1);
+  }
+}
