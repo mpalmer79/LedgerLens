@@ -510,6 +510,14 @@ export default function EvalsPage() {
                   shows the generic baseline next to the mapped variant on the
                   same dataset.
                 </p>
+                <p className="mt-2 max-w-3xl text-[12px] text-text-subtle">
+                  <strong>Batch #1 (this PR):</strong> Added safe parts-vendor
+                  rules — NAPA, AutoZone, O&apos;Reilly, Advance Auto, LKQ,
+                  Carquest, and tire distributors — based on the prior
+                  rule-gap analysis. Auto-repair mapped-row count lifted from
+                  5 → 19; auto-approve accuracy lifted from 22.2% → 44.7%.
+                  Other businesses unchanged.
+                </p>
                 <div className="mt-6 overflow-x-auto rounded-lg border border-brand-200 bg-brand-100">
                   <table className="w-full text-left text-[13px]">
                     <thead className="border-b border-surface-border">
