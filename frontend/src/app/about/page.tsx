@@ -10,7 +10,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
-import { Logomark } from "@/components/ui/Logomark";
+import { MarketingNav } from "@/components/marketing/MarketingNav";
 import {
   ARCHITECTURE_URL,
   GITHUB_PROFILE_URL,
@@ -26,44 +26,15 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="bg-surface-page text-text-primary min-h-screen">
-      <nav className="border-b border-surface-border px-8 py-4">
-        <div className="mx-auto flex max-w-6xl items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-text-primary">
-            <Logomark size={24} className="text-brand-600" />
-            <span className="font-display text-[18px] font-medium">LedgerLens</span>
-          </Link>
-          <div className="flex items-center gap-6 text-[13px]">
-            <Link
-              href="/demo"
-              className="rounded-md bg-brand-600 px-3 py-1.5 font-medium text-white hover:bg-brand-500"
-            >
-              Start the 3-minute demo →
-            </Link>
-            <Link href="/technical-story" className="text-text-secondary hover:text-text-primary">
-              Technical story
-            </Link>
-            <Link href="/evals" className="text-text-secondary hover:text-text-primary">
-              Eval evidence
-            </Link>
-            <a
-              href={REPO_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-text-secondary hover:text-text-primary"
-            >
-              GitHub
-            </a>
-          </div>
-        </div>
-      </nav>
+    <div className="bg-surface-page text-text-primary min-h-screen overflow-x-hidden">
+      <MarketingNav />
 
-      <main className="mx-auto max-w-4xl px-8 py-16">
+      <main className="mx-auto max-w-4xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
         <header>
           <p className="text-[12px] font-medium uppercase tracking-[0.5px] text-brand-600">
             About
           </p>
-          <h1 className="mt-3 font-display text-4xl font-medium text-text-primary">
+          <h1 className="mt-3 font-display text-[clamp(28px,6vw,40px)] font-medium leading-tight text-text-primary">
             About Michael Palmer
           </h1>
           <p className="mt-5 text-[16px] leading-relaxed text-text-secondary">
