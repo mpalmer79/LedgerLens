@@ -366,13 +366,26 @@ def categorize_transaction(
     if rule_match.verdict == "apply" and rule_match.rule is not None:
         from dataclasses import replace as _dc_replace
 
-        from ledgerlens.data.business_rule_maps import resolve_category_for_intent
+        from ledgerlens.services.category_mapping import resolve as _resolve_mapping
 
         rule = rule_match.rule
-        # Per-business intent mapping: if the rule carries an intent and the
-        # active business has a mapped category code, swap to that code.
-        # Falls back to the rule's own category_code when no mapping exists.
-        mapped_code = resolve_category_for_intent(rule.intent, fallback_code=rule.category_code)
+        # Resolve intent → final code with the persistent profile taking
+        # precedence over the Python registry. When the profile (or the
+        # registry) blocks fallback for this intent, the row is routed to
+        # review rather than auto-approved on the rule's own code.
+        resolution = _resolve_mapping(db, rule.intent, fallback_code=rule.category_code)
+        if resolution.block_fallback:
+            latency_ms = int((datetime.now().timestamp() - started) * 1000)
+            return _persist_rule_result(
+                tx,
+                rule,
+                cat_repo.get(rule.category_code),
+                db,
+                latency_ms,
+                ResultStatus.NEEDS_REVIEW,
+                "Owner mapping blocks fallback for this intent; routed to review.",
+            )
+        mapped_code = resolution.code or rule.category_code
         # Validate the mapped code resolves to a real, active COA category.
         # If not, drop back to the rule's original code (which the rules
         # loader already validated at load time).

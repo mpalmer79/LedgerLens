@@ -296,3 +296,36 @@ Still explicitly not in scope:
   `AccountCategory`.
 - No editable category mapping UI.
 - No rate limiting.
+
+---
+
+## 10. Persistent editable category mapping (v1) sprint
+
+What landed (see `docs/PERSISTENT_CATEGORY_MAPPING.md`):
+
+- `/mapping` is now an editable wizard. Edits persist via
+  `CategoryMappingProfile` / `CategoryMappingEntry` and survive
+  refresh.
+- `PUT /mapping/profile/entries/{intent}` validates the intent
+  against the active business's registry and the category code
+  against the active COA.
+- `POST /mapping/profile/reset` restores the seeded defaults so
+  reviewers / next-day visitors can recover a known state.
+- Categorize-path resolution precedence is now: persistent profile
+  > Python registry > rule's own fallback.
+- `block_fallback=True` on a persistent entry routes matching rows
+  to `needs_review` with an explicit reason, not auto-approve.
+- Alembic revision `527984084a01` adds
+  `category_mapping_profiles.source`, makes
+  `category_mapping_entries.category_code` nullable, and adds
+  `category_mapping_entries.notes`.
+- Demo-stub no-Anthropic regression test still passes; the eval
+  businesses continue to use the Python registry only.
+
+Still explicitly not in scope:
+
+- Authentication on the mapping endpoints. Public-demo warnings
+  call this out.
+- Mapping change preview ("if you change X, Y transactions move").
+- Re-categorize existing finalized rows after a mapping edit.
+- Per-tenant business switcher on `/mapping`.

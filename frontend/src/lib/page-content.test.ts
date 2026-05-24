@@ -894,3 +894,51 @@ describe("admin / tenant foundation page", () => {
     expect(ADMIN).toContain("getFoundationStatus");
   });
 });
+
+const MAPPING = readPage("mapping/page.tsx");
+
+describe("category mapping editable wizard", () => {
+  it("renders the public-demo warning and active-business context", () => {
+    expect(MAPPING).toContain("mapping-warning");
+    expect(MAPPING).toMatch(/Public demo — these settings are not protected/);
+    expect(MAPPING).toContain("Active business");
+    expect(MAPPING).toMatch(/Do not upload real bank/);
+    expect(MAPPING).toMatch(/not\s+a true accounting ledger/);
+  });
+
+  it("uses the new editable API surface", () => {
+    expect(MAPPING).toContain("getMappingProfile");
+    expect(MAPPING).toContain("updateMappingEntry");
+    expect(MAPPING).toContain("resetMappingProfile");
+  });
+
+  it("renders the category dropdown + block-fallback + save controls", () => {
+    expect(MAPPING).toMatch(/<select[\s\S]*?id=\{`code-/);
+    expect(MAPPING).toMatch(/<input[^>]*type="checkbox"/);
+    expect(MAPPING).toContain('data-testid={`block-${e.intent}`}');
+    expect(MAPPING).toContain('data-testid={`save-${e.intent}`}');
+    expect(MAPPING).toContain('data-testid="mapping-reset"');
+  });
+
+  it("shows mapped / unmapped / fallback-blocked badges", () => {
+    expect(MAPPING).toContain('"mapped"');
+    expect(MAPPING).toContain('"unmapped"');
+    expect(MAPPING).toContain('"fallback_blocked"');
+    expect(MAPPING).toContain("fallback blocked");
+  });
+
+  it("has 44px tap targets on the editable controls", () => {
+    // The select, the save button, and the reset button each declare min-h-[44px].
+    const occurrences = MAPPING.match(/min-h-\[44px\]/g) ?? [];
+    expect(occurrences.length).toBeGreaterThanOrEqual(3);
+  });
+
+  it("does not claim production tenant isolation or real-bank safety", () => {
+    expect(MAPPING.toLowerCase()).not.toContain("tenant-isolated");
+    expect(MAPPING.toLowerCase()).not.toContain("production-secure");
+    expect(MAPPING.toLowerCase()).not.toContain("safe for real bank");
+    // No tel: / mailto: links sneak in.
+    expect(MAPPING).not.toMatch(/href="mailto:/);
+    expect(MAPPING).not.toMatch(/href="tel:/);
+  });
+});

@@ -53,6 +53,13 @@ class CategoryMappingProfile(Base):
     is_active: Mapped[bool] = mapped_column(
         Boolean, nullable=False, default=False, server_default="false"
     )
+    # How this profile got here. "seed" = re-seedable from the Python
+    # registry; "user" = the owner edited it; future Phase 2 may add
+    # "imported" for accountant-supplied profiles. Stored as a plain
+    # string to keep migrations simple.
+    source: Mapped[str] = mapped_column(
+        String(16), nullable=False, default="seed", server_default="seed"
+    )
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(UTC)
@@ -86,11 +93,15 @@ class CategoryMappingEntry(Base):
         index=True,
     )
     intent: Mapped[str] = mapped_column(String(64), nullable=False)
-    category_code: Mapped[str] = mapped_column(String(16), nullable=False)
+    # Nullable so an entry can represent "intentionally unmapped"
+    # (when paired with block_fallback=True or simply pending an
+    # owner decision).
+    category_code: Mapped[str | None] = mapped_column(String(16), nullable=True)
     category_name: Mapped[str | None] = mapped_column(String(128), nullable=True)
     block_fallback: Mapped[bool] = mapped_column(
         Boolean, nullable=False, default=False, server_default="false"
     )
+    notes: Mapped[str | None] = mapped_column(String(512), nullable=True)
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(UTC)

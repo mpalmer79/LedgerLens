@@ -583,3 +583,45 @@ export type FoundationStatus = {
 
 export const getFoundationStatus = () =>
   apiFetch<FoundationStatus>("/admin/foundation/status");
+
+// ── Category mapping (editable) ───────────────────────────────────────────
+
+export type MappingEntry = {
+  intent: string;
+  category_code: string | null;
+  category_name: string | null;
+  block_fallback: boolean;
+  notes: string | null;
+  status: "mapped" | "unmapped" | "fallback_blocked";
+};
+
+export type CategoryOption = {
+  code: string;
+  name: string;
+};
+
+export type MappingProfile = {
+  profile_id: string;
+  profile_name: string;
+  business_id: string;
+  business_name: string | null;
+  source: string;
+  entries: MappingEntry[];
+  missing_intents: string[];
+  available_categories: CategoryOption[];
+  warnings: string[];
+};
+
+export const getMappingProfile = () => apiFetch<MappingProfile>("/mapping/profile");
+
+export const updateMappingEntry = (
+  intent: string,
+  payload: { category_code: string | null; block_fallback: boolean; notes?: string | null },
+) =>
+  apiFetch<MappingProfile>(`/mapping/profile/entries/${encodeURIComponent(intent)}`, {
+    method: "PUT",
+    body: JSON.stringify(payload),
+  });
+
+export const resetMappingProfile = () =>
+  apiFetch<MappingProfile>("/mapping/profile/reset", { method: "POST" });
