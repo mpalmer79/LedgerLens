@@ -47,7 +47,10 @@ Recommended sequence — each step has a self-contained design in
 the sections below.
 
 1. **CSV mapping wizard** — owners can import their bank's
-   actual CSV without renaming columns.
+   actual CSV without renaming columns. **✅ Shipped in PR #46.**
+   See `docs/CSV_IMPORT_MAPPING_WIZARD.md` for the working
+   implementation and `docs/CSV_IMPORT_MAPPING_WIZARD_REVIEW.md`
+   for the sprint review.
 2. **Account-mapping wizard** — owners or their accountant can
    tweak the intent → COA map per business.
 3. **Mobile-first review queue** — one card at a time, big

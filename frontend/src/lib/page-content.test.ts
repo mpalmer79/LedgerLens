@@ -238,6 +238,40 @@ describe("transactions/import page content", () => {
     expect(IMPORT.toLowerCase()).toMatch(/no\s+authentication/);
     expect(IMPORT.toLowerCase()).toMatch(/no\s+tenant\s+isolation/);
   });
+
+  it("renders the CSV mapping wizard with drag-and-drop + sample download", () => {
+    // Wizard step indicator + entry points.
+    expect(IMPORT).toMatch(/Drag\s+&amp;\s+drop\s+a\s+CSV\s+here/);
+    expect(IMPORT).toContain("Choose CSV file");
+    expect(IMPORT).toContain("/samples/granite-state-bank-sample.csv");
+    expect(IMPORT).toContain("Download sample CSV");
+    expect(IMPORT).toContain("Load sample into wizard");
+  });
+
+  it("renders the column-mapping + amount-mode + validate steps", () => {
+    // Step bar
+    expect(IMPORT).toContain("Map columns");
+    expect(IMPORT).toContain("Validate");
+    // Mapping fields
+    expect(IMPORT).toContain("Single signed amount column");
+    expect(IMPORT).toContain("Separate debit");
+    expect(IMPORT).toContain("Debit (outflow)");
+    expect(IMPORT).toContain("Credit (inflow)");
+    // Validation summary fields
+    expect(IMPORT).toContain("Need attention");
+    expect(IMPORT).toContain("Blank rows skipped");
+  });
+
+  it("posts a reminder before final import + routes user to /cleanup on done", () => {
+    expect(IMPORT.toLowerCase()).toMatch(/reminder.*no\s+authentication/);
+    expect(IMPORT).toContain('href="/cleanup"');
+    expect(IMPORT).toContain("Start monthly cleanup");
+  });
+
+  it("does NOT claim production accounting software or 100% AI accuracy", () => {
+    expect(IMPORT.toLowerCase()).not.toMatch(/production\s+accounting\s+software/);
+    expect(IMPORT.toLowerCase()).not.toMatch(/100\s*%\s*ai\b/);
+  });
 });
 
 // ── Demo ──────────────────────────────────────────────────────────────────
