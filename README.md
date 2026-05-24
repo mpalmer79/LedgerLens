@@ -13,7 +13,14 @@
 - **The approach** — a layered pipeline (`correction memory → deterministic rules → fallback → confidence routing → human review → audit`) that only calls the model when the earlier layers can't decide safely.
 - **The headline number** — **100% of finalized guided-demo ledger rows are verified before export.** This is a workflow-level guarantee, not a claim about raw AI accuracy. A finalized row counts as verified only when it came through a deterministic rule auto-approval, a correction-memory replay of a prior human decision, or an explicit human review. See [`docs/TRUST_METRIC.md`](docs/TRUST_METRIC.md).
 - **The deployed instance** — runs in **zero-cost demo mode**. The `anthropic` SDK is never imported. A regression test asserts that.
-- **Start here** — the [3-minute guided demo](https://ledgerlens.up.railway.app/demo) walks through the full story using real backend calls.
+
+## Try it / read about it
+
+- **Try the workflow** — [3-minute guided demo](https://ledgerlens.up.railway.app/demo). Real backend calls, no mocked state.
+- **Read the engineering story** — [`/technical-story`](https://ledgerlens.up.railway.app/technical-story) covers the architecture, the "not an LLM wrapper" comparison, the trust model, and the stack.
+- **About the builder** — [`/about`](https://ledgerlens.up.railway.app/about). Michael Palmer, GitHub + LinkedIn.
+- **Eval evidence** — [`/evals`](https://ledgerlens.up.railway.app/evals) for the honest model-only numbers (model accuracy ≈ 63%, adversarial ≈ 42%).
+- **Run locally** — see the [`Running locally`](#running-locally) section below.
 
 ## Why not claim 100% AI accuracy?
 

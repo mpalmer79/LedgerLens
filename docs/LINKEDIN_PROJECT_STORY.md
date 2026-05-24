@@ -57,27 +57,72 @@ It deliberately isn't. Raw model accuracy on adversarial bookkeeping data is aro
 - Added a recruiter-facing About page and a Technical Story page with the architecture pipeline diagrammed.
 - Wrote honest limitations: per-tenant COA mismatch, raw model accuracy, demo-mode caveats.
 
-## 9. Suggested launch post
+## 9. Main LinkedIn launch post
 
-> I just shipped LedgerLens — an AI-assisted bookkeeping workflow prototype that demonstrates AI-systems engineering, not LLM-wrapping.
+> I built LedgerLens to answer a practical AI question: how do you use AI to help with messy bookkeeping without blindly trusting the model?
 >
-> The headline metric isn't "X% accurate AI." It's: **100% of finalized guided-demo ledger rows are verified before export.** A row only counts as verified if it was decided by human review, by correction memory built from a prior human decision, or by a deterministic rule above threshold. Demo-stub results never qualify. Unreviewed model auto-approvals never qualify.
+> Small-business bookkeeping cleanup is repetitive, risky, and a great test case for AI-assisted workflows. The product's headline metric is **not** "X% accurate AI." It's:
 >
-> Raw model accuracy on adversarial bookkeeping data is around 63%. That number is reported honestly on the eval page — it's just not the right number for evaluating a financial-workflow product.
+> **100% of finalized guided-demo ledger rows are verified before export.**
 >
-> Three-minute guided demo at the link — real backend calls, no mocked state, end-to-end through a verified ledger export.
+> A row only counts as verified if it was decided by human review, by correction memory built from a prior human decision, or by a deterministic rule above threshold. Demo-stub results never qualify. Unreviewed model auto-approvals never qualify.
+>
+> Raw model accuracy on adversarial bookkeeping data is around 63% — and that number is reported honestly on the eval page. It's just not the right number for evaluating a financial-workflow product.
+>
+> Three-minute guided demo at the link → real backend calls, no mocked state, end-to-end through a verified ledger export. The deployed instance runs at $0 paid spend (demo-stub mode; the Anthropic SDK is never imported — there's a regression test for that).
 >
 > Stack: FastAPI · SQLAlchemy · Postgres-ready · Next.js · TypeScript · Docker · Railway · Anthropic (opt-in) · pytest · vitest · mypy --strict.
 >
-> Built as the next step in my pivot from automotive operations into AI software. Code, ADRs, eval artifacts, and the trust-metric doc are all on GitHub.
+> Built as the next step in my pivot from automotive retail / enterprise implementation into AI software. Code, ADRs, eval artifacts, the verified-ledger trust contract — all on GitHub. Open to AI engineering / applied AI / solutions engineering / full-stack / AI workflow automation roles.
 
-## 10. Suggested first comment with GitHub link
+## 10. First comment with GitHub link
 
-> Source, ADRs, and the trust-metric doc: https://github.com/mpalmer79/LedgerLens
+> Source, ADRs, eval artifacts, and the trust-metric doc: https://github.com/mpalmer79/LedgerLens
+>
+> About me: https://ledgerlens.up.railway.app/about
+> Engineering story: https://ledgerlens.up.railway.app/technical-story
 
-## 11. Ten hashtags
+## 11. Line to add after recording the Loom
+
+Drop this in as the second-to-last paragraph of the post once `NEXT_PUBLIC_LOOM_URL` is set on Railway:
+
+> Watch it in 30 seconds: [Loom URL]
+
+## 12. Screenshot / OG image guidance
+
+The deployed page generates a 1200×630 social preview automatically (`/og-ledgerlens.png`). Verify it renders correctly in LinkedIn's Post Inspector before posting. If you want a manual screenshot for an in-line image:
+
+- Capture the trust card moment at the end of `/demo` step 6 (when the page shows "Every finalized row in this demo ledger is verified before export").
+- Or capture the hero with the trust card visible at desktop width.
+- Avoid screenshotting `/evals` for the launch post — the eval page is for the engineering audience and the 63% number is best read in context, not as a standalone image.
+
+## 13. Ten hashtags
 
 `#AIEngineering` · `#SoftwareEngineering` · `#FullStack` · `#SmallBusiness` · `#FastAPI` · `#NextJS` · `#Anthropic` · `#HumanInTheLoop` · `#PortfolioProject` · `#CareerChange`
+
+## 14. Three alternate hooks
+
+If the main hook doesn't fit your voice, try one of these instead. Each one leads with a different angle.
+
+1. **The cost-control hook.** "I built an AI bookkeeping prototype that runs at $0 on the public demo deploy. The model is never imported in demo mode — there's a regression test that fails if it ever is. Here's how the trust boundary works without it."
+
+2. **The career-pivot hook.** "After 25 years in automotive retail and enterprise implementation, I shipped my first portfolio AI product. LedgerLens turns messy bank transactions into a verified ledger by combining deterministic rules, correction memory, review routing, and human-in-the-loop. The architecture story is the part I'm proudest of."
+
+3. **The honest-AI hook.** "Most 'AI bookkeeping' tools either guess and quietly contaminate the books or wrap a chat UI around a model and call it done. LedgerLens does neither — it routes uncertainty to a human and only counts a row as 'finalized' when it was decided by a defensible authority. Three-minute guided demo at [link]."
+
+## 15. Recruiter DM follow-up template
+
+Use this after the post is published if a recruiter likes or comments. Personalise the first sentence.
+
+> Hi [Name] — thanks for the comment on the LedgerLens post. Quick context: I'm in the middle of pivoting from automotive operations / enterprise implementation into AI software, and LedgerLens is the portfolio piece that demonstrates the kind of work I want to do — layered AI workflows with cost control and a real trust boundary, not chatbot demos.
+>
+> If you're hiring for AI engineering, applied AI, solutions engineering, or AI workflow automation roles, I'd love to chat. About page: https://ledgerlens.up.railway.app/about — GitHub: https://github.com/mpalmer79
+
+## 16. Short explanation of the verified-ledger metric
+
+If anyone asks "what does 100% verified actually mean?", use this exact answer:
+
+> It's a workflow-level metric, not a model-level one. LedgerLens refuses to mark a ledger row as "finalized" unless one of three things is true: a human reviewed it, it was decided by correction memory that was originally seeded by a human, or it was auto-approved by a deterministic rule above the confidence threshold. Demo-stub results and unreviewed model auto-approvals never qualify. So 100% is true by construction — the system simply doesn't allow finalized rows that lack a defensible authority. Raw model accuracy is a different number (~63%) and is published honestly on the evals page.
 
 ## Suggested GitHub README excerpt
 

@@ -269,6 +269,19 @@ export default function DemoPage() {
         )}
       </header>
 
+      {/* What to look for — first-time-visitor framing. */}
+      <section className="mt-6 rounded-lg border border-brand-200 bg-brand-100 p-4">
+        <p className="text-[11px] font-medium uppercase tracking-wide text-brand-700">
+          What to look for
+        </p>
+        <p className="mt-1 text-[13px] text-brand-900">
+          In this demo, watch how LedgerLens <strong>avoids blind automation</strong>: obvious
+          rows are handled by rules or correction memory, uncertain rows are routed to review,
+          and only verified rows should be treated as final. The trust panel in step 6 reflects
+          the persisted database — no mocked numbers.
+        </p>
+      </section>
+
       {/* Step 1: the mess */}
       <Step
         n={1}
