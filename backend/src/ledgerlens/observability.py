@@ -89,58 +89,26 @@ class RequestIdMiddleware(BaseHTTPMiddleware):
 
 
 # ── Redaction helpers ───────────────────────────────────────────────────
+# These now delegate to ledgerlens.services.sensitive_data, the single
+# source of truth for "do not store/log this verbatim." The names are
+# kept here for back-compat with the many call sites that import from
+# observability.
 
+from ledgerlens.services.sensitive_data import (  # noqa: E402
+    redact_account_number_like,
+    redact_card_like,
+    redact_email,
+    redact_phone,
+    redact_pii_text as sanitize_for_log,
+)
 
-_EMAIL_RE = re.compile(r"[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}")
-# US-ish phone numbers — 10+ digits with separators or parens.
-_PHONE_RE = re.compile(r"(?<!\d)(?:\+?\d{1,2}[\s\-.])?\(?\d{3}\)?[\s\-.]\d{3}[\s\-.]\d{4}(?!\d)")
-# A run of 9+ digits — covers account numbers and long routing numbers.
-_LONG_DIGITS_RE = re.compile(r"(?<!\d)\d{9,}(?!\d)")
-# Card-ish: 13-19 digit groups separated by spaces/dashes (Luhn not enforced).
-_CARDISH_RE = re.compile(r"(?<!\d)(?:\d[ \-]?){13,19}(?!\d)")
-
-
-def redact_email(s: str) -> str:
-    return _EMAIL_RE.sub("[redacted-email]", s)
-
-
-def redact_phone(s: str) -> str:
-    return _PHONE_RE.sub("[redacted-phone]", s)
-
-
-def redact_account_number_like(s: str) -> str:
-    return _LONG_DIGITS_RE.sub("[redacted-account]", s)
-
-
-def redact_card_like(s: str) -> str:
-    return _CARDISH_RE.sub("[redacted-card]", s)
-
-
-def sanitize_for_log(value: object, *, max_len: int = 80) -> str:
-    """Render `value` as a single log-safe line.
-
-    - Strips emails, phones, card-like groups, and runs of 9+ digits.
-    - Collapses newlines / control chars to spaces.
-    - Truncates to `max_len` characters with an ellipsis.
-
-    Use this anywhere you would otherwise log a raw transaction
-    description, owner-supplied note, vendor name, or other
-    free-text field that came from outside the trust boundary.
-    """
-    if value is None:
-        return "None"
-    s = str(value)
-    s = redact_email(s)
-    s = redact_phone(s)
-    # Card-like before account-like so long card numbers don't get
-    # split into "[redacted-card] [redacted-account]" oddly.
-    s = redact_card_like(s)
-    s = redact_account_number_like(s)
-    s = re.sub(r"[\r\n\t]+", " ", s)
-    s = re.sub(r"[\x00-\x1f]+", " ", s)
-    if len(s) > max_len:
-        s = s[: max_len - 1] + "…"
-    return s
+__all_redactors__ = (
+    "redact_account_number_like",
+    "redact_card_like",
+    "redact_email",
+    "redact_phone",
+    "sanitize_for_log",
+)
 
 
 # ── Structured logging foundation ───────────────────────────────────────

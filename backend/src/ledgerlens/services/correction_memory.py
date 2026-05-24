@@ -136,7 +136,11 @@ def find_memory_match(tx: Transaction, db: Session) -> MemoryMatch:
         )
 
     repo = CorrectionMemoryRepo(db)
-    candidates = repo.find_for_keys(merchant_key=merchant_key, description_key=description_key)
+    candidates = repo.find_for_keys(
+        merchant_key=merchant_key,
+        description_key=description_key,
+        business_id=tx.business_id,
+    )
     if not candidates:
         return MemoryMatch(
             verdict="none",
@@ -261,6 +265,7 @@ def record_correction_memory(
         merchant_key=merchant_key,
         description_key=description_key,
         selected_category_code=selected,
+        business_id=tx.business_id,
     )
     if existing is not None:
         existing.updated_at = datetime.now(UTC)
@@ -269,6 +274,7 @@ def record_correction_memory(
         return existing
 
     memory = CorrectionMemory(
+        business_id=tx.business_id,
         merchant_key=merchant_key,
         description_key=description_key,
         selected_category_code=selected,

@@ -22,6 +22,8 @@ class CorrectionMemory(Base):
     __tablename__ = "correction_memory"
 
     id: Mapped[str] = mapped_column(String(32), primary_key=True, default=_new_id)
+    # Tenant-boundary scope; nullable in schema for safe backfill.
+    business_id: Mapped[str | None] = mapped_column(String(32), nullable=True, index=True)
 
     merchant_key: Mapped[str] = mapped_column(String(128), index=True, nullable=False, default="")
     description_key: Mapped[str] = mapped_column(

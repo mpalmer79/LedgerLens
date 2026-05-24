@@ -5,6 +5,7 @@ from datetime import date, datetime
 from fastapi import APIRouter, Depends, File, UploadFile
 from sqlalchemy.orm import Session
 
+from ledgerlens.actor import DemoActor, get_demo_actor
 from ledgerlens.api.schemas import (
     CsvImportSummary,
     TransactionBatchIn,
@@ -26,10 +27,11 @@ MAX_CSV_BYTES = 5 * 1024 * 1024  # 5 MB
 MAX_CSV_ROWS = 5000
 
 
-def _to_model(payload: TransactionIn) -> Transaction:
+def _to_model(payload: TransactionIn, business_id: str | None = None) -> Transaction:
     raw = payload.description
     normalized = normalize_description(raw)
     return Transaction(
+        business_id=business_id,
         transaction_date=payload.transaction_date,
         description=payload.description,
         raw_description=raw,
@@ -45,8 +47,9 @@ def _to_model(payload: TransactionIn) -> Transaction:
 def create_transaction(
     payload: TransactionIn,
     db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
 ) -> TransactionOut:
-    tx = TransactionRepo(db).add(_to_model(payload))
+    tx = TransactionRepo(db).add(_to_model(payload, business_id=actor.business_id))
     AuditRepo(db).record(
         entity_type="transaction",
         action="created",
@@ -62,12 +65,15 @@ def create_transaction(
 def create_batch(
     payload: TransactionBatchIn,
     db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
 ) -> TransactionBatchOut:
     created: list[Transaction] = []
     errors: list[dict[str, object]] = []
     for i, item in enumerate(payload.transactions):
         try:
-            created.append(TransactionRepo(db).add(_to_model(item)))
+            created.append(
+                TransactionRepo(db).add(_to_model(item, business_id=actor.business_id))
+            )
         except Exception as exc:  # noqa: BLE001
             errors.append({"index": i, "error": type(exc).__name__, "message": str(exc)})
     if created:
@@ -88,20 +94,40 @@ def list_transactions(
     limit: int = 50,
     offset: int = 0,
     db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
 ) -> TransactionListOut:
     limit = max(1, min(limit, 200))
     offset = max(0, offset)
-    repo = TransactionRepo(db)
-    items = repo.list(limit=limit, offset=offset)
+    items = (
+        db.query(Transaction)
+        .filter(Transaction.business_id == actor.business_id)
+        .order_by(Transaction.created_at.desc())
+        .offset(offset)
+        .limit(limit)
+        .all()
+    )
+    total = (
+        db.query(Transaction)
+        .filter(Transaction.business_id == actor.business_id)
+        .count()
+    )
     return TransactionListOut(
-        total=repo.count(),
+        total=total,
         items=[TransactionOut.model_validate(t) for t in items],
     )
 
 
 @router.get("/{tx_id}", response_model=TransactionOut)
-def get_transaction(tx_id: str, db: Session = Depends(get_db)) -> TransactionOut:
-    tx = TransactionRepo(db).get(tx_id)
+def get_transaction(
+    tx_id: str,
+    db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
+) -> TransactionOut:
+    tx = (
+        db.query(Transaction)
+        .filter(Transaction.id == tx_id, Transaction.business_id == actor.business_id)
+        .one_or_none()
+    )
     if not tx:
         raise NotFound("transaction", tx_id)
     return TransactionOut.model_validate(tx)
@@ -144,6 +170,7 @@ _FIELD_ALIASES = {
 async def import_csv(
     file: UploadFile = File(...),
     db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
 ) -> CsvImportSummary:
     raw = await file.read()
     if len(raw) > MAX_CSV_BYTES:
@@ -193,7 +220,7 @@ async def import_csv(
     received_rows = row_idx if "row_idx" in dir() else 0
 
     repo = TransactionRepo(db)
-    created_models = [repo.add(_to_model(r)) for r in rows]
+    created_models = [repo.add(_to_model(r, business_id=actor.business_id)) for r in rows]
     AuditRepo(db).record(
         entity_type="transaction",
         action="csv_imported",

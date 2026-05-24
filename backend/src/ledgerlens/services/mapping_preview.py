@@ -16,7 +16,6 @@ from dataclasses import dataclass
 
 from sqlalchemy.orm import Session
 
-from ledgerlens.data.business_rule_maps import active_business_id
 from ledgerlens.models import (
     AccountCategory,
     CategorizationResult,
@@ -62,13 +61,15 @@ def _category_name(db: Session, code: str | None) -> str | None:
     return cat.name if cat else None
 
 
-def _latest_review(db: Session, transaction_id: str) -> ReviewDecision | None:
-    return (
-        db.query(ReviewDecision)
-        .filter(ReviewDecision.transaction_id == transaction_id)
-        .order_by(ReviewDecision.created_at.desc())
-        .first()
-    )
+def _latest_review(
+    db: Session, transaction_id: str, business_id: str | None
+) -> ReviewDecision | None:
+    q = db.query(ReviewDecision).filter(ReviewDecision.transaction_id == transaction_id)
+    if business_id is None:
+        q = q.filter(ReviewDecision.business_id.is_(None))
+    else:
+        q = q.filter(ReviewDecision.business_id == business_id)
+    return q.order_by(ReviewDecision.created_at.desc()).first()
 
 
 def _ineligibility_reason(
@@ -107,7 +108,7 @@ def preview_mapping_change(
     intent: str,
     proposed_category_code: str | None,
     block_fallback: bool,
-    business_id: str | None = None,
+    business_id: str | None,
     limit: int = 200,
 ) -> PreviewSummary:
     """Walk transactions; return eligibility + proposed code per row.
@@ -115,10 +116,12 @@ def preview_mapping_change(
     The preview never mutates. It runs the existing `find_rule_match`
     on each transaction (cheap — pure-Python regex match) to identify
     which rows the rule layer would attach to the supplied intent.
+
+    ``business_id`` is the tenant scope for the SQL reads — must be the
+    actor's ``Business`` row id (not the rule-map slug). Passing ``None``
+    only matches legacy rows whose tenant column is NULL.
     """
-    # Resolve the business id (no per-row use today, but the
-    # callers pass it for the future-tenanted code path).
-    _ = business_id or active_business_id()
+    scoped_business_id = business_id
     warnings = [
         "Nothing has been changed yet — this is a preview only.",
         "Human-corrected and accountant-follow-up rows are protected.",
@@ -128,7 +131,12 @@ def preview_mapping_change(
 
     proposed_name = _category_name(db, proposed_category_code)
 
-    transactions = db.query(Transaction).order_by(Transaction.transaction_date.desc()).all()
+    tx_query = db.query(Transaction)
+    if scoped_business_id is None:
+        tx_query = tx_query.filter(Transaction.business_id.is_(None))
+    else:
+        tx_query = tx_query.filter(Transaction.business_id == scoped_business_id)
+    transactions = tx_query.order_by(Transaction.transaction_date.desc()).all()
     rows: list[PreviewRow] = []
     would_route_to_review = 0
 
@@ -137,15 +145,17 @@ def preview_mapping_change(
         match = find_rule_match(tx, db)
         if match.verdict != "apply" or match.rule is None or match.rule.intent != intent:
             continue
-        latest = (
-            db.query(CategorizationResult)
-            .filter(CategorizationResult.transaction_id == tx.id)
-            .order_by(CategorizationResult.created_at.desc())
-            .first()
+        cat_query = db.query(CategorizationResult).filter(
+            CategorizationResult.transaction_id == tx.id
         )
+        if scoped_business_id is None:
+            cat_query = cat_query.filter(CategorizationResult.business_id.is_(None))
+        else:
+            cat_query = cat_query.filter(CategorizationResult.business_id == scoped_business_id)
+        latest = cat_query.order_by(CategorizationResult.created_at.desc()).first()
         if latest is None:
             continue
-        review = _latest_review(db, tx.id)
+        review = _latest_review(db, tx.id, scoped_business_id)
         reason = _ineligibility_reason(latest, review)
         # Current code: prefer the review's selected code (CORRECT path)
         # else the result's predicted code.

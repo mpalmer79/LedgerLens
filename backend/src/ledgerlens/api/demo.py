@@ -40,6 +40,7 @@ from ledgerlens.models import (
     ReviewDecision,
     Transaction,
 )
+from ledgerlens.actor import DemoActor, get_demo_actor
 from ledgerlens.observability import get_logger, get_request_id, sanitize_for_log
 from ledgerlens.repositories import AuditRepo, TransactionRepo
 from ledgerlens.services.normalize import normalize_description
@@ -487,7 +488,10 @@ def demo_scenario() -> SampleScenario:
 
 
 @router.post("/seed", status_code=201)
-def demo_seed(db: Session = Depends(get_db)) -> dict[str, object]:
+def demo_seed(
+    db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
+) -> dict[str, object]:
     """Insert the bundled demo transactions. Tagged source='demo'.
 
     Re-running this endpoint inserts another copy; the frontend should
@@ -503,6 +507,7 @@ def demo_seed(db: Session = Depends(get_db)) -> dict[str, object]:
         amount_raw = row["amount_cents"]
         assert isinstance(amount_raw, int)
         tx = Transaction(
+            business_id=actor.business_id,
             transaction_date=date.fromisoformat(str(row["transaction_date"])),
             description=description,
             raw_description=description,

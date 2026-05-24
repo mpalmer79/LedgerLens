@@ -32,6 +32,8 @@ class CategorizationResult(Base):
     __tablename__ = "categorization_results"
 
     id: Mapped[str] = mapped_column(String(32), primary_key=True, default=_new_id)
+    # Tenant-boundary scope; nullable in schema for safe backfill.
+    business_id: Mapped[str | None] = mapped_column(String(32), nullable=True, index=True)
     transaction_id: Mapped[str] = mapped_column(
         String(32), ForeignKey("transactions.id"), nullable=False, index=True
     )

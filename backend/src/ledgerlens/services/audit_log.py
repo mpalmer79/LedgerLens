@@ -20,39 +20,13 @@ from sqlalchemy.orm import Session
 
 from ledgerlens.actor import DemoActor
 from ledgerlens.models import AuditEvent
-
-# Keys we never want to see end up in the audit JSON, even by
-# accident. Each key is dropped before persistence; nested
-# structures are walked once.
-_FORBIDDEN_KEYS: frozenset[str] = frozenset(
-    {
-        "raw_csv",
-        "raw_row",
-        "raw_rows",
-        "row_data",
-        "csv_text",
-        "transaction_description",
-        "account_number",
-        "routing_number",
-        "card_number",
-        "credentials",
-        "password",
-        "secret",
-        "api_key",
-        "anthropic_api_key",
-        "database_url",
-    }
+from ledgerlens.services.sensitive_data import (
+    FORBIDDEN_KEYS as _FORBIDDEN_KEYS,
+    redact_forbidden_keys as _redact,
 )
 
-
-def _redact(value: Any) -> Any:
-    """Strip forbidden keys from a JSON-shaped value. One level deep
-    is enough today; nested structures are walked recursively."""
-    if isinstance(value, dict):
-        return {k: _redact(v) for k, v in value.items() if k not in _FORBIDDEN_KEYS}
-    if isinstance(value, list):
-        return [_redact(item) for item in value]
-    return value
+# Re-exported for tests that imported the previous internal names.
+__all__ = ["_FORBIDDEN_KEYS", "_redact", "record_audit_event"]
 
 
 def record_audit_event(
