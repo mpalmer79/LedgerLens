@@ -329,3 +329,33 @@ Still explicitly not in scope:
 - Mapping change preview ("if you change X, Y transactions move").
 - Re-categorize existing finalized rows after a mapping edit.
 - Per-tenant business switcher on `/mapping`.
+
+---
+
+## 11. Public-demo deployment incident hotfix
+
+What landed (see `docs/PUBLIC_DEMO_INCIDENT_HOTFIX_AUDIT.md` and
+`docs/PUBLIC_DEMO_INCIDENT_HOTFIX_REVIEW.md`):
+
+- `Settings.cors_origins` is now a `str` with a `cors_origins_list`
+  property. Single origin, comma-separated, and JSON-array shapes
+  all boot.
+- `/demo/status` catches DB / schema exceptions and returns a
+  structured 503 (`{ error, message, request_id, hint }`); the real
+  exception class is logged via the structured logger.
+- New `/demo/ready` probes every demo-critical table independently
+  so schema drift cannot hide behind `/ready`'s shallow `SELECT 1`.
+- `backend/scripts/bootstrap_or_migrate.py` + `backend/scripts/start.sh`
+  give Railway a safe migration entry point. Dockerfile CMD switched
+  to `start.sh`. Opt-in via `RUN_MIGRATIONS_ON_START=true`.
+- `<DemoUnavailablePanel>` is rendered by `/app` and `/demo` when
+  `/demo/ready` is not ready or errors; never embarrasses the
+  public demo with raw API messages.
+- `scripts/smoke_public_demo.sh` curls the public URLs end-to-end
+  for post-deploy verification.
+
+Still explicitly not in scope:
+
+- Re-categorize existing rows after schema migration.
+- Automatic stamp/repair (refused by design — operator must decide).
+- JSON-formatted log shipping to an external sink.

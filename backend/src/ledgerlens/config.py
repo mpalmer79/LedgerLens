@@ -1,4 +1,5 @@
 from functools import lru_cache
+from json import JSONDecodeError, loads
 from typing import Any, Literal
 
 from pydantic import field_validator
@@ -6,6 +7,39 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 CategorizerMode = Literal["demo_stub", "anthropic"]
 SUPPORTED_CATEGORIZER_MODES: tuple[str, ...] = ("demo_stub", "anthropic")
+
+
+def _parse_cors_origins(value: str) -> list[str]:
+    """Parse a `CORS_ORIGINS` env value into a list of origins.
+
+    Accepts three shapes — in order of how a Railway operator is most
+    likely to set the variable:
+
+    1. Single origin: `https://example.com`
+    2. Comma-separated: `https://example.com,http://localhost:3000`
+    3. JSON array: `["https://example.com"]`
+
+    Whitespace is stripped, empty entries are dropped. Malformed JSON
+    arrays raise `ValueError` with a clear message so a typo doesn't
+    silently pass through as a one-element list.
+    """
+    raw = value.strip()
+    if not raw:
+        return []
+    if raw.startswith("["):
+        try:
+            parsed = loads(raw)
+        except JSONDecodeError as exc:
+            raise ValueError(
+                f"CORS_ORIGINS looks like a JSON array but does not parse: {exc.msg}"
+            ) from exc
+        if not isinstance(parsed, list) or not all(isinstance(item, str) for item in parsed):
+            raise ValueError(
+                "CORS_ORIGINS must be a single origin, a comma-separated list, "
+                "or a JSON array of strings."
+            )
+        return [item.strip() for item in parsed if item.strip()]
+    return [origin.strip() for origin in raw.split(",") if origin.strip()]
 
 
 class Settings(BaseSettings):
@@ -52,15 +86,13 @@ class Settings(BaseSettings):
     categorizer_mode: CategorizerMode = "demo_stub"
 
     log_level: str = "INFO"
-    cors_origins: list[str] = ["http://localhost:3000"]
+    # Stored as the raw env string. `cors_origins_list` parses it.
+    # Typing this as a plain `str` (not `list[str]`) avoids
+    # pydantic-settings' built-in `json.loads()` coercion that would
+    # reject anything that isn't a JSON array — including the
+    # one-origin string Railway operators reach for first.
+    cors_origins: str = "http://localhost:3000"
     app_version: str = "0.2.0"
-
-    @field_validator("cors_origins", mode="before")
-    @classmethod
-    def _split_cors_origins(cls, value: Any) -> Any:
-        if isinstance(value, str):
-            return [origin.strip() for origin in value.split(",") if origin.strip()]
-        return value
 
     @field_validator("categorizer_mode", mode="before")
     @classmethod
@@ -76,6 +108,25 @@ class Settings(BaseSettings):
                 )
             return normalized
         return value
+
+    @field_validator("cors_origins", mode="before")
+    @classmethod
+    def _coerce_cors_origins_input(cls, value: Any) -> Any:
+        """Accept a list (legacy callers) or a string. Always store a string.
+
+        A `Settings(cors_origins=["a", "b"])` call coming from a test or
+        a Python caller is preserved by re-joining with commas; anything
+        else passes through and gets validated by `_parse_cors_origins`
+        at read time.
+        """
+        if isinstance(value, list):
+            return ",".join(str(v).strip() for v in value if str(v).strip())
+        return value
+
+    @property
+    def cors_origins_list(self) -> list[str]:
+        """Parsed list of CORS origins. Validates the raw env string."""
+        return _parse_cors_origins(self.cors_origins)
 
     @property
     def anthropic_configured(self) -> bool:

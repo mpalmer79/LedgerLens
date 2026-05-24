@@ -4,14 +4,17 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 
 import { AppShell } from "@/components/app/AppShell";
+import { DemoUnavailablePanel } from "@/components/app/DemoUnavailablePanel";
 import { ErrorState } from "@/components/ui/DataState";
 import {
+  getDemoReady,
   getLedger,
   getReady,
   getReviewQueue,
   listAuditEvents,
   listCorrections,
   listTransactions,
+  type DemoReadiness,
 } from "@/lib/api/client";
 import type {
   AuditEvent,
@@ -30,6 +33,8 @@ type State = {
   events: AuditEvent[] | null;
   corrections: CorrectionMemoryList | null;
   ready: ReadyResponse | null;
+  demoReady: DemoReadiness | null;
+  demoReadyError: boolean;
   error: unknown;
   loading: boolean;
 };
@@ -41,6 +46,8 @@ const INITIAL: State = {
   events: null,
   corrections: null,
   ready: null,
+  demoReady: null,
+  demoReadyError: false,
   error: null,
   loading: true,
 };
@@ -50,6 +57,22 @@ export default function DashboardPage() {
 
   const load = useCallback(async () => {
     setState((s) => ({ ...s, loading: true, error: null }));
+    // Probe /demo/ready independently — if it fails or ready=false,
+    // surface the polished unavailable panel rather than letting the
+    // raw API error dominate.
+    const demoReadyResult = await getDemoReady().then(
+      (r) => ({ ok: true as const, value: r }),
+      () => ({ ok: false as const, value: null }),
+    );
+    if (!demoReadyResult.ok || !demoReadyResult.value.ready) {
+      setState({
+        ...INITIAL,
+        demoReady: demoReadyResult.value,
+        demoReadyError: !demoReadyResult.ok,
+        loading: false,
+      });
+      return;
+    }
     try {
       const [transactions, queue, ledger, events, corrections, ready] = await Promise.all([
         listTransactions({ limit: 5 }),
@@ -66,6 +89,8 @@ export default function DashboardPage() {
         ledger,
         events,
         corrections,
+        demoReady: demoReadyResult.value,
+        demoReadyError: false,
         error: null,
         loading: false,
       });
@@ -103,6 +128,20 @@ export default function DashboardPage() {
           pipeline — not the whole answer.
         </p>
       </header>
+
+      {(state.demoReadyError ||
+        (state.demoReady !== null && state.demoReady.ready === false)) && (
+        <DemoUnavailablePanel
+          onRetry={() => void load()}
+          notReadyTables={
+            state.demoReady
+              ? Object.entries(state.demoReady.checks)
+                  .filter(([, v]) => v && (v as { ok?: boolean }).ok === false)
+                  .map(([k]) => k)
+              : undefined
+          }
+        />
+      )}
 
       {state.ready?.checks.categorizer?.demo_mode && (
         <div className="mt-4 rounded-md border border-brand-200 bg-brand-100 px-4 py-2 text-[12px] text-brand-800">

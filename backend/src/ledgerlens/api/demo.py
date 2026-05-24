@@ -22,7 +22,8 @@ from __future__ import annotations
 from datetime import date
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy import delete
+from fastapi.responses import JSONResponse
+from sqlalchemy import delete, text
 from sqlalchemy.orm import Session
 
 from ledgerlens.api.schemas import TransactionOut
@@ -30,16 +31,21 @@ from ledgerlens.config import get_settings
 from ledgerlens.data.sample_scenario import SAMPLE_SCENARIO, SampleScenario
 from ledgerlens.db import get_db
 from ledgerlens.models import (
+    AccountCategory,
     AuditEvent,
     CategorizationResult,
+    CategoryMappingEntry,
+    CategoryMappingProfile,
     CorrectionMemory,
     ReviewDecision,
     Transaction,
 )
+from ledgerlens.observability import get_logger, get_request_id, sanitize_for_log
 from ledgerlens.repositories import AuditRepo, TransactionRepo
 from ledgerlens.services.normalize import normalize_description
 
 router = APIRouter(prefix="/demo", tags=["demo"])
+logger = get_logger("ledgerlens.api.demo")
 
 DEMO_SOURCE = "demo"
 
@@ -351,22 +357,123 @@ def _require_demo_mode() -> None:
 
 
 @router.get("/status")
-def demo_status(db: Session = Depends(get_db)) -> dict[str, object]:
-    """Counts the demo page renders. Safe to call in any mode (no writes)."""
+def demo_status(db: Session = Depends(get_db)) -> JSONResponse:
+    """Counts the demo page renders.
+
+    Wrapped in try/except so a schema-drift or migration-gap exception
+    on the demo deploy returns a structured 503 instead of the raw
+    "Internal Server Error" page. The actual exception class is logged
+    via the structured logger so the cause is recoverable from logs.
+    """
     settings = get_settings()
-    repo = TransactionRepo(db)
-    demo_tx_count = db.query(Transaction).filter(Transaction.source == DEMO_SOURCE).count()
-    return {
-        "demo_mode": settings.categorizer_mode == "demo_stub",
-        "categorizer_mode": settings.categorizer_mode,
-        "transaction_count": repo.count(),
-        "demo_transaction_count": demo_tx_count,
-        "categorization_result_count": db.query(CategorizationResult).count(),
-        "review_decision_count": db.query(ReviewDecision).count(),
-        "correction_memory_count": (
-            db.query(CorrectionMemory).filter(CorrectionMemory.active.is_(True)).count()
-        ),
+    try:
+        repo = TransactionRepo(db)
+        demo_tx_count = db.query(Transaction).filter(Transaction.source == DEMO_SOURCE).count()
+        body: dict[str, object] = {
+            "demo_mode": settings.categorizer_mode == "demo_stub",
+            "categorizer_mode": settings.categorizer_mode,
+            "transaction_count": repo.count(),
+            "demo_transaction_count": demo_tx_count,
+            "categorization_result_count": db.query(CategorizationResult).count(),
+            "review_decision_count": db.query(ReviewDecision).count(),
+            "correction_memory_count": (
+                db.query(CorrectionMemory).filter(CorrectionMemory.active.is_(True)).count()
+            ),
+        }
+        return JSONResponse(status_code=200, content=body)
+    except Exception as exc:  # noqa: BLE001 — surface the SQL/schema error
+        rid = get_request_id() or "-"
+        logger.exception(
+            "demo_status_failed exc=%s",
+            sanitize_for_log(type(exc).__name__),
+        )
+        return JSONResponse(
+            status_code=503,
+            content={
+                "error": "demo_status_unavailable",
+                "message": "Demo status is temporarily unavailable.",
+                "request_id": rid,
+                "hint": "Check /demo/ready for dependency status.",
+            },
+        )
+
+
+_DEMO_READY_TABLES: tuple[tuple[str, type], ...] = (
+    ("transactions", Transaction),
+    ("categorization_results", CategorizationResult),
+    ("review_decisions", ReviewDecision),
+    ("correction_memory", CorrectionMemory),
+    ("account_categories", AccountCategory),
+    ("category_mapping_profiles", CategoryMappingProfile),
+    ("category_mapping_entries", CategoryMappingEntry),
+)
+
+
+@router.get("/ready")
+def demo_ready(db: Session = Depends(get_db)) -> JSONResponse:
+    """Deep readiness check for the public demo.
+
+    `/health` only proves the process is up. `/ready` only proves
+    `SELECT 1` works. This endpoint proves that every table the demo
+    actually touches is queryable — catching the schema-drift class of
+    failures that hides behind those simpler checks.
+
+    Returns 200 with `ready=false` (and a per-check breakdown) when a
+    dependency is misconfigured. Never echoes `DATABASE_URL`, env
+    vars, secrets, or raw stack traces.
+    """
+    settings = get_settings()
+    checks: dict[str, dict[str, object]] = {}
+
+    try:
+        db.execute(text("SELECT 1"))
+        checks["database"] = {"ok": True}
+    except Exception as exc:  # noqa: BLE001
+        checks["database"] = {"ok": False, "error": type(exc).__name__}
+
+    # Each table check is isolated so one schema-drift failure doesn't
+    # mask the rest.
+    for table_name, model in _DEMO_READY_TABLES:
+        try:
+            db.query(model).count()
+            checks[table_name] = {"ok": True}
+        except Exception as exc:  # noqa: BLE001
+            checks[table_name] = {"ok": False, "error": type(exc).__name__}
+
+    checks["categorizer"] = {
+        "mode": settings.categorizer_mode,
+        "demo_mode": settings.is_demo_mode,
     }
+    checks["demo_stub"] = {
+        "active": settings.is_demo_mode,
+        # In demo_stub mode the Anthropic SDK is never imported, so a
+        # missing key is explicitly NOT a readiness blocker.
+        "anthropic_required": settings.categorizer_mode == "anthropic",
+    }
+
+    ready_flag = bool(checks["database"]["ok"]) and all(
+        bool(checks[name]["ok"]) for name, _ in _DEMO_READY_TABLES
+    )
+    if settings.categorizer_mode == "anthropic" and not settings.anthropic_configured:
+        ready_flag = False
+
+    warnings: list[str] = []
+    if not ready_flag:
+        warnings.append(
+            "One or more demo dependencies are unavailable. The API process "
+            "is up but the public demo flows are not fully functional."
+        )
+    warnings.append("Public demo — synthetic / sample data only. Do not upload real bank data.")
+
+    return JSONResponse(
+        status_code=200,
+        content={
+            "ready": ready_flag,
+            "checks": checks,
+            "warnings": warnings,
+            "version": settings.app_version,
+        },
+    )
 
 
 @router.get("/scenario")

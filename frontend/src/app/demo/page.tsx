@@ -10,6 +10,7 @@ import {
   categorize,
   categorizeBatch,
   correctReview,
+  getDemoReady,
   getDemoSampleTransactions,
   getDemoScenario,
   getDemoStatus,
@@ -18,10 +19,12 @@ import {
   getReviewQueue,
   resetDemo,
   seedDemo,
+  type DemoReadiness,
   type DemoSampleTransaction,
   type DemoScenario,
   type DemoStatus,
 } from "@/lib/api/client";
+import { DemoUnavailablePanel } from "@/components/app/DemoUnavailablePanel";
 import type {
   CategorizationResult,
   Ledger,
@@ -115,6 +118,19 @@ export default function DemoPage() {
   const [state, setState] = useState<DemoState>(INITIAL);
   const [globalError, setGlobalError] = useState<string | null>(null);
   const [resetting, setResetting] = useState(false);
+  const [demoReady, setDemoReady] = useState<DemoReadiness | null>(null);
+  const [demoReadyError, setDemoReadyError] = useState(false);
+
+  const refreshReady = useCallback(async () => {
+    setDemoReadyError(false);
+    try {
+      const r = await getDemoReady();
+      setDemoReady(r);
+    } catch {
+      setDemoReady(null);
+      setDemoReadyError(true);
+    }
+  }, []);
 
   const setStep = useCallback(
     (key: keyof DemoState["steps"], patch: Partial<StepState>) => {
@@ -129,6 +145,10 @@ export default function DemoPage() {
   useEffect(() => {
     let cancelled = false;
     (async () => {
+      // Run the deep readiness probe first. If demo dependencies are
+      // unavailable, render the polished panel instead of falling through
+      // to a raw API error from /demo/status.
+      await refreshReady();
       // Status + samples are critical (the guided demo needs them). Scenario
       // is decorative — surface it only if it loads. If it fails the rest of
       // the page still works.
@@ -152,7 +172,7 @@ export default function DemoPage() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [refreshReady]);
 
   const handleReset = async () => {
     if (resetting) return; // double-click guard
@@ -254,6 +274,13 @@ export default function DemoPage() {
 
   const inDemoMode = state.status?.demo_mode ?? false;
 
+  const demoUnavailable = demoReadyError || (demoReady !== null && demoReady.ready === false);
+  const notReadyTables = demoReady
+    ? Object.entries(demoReady.checks)
+        .filter(([, v]) => v && (v as { ok?: boolean }).ok === false)
+        .map(([k]) => k)
+    : undefined;
+
   return (
     <AppShell>
       <header>
@@ -289,6 +316,13 @@ export default function DemoPage() {
           </p>
         )}
       </header>
+
+      {demoUnavailable && (
+        <DemoUnavailablePanel
+          onRetry={() => void refreshReady()}
+          notReadyTables={notReadyTables}
+        />
+      )}
 
       {/* Sample cleanup scenario card — names the fictional business. */}
       {state.scenario && (
