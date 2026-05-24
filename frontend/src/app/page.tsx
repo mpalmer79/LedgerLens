@@ -49,29 +49,41 @@ export default function Page() {
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-5">
           <div className="lg:col-span-3">
             <p className="mb-4 text-[12px] font-medium uppercase tracking-[0.5px] text-brand-600">
-              For small-business bookkeeping cleanup
+              Monthly bookkeeping cleanup assistant
             </p>
             <h1 className="font-display text-[clamp(28px,7vw,48px)] font-medium leading-[1.1] text-text-primary md:text-5xl break-words">
-              Turn messy bank transactions into a{" "}
-              <span className="text-brand-600">verified small-business ledger.</span>
+              Clean up this month&apos;s books and send your accountant a{" "}
+              <span className="text-brand-600">verified handoff.</span>
             </h1>
             <p className="mt-5 max-w-2xl text-[17px] leading-relaxed text-text-secondary">
-              LedgerLens helps small business owners categorize expenses, route uncertainty
-              to review, remember human corrections, and export a reviewed ledger — without
-              blindly trusting AI.
+              LedgerLens helps small business owners import bank activity, classify
+              obvious vendors, answer plain-English review questions, and export a
+              verified ledger package — without blindly trusting AI.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
-                href="/demo"
+                href="/cleanup"
                 className="inline-flex items-center rounded-md bg-brand-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-500"
               >
-                Start the 3-minute demo →
+                Start monthly cleanup →
+              </Link>
+              <Link
+                href="/handoff"
+                className="inline-flex items-center gap-1.5 rounded-md border-2 border-brand-600 bg-transparent px-5 py-2.5 text-sm font-medium text-brand-700 transition-colors hover:bg-brand-50"
+              >
+                View accountant handoff
+              </Link>
+              <Link
+                href="/demo"
+                className="inline-flex items-center text-sm font-medium text-text-secondary hover:text-text-primary"
+              >
+                3-min guided demo →
               </Link>
               <Link
                 href="/technical-story"
-                className="inline-flex items-center gap-1.5 rounded-md border border-surface-border-strong bg-transparent px-5 py-2.5 text-sm font-medium text-text-primary transition-colors hover:bg-surface-sunken"
+                className="inline-flex items-center text-sm font-medium text-text-secondary hover:text-text-primary"
               >
-                Read the technical story
+                Engineering story →
               </Link>
               <Link
                 href="/about"
@@ -85,7 +97,7 @@ export default function Page() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center text-sm font-medium text-text-secondary hover:text-text-primary"
               >
-                View GitHub →
+                GitHub →
               </a>
             </div>
             <p className="mt-5 max-w-2xl text-[13px] text-text-subtle">
@@ -113,8 +125,8 @@ export default function Page() {
               </p>
               <p className="mt-3 text-[13px] leading-relaxed text-brand-800">
                 Finalized rows are backed by human review, correction memory, or
-                deterministic rules before export.{" "}
-                <strong>Workflow-level trust metric — not raw model accuracy.</strong>
+                deterministic rules <strong>before they appear in the handoff package.</strong>{" "}
+                Workflow-level trust metric — not raw model accuracy.
               </p>
               <Link
                 href="/evals"
@@ -139,6 +151,120 @@ export default function Page() {
         </p>
         <div className="mt-5">
           <TrustPipeline />
+        </div>
+      </section>
+
+      {/* Before / After */}
+      <section className="mx-auto mt-16 max-w-6xl px-4 sm:px-6 lg:px-8">
+        <h2 className="font-display text-[24px] font-medium text-text-primary">
+          From messy transactions to accountant-ready handoff.
+        </h2>
+        <p className="mt-2 max-w-3xl text-[14px] text-text-secondary">
+          Every small-business owner has the same Monday-of-the-month problem. Here&apos;s
+          what the workflow looks like before and after.
+        </p>
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="rounded-lg border border-surface-border bg-surface-panel p-5">
+            <p className="text-[11px] font-medium uppercase tracking-wide text-text-subtle">
+              Before
+            </p>
+            <ul className="mt-3 space-y-2 text-[13px] text-text-secondary">
+              <li>· Uncategorized bank activity in a spreadsheet</li>
+              <li>· Vague ACH transfers nobody remembers</li>
+              <li>· Owner unsure what the Costco run was actually for</li>
+              <li>· Accountant follow-up scattered across texts and emails</li>
+              <li>· No clear review status anywhere</li>
+            </ul>
+          </div>
+          <div className="rounded-lg border-2 border-brand-600 bg-brand-100 p-5">
+            <p className="text-[11px] font-medium uppercase tracking-wide text-brand-700">
+              After LedgerLens
+            </p>
+            <ul className="mt-3 space-y-2 text-[13px] text-brand-900">
+              <li>· Obvious vendors classified by rules or correction memory</li>
+              <li>· Uncertain rows routed to plain-English owner questions</li>
+              <li>· Your answers captured as review notes for the accountant</li>
+              <li>· Verified ledger rows separated from unresolved items</li>
+              <li>· Markdown + CSV handoff package ready to send</li>
+            </ul>
+          </div>
+        </div>
+        <div className="mt-6 rounded-lg border border-surface-border bg-surface-panel p-5">
+          <p className="text-[11px] font-medium uppercase tracking-wide text-text-subtle">
+            What you get in the handoff package
+          </p>
+          <ul className="mt-3 grid grid-cols-2 gap-y-2 text-[13px] text-text-primary sm:grid-cols-3">
+            <li>✓ Verified ledger summary</li>
+            <li>✓ Unresolved questions</li>
+            <li>✓ Owner answers</li>
+            <li>✓ Corrections learned</li>
+            <li>✓ CSV export</li>
+            <li>✓ Markdown handoff report</li>
+          </ul>
+        </div>
+      </section>
+
+      {/* Handoff preview card */}
+      <section className="mx-auto mt-16 max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="rounded-xl border border-surface-border bg-surface-panel p-1 shadow-sm">
+          <div className="rounded-lg bg-surface-page p-5">
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <p className="text-[11px] font-medium uppercase tracking-wide text-brand-700">
+                Example handoff preview
+              </p>
+              <span className="rounded-full bg-surface-sunken px-2 py-0.5 text-[10px] uppercase tracking-wide text-text-subtle">
+                illustrative
+              </span>
+            </div>
+            <h3 className="mt-2 font-display text-[20px] font-medium text-text-primary">
+              Accountant handoff package — March 2026
+            </h3>
+            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+              <PreviewTile label="Transactions imported" value="24" />
+              <PreviewTile label="Verified finalized rows" value="18" tone="good" />
+              <PreviewTile label="Owner questions answered" value="4" />
+              <PreviewTile label="Still needs review" value="2" tone="warn" />
+              <PreviewTile label="Corrections learned" value="3" />
+              <PreviewTile label="Verification rate" value="100%" tone="good" />
+            </div>
+            <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <PreviewBlock title="Ready for accountant">
+                Verified rows backed by review, memory, or a deterministic rule.
+                Export as CSV or copy from the markdown summary.
+              </PreviewBlock>
+              <PreviewBlock title="Needs review">
+                Two items the owner flagged for accountant follow-up — explained in the
+                owner-answers section, never silently finalized.
+              </PreviewBlock>
+              <PreviewBlock title="Owner answers">
+                Plain-English notes captured during the questions workflow. Forwarded
+                with the handoff so the accountant has business context.
+              </PreviewBlock>
+              <PreviewBlock title="Corrections learned">
+                New (merchant → category) rules saved this month. The system will reuse
+                them next month at zero model cost.
+              </PreviewBlock>
+            </div>
+            <div className="mt-5 flex flex-wrap gap-3">
+              <Link
+                href="/handoff"
+                className="inline-flex items-center rounded-md bg-brand-600 px-4 py-2 text-[13px] font-medium text-white hover:bg-brand-500"
+              >
+                Open the live handoff page →
+              </Link>
+              <Link
+                href="/cleanup"
+                className="inline-flex items-center rounded-md border border-surface-border-strong px-4 py-2 text-[13px] font-medium text-text-primary hover:bg-surface-sunken"
+              >
+                Start monthly cleanup
+              </Link>
+            </div>
+            <p className="mt-3 text-[11px] text-text-subtle">
+              The numbers above are illustrative. The live{" "}
+              <Link href="/handoff" className="underline">/handoff</Link>{" "}
+              page is driven by the actual database.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -393,6 +519,44 @@ function TechCard({ icon, title, body }: CardProps) {
         <h3 className="font-display text-[15px] font-medium text-text-primary">{title}</h3>
       </div>
       <p className="mt-2 text-[13px] leading-relaxed text-text-secondary">{body}</p>
+    </div>
+  );
+}
+
+function PreviewTile({
+  label,
+  value,
+  tone = "neutral",
+}: {
+  label: string;
+  value: string;
+  tone?: "good" | "warn" | "neutral";
+}) {
+  const valueClass =
+    tone === "good"
+      ? "text-brand-700"
+      : tone === "warn"
+        ? "text-amber-800"
+        : "text-text-primary";
+  return (
+    <div className="rounded-md border border-surface-border bg-surface-panel p-3">
+      <p className="field-label">{label}</p>
+      <p className={`mt-1 font-display text-[22px] font-medium ${valueClass}`}>{value}</p>
+    </div>
+  );
+}
+
+function PreviewBlock({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="rounded-md border border-surface-border bg-surface-panel p-3">
+      <p className="text-[12px] font-medium text-text-primary">{title}</p>
+      <p className="mt-1 text-[12px] leading-relaxed text-text-secondary">{children}</p>
     </div>
   );
 }

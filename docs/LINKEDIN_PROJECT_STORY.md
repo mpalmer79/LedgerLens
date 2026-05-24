@@ -57,23 +57,41 @@ It deliberately isn't. Raw model accuracy on adversarial bookkeeping data is aro
 - Added a recruiter-facing About page and a Technical Story page with the architecture pipeline diagrammed.
 - Wrote honest limitations: per-tenant COA mismatch, raw model accuracy, demo-mode caveats.
 
-## 9. Main LinkedIn launch post
+## 9. Main LinkedIn launch post (long version)
 
-> I built LedgerLens to answer a practical AI question: how do you use AI to help with messy bookkeeping without blindly trusting the model?
+> I started LedgerLens with a simple question: how can AI help a small business owner clean up monthly bookkeeping without blindly trusting the model?
 >
-> Small-business bookkeeping cleanup is repetitive, risky, and a great test case for AI-assisted workflows. The product's headline metric is **not** "X% accurate AI." It's:
+> Most "AI bookkeeping" tools either guess the category (and quietly contaminate the books) or wrap a chat UI around a model and call it done. Neither helps the owner produce something an accountant can actually use.
 >
-> **100% of finalized guided-demo ledger rows are verified before export.**
+> So I built a **monthly cleanup assistant**. The deliverable is a **verified accountant handoff package** — markdown summary + CSV ledger — that the owner sends to their bookkeeper or CPA at month-end.
 >
-> A row only counts as verified if it was decided by human review, by correction memory built from a prior human decision, or by a deterministic rule above threshold. Demo-stub results never qualify. Unreviewed model auto-approvals never qualify.
+> The workflow:
+> 1. Import this month's messy bank activity.
+> 2. Obvious vendors (Comcast, QuickBooks, payroll, fuel, Stripe fees) are handled automatically by deterministic rules + correction memory.
+> 3. Uncertain transactions become **plain-English questions** ("What was this ACH transfer for?" — not "pick a COA code").
+> 4. Owner answers become **review notes for the accountant**.
+> 5. The handoff package separates verified rows from unresolved items.
+> 6. Export. Done.
 >
-> Raw model accuracy on adversarial bookkeeping data is around 63% — and that number is reported honestly on the eval page. It's just not the right number for evaluating a financial-workflow product.
+> The product's headline metric is **workflow-level**, not model-level: **100% of finalized guided-demo ledger rows are verified before export.** A row only counts as verified if it was decided by review, by correction memory, or by a deterministic rule above threshold. Raw model accuracy on adversarial bookkeeping data is ~63% — reported honestly on the eval page; it's just not the right number for a financial-workflow product.
 >
-> Three-minute guided demo at the link → real backend calls, no mocked state, end-to-end through a verified ledger export. The deployed instance runs at $0 paid spend (demo-stub mode; the Anthropic SDK is never imported — there's a regression test for that).
+> The deployed instance runs at $0 paid spend (demo-stub mode; the Anthropic SDK is never imported — there's a regression test for that).
 >
 > Stack: FastAPI · SQLAlchemy · Postgres-ready · Next.js · TypeScript · Docker · Railway · Anthropic (opt-in) · pytest · vitest · mypy --strict.
 >
-> Built as the next step in my pivot from automotive retail / enterprise implementation into AI software. Code, ADRs, eval artifacts, the verified-ledger trust contract — all on GitHub. Open to AI engineering / applied AI / solutions engineering / full-stack / AI workflow automation roles.
+> Built as the next step in my pivot from automotive retail / enterprise implementation into AI software. Code, ADRs, eval artifacts, and the verified-ledger trust contract — all on GitHub. Open to AI engineering / applied AI / solutions engineering / full-stack / AI workflow automation roles.
+
+## 9b. Short version (LinkedIn-skim friendly)
+
+> New project — LedgerLens, a monthly bookkeeping cleanup assistant for small businesses.
+>
+> Owner imports bank CSV → obvious vendors auto-classified by rules + correction memory → uncertain rows become plain-English questions → out comes a **verified accountant handoff package** (markdown + CSV).
+>
+> The headline metric is workflow-level, not model-level: 100% of finalized demo-ledger rows are verified before export. Raw model accuracy is reported honestly (~63%) on the eval page — but it's not the trust boundary for a financial workflow.
+>
+> Stack: FastAPI · Next.js · Postgres-ready · Docker · Railway · pytest · vitest · mypy --strict. $0 paid API spend on the public deploy.
+>
+> Three-minute guided demo + the live cleanup + handoff pages at the link. GitHub in the comments.
 
 ## 10. First comment with GitHub link
 

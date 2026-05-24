@@ -53,19 +53,36 @@ describe("homepage content", () => {
     expect(HOMEPAGE).toContain("MarketingNav");
   });
 
-  it("renders the verified-ledger headline (no raw-accuracy claim)", () => {
-    expect(HOMEPAGE).toContain("verified small-business ledger");
+  it("leads with the monthly cleanup / accountant handoff framing", () => {
+    expect(HOMEPAGE.toLowerCase()).toContain("monthly bookkeeping cleanup");
+    expect(HOMEPAGE).toContain("verified handoff");
     expect(HOMEPAGE).not.toMatch(/100\s*%\s*ai\s*accurate/i);
   });
 
-  it("renders the primary CTA to the guided demo", () => {
-    expect(HOMEPAGE).toContain('href="/demo"');
-    expect(HOMEPAGE).toContain("Start the 3-minute demo");
+  it("uses /cleanup as the primary CTA (not /demo)", () => {
+    expect(HOMEPAGE).toContain('href="/cleanup"');
+    expect(HOMEPAGE).toContain("Start monthly cleanup");
   });
 
-  it("renders the technical-story CTA", () => {
+  it("offers a clear /handoff CTA", () => {
+    expect(HOMEPAGE).toContain('href="/handoff"');
+    expect(HOMEPAGE).toContain("View accountant handoff");
+  });
+
+  it("keeps secondary CTAs for /demo and /technical-story", () => {
+    expect(HOMEPAGE).toContain('href="/demo"');
     expect(HOMEPAGE).toContain('href="/technical-story"');
-    expect(HOMEPAGE).toContain("Read the technical story");
+  });
+
+  it("renders the before/after section", () => {
+    expect(HOMEPAGE).toContain("accountant-ready handoff");
+    expect(HOMEPAGE).toContain("After LedgerLens");
+  });
+
+  it("renders the example handoff preview card", () => {
+    expect(HOMEPAGE).toContain("Example handoff preview");
+    expect(HOMEPAGE).toContain("illustrative");
+    expect(HOMEPAGE).toContain("Accountant handoff package");
   });
 
   it("links to /about and includes Michael's name as the builder line", () => {
@@ -264,10 +281,12 @@ describe("app dashboard content", () => {
     expect(APP_DASH).toContain("Small-business bookkeeping cleanup");
   });
 
-  it("renders a three-card empty state for first-time visitors", () => {
-    expect(APP_DASH).toContain("Start guided demo");
+  it("renders an empty state that leads with the cleanup assistant", () => {
+    expect(APP_DASH).toContain("Open cleanup assistant");
+    expect(APP_DASH).toContain("Try guided demo");
     expect(APP_DASH).toContain("Import transactions");
     expect(APP_DASH).toContain("View technical story");
+    expect(APP_DASH).toContain('href="/cleanup"');
   });
 
   it('renders the "Why this matters" panel', () => {
