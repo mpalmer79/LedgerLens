@@ -53,9 +53,11 @@ the sections below.
    for the sprint review.
 2. **Account-mapping wizard** — owners or their accountant can
    tweak the intent → COA map per business. **🟡 Partial — read-only
-   explorer shipped at `/mapping`.** Editing requires the auth /
-   tenant foundation (see `AUTH_TENANT_FOUNDATION.md`). See
-   `docs/CATEGORY_MAPPING_WIZARD.md`.
+   explorer shipped at `/mapping`. Schema foundation
+   (`CategoryMappingProfile`, `CategoryMappingEntry`) shipped in
+   Auth/Tenant Phase 1.** Editing requires login + sessions, which
+   land in Phase 2. See `docs/CATEGORY_MAPPING_WIZARD.md` and
+   `docs/AUTH_TENANT_PHASE_1.md`.
 3. **Mobile-first review queue** — one card at a time, big
    buttons, sticky save/skip. **🟡 Partial — `/review` now offers
    four explicit primary actions on a 1-/2-/4-column responsive

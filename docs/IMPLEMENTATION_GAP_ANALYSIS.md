@@ -263,3 +263,36 @@ What is still **explicitly not** in scope:
 - Two-way accountant collaboration inside LedgerLens.
 - Split transactions.
 - JSON-structured logging + log shipping.
+
+---
+
+## 9. Auth/Tenant Phase 1 sprint
+
+What landed (see `docs/AUTH_TENANT_PHASE_1.md` for the full write-up):
+
+- Schema foundation: `User`, `Tenant`, `Membership` (+
+  `MembershipRole`), `Business`, `CategoryMappingProfile`,
+  `CategoryMappingEntry` models with unique constraints.
+- Alembic baseline: `alembic.ini`, `alembic/env.py`, one initial
+  migration tested against an empty SQLite DB.
+- `TenantContext` + `get_demo_tenant_context()` +
+  `require_tenant_context()` helpers for future protected routes.
+- Demo seed: `seed_demo_tenant()` creates a "LedgerLens Demo
+  Organization" tenant and "Granite State Auto Repair" business.
+- `GET /admin/foundation/status` endpoint that returns an honest
+  snapshot. Tests pin no env leak.
+- Frontend `/admin` route with explicit "not production" framing,
+  per-model status list, count cards, honesty warnings, and a
+  no-fake-login placeholder.
+- 13 backend + 5 frontend new tests.
+
+Still explicitly not in scope:
+
+- No `password_hash`, no `Session` table, no JWT, no cookie auth.
+- No login UI, no signup, no password reset.
+- No protected routes; every endpoint is publicly reachable.
+- No tenant scoping on `Transaction`, `CategorizationResult`,
+  `ReviewDecision`, `CorrectionMemory`, `AuditEvent`,
+  `AccountCategory`.
+- No editable category mapping UI.
+- No rate limiting.
