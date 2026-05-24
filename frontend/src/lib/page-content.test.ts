@@ -1411,3 +1411,93 @@ describe("mapping apply UI (Phase 2)", () => {
     expect(MAPPING).toContain('href="/audit"');
   });
 });
+
+const PHOTO_CREDITS_COMPONENT = readFileSync(
+  join(SRC, "components", "marketing", "PhotoCredits.tsx"),
+  "utf-8",
+);
+const IMAGE_CREDITS_MODULE = readFileSync(
+  join(SRC, "data", "imageCredits.ts"),
+  "utf-8",
+);
+
+describe("homepage stock photography (visual refresh)", () => {
+  it("renders all five image slots with descriptive alt text", () => {
+    expect(HOMEPAGE).toContain('data-testid="homepage-hero-image"');
+    expect(HOMEPAGE).toContain('data-testid="homepage-trust-image"');
+    expect(HOMEPAGE).toContain('data-testid="homepage-auto-shop-image"');
+    expect(HOMEPAGE).toContain('data-testid="homepage-engineering-image"');
+    expect(HOMEPAGE).toContain('data-testid="homepage-faq-image"');
+    // Each image carries the exact alt the audit spec called for.
+    expect(HOMEPAGE).toContain(
+      "Tidy desk with laptop and notebook in soft morning light",
+    );
+    expect(HOMEPAGE).toContain(
+      "Top-down view of a checklist and pen",
+    );
+    expect(HOMEPAGE).toContain(
+      "Independent auto repair shop exterior in daylight",
+    );
+    expect(HOMEPAGE).toContain(
+      "Workflow planning scene with notebook and laptop",
+    );
+    expect(HOMEPAGE).toContain(
+      "Small business owner reviewing documents calmly near a laptop",
+    );
+  });
+
+  it("uses next/image and points only at local /images/stock/ paths", () => {
+    expect(HOMEPAGE).toContain('import Image from "next/image"');
+    expect(HOMEPAGE).toContain("/images/stock/hero/calm-workspace-morning.jpg");
+    expect(HOMEPAGE).toContain(
+      "/images/stock/trust/verified-checklist-flatlay.jpg",
+    );
+    expect(HOMEPAGE).toContain(
+      "/images/stock/auto-shop/independent-garage.jpg",
+    );
+    expect(HOMEPAGE).toContain(
+      "/images/stock/engineering/workflow-architecture.jpg",
+    );
+    expect(HOMEPAGE).toContain("/images/stock/faq/calm-owner-review.jpg");
+    // No remote hosts hot-linked.
+    expect(HOMEPAGE).not.toMatch(/src="https?:\/\/[^"]+\.(?:jpg|jpeg|png|webp)"/);
+  });
+
+  it("hero image gets priority; other images lazy-load", () => {
+    // The hero slot uses priority; the four others use loading="lazy".
+    expect(HOMEPAGE).toMatch(/homepage-hero-image[\s\S]*?priority/);
+    const lazyHits = HOMEPAGE.match(/loading="lazy"/g) ?? [];
+    expect(lazyHits.length).toBeGreaterThanOrEqual(4);
+  });
+
+  it("renders the PhotoCredits component in the footer area", () => {
+    expect(HOMEPAGE).toContain("<PhotoCredits />");
+    expect(PHOTO_CREDITS_COMPONENT).toContain("HOMEPAGE_IMAGE_CREDITS");
+    expect(PHOTO_CREDITS_COMPONENT).toContain('data-testid="homepage-photo-credits"');
+    // Wrapped in <details> so it's collapsed by default.
+    expect(PHOTO_CREDITS_COMPONENT).toContain("<details");
+    expect(PHOTO_CREDITS_COMPONENT).toContain("<summary");
+  });
+
+  it("ships one credit entry per used image", () => {
+    for (const file of [
+      "/images/stock/hero/calm-workspace-morning.jpg",
+      "/images/stock/trust/verified-checklist-flatlay.jpg",
+      "/images/stock/auto-shop/independent-garage.jpg",
+      "/images/stock/engineering/workflow-architecture.jpg",
+      "/images/stock/faq/calm-owner-review.jpg",
+    ]) {
+      expect(IMAGE_CREDITS_MODULE).toContain(`"${file}"`);
+    }
+  });
+
+  it("does not bake commercial-SaaS imagery copy into the page", () => {
+    // Sanity: the visual refresh did not sneak in any pricing /
+    // contact / request-demo / mailto / tel link.
+    expect(HOMEPAGE).not.toMatch(/href="mailto:/);
+    expect(HOMEPAGE).not.toMatch(/href="tel:/);
+    expect(HOMEPAGE.toLowerCase()).not.toContain("request a demo");
+    expect(HOMEPAGE.toLowerCase()).not.toMatch(/100\s*%\s*ai/);
+    expect(HOMEPAGE.toLowerCase()).not.toContain("safe for real bank");
+  });
+});
