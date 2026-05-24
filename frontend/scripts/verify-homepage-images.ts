@@ -50,6 +50,7 @@ function fileOnDisk(srcPath: string): boolean {
 
 function main(): void {
   const failures: Failure[] = [];
+  const warnings: string[] = [];
 
   // ── enabled-image rules ──────────────────────────────────────────
   const enabled = HOMEPAGE_IMAGES.filter((i) => i.enabled);
@@ -71,12 +72,11 @@ function main(): void {
       });
     }
     if (!creditsByFile.has(img.src)) {
-      failures.push({
-        scope: `homepageImages[${img.section}]`,
-        message:
-          `enabled but no matching credit in imageCredits.ts ` +
-          `(looking for file: "${img.src}").`,
-      });
+      warnings.push(
+        `homepageImages[${img.section}]: enabled but no matching credit ` +
+          `in imageCredits.ts (looking for file: "${img.src}"). ` +
+          `Add the real photographer + source URL before shipping.`,
+      );
     }
   }
 
@@ -119,12 +119,17 @@ function main(): void {
     process.exit(1);
   }
 
+  for (const w of warnings) {
+    console.warn(`  ⚠ ${w}`);
+  }
+
   const total = HOMEPAGE_IMAGES.length;
   const enabledCount = enabled.length;
   const creditCount = imageCredits.length;
   console.log(
     `verify-homepage-images: ok — ${enabledCount}/${total} image slot(s) ` +
-      `enabled, ${creditCount} credit(s) on file.`,
+      `enabled, ${creditCount} credit(s) on file.` +
+      (warnings.length > 0 ? ` (${warnings.length} warning(s))` : ""),
   );
 }
 

@@ -57,7 +57,7 @@ export const HOMEPAGE_IMAGES: ReadonlyArray<HomepageImage> = [
     alt:
       "Tidy desk with laptop and notebook in soft morning light, " +
       "representing a calm monthly bookkeeping cleanup workflow",
-    enabled: false,
+    enabled: true,
     aspect: "21:9",
     placement: "homepage hero",
     placeholderTitle: "Hero image slot",
