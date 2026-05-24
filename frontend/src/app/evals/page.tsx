@@ -494,6 +494,128 @@ export default function EvalsPage() {
               </section>
             )}
 
+            {/* e2. Business-specific rule mapping (PR #42) */}
+            {comparison && comparison.runs.some((r) => r.mapping?.enabled) && (
+              <section id="business-specific-rule-mapping" className="mt-16 scroll-mt-24">
+                <h2 className="font-display text-[24px] font-medium text-text-primary">
+                  Business-specific rule mapping
+                </h2>
+                <p className="mt-2 max-w-3xl text-[14px] text-text-secondary">
+                  Rules first identify an accounting <em>intent</em>{" "}
+                  (<span className="mono">parts_inventory</span>,{" "}
+                  <span className="mono">software_subscription</span>, etc.) and
+                  then resolve that intent to the active business&apos;s chart of
+                  accounts. If a mapping is missing, LedgerLens routes the row to
+                  review instead of forcing a bad category. The comparison below
+                  shows the generic baseline next to the mapped variant on the
+                  same dataset.
+                </p>
+                <div className="mt-6 overflow-x-auto rounded-lg border border-brand-200 bg-brand-100">
+                  <table className="w-full text-left text-[13px]">
+                    <thead className="border-b border-surface-border">
+                      <tr>
+                        <th className="field-label px-4 py-3">Mode</th>
+                        <th className="field-label px-4 py-3 text-right">Overall</th>
+                        <th className="field-label px-4 py-3 text-right">Adversarial</th>
+                        <th className="field-label px-4 py-3">Mapping outcomes</th>
+                        <th className="field-label px-4 py-3 text-right">Cost / 100</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {comparison.runs
+                        .filter((r) =>
+                          ["rule-categorizer-v1", "rule-categorizer-mapped-v1"].includes(
+                            r.categorizer,
+                          ),
+                        )
+                        .map((r, i) => (
+                          <tr
+                            key={r.categorizer}
+                            className={i % 2 === 1 ? "bg-surface-sunken/30" : ""}
+                          >
+                            <td className="px-4 py-3 text-text-primary">
+                              <p className="font-medium">{r.categorizer}</p>
+                              <p className="text-[11px] text-text-subtle">
+                                {r.categorizer === "rule-categorizer-mapped-v1"
+                                  ? "rules-only with per-business intent mapping"
+                                  : "rules-only generic baseline"}
+                              </p>
+                            </td>
+                            <td className="mono px-4 py-3 text-right">{pct(r.overall_accuracy)}</td>
+                            <td className="mono px-4 py-3 text-right">
+                              {pct(r.adversarial_accuracy)}
+                            </td>
+                            <td className="px-4 py-3 text-[12px]">
+                              {r.mapping?.enabled ? (
+                                <>
+                                  <span className="mono text-brand-700">
+                                    mapped {r.mapping.mapped_intent_count}
+                                  </span>{" "}
+                                  ·{" "}
+                                  <span className="mono text-text-secondary">
+                                    fallback {r.mapping.fallback_to_default_count}
+                                  </span>{" "}
+                                  ·{" "}
+                                  <span className="mono text-amber-700">
+                                    review {r.mapping.routed_to_review_count}
+                                  </span>
+                                </>
+                              ) : (
+                                <span className="text-text-subtle">— (mapping disabled)</span>
+                              )}
+                            </td>
+                            <td className="mono px-4 py-3 text-right">{dollars(r.cost_per_100, 4)}</td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
+                {/* Unmapped intents — useful debugging signal */}
+                {(() => {
+                  const mapped = comparison.runs.find(
+                    (r) => r.categorizer === "rule-categorizer-mapped-v1",
+                  );
+                  if (!mapped?.mapping?.enabled) return null;
+                  const top = mapped.mapping.top_unmapped_intents.slice(0, 5);
+                  if (top.length === 0) return null;
+                  return (
+                    <p className="mt-3 text-[12px] text-text-subtle">
+                      Top unmapped intents:{" "}
+                      {top.map((e, i) => (
+                        <span key={e.intent}>
+                          <span className="mono">{e.intent}</span> ({e.count})
+                          {i < top.length - 1 ? ", " : ""}
+                        </span>
+                      ))}
+                      . These rule matches fell back to the rule&apos;s default
+                      category code because no per-business override exists yet.
+                    </p>
+                  );
+                })()}
+                <p className="mt-4 rounded-md border border-amber-200 bg-amber-50 p-3 text-[12px] text-amber-900">
+                  Mapped rules improve category alignment for a specific
+                  business, but they do not make the model perfect and they do
+                  not replace review for ambiguous transactions. Auto-approval
+                  still requires confidence ≥ 0.90; everything else routes to
+                  review. The trust metric remains workflow-level, not raw
+                  model accuracy.
+                </p>
+                <p className="mt-3 text-[12px] text-text-subtle">
+                  See <Link href="/rules" className="underline">/rules</Link> for
+                  the current per-business intent → category map and{" "}
+                  <a
+                    href={`${REPO_URL}/blob/main/docs/MAPPED_RULE_EVALS.md`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline"
+                  >
+                    docs/MAPPED_RULE_EVALS.md
+                  </a>{" "}
+                  for the per-eval-mode methodology and limitations.
+                </p>
+              </section>
+            )}
+
             {/* f. Adversarial deep-dive */}
             {dataset && (
               <section className="mt-16">

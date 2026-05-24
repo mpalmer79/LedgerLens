@@ -72,6 +72,24 @@ export type CalibrationMetrics = {
   deterministic?: CalibrationBlock;
 };
 
+export type MappingIntentCount = {
+  intent: string;
+  count: number;
+};
+
+export type MappingMetrics = {
+  enabled: boolean;
+  mapped_intent_count: number;
+  fallback_to_default_count: number;
+  routed_to_review_count: number;
+  unmapped_intent_count: number;
+  mapping_override_count: number;
+  correct_when_mapped: number;
+  correct_when_fallback: number;
+  top_unmapped_intents: MappingIntentCount[];
+  top_rule_intents: MappingIntentCount[];
+};
+
 export type MetricsSlice = {
   accuracy: number;
   per_category: Record<string, PerCategoryMetrics>;
@@ -84,6 +102,7 @@ export type MetricsSlice = {
   category_coverage?: Record<string, unknown>;
   routing?: RoutingMetrics;
   calibration?: CalibrationMetrics;
+  mapping?: MappingMetrics;
 };
 
 export type RunMetadata = {
@@ -103,6 +122,8 @@ export type Prediction = {
   cost_usd: number;
   latency_ms: number;
   model: string | null;
+  matched_rule_intent?: string | null;
+  mapping_outcome?: string | null;
 };
 
 export type EvalRun = {
@@ -227,6 +248,7 @@ export type ComparisonRunSummary = {
   p95_latency_ms: number;
   routing: RoutingMetrics;
   calibration: CalibrationMetrics;
+  mapping?: MappingMetrics;
 };
 
 export type ComparisonArtifact = {

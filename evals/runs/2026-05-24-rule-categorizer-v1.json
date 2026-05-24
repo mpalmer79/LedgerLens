@@ -1,0 +1,5865 @@
+{
+  "run_metadata": {
+    "dataset_version": "v0",
+    "categorizer_name": "rule-categorizer-v1",
+    "model": "deterministic_rules_v1",
+    "timestamp_utc": "2026-05-24T03:47:46+00:00",
+    "git_sha": "c9365393897b6e85da6bb1867bbf5f486e640766"
+  },
+  "metrics": {
+    "overall": {
+      "accuracy": 0.0,
+      "per_category": {
+        "1020": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
+        },
+        "1030": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
+        },
+        "1050": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 13.0,
+          "false_positives": 0.0,
+          "false_negatives": 13.0
+        },
+        "1060": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 3.0,
+          "false_positives": 0.0,
+          "false_negatives": 3.0
+        },
+        "1070": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
+        },
+        "1080": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
+        },
+        "1200": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 4.0,
+          "false_positives": 0.0,
+          "false_negatives": 4.0
+        },
+        "1510": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
+        },
+        "3030": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 8.0,
+          "false_positives": 0.0,
+          "false_negatives": 8.0
+        },
+        "4010": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 40.0,
+          "false_positives": 0.0,
+          "false_negatives": 40.0
+        },
+        "4020": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
+        },
+        "4030": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 6.0,
+          "false_positives": 0.0,
+          "false_negatives": 6.0
+        },
+        "4040": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
+        },
+        "5010": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
+        },
+        "5020": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
+        },
+        "5040": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 4.0,
+          "false_positives": 0.0,
+          "false_negatives": 4.0
+        },
+        "6010": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 28.0,
+          "false_positives": 0.0,
+          "false_negatives": 28.0
+        },
+        "6020": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 12.0,
+          "false_positives": 0.0,
+          "false_negatives": 12.0
+        },
+        "6030": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 4.0,
+          "false_positives": 0.0,
+          "false_negatives": 4.0
+        },
+        "6040": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 28.0,
+          "false_positives": 0.0,
+          "false_negatives": 28.0
+        },
+        "6050": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
+        },
+        "6060": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 6.0,
+          "false_negatives": 5.0
+        },
+        "6070": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 7.0,
+          "false_positives": 25.0,
+          "false_negatives": 7.0
+        },
+        "6080": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 3.0,
+          "false_positives": 0.0,
+          "false_negatives": 3.0
+        },
+        "6100": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 7.0,
+          "false_positives": 40.0,
+          "false_negatives": 7.0
+        },
+        "6110": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 17.0,
+          "false_positives": 0.0,
+          "false_negatives": 17.0
+        },
+        "6120": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 14.0,
+          "false_positives": 1.0,
+          "false_negatives": 14.0
+        },
+        "6130": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 9.0,
+          "false_positives": 0.0,
+          "false_negatives": 9.0
+        },
+        "6140": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 9.0,
+          "false_positives": 0.0,
+          "false_negatives": 9.0
+        },
+        "6150": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
+        },
+        "6160": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
+        },
+        "6170": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 12.0,
+          "false_positives": 0.0,
+          "false_negatives": 12.0
+        },
+        "6180": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 8.0,
+          "false_positives": 0.0,
+          "false_negatives": 8.0
+        },
+        "6190": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 4.0,
+          "false_positives": 0.0,
+          "false_negatives": 4.0
+        },
+        "6200": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
+        },
+        "6210": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 9.0,
+          "false_positives": 0.0,
+          "false_negatives": 9.0
+        },
+        "6220": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
+        },
+        "6230": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
+        },
+        "6240": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
+        },
+        "UNCATEGORIZABLE": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0.0,
+          "false_positives": 230.0,
+          "false_negatives": 0.0
+        }
+      },
+      "reliability_diagram": [
+        {
+          "bucket": "0.0-0.1",
+          "count": 230,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.1-0.2",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.2-0.3",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.3-0.4",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.4-0.5",
+          "count": 4,
+          "predicted_confidence_mean": 0.4,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.5-0.6",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.6-0.7",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.7-0.8",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.8-0.9",
+          "count": 41,
+          "predicted_confidence_mean": 0.8792682926829268,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.9-1.0",
+          "count": 27,
+          "predicted_confidence_mean": 0.9255555555555556,
+          "actual_accuracy": 0.0
+        }
+      ],
+      "latency_stats": {
+        "p50_ms": 0.014757999451830983,
+        "p95_ms": 0.02269200012960937,
+        "mean_ms": 0.016320221829004524
+      },
+      "total_cost": 0.0,
+      "cost_per_100": 0.0,
+      "transaction_count": 302,
+      "top_confusions": [
+        {
+          "actual": "6010",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 28,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "6040",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 28,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "4010",
+          "predicted": "6100",
+          "count": 26,
+          "percentage_of_actual": 0.65
+        },
+        {
+          "actual": "4010",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 14,
+          "percentage_of_actual": 0.35
+        },
+        {
+          "actual": "1050",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 13,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "6020",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 12,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "6120",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 12,
+          "percentage_of_actual": 0.8571428571428571
+        },
+        {
+          "actual": "6110",
+          "predicted": "6070",
+          "count": 9,
+          "percentage_of_actual": 0.5294117647058824
+        },
+        {
+          "actual": "6170",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 9,
+          "percentage_of_actual": 0.75
+        },
+        {
+          "actual": "6210",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 9,
+          "percentage_of_actual": 1.0
+        }
+      ],
+      "category_coverage": {
+        "categories_in_truth": [
+          "1020",
+          "1030",
+          "1050",
+          "1060",
+          "1070",
+          "1080",
+          "1200",
+          "1510",
+          "3030",
+          "4010",
+          "4020",
+          "4030",
+          "4040",
+          "5010",
+          "5020",
+          "5040",
+          "6010",
+          "6020",
+          "6030",
+          "6040",
+          "6050",
+          "6060",
+          "6070",
+          "6080",
+          "6100",
+          "6110",
+          "6120",
+          "6130",
+          "6140",
+          "6150",
+          "6160",
+          "6170",
+          "6180",
+          "6190",
+          "6200",
+          "6210",
+          "6220",
+          "6230",
+          "6240"
+        ],
+        "categories_in_truth_count": 39,
+        "categories_predicted": [
+          "6060",
+          "6070",
+          "6100",
+          "6120",
+          "UNCATEGORIZABLE"
+        ],
+        "categories_predicted_count": 5,
+        "never_predicted": [
+          "1020",
+          "1030",
+          "1050",
+          "1060",
+          "1070",
+          "1080",
+          "1200",
+          "1510",
+          "3030",
+          "4010",
+          "4020",
+          "4030",
+          "4040",
+          "5010",
+          "5020",
+          "5040",
+          "6010",
+          "6020",
+          "6030",
+          "6040",
+          "6050",
+          "6080",
+          "6110",
+          "6130",
+          "6140",
+          "6150",
+          "6160",
+          "6170",
+          "6180",
+          "6190",
+          "6200",
+          "6210",
+          "6220",
+          "6230",
+          "6240"
+        ],
+        "zero_recall": [
+          "1020",
+          "1030",
+          "1050",
+          "1060",
+          "1070",
+          "1080",
+          "1200",
+          "1510",
+          "3030",
+          "4010",
+          "4020",
+          "4030",
+          "4040",
+          "5010",
+          "5020",
+          "5040",
+          "6010",
+          "6020",
+          "6030",
+          "6040",
+          "6050",
+          "6060",
+          "6070",
+          "6080",
+          "6100",
+          "6110",
+          "6120",
+          "6130",
+          "6140",
+          "6150",
+          "6160",
+          "6170",
+          "6180",
+          "6190",
+          "6200",
+          "6210",
+          "6220",
+          "6230",
+          "6240"
+        ]
+      },
+      "routing": {
+        "total": 302,
+        "auto_approved": 27,
+        "needs_review": 45,
+        "uncategorizable": 230,
+        "failed": 0,
+        "auto_approved_rate": 0.08940397350993377,
+        "review_rate": 0.1490066225165563,
+        "auto_approved_accuracy": 0.0,
+        "model_called": 0,
+        "model_called_rate": 0.0,
+        "zero_cost": 302,
+        "zero_cost_rate": 1.0,
+        "by_provider": {
+          "deterministic_other": 230,
+          "rule_categorizer": 72
+        },
+        "cost_per_100": 0.0,
+        "cost_per_100_model_only_baseline": null,
+        "cost_savings_per_100": null
+      },
+      "calibration": {
+        "overall": {
+          "label": "overall",
+          "count": 302,
+          "ece": 0.2074,
+          "mce": 0.9256,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 230,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 4,
+              "predicted_confidence_mean": 0.4,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 41,
+              "predicted_confidence_mean": 0.8792682926829268,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 27,
+              "predicted_confidence_mean": 0.9255555555555556,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": "High-confidence bucket (0.9-1.0, n=27) actual accuracy 0.00% is materially below the 90% expectation. Auto-approved predictions in this range cannot be trusted blindly."
+        },
+        "model_only": {
+          "label": "model_only",
+          "count": 0,
+          "ece": 0.0,
+          "mce": 0.0,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": null
+        },
+        "deterministic": {
+          "label": "deterministic",
+          "count": 302,
+          "ece": 0.2074,
+          "mce": 0.9256,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 230,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 4,
+              "predicted_confidence_mean": 0.4,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 41,
+              "predicted_confidence_mean": 0.8792682926829268,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 27,
+              "predicted_confidence_mean": 0.9255555555555556,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": "High-confidence bucket (0.9-1.0, n=27) actual accuracy 0.00% is materially below the 90% expectation. Auto-approved predictions in this range cannot be trusted blindly."
+        }
+      },
+      "mapping": {
+        "enabled": false,
+        "mapped_intent_count": 0,
+        "fallback_to_default_count": 0,
+        "routed_to_review_count": 0,
+        "unmapped_intent_count": 0,
+        "mapping_override_count": 0,
+        "correct_when_mapped": 0,
+        "correct_when_fallback": 0,
+        "top_unmapped_intents": [],
+        "top_rule_intents": []
+      }
+    },
+    "non_adversarial": {
+      "accuracy": 0.0,
+      "per_category": {
+        "1020": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
+        },
+        "1050": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 13.0,
+          "false_positives": 0.0,
+          "false_negatives": 13.0
+        },
+        "1060": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
+        },
+        "1070": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 4.0,
+          "false_positives": 0.0,
+          "false_negatives": 4.0
+        },
+        "1080": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
+        },
+        "1200": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
+        },
+        "1510": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
+        },
+        "3030": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 4.0,
+          "false_positives": 0.0,
+          "false_negatives": 4.0
+        },
+        "4010": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 38.0,
+          "false_positives": 0.0,
+          "false_negatives": 38.0
+        },
+        "4020": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
+        },
+        "4030": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 6.0,
+          "false_positives": 0.0,
+          "false_negatives": 6.0
+        },
+        "4040": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
+        },
+        "5010": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
+        },
+        "5020": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
+        },
+        "5040": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 4.0,
+          "false_positives": 0.0,
+          "false_negatives": 4.0
+        },
+        "6010": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 28.0,
+          "false_positives": 0.0,
+          "false_negatives": 28.0
+        },
+        "6020": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 12.0,
+          "false_positives": 0.0,
+          "false_negatives": 12.0
+        },
+        "6030": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 4.0,
+          "false_positives": 0.0,
+          "false_negatives": 4.0
+        },
+        "6040": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 26.0,
+          "false_positives": 0.0,
+          "false_negatives": 26.0
+        },
+        "6050": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
+        },
+        "6060": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 1.0,
+          "false_negatives": 5.0
+        },
+        "6070": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 7.0,
+          "false_positives": 23.0,
+          "false_negatives": 7.0
+        },
+        "6080": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 3.0,
+          "false_positives": 0.0,
+          "false_negatives": 3.0
+        },
+        "6100": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 7.0,
+          "false_positives": 38.0,
+          "false_negatives": 7.0
+        },
+        "6110": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 14.0,
+          "false_positives": 0.0,
+          "false_negatives": 14.0
+        },
+        "6120": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 12.0,
+          "false_positives": 0.0,
+          "false_negatives": 12.0
+        },
+        "6130": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 6.0,
+          "false_positives": 0.0,
+          "false_negatives": 6.0
+        },
+        "6140": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 3.0,
+          "false_positives": 0.0,
+          "false_negatives": 3.0
+        },
+        "6160": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
+        },
+        "6170": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 12.0,
+          "false_positives": 0.0,
+          "false_negatives": 12.0
+        },
+        "6180": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 8.0,
+          "false_positives": 0.0,
+          "false_negatives": 8.0
+        },
+        "6190": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 3.0,
+          "false_positives": 0.0,
+          "false_negatives": 3.0
+        },
+        "6200": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 5.0,
+          "false_positives": 0.0,
+          "false_negatives": 5.0
+        },
+        "6210": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 8.0,
+          "false_positives": 0.0,
+          "false_negatives": 8.0
+        },
+        "6220": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
+        },
+        "6230": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
+        },
+        "6240": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
+        },
+        "UNCATEGORIZABLE": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0.0,
+          "false_positives": 209.0,
+          "false_negatives": 0.0
+        }
+      },
+      "reliability_diagram": [
+        {
+          "bucket": "0.0-0.1",
+          "count": 209,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.1-0.2",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.2-0.3",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.3-0.4",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.4-0.5",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.5-0.6",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.6-0.7",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.7-0.8",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.8-0.9",
+          "count": 38,
+          "predicted_confidence_mean": 0.88,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.9-1.0",
+          "count": 24,
+          "predicted_confidence_mean": 0.9270833333333334,
+          "actual_accuracy": 0.0
+        }
+      ],
+      "latency_stats": {
+        "p50_ms": 0.014704999557579868,
+        "p95_ms": 0.023982998754945584,
+        "mean_ms": 0.016421523972444934
+      },
+      "total_cost": 0.0,
+      "cost_per_100": 0.0,
+      "transaction_count": 271,
+      "top_confusions": [
+        {
+          "actual": "6010",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 28,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "6040",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 26,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "4010",
+          "predicted": "6100",
+          "count": 25,
+          "percentage_of_actual": 0.6578947368421053
+        },
+        {
+          "actual": "1050",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 13,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "4010",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 13,
+          "percentage_of_actual": 0.34210526315789475
+        },
+        {
+          "actual": "6020",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 12,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "6120",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 12,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "6170",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 9,
+          "percentage_of_actual": 0.75
+        },
+        {
+          "actual": "6180",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 8,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "6210",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 8,
+          "percentage_of_actual": 1.0
+        }
+      ],
+      "category_coverage": {
+        "categories_in_truth": [
+          "1020",
+          "1050",
+          "1060",
+          "1070",
+          "1080",
+          "1200",
+          "1510",
+          "3030",
+          "4010",
+          "4020",
+          "4030",
+          "4040",
+          "5010",
+          "5020",
+          "5040",
+          "6010",
+          "6020",
+          "6030",
+          "6040",
+          "6050",
+          "6060",
+          "6070",
+          "6080",
+          "6100",
+          "6110",
+          "6120",
+          "6130",
+          "6140",
+          "6160",
+          "6170",
+          "6180",
+          "6190",
+          "6200",
+          "6210",
+          "6220",
+          "6230",
+          "6240"
+        ],
+        "categories_in_truth_count": 37,
+        "categories_predicted": [
+          "6060",
+          "6070",
+          "6100",
+          "UNCATEGORIZABLE"
+        ],
+        "categories_predicted_count": 4,
+        "never_predicted": [
+          "1020",
+          "1050",
+          "1060",
+          "1070",
+          "1080",
+          "1200",
+          "1510",
+          "3030",
+          "4010",
+          "4020",
+          "4030",
+          "4040",
+          "5010",
+          "5020",
+          "5040",
+          "6010",
+          "6020",
+          "6030",
+          "6040",
+          "6050",
+          "6080",
+          "6110",
+          "6120",
+          "6130",
+          "6140",
+          "6160",
+          "6170",
+          "6180",
+          "6190",
+          "6200",
+          "6210",
+          "6220",
+          "6230",
+          "6240"
+        ],
+        "zero_recall": [
+          "1020",
+          "1050",
+          "1060",
+          "1070",
+          "1080",
+          "1200",
+          "1510",
+          "3030",
+          "4010",
+          "4020",
+          "4030",
+          "4040",
+          "5010",
+          "5020",
+          "5040",
+          "6010",
+          "6020",
+          "6030",
+          "6040",
+          "6050",
+          "6060",
+          "6070",
+          "6080",
+          "6100",
+          "6110",
+          "6120",
+          "6130",
+          "6140",
+          "6160",
+          "6170",
+          "6180",
+          "6190",
+          "6200",
+          "6210",
+          "6220",
+          "6230",
+          "6240"
+        ]
+      },
+      "routing": {
+        "total": 271,
+        "auto_approved": 24,
+        "needs_review": 38,
+        "uncategorizable": 209,
+        "failed": 0,
+        "auto_approved_rate": 0.08856088560885608,
+        "review_rate": 0.14022140221402213,
+        "auto_approved_accuracy": 0.0,
+        "model_called": 0,
+        "model_called_rate": 0.0,
+        "zero_cost": 271,
+        "zero_cost_rate": 1.0,
+        "by_provider": {
+          "deterministic_other": 209,
+          "rule_categorizer": 62
+        },
+        "cost_per_100": 0.0,
+        "cost_per_100_model_only_baseline": null,
+        "cost_savings_per_100": null
+      },
+      "calibration": {
+        "overall": {
+          "label": "overall",
+          "count": 271,
+          "ece": 0.2055,
+          "mce": 0.9271,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 209,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 38,
+              "predicted_confidence_mean": 0.88,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 24,
+              "predicted_confidence_mean": 0.9270833333333334,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": "High-confidence bucket (0.9-1.0, n=24) actual accuracy 0.00% is materially below the 90% expectation. Auto-approved predictions in this range cannot be trusted blindly."
+        },
+        "model_only": {
+          "label": "model_only",
+          "count": 0,
+          "ece": 0.0,
+          "mce": 0.0,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": null
+        },
+        "deterministic": {
+          "label": "deterministic",
+          "count": 271,
+          "ece": 0.2055,
+          "mce": 0.9271,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 209,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 38,
+              "predicted_confidence_mean": 0.88,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 24,
+              "predicted_confidence_mean": 0.9270833333333334,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": "High-confidence bucket (0.9-1.0, n=24) actual accuracy 0.00% is materially below the 90% expectation. Auto-approved predictions in this range cannot be trusted blindly."
+        }
+      },
+      "mapping": {
+        "enabled": false,
+        "mapped_intent_count": 0,
+        "fallback_to_default_count": 0,
+        "routed_to_review_count": 0,
+        "unmapped_intent_count": 0,
+        "mapping_override_count": 0,
+        "correct_when_mapped": 0,
+        "correct_when_fallback": 0,
+        "top_unmapped_intents": [],
+        "top_rule_intents": []
+      }
+    },
+    "adversarial": {
+      "accuracy": 0.0,
+      "per_category": {
+        "1030": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
+        },
+        "1060": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
+        },
+        "1070": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
+        },
+        "1200": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
+        },
+        "3030": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 4.0,
+          "false_positives": 0.0,
+          "false_negatives": 4.0
+        },
+        "4010": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
+        },
+        "6040": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 0.0,
+          "false_negatives": 2.0
+        },
+        "6060": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0.0,
+          "false_positives": 5.0,
+          "false_negatives": 0.0
+        },
+        "6070": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0.0,
+          "false_positives": 2.0,
+          "false_negatives": 0.0
+        },
+        "6100": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0.0,
+          "false_positives": 2.0,
+          "false_negatives": 0.0
+        },
+        "6110": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 3.0,
+          "false_positives": 0.0,
+          "false_negatives": 3.0
+        },
+        "6120": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 2.0,
+          "false_positives": 1.0,
+          "false_negatives": 2.0
+        },
+        "6130": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 3.0,
+          "false_positives": 0.0,
+          "false_negatives": 3.0
+        },
+        "6140": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 6.0,
+          "false_positives": 0.0,
+          "false_negatives": 6.0
+        },
+        "6150": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
+        },
+        "6190": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
+        },
+        "6210": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
+        },
+        "6230": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 1.0,
+          "false_positives": 0.0,
+          "false_negatives": 1.0
+        },
+        "UNCATEGORIZABLE": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0.0,
+          "false_positives": 21.0,
+          "false_negatives": 0.0
+        }
+      },
+      "reliability_diagram": [
+        {
+          "bucket": "0.0-0.1",
+          "count": 21,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.1-0.2",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.2-0.3",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.3-0.4",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.4-0.5",
+          "count": 4,
+          "predicted_confidence_mean": 0.4,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.5-0.6",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.6-0.7",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.7-0.8",
+          "count": 0,
+          "predicted_confidence_mean": 0.0,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.8-0.9",
+          "count": 3,
+          "predicted_confidence_mean": 0.87,
+          "actual_accuracy": 0.0
+        },
+        {
+          "bucket": "0.9-1.0",
+          "count": 3,
+          "predicted_confidence_mean": 0.9133333333333333,
+          "actual_accuracy": 0.0
+        }
+      ],
+      "latency_stats": {
+        "p50_ms": 0.014878998626954854,
+        "p95_ms": 0.018384000213700347,
+        "mean_ms": 0.01543464502667062
+      },
+      "total_cost": 0.0,
+      "cost_per_100": 0.0,
+      "transaction_count": 31,
+      "top_confusions": [
+        {
+          "actual": "6140",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 6,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "3030",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 3,
+          "percentage_of_actual": 0.75
+        },
+        {
+          "actual": "6130",
+          "predicted": "6060",
+          "count": 3,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "1200",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 2,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "6040",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 2,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "6110",
+          "predicted": "6070",
+          "count": 2,
+          "percentage_of_actual": 0.6666666666666666
+        },
+        {
+          "actual": "6120",
+          "predicted": "6060",
+          "count": 2,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "1030",
+          "predicted": "6100",
+          "count": 1,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "1060",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 1,
+          "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "1070",
+          "predicted": "UNCATEGORIZABLE",
+          "count": 1,
+          "percentage_of_actual": 1.0
+        }
+      ],
+      "category_coverage": {
+        "categories_in_truth": [
+          "1030",
+          "1060",
+          "1070",
+          "1200",
+          "3030",
+          "4010",
+          "6040",
+          "6110",
+          "6120",
+          "6130",
+          "6140",
+          "6150",
+          "6190",
+          "6210",
+          "6230"
+        ],
+        "categories_in_truth_count": 15,
+        "categories_predicted": [
+          "6060",
+          "6070",
+          "6100",
+          "6120",
+          "UNCATEGORIZABLE"
+        ],
+        "categories_predicted_count": 5,
+        "never_predicted": [
+          "1030",
+          "1060",
+          "1070",
+          "1200",
+          "3030",
+          "4010",
+          "6040",
+          "6110",
+          "6130",
+          "6140",
+          "6150",
+          "6190",
+          "6210",
+          "6230"
+        ],
+        "zero_recall": [
+          "1030",
+          "1060",
+          "1070",
+          "1200",
+          "3030",
+          "4010",
+          "6040",
+          "6110",
+          "6120",
+          "6130",
+          "6140",
+          "6150",
+          "6190",
+          "6210",
+          "6230"
+        ]
+      },
+      "routing": {
+        "total": 31,
+        "auto_approved": 3,
+        "needs_review": 7,
+        "uncategorizable": 21,
+        "failed": 0,
+        "auto_approved_rate": 0.0967741935483871,
+        "review_rate": 0.22580645161290322,
+        "auto_approved_accuracy": 0.0,
+        "model_called": 0,
+        "model_called_rate": 0.0,
+        "zero_cost": 31,
+        "zero_cost_rate": 1.0,
+        "by_provider": {
+          "deterministic_other": 21,
+          "rule_categorizer": 10
+        },
+        "cost_per_100": 0.0,
+        "cost_per_100_model_only_baseline": null,
+        "cost_savings_per_100": null
+      },
+      "calibration": {
+        "overall": {
+          "label": "overall",
+          "count": 31,
+          "ece": 0.2242,
+          "mce": 0.9133,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 21,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 4,
+              "predicted_confidence_mean": 0.4,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 3,
+              "predicted_confidence_mean": 0.87,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 3,
+              "predicted_confidence_mean": 0.9133333333333333,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": null
+        },
+        "model_only": {
+          "label": "model_only",
+          "count": 0,
+          "ece": 0.0,
+          "mce": 0.0,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": null
+        },
+        "deterministic": {
+          "label": "deterministic",
+          "count": 31,
+          "ece": 0.2242,
+          "mce": 0.9133,
+          "buckets": [
+            {
+              "bucket": "0.0-0.1",
+              "count": 21,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.1-0.2",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.2-0.3",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.3-0.4",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.4-0.5",
+              "count": 4,
+              "predicted_confidence_mean": 0.4,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.5-0.6",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.6-0.7",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.7-0.8",
+              "count": 0,
+              "predicted_confidence_mean": 0.0,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.8-0.9",
+              "count": 3,
+              "predicted_confidence_mean": 0.87,
+              "actual_accuracy": 0.0
+            },
+            {
+              "bucket": "0.9-1.0",
+              "count": 3,
+              "predicted_confidence_mean": 0.9133333333333333,
+              "actual_accuracy": 0.0
+            }
+          ],
+          "warning": null
+        }
+      },
+      "mapping": {
+        "enabled": false,
+        "mapped_intent_count": 0,
+        "fallback_to_default_count": 0,
+        "routed_to_review_count": 0,
+        "unmapped_intent_count": 0,
+        "mapping_override_count": 0,
+        "correct_when_mapped": 0,
+        "correct_when_fallback": 0,
+        "top_unmapped_intents": [],
+        "top_rule_intents": []
+      }
+    }
+  },
+  "predictions": [
+    {
+      "transaction_id": "auto-repair-tx-001",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.02859900087059941,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-002",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01838200114434585,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-003",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.016321000657626428,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-004",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015824000001884997,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-005",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015058998542372137,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-006",
+      "predicted_category_code": "6060",
+      "confidence": 0.4,
+      "reasoning": "rule_categorizer: matched rule.amazon.review (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015143999917199835,
+      "model": "rule.amazon.review",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-007",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014389001080417074,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-008",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014921000911272131,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-009",
+      "predicted_category_code": "6120",
+      "confidence": 0.85,
+      "reasoning": "rule_categorizer: matched rule.dunkin.meals (keyword_any)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014805000319029205,
+      "model": "rule.dunkin.meals",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-010",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014313000065158121,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-011",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.018513999748392962,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-012",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.024507999114575796,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-013",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.019254001017543487,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-014",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014592998923035339,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-015",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015954999980749562,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-016",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.016021998817450367,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-017",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014956998711568303,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-018",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015122001059353352,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-019",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01521600097476039,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-020",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014105999071034603,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-021",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015050000001792796,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-022",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.02622299871291034,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-023",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015418001567013562,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-024",
+      "predicted_category_code": "6070",
+      "confidence": 0.95,
+      "reasoning": "rule_categorizer: matched rule.intuit.software (keyword_any)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015454999811481684,
+      "model": "rule.intuit.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-025",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015731000530649908,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-026",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015614999938406982,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-027",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015183999494183809,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-028",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014880999515298754,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-029",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.04663300023821648,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-030",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.017206999473273754,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-031",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.016202000551857054,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-032",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015060999430716038,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-033",
+      "predicted_category_code": "6060",
+      "confidence": 0.9,
+      "reasoning": "rule_categorizer: matched rule.staples.office (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015527999494224787,
+      "model": "rule.staples.office",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-034",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015286999769159593,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-035",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.0144240002555307,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-036",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014683000699733384,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-037",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015026000255602412,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-038",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014495999494101852,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-039",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014397999620996416,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-040",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014590001228498295,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-041",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014100000043981709,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-042",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015130999599932693,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-043",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014081999324844219,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-044",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.020106999727431685,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-045",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014192999515216798,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-046",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014314000509330072,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-047",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015980998796294443,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-048",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015132000044104643,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-049",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.013750001016887836,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-050",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014205001207301393,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-051",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01398799940943718,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-052",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014101999113336205,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-053",
+      "predicted_category_code": "6060",
+      "confidence": 0.4,
+      "reasoning": "rule_categorizer: matched rule.amazon.review (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014099001418799162,
+      "model": "rule.amazon.review",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-054",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.016042000424931757,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-055",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014512999769067392,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-056",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01541399979032576,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-057",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014445000488194637,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-058",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014913999621057883,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-059",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014661000022897497,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-060",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014833000022917986,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-061",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014613999155699275,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-062",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.013978000424685888,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-063",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014578001355403103,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-064",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.02588800089142751,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-065",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.017665000996203162,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-066",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014097000530455261,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-067",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014978000763221644,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-068",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014728999303770252,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-069",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014056000509299338,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-070",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014076998922973871,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-071",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014464001651504077,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-072",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.018790000467561185,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-073",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014922999980626628,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-074",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015120000171009451,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-075",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014351999197970144,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-076",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014653000107500702,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-077",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014704999557579868,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-078",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014769000699743629,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-079",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.013999000657349825,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-080",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01444100053049624,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-081",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014074999853619374,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-082",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.013873001080355607,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-083",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015650999557692558,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-084",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.013986000340082683,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-085",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01556899951538071,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-086",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014072998965275474,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-087",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.023982998754945584,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-088",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01400600012857467,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-089",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014967999959480949,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-090",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014393001038115472,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-091",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.013805998605675995,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-092",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01430200063623488,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-093",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014262999684433453,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-094",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014109999028733,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-095",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014066001313040033,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-096",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.013659000615007244,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-097",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014957999155740254,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-098",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.013957000192021951,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-099",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014313998690340668,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "auto-repair-tx-100",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014331000784295611,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-001",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01586700091138482,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-002",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015082998288562521,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-003",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014278999515227042,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-004",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01670500023465138,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-005",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014690000170958228,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-006",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014719998944201507,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-007",
+      "predicted_category_code": "6060",
+      "confidence": 0.4,
+      "reasoning": "rule_categorizer: matched rule.amazon.review (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014359999113366939,
+      "model": "rule.amazon.review",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-008",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01444000008632429,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-009",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01422300010744948,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-010",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015027999324956909,
+      "model": "rule.stripe.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-011",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014433000615099445,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-012",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014532999557559378,
+      "model": "rule.square.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-013",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014835000911261886,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-014",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014819999705650844,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-015",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01807899934647139,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-016",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01650000012887176,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-017",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015063000319059938,
+      "model": "rule.square.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-018",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01530599911347963,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-019",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01618699934624601,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-020",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014634000763180666,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-021",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014271001418819651,
+      "model": "rule.square.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-022",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014014000043971464,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-023",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.013988001228426583,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-024",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01398899985360913,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-025",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015348001397796907,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-026",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014349001503433101,
+      "model": "rule.square.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-027",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015702999007771723,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-028",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014168999769026414,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-029",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.018918000932899304,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-030",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.05083799987914972,
+      "model": "rule.square.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-031",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.017405998733011074,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-032",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01479499951528851,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-033",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014532000932376832,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-034",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014453000403591432,
+      "model": "rule.square.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-035",
+      "predicted_category_code": "6070",
+      "confidence": 0.95,
+      "reasoning": "rule_categorizer: matched rule.intuit.software (keyword_any)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015450999853783287,
+      "model": "rule.intuit.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-036",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014805000319029205,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-037",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015790999896125868,
+      "model": "rule.square.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-038",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01477699879615102,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-039",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.013869999747839756,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-040",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015048999557620846,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-041",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01442299981135875,
+      "model": "rule.square.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-042",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014826999176875688,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-043",
+      "predicted_category_code": "6060",
+      "confidence": 0.9,
+      "reasoning": "rule_categorizer: matched rule.staples.office (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015051000445964746,
+      "model": "rule.staples.office",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-044",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014140001439955086,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-045",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014855000699753873,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-046",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014265000572777353,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-047",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01412900019204244,
+      "model": "rule.square.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-048",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01942999915627297,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-049",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015349000022979453,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-050",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01392800004396122,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-051",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.017912001567310654,
+      "model": "rule.square.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-052",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014540999472956173,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-053",
+      "predicted_category_code": "6070",
+      "confidence": 0.95,
+      "reasoning": "rule_categorizer: matched rule.intuit.software (keyword_any)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014745000953553244,
+      "model": "rule.intuit.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-054",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.018376000298303552,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-055",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.018650000129127875,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-056",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014479001038125716,
+      "model": "rule.square.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-057",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.013830000170855783,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-058",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014827999621047638,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-059",
+      "predicted_category_code": "6060",
+      "confidence": 0.4,
+      "reasoning": "rule_categorizer: matched rule.amazon.review (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015752000763313845,
+      "model": "rule.amazon.review",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-060",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015279998478945345,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-061",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014969000403652899,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-062",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014613000530516729,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-063",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014279999959398992,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-064",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015017998521216214,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-065",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014219000149751082,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-066",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01428299947292544,
+      "model": "rule.square.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-067",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014123999790172093,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-068",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.025474999347352423,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-069",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014245999409467913,
+      "model": "rule.square.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-070",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.018180999177275226,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-071",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01540500124974642,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-072",
+      "predicted_category_code": "6070",
+      "confidence": 0.95,
+      "reasoning": "rule_categorizer: matched rule.intuit.software (keyword_any)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014803999874857254,
+      "model": "rule.intuit.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-073",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014990000636316836,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-074",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014157998521113768,
+      "model": "rule.square.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-075",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.018146998627344146,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-076",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.018401999113848433,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-077",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.013865999790141359,
+      "model": "rule.square.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-078",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.022018000890966505,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-079",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.017294998542638496,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-080",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.029168000764911994,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-081",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01489300120738335,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-082",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014882001778460108,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-083",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014449000445893034,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-084",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.013844999557477422,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-085",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014291001207311638,
+      "model": "rule.square.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-086",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015028999769128859,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-087",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01398899985360913,
+      "model": "rule.square.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-088",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.013892000424675643,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-089",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01371300095343031,
+      "model": "rule.square.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-090",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.018630998965818435,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-091",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.020954999854438938,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-092",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.0424230001954129,
+      "model": "rule.square.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-093",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.023718999727861956,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-094",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014813000234426,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-095",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014469998859567568,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-096",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014449999071075581,
+      "model": "rule.square.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-097",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014531000488204882,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-098",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01384799907100387,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-099",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.019408000298426487,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-100",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015149000319070183,
+      "model": "rule.square.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-101",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01507600063632708,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "coffee-shop-tx-102",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.02269200012960937,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-001",
+      "predicted_category_code": "6070",
+      "confidence": 0.95,
+      "reasoning": "rule_categorizer: matched rule.adobe.software (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015022000297904015,
+      "model": "rule.adobe.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-002",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014294000720838085,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-003",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.06477699935203418,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-004",
+      "predicted_category_code": "6070",
+      "confidence": 0.9,
+      "reasoning": "rule_categorizer: matched rule.github.software (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014981998901930638,
+      "model": "rule.github.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-005",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014182000086293556,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-006",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015237999832606874,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-007",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.019200999304302968,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-008",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.019212000552215613,
+      "model": "rule.stripe.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-009",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.013905999367125332,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-010",
+      "predicted_category_code": "6070",
+      "confidence": 0.95,
+      "reasoning": "rule_categorizer: matched rule.adobe.software (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.021979998564347625,
+      "model": "rule.adobe.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-011",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01470300048822537,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-012",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014059998648008332,
+      "model": "rule.stripe.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-013",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014261000615078956,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-014",
+      "predicted_category_code": "6070",
+      "confidence": 0.9,
+      "reasoning": "rule_categorizer: matched rule.github.software (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.022112000806373544,
+      "model": "rule.github.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-015",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.013801000022795051,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-016",
+      "predicted_category_code": "6070",
+      "confidence": 0.92,
+      "reasoning": "rule_categorizer: matched rule.dropbox.software (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014878998626954854,
+      "model": "rule.dropbox.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-017",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.013984999895910732,
+      "model": "rule.stripe.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-018",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01414700091117993,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-019",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01420700027665589,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-020",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015206998796202242,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-021",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014276998626883142,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-022",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.013901000784244388,
+      "model": "rule.stripe.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-023",
+      "predicted_category_code": "6070",
+      "confidence": 0.92,
+      "reasoning": "rule_categorizer: matched rule.zoom.software (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014757999451830983,
+      "model": "rule.zoom.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-024",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01984699883905705,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-025",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015858999176998623,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-026",
+      "predicted_category_code": "6070",
+      "confidence": 0.95,
+      "reasoning": "rule_categorizer: matched rule.adobe.software (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014076000297791325,
+      "model": "rule.adobe.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-027",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.04222399911668617,
+      "model": "rule.stripe.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-028",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.021317999198799953,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-029",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01949900070030708,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-030",
+      "predicted_category_code": "6070",
+      "confidence": 0.9,
+      "reasoning": "rule_categorizer: matched rule.github.software (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014925999494153075,
+      "model": "rule.github.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-031",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014536999515257776,
+      "model": "rule.stripe.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-032",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014477998774964362,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-033",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01478000012866687,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-034",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014416998965316452,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-035",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.013934999515186064,
+      "model": "rule.stripe.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-036",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014212000678526238,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-037",
+      "predicted_category_code": "6070",
+      "confidence": 0.92,
+      "reasoning": "rule_categorizer: matched rule.zoom.software (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.018691998775466345,
+      "model": "rule.zoom.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-038",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014813998859608546,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-039",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015270001313183457,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-040",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.018949000150314532,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-041",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014989000192144886,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-042",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.013978000424685888,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-043",
+      "predicted_category_code": "6070",
+      "confidence": 0.95,
+      "reasoning": "rule_categorizer: matched rule.adobe.software (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.024277998818433844,
+      "model": "rule.adobe.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-044",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014514000213239342,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-045",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014199000361259095,
+      "model": "rule.stripe.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-046",
+      "predicted_category_code": "6070",
+      "confidence": 0.9,
+      "reasoning": "rule_categorizer: matched rule.github.software (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014018000001669861,
+      "model": "rule.github.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-047",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015499999790336005,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-048",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014354000086314045,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-049",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.018419999832985923,
+      "model": "rule.stripe.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-050",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014311999620986171,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-051",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.018384000213700347,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-052",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01479900129197631,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-053",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01590000101714395,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-054",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01420599983248394,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-055",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.013830000170855783,
+      "model": "rule.stripe.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-056",
+      "predicted_category_code": "6070",
+      "confidence": 0.92,
+      "reasoning": "rule_categorizer: matched rule.zoom.software (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.013819000741932541,
+      "model": "rule.zoom.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-057",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01470099959988147,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-058",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014532000932376832,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-059",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015093999536475167,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-060",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014106999515206553,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-061",
+      "predicted_category_code": "6070",
+      "confidence": 0.95,
+      "reasoning": "rule_categorizer: matched rule.adobe.software (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01532500027678907,
+      "model": "rule.adobe.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-062",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.018029000784736127,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-063",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.017917000150191598,
+      "model": "rule.stripe.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-064",
+      "predicted_category_code": "6070",
+      "confidence": 0.9,
+      "reasoning": "rule_categorizer: matched rule.github.software (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014131999705568887,
+      "model": "rule.github.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-065",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015923000319162384,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-066",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014369001291925088,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-067",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.018646998796612024,
+      "model": "rule.stripe.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-068",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014523000572808087,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-069",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014549999832524918,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-070",
+      "predicted_category_code": "6070",
+      "confidence": 0.92,
+      "reasoning": "rule_categorizer: matched rule.dropbox.software (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014741999621037394,
+      "model": "rule.dropbox.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-071",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.019234999854234047,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-072",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014600000213249587,
+      "model": "rule.stripe.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-073",
+      "predicted_category_code": "6070",
+      "confidence": 0.92,
+      "reasoning": "rule_categorizer: matched rule.zoom.software (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014335000741994008,
+      "model": "rule.zoom.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-074",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015800000255694613,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-075",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01442700158804655,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-076",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014150000424706377,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-077",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01426499875378795,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-078",
+      "predicted_category_code": "6070",
+      "confidence": 0.95,
+      "reasoning": "rule_categorizer: matched rule.adobe.software (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014193999959388748,
+      "model": "rule.adobe.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-079",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014053999620955437,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-080",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014261000615078956,
+      "model": "rule.stripe.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-081",
+      "predicted_category_code": "6070",
+      "confidence": 0.9,
+      "reasoning": "rule_categorizer: matched rule.github.software (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.018288999854121357,
+      "model": "rule.github.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-082",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.0666839987388812,
+      "model": "rule.stripe.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-083",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.020130000848439522,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-084",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014588000340154395,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-085",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.0145009998959722,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-086",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014401999578694813,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-087",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014260000170907006,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-088",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014340999769046903,
+      "model": "rule.stripe.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-089",
+      "predicted_category_code": "6070",
+      "confidence": 0.92,
+      "reasoning": "rule_categorizer: matched rule.zoom.software (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014355999155668542,
+      "model": "rule.zoom.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-090",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015081999663379975,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-091",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014432998796110041,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-092",
+      "predicted_category_code": "6070",
+      "confidence": 0.95,
+      "reasoning": "rule_categorizer: matched rule.adobe.software (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014184999599820003,
+      "model": "rule.adobe.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-093",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.01436099955753889,
+      "model": "rule.stripe.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-094",
+      "predicted_category_code": "6070",
+      "confidence": 0.9,
+      "reasoning": "rule_categorizer: matched rule.github.software (merchant_contains)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015640000128769316,
+      "model": "rule.github.software",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-095",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014521998309646733,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-096",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014039998859516345,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-097",
+      "predicted_category_code": "6100",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.015800000255694613,
+      "model": "rule.stripe.fees",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-098",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014036999345989898,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-099",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014364999515237287,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    },
+    {
+      "transaction_id": "design-agency-tx-100",
+      "predicted_category_code": "UNCATEGORIZABLE",
+      "confidence": 0.0,
+      "reasoning": "rule_categorizer: no rule matched",
+      "alternative_category_code": null,
+      "cost_usd": 0.0,
+      "latency_ms": 0.014133000149740838,
+      "model": "deterministic_rules_v1",
+      "matched_rule_intent": null,
+      "mapping_outcome": null
+    }
+  ]
+}

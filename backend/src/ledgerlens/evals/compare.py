@@ -38,6 +38,7 @@ class RunSummary:
     p95_latency_ms: float
     routing: dict[str, Any]
     calibration: dict[str, Any]
+    mapping: dict[str, Any]
 
 
 def _coerce_run(path: Path) -> RunSummary | None:
@@ -63,6 +64,7 @@ def _coerce_run(path: Path) -> RunSummary | None:
             p95_latency_ms=float(overall.get("latency_stats", {}).get("p95_ms", 0.0)),
             routing=overall.get("routing", {}),
             calibration=overall.get("calibration", {}),
+            mapping=overall.get("mapping", {}),
         )
     except (KeyError, ValueError, TypeError):
         return None
@@ -107,16 +109,27 @@ def _format_calibration_cell(calibration: dict[str, Any]) -> str:
     return f"ECE {float(model.get('ece', 0.0)):.3f} · MCE {float(model.get('mce', 0.0)):.3f}"
 
 
+def _format_mapping_cell(mapping: dict[str, Any]) -> str:
+    """Compact mapping-outcome cell for the comparison markdown table."""
+    if not mapping or not mapping.get("enabled"):
+        return "—"
+    mapped = int(mapping.get("mapped_intent_count", 0))
+    fallback = int(mapping.get("fallback_to_default_count", 0))
+    review = int(mapping.get("routed_to_review_count", 0))
+    return f"mapped {mapped} · fallback {fallback} · review {review}"
+
+
 COA_CAVEAT = (
-    "Rules are tenant-specific. `rules-only` and `hybrid-rules-model` accuracy "
-    "on the synthetic dataset is bounded by a known methodology limitation: "
-    "the bundled rule set targets the default seed chart of accounts, while "
-    "the three synthetic eval businesses each use their own COA numbering. "
-    "Many rule predictions are correct merchant→category mappings but score "
-    "0% against the eval ground truth because `6070` means different things "
-    "in each business's COA. The value of the rule layer in production is "
-    "cost reduction (zero model spend on matched rows), not accuracy on this "
-    "benchmark."
+    "Rules are tenant-specific. The `rules-only` (generic) baseline targets "
+    "the default seed chart of accounts, while the three synthetic eval "
+    "businesses each use their own COA numbering. The `rules-only-mapped` "
+    "mode resolves each rule's intent through a per-business map "
+    "(see `ledgerlens.data.business_rule_maps`) and produces non-zero "
+    "accuracy on the auto-repair eval slice where a curated map exists. "
+    "Coffee-shop and design-agency still fall back to the generic "
+    "intent map and show modest improvement. The deeper value of the rule "
+    "layer in production is cost reduction (zero model spend on matched "
+    "rows), not raw accuracy on this synthetic benchmark."
 )
 
 
@@ -136,6 +149,7 @@ def render_json(summaries: Iterable[RunSummary]) -> dict[str, Any]:
                 "p95_latency_ms": s.p95_latency_ms,
                 "routing": s.routing,
                 "calibration": s.calibration,
+                "mapping": s.mapping,
             }
             for s in summaries
         ],
@@ -156,9 +170,9 @@ def render_markdown(summaries: list[RunSummary]) -> str:
         "",
         (
             "| Categorizer | Tx | Overall | Non-adv | Adversarial | Cost / 100 "
-            "| p95 (ms) | Routing | Model calibration |"
+            "| p95 (ms) | Routing | Model calibration | Mapping |"
         ),
-        "|---|---:|---:|---:|---:|---:|---:|---|---|",
+        "|---|---:|---:|---:|---:|---:|---:|---|---|---|",
     ]
     for s in summaries:
         lines.append(
@@ -174,6 +188,7 @@ def render_markdown(summaries: list[RunSummary]) -> str:
                     f"{s.p95_latency_ms:.0f}",
                     _format_routing_cell(s.routing),
                     _format_calibration_cell(s.calibration),
+                    _format_mapping_cell(s.mapping),
                 ]
             )
             + " |"
@@ -197,8 +212,9 @@ def render_markdown(summaries: list[RunSummary]) -> str:
             "",
             "## What this report does NOT show",
             "",
-            "- Per-tenant rule sets translated against each synthetic business's "
-            "COA. That's next-PR work.",
+            "- Per-tenant intent maps for every eval business. Only the "
+            "auto-repair business has a curated map today; coffee-shop and "
+            "design-agency mapped runs fall back to the generic seed-COA map.",
             "- Confidence calibration after temperature scaling / Platt scaling. "
             "Raw model probabilities only.",
             "- Real correction-memory hit rates from a production stream. The "
