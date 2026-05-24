@@ -625,3 +625,14 @@ export const updateMappingEntry = (
 
 export const resetMappingProfile = () =>
   apiFetch<MappingProfile>("/mapping/profile/reset", { method: "POST" });
+
+// ── Demo readiness ────────────────────────────────────────────────────────
+
+export type DemoReadiness = {
+  ready: boolean;
+  checks: Record<string, Record<string, unknown>>;
+  warnings: string[];
+  version: string;
+};
+
+export const getDemoReady = () => apiFetch<DemoReadiness>("/demo/ready");

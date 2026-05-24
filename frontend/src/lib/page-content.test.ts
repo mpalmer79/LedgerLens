@@ -942,3 +942,68 @@ describe("category mapping editable wizard", () => {
     expect(MAPPING).not.toMatch(/href="tel:/);
   });
 });
+
+const DEMO_UNAVAILABLE_COMPONENT = readFileSync(
+  join(SRC, "components", "app", "DemoUnavailablePanel.tsx"),
+  "utf-8",
+);
+
+describe("demo unavailable fallback (Phase 7)", () => {
+  it("DemoUnavailablePanel renders polished copy, not raw backend errors", () => {
+    expect(DEMO_UNAVAILABLE_COMPONENT).toContain("DemoUnavailablePanel");
+    expect(DEMO_UNAVAILABLE_COMPONENT).toContain("Demo dependencies temporarily unavailable");
+    expect(DEMO_UNAVAILABLE_COMPONENT).toContain("partially unavailable");
+    // Three CTAs the spec required.
+    expect(DEMO_UNAVAILABLE_COMPONENT).toContain("Try again");
+    expect(DEMO_UNAVAILABLE_COMPONENT).toContain("Open cleanup checklist");
+    expect(DEMO_UNAVAILABLE_COMPONENT).toContain("Open technical story");
+    // Public-demo warning is preserved.
+    expect(DEMO_UNAVAILABLE_COMPONENT).toMatch(/Do not upload real\s+bank\s+data/);
+    // Never the primary "Is the backend running?" line.
+    expect(DEMO_UNAVAILABLE_COMPONENT).not.toContain("Is the backend running");
+    // 44px tap targets on the action buttons.
+    expect(DEMO_UNAVAILABLE_COMPONENT).toContain("min-h-[44px]");
+  });
+
+  it("/app integrates the polished panel and probes /demo/ready", () => {
+    expect(APP_DASH).toContain("DemoUnavailablePanel");
+    expect(APP_DASH).toContain("getDemoReady");
+    // /app does not lead with a raw backend message during outage.
+    expect(APP_DASH).not.toContain("Is the backend running?");
+  });
+
+  it("/demo integrates the polished panel and probes /demo/ready", () => {
+    expect(DEMO).toContain("DemoUnavailablePanel");
+    expect(DEMO).toContain("getDemoReady");
+    expect(DEMO).not.toContain("Is the backend running?");
+  });
+
+  it("health / readiness copy doesn't imply /health alone proves demo readiness", () => {
+    // The unavailable panel explicitly distinguishes the API process
+    // from the demo database checks.
+    expect(DEMO_UNAVAILABLE_COMPONENT).toContain("The API process is up");
+    expect(DEMO_UNAVAILABLE_COMPONENT.toLowerCase()).toContain("demo database checks");
+  });
+
+  it("does not claim production-ready / real-bank-data-safe / true ledger", () => {
+    for (const [name, src] of [
+      ["DemoUnavailablePanel", DEMO_UNAVAILABLE_COMPONENT],
+      ["/app", APP_DASH],
+      ["/demo", DEMO],
+    ] as const) {
+      expect(
+        src.toLowerCase().includes("production ready"),
+        `${name} should not claim production-ready`,
+      ).toBe(false);
+      expect(
+        src.toLowerCase().includes("safe for real bank"),
+        `${name} should not claim real-bank-data safety`,
+      ).toBe(false);
+      // "true accounting ledger" claim
+      expect(
+        /true accounting ledger/i.test(src) && !/not a true accounting ledger/i.test(src),
+        `${name} should not claim true accounting ledger`,
+      ).toBe(false);
+    }
+  });
+});

@@ -163,3 +163,81 @@ In priority order:
    so schema drift is caught at the boundary, not deep inside a page.
 6. **Multi-region deploy + retry backoff.** Out of scope for the
    current portfolio target.
+
+## Post-incident hotfix (2026-05-24)
+
+### Symptoms
+
+1. Removing brackets from `CORS_ORIGINS` on Railway crashed backend startup
+   with a `JSONDecodeError` before the validator could split a
+   comma-separated value.
+2. `/demo/status` returned a raw "Internal Server Error" page in the
+   browser while `/health` and `/ready` both passed — schema drift was
+   hiding behind the shallow `SELECT 1` check.
+
+### Code changes
+
+| Area | Before | After |
+|---|---|---|
+| `Settings.cors_origins` | `list[str]` — coerced via `json.loads()` by pydantic-settings before any validator ran. | `str` — raw env value stored verbatim; `cors_origins_list` property parses single origin / comma-separated / JSON-array shapes. |
+| `/demo/status` | Raw exception → 500 Internal Server Error page. | `try/except` → structured 503 `{ error, message, request_id, hint }`. Real exception logged via the structured logger. |
+| `/demo/ready` | _(did not exist)_ | New endpoint that probes every demo-critical table independently and reports per-check status. |
+| `init_db()` / migrations | Only `Base.metadata.create_all()`; never ran Alembic. | `backend/scripts/bootstrap_or_migrate.py` + `backend/scripts/start.sh`. Dockerfile CMD now uses `start.sh`. Opt-in via `RUN_MIGRATIONS_ON_START=true`. |
+| Schema drift handling | `create_all()` silently no-op'd missing columns / enum values. | Bootstrap script detects drift (app tables present + `alembic_version` missing) and **exits 2 with a clear repair message** — never silently stamps. |
+| `/app` and `/demo` | A raw API error dominated when any demo dependency failed. | Both pages probe `/demo/ready` and render `<DemoUnavailablePanel>` (polished copy + three CTAs) when dependencies are unavailable. |
+
+### Correct Railway env after this PR is deployed
+
+```
+CORS_ORIGINS=https://ledgerlens.up.railway.app
+CATEGORIZER_MODE=demo_stub
+DATABASE_URL=<Railway Postgres internal URL>
+RUN_MIGRATIONS_ON_START=true
+```
+
+(Plain string for `CORS_ORIGINS`; brackets no longer required.)
+
+### Frontend env
+
+```
+NEXT_PUBLIC_API_BASE_URL=https://ledgerlens-backend-production.up.railway.app
+```
+
+### Pre-deploy env (works on current main without the fix)
+
+```
+CORS_ORIGINS=["https://ledgerlens.up.railway.app"]
+```
+
+### How to repair the Railway Postgres
+
+The Railway Postgres was populated by an earlier deploy's
+`Base.metadata.create_all()`, so it has app tables but no
+`alembic_version` row. On the first boot after this PR is deployed,
+`bootstrap_or_migrate.py` will detect that state and exit 2 with a
+repair message. The operator picks one of:
+
+**A — RESET (recommended; demo data is fictional)**
+
+1. In the Railway dashboard, drop the Postgres database (delete +
+   recreate, or use Railway's "reset database" if available).
+2. Redeploy. The next boot hits the "fresh database" path and runs
+   every migration end-to-end.
+
+**B — STAMP (only if you have verified column-by-column compatibility)**
+
+1. Run `alembic stamp head` once against the live Postgres URL from
+   your laptop or a Railway shell.
+2. Redeploy. Subsequent boots run `alembic upgrade head`.
+
+For the public portfolio demo, option A is the right choice.
+
+### Smoke check after deploy
+
+```
+scripts/smoke_public_demo.sh
+```
+
+Exits non-zero if any of `/health`, `/ready`, `/demo/ready`,
+`/demo/status`, the frontend `/`, `/app`, `/demo`, or the CORS
+preflight fails.

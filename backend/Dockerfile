@@ -22,12 +22,16 @@ COPY src /app/src
 RUN pip install --upgrade pip build setuptools \
     && pip install .
 
-# Copy the rest (tests, evals, etc.) — useful if eval CLI is invoked
-# from the running container.
+# Copy the rest (tests, evals, alembic, scripts) — useful if eval CLI
+# is invoked from the running container; required for the start script
+# and the Alembic migration baseline.
 COPY . /app
+
+RUN chmod +x /app/scripts/start.sh /app/scripts/bootstrap_or_migrate.py
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1
 
-# Railway injects $PORT at runtime.
-CMD ["sh", "-c", "uvicorn ledgerlens.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+# Railway injects $PORT at runtime. The start script handles optional
+# migration via RUN_MIGRATIONS_ON_START before exec'ing uvicorn.
+CMD ["/app/scripts/start.sh"]

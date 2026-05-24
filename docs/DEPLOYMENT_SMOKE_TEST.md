@@ -58,3 +58,38 @@ still catches problems gracefully.
   no missing disclaimers).
 
 If any step fails, fix or revert before announcing the deploy.
+
+## Automated smoke (post-incident hotfix)
+
+After every Railway deploy, run:
+
+```
+FRONTEND_URL=https://ledgerlens.up.railway.app \
+BACKEND_URL=https://ledgerlens-backend-production.up.railway.app \
+scripts/smoke_public_demo.sh
+```
+
+The script exits non-zero on the first failure and checks:
+
+- `/health`, `/ready`, `/demo/ready` (all 200).
+- `/demo/status` (200 or a clean structured 503).
+- `/demo/ready` reports `ready=true`.
+- `/ready` reports `ready=true`.
+- Frontend `/`, `/app`, `/demo` (all 200).
+- CORS preflight from the frontend origin to `/health` reflects the origin.
+
+A green smoke pass means the demo is end-to-end ready, not just that the
+API process is up. `/health` alone is no longer treated as sufficient
+evidence of demo readiness.
+
+## Required Railway env (post-hotfix)
+
+```
+CORS_ORIGINS=https://ledgerlens.up.railway.app
+CATEGORIZER_MODE=demo_stub
+DATABASE_URL=<Railway Postgres internal URL>
+RUN_MIGRATIONS_ON_START=true
+```
+
+`CORS_ORIGINS` now accepts a single origin, comma-separated origins,
+or the legacy JSON-array form. The brackets are no longer required.
