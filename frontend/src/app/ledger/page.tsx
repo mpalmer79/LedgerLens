@@ -106,6 +106,22 @@ export default function LedgerPage() {
         </section>
       )}
 
+      {!hasUnverified && ledger && ledger.trust.finalized_count > 0 && (
+        <section className="mt-4 rounded-md border-2 border-brand-600 bg-brand-100 p-4">
+          <p className="text-[14px] font-medium text-brand-900">
+            Every finalized row is verified.
+          </p>
+          <p className="mt-1 text-[13px] text-brand-800">
+            All{" "}
+            <span className="mono">{ledger.trust.finalized_count}</span> finalized row
+            {ledger.trust.finalized_count === 1 ? "" : "s"} were decided by a deterministic
+            rule auto-approval, a correction-memory replay, or an explicit human review. The
+            CSV export carries the same per-row <span className="mono">verified=true</span>{" "}
+            signal so downstream tooling can confirm.
+          </p>
+        </section>
+      )}
+
       {error && (
         <div className="mt-6 rounded-md border border-red-200 bg-red-50 p-4 text-[14px] text-red-700">
           {error}

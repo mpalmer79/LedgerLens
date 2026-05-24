@@ -17,6 +17,44 @@ export const metadata: Metadata = {
     "How LedgerLens layers correction memory, deterministic rules, review routing, audit trails, and a configurable model fallback into a verified bookkeeping workflow.",
 };
 
+const LLM_VS_LEDGER: { capability: string; wrapper: string; ledger: string }[] = [
+  {
+    capability: "Input shape",
+    wrapper: "Free-form chat prompt",
+    ledger: "Persisted transaction with normalized fields",
+  },
+  {
+    capability: "Decision logic",
+    wrapper: "One model call returns one answer",
+    ledger: "Memory → rules → fallback → confidence routing",
+  },
+  {
+    capability: "Uncertainty handling",
+    wrapper: "Hallucinates an answer",
+    ledger: "Routes to a human review queue",
+  },
+  {
+    capability: "Improvement loop",
+    wrapper: "Manual prompt tuning",
+    ledger: "Human corrections become deterministic memory rules",
+  },
+  {
+    capability: "Audit trail",
+    wrapper: "None by default",
+    ledger: "AuditEvent on every state change, with provider attribution",
+  },
+  {
+    capability: "Trust metric",
+    wrapper: "Model accuracy (if measured at all)",
+    ledger: "Verified finalized ledger — workflow-level guarantee",
+  },
+  {
+    capability: "Cost control on public demo",
+    wrapper: "Pays per call",
+    ledger: "Demo-stub mode never imports the SDK (regression-tested)",
+  },
+];
+
 const STACK: string[] = [
   "Next.js 14 (App Router)",
   "TypeScript",
@@ -81,6 +119,26 @@ export default function TechnicalStoryPage() {
           </p>
         </header>
 
+        {/* Reviewer takeaway — the one-card version of this page. */}
+        <section className="mt-8 rounded-lg border-2 border-brand-600 bg-brand-100 p-5">
+          <p className="text-[11px] font-medium uppercase tracking-wide text-brand-700">
+            Reviewer takeaway
+          </p>
+          <p className="mt-2 font-display text-[18px] font-medium text-brand-900">
+            LedgerLens demonstrates layered AI decisioning, full-stack implementation,
+            persistent workflow state, evaluation discipline, and deployment readiness.
+          </p>
+          <p className="mt-2 text-[13px] text-brand-800">
+            The rest of this page exists to back up that sentence. Skim the sections, or
+            jump straight to <Link href="/demo" className="underline">/demo</Link> /{" "}
+            <Link href="/evals" className="underline">/evals</Link> /{" "}
+            <a href={REPO_URL} target="_blank" rel="noopener noreferrer" className="underline">
+              GitHub
+            </a>
+            .
+          </p>
+        </section>
+
         {/* 1. Product problem */}
         <Section number="01" title="Product problem">
           <p className="text-[14px] leading-relaxed text-text-secondary">
@@ -116,12 +174,34 @@ export default function TechnicalStoryPage() {
 
         {/* 3. Why not an LLM wrapper */}
         <Section number="03" title="Why this is not an LLM wrapper">
-          <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div className="overflow-x-auto">
+            <table className="w-full table-fixed text-left text-[13px]">
+              <thead className="border-b border-surface-border">
+                <tr>
+                  <th className="field-label w-1/3 py-2 pr-3">Capability</th>
+                  <th className="field-label w-1/3 py-2 pr-3 text-text-subtle">
+                    Typical LLM wrapper
+                  </th>
+                  <th className="field-label w-1/3 py-2 text-brand-700">LedgerLens</th>
+                </tr>
+              </thead>
+              <tbody>
+                {LLM_VS_LEDGER.map((row) => (
+                  <tr key={row.capability} className="border-b border-surface-border/40 last:border-0">
+                    <td className="py-1.5 pr-3 text-text-primary">{row.capability}</td>
+                    <td className="py-1.5 pr-3 text-text-subtle">{row.wrapper}</td>
+                    <td className="py-1.5 text-text-primary">{row.ledger}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <ul className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <Bullet>Deterministic rules run <em>before</em> the model fallback.</Bullet>
             <Bullet>Human corrections become reusable memory — auditable, not opaque.</Bullet>
             <Bullet>Mid-confidence and unfamiliar transactions are routed to review.</Bullet>
             <Bullet>The verified-ledger trust metric is workflow-level, not model-level.</Bullet>
-            <Bullet>Every state change writes an `AuditEvent`.</Bullet>
+            <Bullet>Every state change writes an <span className="mono">AuditEvent</span>.</Bullet>
             <Bullet>Public demo mode runs at zero paid spend — regression-tested.</Bullet>
             <Bullet>Eval harness reports ECE / MCE / confusion pairs / routing metrics.</Bullet>
             <Bullet>Typed contracts on the API client; mypy --strict; ruff; CI gates per PR.</Bullet>

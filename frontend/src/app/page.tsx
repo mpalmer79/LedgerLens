@@ -49,8 +49,11 @@ export default function Page() {
             <Link href="/app" className="text-text-secondary hover:text-text-primary">
               App
             </Link>
-            <Link href="/about" className="text-text-secondary hover:text-text-primary">
-              About
+            <Link
+              href="/about"
+              className="font-medium text-text-primary hover:text-brand-700"
+            >
+              About Michael
             </Link>
             <a
               href={REPO_URL}
@@ -107,15 +110,31 @@ export default function Page() {
                 href="/technical-story"
                 className="inline-flex items-center gap-1.5 rounded-md border border-surface-border-strong bg-transparent px-5 py-2.5 text-sm font-medium text-text-primary transition-colors hover:bg-surface-sunken"
               >
-                See the engineering story
+                Read the technical story
               </Link>
               <Link
-                href="/app"
+                href="/about"
+                className="inline-flex items-center text-sm font-medium text-brand-700 hover:text-brand-800"
+              >
+                About Michael →
+              </Link>
+              <a
+                href={REPO_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center text-sm font-medium text-text-secondary hover:text-text-primary"
               >
-                Open live app →
-              </Link>
+                View GitHub →
+              </a>
             </div>
+            <p className="mt-5 max-w-2xl text-[13px] text-text-subtle">
+              Built by{" "}
+              <Link href="/about" className="text-text-secondary underline hover:text-text-primary">
+                Michael Palmer
+              </Link>{" "}
+              as a portfolio project demonstrating AI workflow engineering, full-stack
+              development, and practical product thinking.
+            </p>
           </div>
 
           {/* Premium trust card — replaces the old raw-accuracy stat. */}
@@ -125,20 +144,23 @@ export default function Page() {
               <p className="inline-block rounded bg-brand-600 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-white">
                 Trust boundary
               </p>
-              <p className="mt-4 font-display text-[28px] font-medium leading-tight text-brand-900">
-                100% verified finalized demo ledger
+              <p className="mt-4 font-display text-[56px] font-medium leading-none text-brand-900">
+                100%
+              </p>
+              <p className="mt-1 text-[14px] font-medium uppercase tracking-wide text-brand-700">
+                verified finalized demo ledger
               </p>
               <p className="mt-3 text-[13px] leading-relaxed text-brand-800">
-                Finalized rows are verified by human review, correction memory, or
-                deterministic rules before export.
+                Finalized rows are backed by human review, correction memory, or
+                deterministic rules before export.{" "}
+                <strong>Workflow-level trust metric — not raw model accuracy.</strong>
               </p>
-              <p className="mt-3 text-[11px] text-text-subtle">
-                Raw model performance is still measured separately on the{" "}
-                <Link href="/evals" className="underline hover:text-text-primary">
-                  evals page
-                </Link>
-                .
-              </p>
+              <Link
+                href="/evals"
+                className="mt-3 inline-flex items-center text-[12px] font-medium text-brand-700 underline hover:text-brand-800"
+              >
+                See raw model evals →
+              </Link>
             </div>
           </aside>
         </div>
