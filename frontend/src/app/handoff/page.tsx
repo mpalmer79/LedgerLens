@@ -88,22 +88,41 @@ export default function HandoffPage() {
             <CleanupImpactSummary impact={handoff.impact} variant="compact" />
           </section>
 
-          <section className="mt-8 flex flex-wrap gap-3">
-            <a
-              href={getHandoffMarkdownUrl()}
-              download
-              className="rounded-md bg-brand-600 px-4 py-2 text-[13px] font-medium text-white hover:bg-brand-500"
-            >
-              Download handoff summary (markdown)
-            </a>
-            <a
-              href={getLedgerExportUrl()}
-              download
-              className="rounded-md border border-surface-border-strong px-4 py-2 text-[13px] font-medium text-text-primary hover:bg-surface-sunken"
-            >
-              Download full ledger CSV
-            </a>
+          <section className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div className="rounded-md border border-surface-border bg-surface-panel p-4">
+              <a
+                href={getHandoffMarkdownUrl()}
+                download
+                className="inline-flex items-center rounded-md bg-brand-600 px-4 py-2 text-[13px] font-medium text-white hover:bg-brand-500"
+              >
+                Download handoff summary (markdown)
+              </a>
+              <p className="mt-2 text-[12px] text-text-secondary">
+                Use this for accountant context or email handoff. Includes the cleanup
+                summary, ready-for-accountant rows, unresolved items, owner answers, and
+                corrections learned.
+              </p>
+            </div>
+            <div className="rounded-md border border-surface-border bg-surface-panel p-4">
+              <a
+                href={getLedgerExportUrl()}
+                download
+                className="inline-flex items-center rounded-md border border-surface-border-strong px-4 py-2 text-[13px] font-medium text-text-primary hover:bg-surface-sunken"
+              >
+                Download full ledger CSV
+              </a>
+              <p className="mt-2 text-[12px] text-text-secondary">
+                Use this for ledger import or spreadsheet review. Every row carries a
+                per-row <span className="mono">verified</span> column so downstream tooling
+                can filter unverified rows.
+              </p>
+            </div>
           </section>
+
+          <p className="mt-3 text-[12px] text-text-subtle">
+            This is not tax advice or a substitute for accounting review. It is a cleanup
+            and handoff aid.
+          </p>
 
           {/* Ready for accountant */}
           <Section

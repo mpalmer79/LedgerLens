@@ -219,9 +219,9 @@ export default function CleanupPage() {
           Monthly bookkeeping cleanup
         </h1>
         <p className="mt-2 max-w-3xl text-[14px] text-text-secondary">
-          Turn this month&apos;s messy transactions into a verified ledger package for your
-          accountant or records. LedgerLens handles the obvious rows, flags the uncertain
-          ones, and remembers your corrections for next month.
+          Use this checklist once a month to move from messy bank activity to a verified
+          handoff package. LedgerLens handles the obvious rows, turns uncertain ones into
+          plain-English questions, and remembers your corrections for next month.
         </p>
       </header>
 

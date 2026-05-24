@@ -10,7 +10,9 @@ import { REPO_URL } from "@/lib/site";
 type NavItem = { href: string; label: string; primary?: boolean };
 
 const ITEMS: NavItem[] = [
-  { href: "/demo", label: "Demo", primary: true },
+  { href: "/cleanup", label: "Cleanup", primary: true },
+  { href: "/handoff", label: "Handoff" },
+  { href: "/demo", label: "Demo" },
   { href: "/technical-story", label: "Technical story" },
   { href: "/evals", label: "Evals" },
   { href: "/app", label: "App" },
@@ -48,19 +50,22 @@ export function MarketingNav() {
         {/* Desktop / large-tablet inline nav (≥ md) */}
         <div className="hidden items-center gap-4 text-[13px] md:flex lg:gap-5">
           <Link
-            href="/demo"
+            href="/cleanup"
             className="rounded-md bg-brand-600 px-3 py-1.5 font-medium text-white hover:bg-brand-500"
           >
-            Start the 3-minute demo →
+            Start monthly cleanup →
+          </Link>
+          <Link href="/handoff" className="font-medium text-brand-700 hover:text-brand-800">
+            Handoff
+          </Link>
+          <Link href="/demo" className="text-text-secondary hover:text-text-primary">
+            Demo
           </Link>
           <Link href="/technical-story" className="text-text-secondary hover:text-text-primary">
             Technical story
           </Link>
           <Link href="/evals" className="text-text-secondary hover:text-text-primary">
             Evals
-          </Link>
-          <Link href="/app" className="text-text-secondary hover:text-text-primary">
-            App
           </Link>
           <Link
             href="/about"
@@ -81,10 +86,10 @@ export function MarketingNav() {
         {/* Mobile: primary CTA stays visible, secondary links go behind a sheet */}
         <div className="flex items-center gap-2 md:hidden">
           <Link
-            href="/demo"
+            href="/cleanup"
             className="rounded-md bg-brand-600 px-3 py-1.5 text-[12px] font-medium text-white hover:bg-brand-500"
           >
-            Demo →
+            Cleanup →
           </Link>
           <button
             type="button"

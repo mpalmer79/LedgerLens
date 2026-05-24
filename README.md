@@ -1,6 +1,6 @@
 # LedgerLens
 
-**An AI-assisted bookkeeping workflow prototype for small businesses.** Turns messy bank transactions into a **verified** categorized ledger by combining deterministic rules, human correction memory, review routing, audit trails, and ledger export.
+**A bookkeeping cleanup assistant for small businesses.** Helps owners turn messy monthly bank transactions into a **verified accountant handoff package** by combining deterministic rules, human correction memory, owner questions, review routing, audit trails, and ledger export.
 
 [![Live demo](https://img.shields.io/badge/demo-ledgerlens.up.railway.app-2e5f32)](https://ledgerlens.up.railway.app)
 [![Guided demo](https://img.shields.io/badge/3--minute-guided%20demo-244c27)](https://ledgerlens.up.railway.app/demo)
@@ -9,17 +9,42 @@
 ## TL;DR
 
 - **Who it's for** — small-business owners doing monthly bookkeeping cleanup; the engineering audience evaluating an AI-systems portfolio.
-- **The problem** — bank exports are full of cryptic merchant strings. A wrong category propagates into financial statements and tax filings. Pure AI guessing isn't good enough.
+- **The headline outcome** — a **verified accountant handoff package** (markdown summary + CSV ledger) that an owner can send to their bookkeeper or CPA at month-end.
 - **The approach** — a layered pipeline (`correction memory → deterministic rules → fallback → confidence routing → human review → audit`) that only calls the model when the earlier layers can't decide safely.
-- **The headline number** — **100% of finalized guided-demo ledger rows are verified before export.** This is a workflow-level guarantee, not a claim about raw AI accuracy. A finalized row counts as verified only when it came through a deterministic rule auto-approval, a correction-memory replay of a prior human decision, or an explicit human review. See [`docs/TRUST_METRIC.md`](docs/TRUST_METRIC.md).
+- **The headline number** — **100% of finalized guided-demo ledger rows are verified before export.** Workflow-level guarantee, not a raw-AI-accuracy claim. A finalized row counts as verified only when it came through a deterministic rule auto-approval, a correction-memory replay, or an explicit human review. See [`docs/TRUST_METRIC.md`](docs/TRUST_METRIC.md).
 - **The deployed instance** — runs in **zero-cost demo mode**. The `anthropic` SDK is never imported. A regression test asserts that.
+
+## What problem does it solve?
+
+Small-business owners fall behind on categorizing transactions. Accountants need *business context* the bank export doesn't carry (what was that ACH transfer for? was the Costco run office supplies or inventory?). Pure AI guessing on financial data is not safe — every wrong category propagates into financial statements and tax filings.
+
+LedgerLens does three things instead:
+
+1. **Handles the obvious vendors automatically** with deterministic rules + correction memory.
+2. **Asks plain-English questions** about the uncertain ones (no accounting jargon as the first step).
+3. **Produces a verified handoff package** the owner can send to their accountant.
+
+## What is the handoff package?
+
+A single, downloadable artifact at [`/handoff`](https://ledgerlens.up.railway.app/handoff) containing:
+
+- **Verified ledger summary** — finalized rows backed by a rule, memory, or human review.
+- **Unresolved review items** — anything that still needs accountant or owner follow-up, explicitly flagged.
+- **Owner answers** — the plain-English notes you wrote during the questions workflow, included for accountant context.
+- **Corrections learned** — new (merchant → category) rules saved this month for reuse next month.
+- **Markdown summary** — `/handoff/export.md`, paste-into-email format.
+- **CSV ledger export** — `/ledger/export.csv`, with a per-row `verified` column.
+
+The export is **not tax advice**. It's a cleanup and handoff aid that gives the accountant clean inputs.
 
 ## Try it / read about it
 
-- **Try the workflow** — [3-minute guided demo](https://ledgerlens.up.railway.app/demo). Real backend calls, no mocked state.
-- **Read the engineering story** — [`/technical-story`](https://ledgerlens.up.railway.app/technical-story) covers the architecture, the "not an LLM wrapper" comparison, the trust model, and the stack.
+- **Start the workflow** — [`/cleanup`](https://ledgerlens.up.railway.app/cleanup). Six-step monthly checklist driven by real backend status.
+- **See the deliverable** — [`/handoff`](https://ledgerlens.up.railway.app/handoff). The verified accountant handoff package.
+- **3-minute guided demo** — [`/demo`](https://ledgerlens.up.railway.app/demo). Real backend calls, no mocked state.
+- **Engineering story** — [`/technical-story`](https://ledgerlens.up.railway.app/technical-story). Architecture, "not an LLM wrapper" comparison, trust model, stack.
 - **About the builder** — [`/about`](https://ledgerlens.up.railway.app/about). Michael Palmer, GitHub + LinkedIn.
-- **Eval evidence** — [`/evals`](https://ledgerlens.up.railway.app/evals) for the honest model-only numbers (model accuracy ≈ 63%, adversarial ≈ 42%).
+- **Eval evidence** — [`/evals`](https://ledgerlens.up.railway.app/evals). Honest raw model-only numbers (model accuracy ≈ 63%, adversarial ≈ 42%).
 - **Run locally** — see the [`Running locally`](#running-locally) section below.
 
 ## Why not claim 100% AI accuracy?
