@@ -146,7 +146,14 @@ def _to_profile_out(db: Session, business_id: str | None = None) -> MappingProfi
 
 @router.get("/profile", response_model=MappingProfileOut)
 def get_profile(db: Session = Depends(get_db)) -> MappingProfileOut:
-    """Read the active mapping profile for the active demo business."""
+    """Read the active mapping profile for the active demo business.
+
+    Note: the mapping profile is keyed by the rule-map slug
+    (``active_business_id()``), which is distinct from the actor's
+    tenant ``business_id`` (the ``Business`` row PK). The two namespaces
+    are unified in a separate refactor; tenant scoping for transaction-
+    like resources uses the actor's ``business_id`` directly.
+    """
     return _to_profile_out(db)
 
 
@@ -165,8 +172,10 @@ def put_entry(
     if not intent:
         raise ValidationFailed("Intent must be non-empty.")
     try:
-        # Snapshot the existing entry for the audit before/after.
-        _, entries = get_active_profile_with_entries(db, actor.business_id)
+        # Snapshot the existing entry for the audit before/after. Uses the
+        # rule-map slug (active_business_id) — distinct from the actor's
+        # tenant business_id; see get_profile docstring.
+        _, entries = get_active_profile_with_entries(db, active_business_id())
         prev = next((e for e in entries if e.intent == intent), None)
         before = (
             {
@@ -291,7 +300,9 @@ def preview_mapping(
                     "chart of accounts.",
                     code=code,
                 )
-    # Validate the intent is one the active business knows about.
+    # Validate the intent is one the active business knows about. The rule
+    # map is keyed by the rule-map slug (active_business_id), separate from
+    # the actor's tenant business_id (see get_profile docstring).
     rule_map = get_business_rule_map(active_business_id())
     if intent not in rule_map.intent_to_code and intent not in rule_map.block_fallback_intents:
         raise ValidationFailed(f"Unknown intent '{intent}' for the active business.")
@@ -301,6 +312,7 @@ def preview_mapping(
         intent=intent,
         proposed_category_code=payload.proposed_category_code,
         block_fallback=payload.block_fallback,
+        business_id=actor.business_id,
         limit=payload.limit,
     )
     # Audit: read-only event so the operator can see which previews
@@ -377,31 +389,37 @@ class MappingApplyOut(BaseModel):
 
 
 def _server_side_eligibility(
-    db: Session, transaction_id: str, intent: str
+    db: Session, transaction_id: str, intent: str, business_id: str | None
 ) -> tuple[bool, str | None, Transaction | None, CategorizationResult | None]:
     """Recompute eligibility for a single transaction.
 
-    Never trusts the frontend. Returns (eligible, reason, tx, latest)
-    so the caller can both reject ineligible rows and apply changes
-    to eligible ones without re-querying.
+    Never trusts the frontend. Tenant-scoped: rows belonging to a different
+    business are treated as "not found", never reclassified.
     """
-    tx = db.query(Transaction).filter(Transaction.id == transaction_id).one_or_none()
+    tx_query = db.query(Transaction).filter(Transaction.id == transaction_id)
+    if business_id is None:
+        tx_query = tx_query.filter(Transaction.business_id.is_(None))
+    else:
+        tx_query = tx_query.filter(Transaction.business_id == business_id)
+    tx = tx_query.one_or_none()
     if tx is None:
         return False, "transaction not found", None, None
     match = find_rule_match(tx, db)
     if match.verdict != "apply" or match.rule is None or match.rule.intent != intent:
         return False, "rule layer no longer matches this intent for this transaction", tx, None
-    latest = (
-        db.query(CategorizationResult)
-        .filter(CategorizationResult.transaction_id == tx.id)
-        .order_by(CategorizationResult.created_at.desc())
-        .first()
+    cat_query = db.query(CategorizationResult).filter(
+        CategorizationResult.transaction_id == tx.id
     )
+    if business_id is None:
+        cat_query = cat_query.filter(CategorizationResult.business_id.is_(None))
+    else:
+        cat_query = cat_query.filter(CategorizationResult.business_id == business_id)
+    latest = cat_query.order_by(CategorizationResult.created_at.desc()).first()
     if latest is None:
         return False, "no categorization result on this transaction yet", tx, None
     from ledgerlens.services.mapping_preview import _latest_review
 
-    review = _latest_review(db, tx.id)
+    review = _latest_review(db, tx.id, business_id)
     reason = _ineligibility_reason(latest, review)
     return reason is None, reason, tx, latest
 
@@ -424,8 +442,9 @@ def apply_preview(
     if not intent:
         raise ValidationFailed("intent is required.")
     # Validate intent against the active business's rule map (same as
-    # /mapping/preview).
-    rule_map = get_business_rule_map(actor.business_id)
+    # /mapping/preview). Rule map uses the slug namespace, not the tenant
+    # business_id; see get_profile docstring.
+    rule_map = get_business_rule_map(active_business_id())
     if intent not in rule_map.intent_to_code and intent not in rule_map.block_fallback_intents:
         raise ValidationFailed(f"Unknown intent '{intent}' for the active business.")
     # Validate proposed code if supplied.
@@ -444,7 +463,9 @@ def apply_preview(
     applied: list[dict[str, object]] = []
     rejected: list[MappingApplyRejectedRow] = []
     for tx_id in selected:
-        eligible, reason, tx, latest = _server_side_eligibility(db, tx_id, intent)
+        eligible, reason, tx, latest = _server_side_eligibility(
+            db, tx_id, intent, actor.business_id
+        )
         if not eligible or tx is None or latest is None:
             rejected.append(
                 MappingApplyRejectedRow(

@@ -166,6 +166,7 @@ def _persist_memory_result(
         explanation = f"{explanation} {extra_note}"
 
     result = CategorizationResult(
+        business_id=tx.business_id,
         transaction_id=tx.id,
         predicted_category_code=memory.selected_category_code,
         predicted_category_name=matched.name if matched else "",
@@ -217,6 +218,7 @@ def _persist_rule_result(
         explanation = f"{explanation} {reason}"
 
     result = CategorizationResult(
+        business_id=tx.business_id,
         transaction_id=tx.id,
         predicted_category_code=rule.category_code,
         predicted_category_name=matched.name if matched else "",
@@ -260,6 +262,7 @@ def _persist_rule_conflict(
         f"{', '.join(c.id for c in candidates)}. Routed to review."
     )
     result = CategorizationResult(
+        business_id=tx.business_id,
         transaction_id=tx.id,
         predicted_category_code=conflicting_codes[0] if conflicting_codes else "",
         predicted_category_name="",
@@ -324,6 +327,7 @@ def categorize_transaction(
         conflicting_codes = sorted({c.selected_category_code for c in match.candidates})
         latency_ms = int((datetime.now().timestamp() - started) * 1000)
         result = CategorizationResult(
+            business_id=tx.business_id,
             transaction_id=tx.id,
             predicted_category_code=conflicting_codes[0] if conflicting_codes else "",
             predicted_category_name="",
@@ -447,6 +451,7 @@ def categorize_transaction(
         audit_action = "categorized"
 
     result = CategorizationResult(
+        business_id=tx.business_id,
         transaction_id=tx.id,
         predicted_category_code=pred.predicted_category_code,
         predicted_category_name=(matched.name if matched else ""),

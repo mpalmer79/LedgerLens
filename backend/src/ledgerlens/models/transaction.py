@@ -17,6 +17,10 @@ class Transaction(Base):
     __tablename__ = "transactions"
 
     id: Mapped[str] = mapped_column(String(32), primary_key=True, default=_new_id)
+    # Phase 3 tenant-boundary: business_id is nullable in the DB
+    # schema so the migration can backfill demo rows safely, but the
+    # service layer treats it as required for every new row.
+    business_id: Mapped[str | None] = mapped_column(String(32), nullable=True, index=True)
     transaction_date: Mapped[date] = mapped_column(Date, nullable=False)
     description: Mapped[str] = mapped_column(String(512), nullable=False)
     raw_description: Mapped[str] = mapped_column(String(512), nullable=False)

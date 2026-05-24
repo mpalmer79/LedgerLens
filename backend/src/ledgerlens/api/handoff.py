@@ -15,6 +15,7 @@ from fastapi import APIRouter, Depends
 from fastapi.responses import PlainTextResponse, StreamingResponse
 from sqlalchemy.orm import Session
 
+from ledgerlens.actor import DemoActor, get_demo_actor
 from ledgerlens.api.schemas import HandoffOut, LedgerRow
 from ledgerlens.db import get_db
 from ledgerlens.repositories import AuditRepo
@@ -24,13 +25,19 @@ router = APIRouter(prefix="/handoff", tags=["handoff"])
 
 
 @router.get("", response_model=HandoffOut)
-def get_handoff(db: Session = Depends(get_db)) -> HandoffOut:
-    return build_handoff(db)
+def get_handoff(
+    db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
+) -> HandoffOut:
+    return build_handoff(db, actor.business_id)
 
 
 @router.get("/export.md", response_class=PlainTextResponse)
-def export_handoff_markdown(db: Session = Depends(get_db)) -> PlainTextResponse:
-    handoff = build_handoff(db)
+def export_handoff_markdown(
+    db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
+) -> PlainTextResponse:
+    handoff = build_handoff(db, actor.business_id)
     body = render_markdown(handoff)
     filename = handoff.scenario.handoff_filename if handoff.scenario else "handoff.md"
     AuditRepo(db).record(
@@ -109,14 +116,17 @@ def _write_reviewed_row(writer: Any, row: LedgerRow) -> None:
 
 
 @router.get("/export.reviewed.csv")
-def export_reviewed_csv(db: Session = Depends(get_db)) -> StreamingResponse:
+def export_reviewed_csv(
+    db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
+) -> StreamingResponse:
     """CSV formatted for accountant review.
 
     Contains only finalized, verified rows — the same set the handoff's
     "Ready for accountant" section shows. Not a QuickBooks / QBO / IIF
     import file; the column set is human-readable.
     """
-    handoff = build_handoff(db)
+    handoff = build_handoff(db, actor.business_id)
     buf = io.StringIO()
     writer = csv.writer(buf)
     writer.writerow(_REVIEWED_COLUMNS)
@@ -143,14 +153,17 @@ def export_reviewed_csv(db: Session = Depends(get_db)) -> StreamingResponse:
 
 
 @router.get("/export.followup.csv")
-def export_followup_csv(db: Session = Depends(get_db)) -> StreamingResponse:
+def export_followup_csv(
+    db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
+) -> StreamingResponse:
     """CSV of rows that need follow-up before they can ship.
 
     Includes accountant-review-required rows (owner explicitly flagged)
     and pending rows the model could not finalize. Kept separate from
     the reviewed CSV so the accountant doesn't have to filter.
     """
-    handoff = build_handoff(db)
+    handoff = build_handoff(db, actor.business_id)
     buf = io.StringIO()
     writer = csv.writer(buf)
     writer.writerow(_REVIEWED_COLUMNS)

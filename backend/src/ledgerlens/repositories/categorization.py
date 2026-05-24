@@ -37,9 +37,15 @@ class CategorizationRepo:
         self,
         status: ResultStatus,
         *,
+        business_id: str | None,
         limit: int = 100,
         offset: int = 0,
     ) -> list[CategorizationResult]:
+        """List results in a given status, scoped to one business.
+
+        A ``None`` ``business_id`` matches only legacy rows whose tenant
+        column is NULL — never another business's rows.
+        """
         stmt = (
             select(CategorizationResult)
             .where(CategorizationResult.status == status)
@@ -47,4 +53,8 @@ class CategorizationRepo:
             .limit(limit)
             .offset(offset)
         )
+        if business_id is None:
+            stmt = stmt.where(CategorizationResult.business_id.is_(None))
+        else:
+            stmt = stmt.where(CategorizationResult.business_id == business_id)
         return list(self.db.scalars(stmt))

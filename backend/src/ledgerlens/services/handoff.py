@@ -75,8 +75,8 @@ def _impact(rows: list[LedgerRow], corrections_learned_count: int) -> CleanupImp
     )
 
 
-def _owner_answers(db: Session) -> list[HandoffOwnerAnswer]:
-    """Surface review decisions that carry owner context.
+def _owner_answers(db: Session, business_id: str | None) -> list[HandoffOwnerAnswer]:
+    """Surface review decisions that carry owner context, scoped to one business.
 
     Owner Answers v2: a decision qualifies if it carries either a
     structured `owner_question_key` (the new path, set by the
@@ -88,17 +88,18 @@ def _owner_answers(db: Session) -> list[HandoffOwnerAnswer]:
 
     tx_repo = TransactionRepo(db)
     cat_repo = CategoryRepo(db)
-    decisions: list[ReviewDecision] = (
-        db.query(ReviewDecision)
-        .filter(
-            or_(
-                ReviewDecision.reviewer_note.isnot(None),
-                ReviewDecision.owner_question_key.isnot(None),
-            )
+    decisions_query = db.query(ReviewDecision).filter(
+        or_(
+            ReviewDecision.reviewer_note.isnot(None),
+            ReviewDecision.owner_question_key.isnot(None),
         )
-        .order_by(ReviewDecision.created_at.desc())
-        .limit(200)
-        .all()
+    )
+    if business_id is None:
+        decisions_query = decisions_query.filter(ReviewDecision.business_id.is_(None))
+    else:
+        decisions_query = decisions_query.filter(ReviewDecision.business_id == business_id)
+    decisions: list[ReviewDecision] = (
+        decisions_query.order_by(ReviewDecision.created_at.desc()).limit(200).all()
     )
     answers: list[HandoffOwnerAnswer] = []
     for d in decisions:
@@ -137,14 +138,15 @@ def _owner_answers(db: Session) -> list[HandoffOwnerAnswer]:
     return answers
 
 
-def _recent_corrections(db: Session, limit: int = 100) -> list[CorrectionMemory]:
-    return (
-        db.query(CorrectionMemory)
-        .filter(CorrectionMemory.active.is_(True))
-        .order_by(CorrectionMemory.created_at.desc())
-        .limit(limit)
-        .all()
-    )
+def _recent_corrections(
+    db: Session, business_id: str | None, limit: int = 100
+) -> list[CorrectionMemory]:
+    query = db.query(CorrectionMemory).filter(CorrectionMemory.active.is_(True))
+    if business_id is None:
+        query = query.filter(CorrectionMemory.business_id.is_(None))
+    else:
+        query = query.filter(CorrectionMemory.business_id == business_id)
+    return query.order_by(CorrectionMemory.created_at.desc()).limit(limit).all()
 
 
 def _scenario_for(rows: list[LedgerRow]) -> HandoffScenario | None:
@@ -164,9 +166,9 @@ def _scenario_for(rows: list[LedgerRow]) -> HandoffScenario | None:
     )
 
 
-def build_handoff(db: Session) -> HandoffOut:
-    """Assemble the handoff report from current persisted state."""
-    rows = _build_rows(db)
+def build_handoff(db: Session, business_id: str | None) -> HandoffOut:
+    """Assemble the handoff report from persisted state, scoped to one business."""
+    rows = _build_rows(db, business_id)
     trust = _compute_trust(rows)
 
     ready = [r for r in rows if _is_verified(r)]
@@ -188,8 +190,8 @@ def build_handoff(db: Session) -> HandoffOut:
         and r.categorization_status in ("auto_approved", "corrected")
     )
 
-    answers = _owner_answers(db)
-    corrections = _recent_corrections(db)
+    answers = _owner_answers(db, business_id)
+    corrections = _recent_corrections(db, business_id)
     corrections_out = [CorrectionMemoryOut.model_validate(c) for c in corrections]
     scenario = _scenario_for(rows)
 

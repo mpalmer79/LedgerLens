@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends
 from fastapi.responses import StreamingResponse
 from sqlalchemy.orm import Session
 
+from ledgerlens.actor import DemoActor, get_demo_actor
 from ledgerlens.api.schemas import LedgerOut, LedgerRow, LedgerTrust
 from ledgerlens.config import get_settings
 from ledgerlens.db import get_db
@@ -20,18 +21,18 @@ from ledgerlens.repositories import (
 router = APIRouter(prefix="/ledger", tags=["ledger"])
 
 
-def _build_rows(db: Session) -> list[LedgerRow]:
+def _build_rows(db: Session, business_id: str | None) -> list[LedgerRow]:
     tx_repo = TransactionRepo(db)
     cat_repo = CategorizationRepo(db)
     rev_repo = ReviewRepo(db)
     coa = CategoryRepo(db)
 
     rows: list[LedgerRow] = []
-    # Iterate all transactions (pagination is a future concern; ledger export
-    # is meant to be the full ledger at v0 scale).
+    # Iterate all transactions for this business (pagination is a future
+    # concern; ledger export is meant to be the full ledger at v0 scale).
     page = 0
     while True:
-        items = tx_repo.list(limit=200, offset=page * 200)
+        items = tx_repo.list_for_business(business_id, limit=200, offset=page * 200)
         if not items:
             break
         for tx in items:
@@ -176,8 +177,11 @@ def _compute_trust(rows: list[LedgerRow]) -> LedgerTrust:
 
 
 @router.get("", response_model=LedgerOut)
-def get_ledger(db: Session = Depends(get_db)) -> LedgerOut:
-    rows = _build_rows(db)
+def get_ledger(
+    db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
+) -> LedgerOut:
+    rows = _build_rows(db, actor.business_id)
     return LedgerOut(
         total=len(rows),
         unresolved=_unresolved_count(rows),
@@ -187,8 +191,11 @@ def get_ledger(db: Session = Depends(get_db)) -> LedgerOut:
 
 
 @router.get("/export.csv")
-def export_csv(db: Session = Depends(get_db)) -> StreamingResponse:
-    rows = _build_rows(db)
+def export_csv(
+    db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
+) -> StreamingResponse:
+    rows = _build_rows(db, actor.business_id)
     trust = _compute_trust(rows)
     buf = io.StringIO()
     writer = csv.writer(buf)

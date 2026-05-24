@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
+from ledgerlens.actor import DemoActor, get_demo_actor
 from ledgerlens.api.schemas import (
     AccountantReviewRequest,
     ApproveReview,
@@ -37,16 +38,22 @@ def list_queue(
     limit: int = 50,
     offset: int = 0,
     db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
 ) -> ReviewQueueOut:
     limit = max(1, min(limit, 200))
     offset = max(0, offset)
     cat_repo = CategorizationRepo(db)
-    needs = cat_repo.list_by_status(ResultStatus.NEEDS_REVIEW, limit=limit, offset=offset)
+    needs = cat_repo.list_by_status(
+        ResultStatus.NEEDS_REVIEW,
+        business_id=actor.business_id,
+        limit=limit,
+        offset=offset,
+    )
 
     items: list[ReviewQueueItem] = []
     tx_repo = TransactionRepo(db)
     for result in needs:
-        tx = tx_repo.get(result.transaction_id)
+        tx = tx_repo.get_for_business(result.transaction_id, actor.business_id)
         if not tx:
             continue
         items.append(
@@ -59,8 +66,10 @@ def list_queue(
     return ReviewQueueOut(total=len(items), items=items)
 
 
-def _latest_or_404(db: Session, tx_id: str) -> tuple[Transaction, CategorizationResult]:
-    tx = TransactionRepo(db).get(tx_id)
+def _latest_or_404(
+    db: Session, tx_id: str, business_id: str | None
+) -> tuple[Transaction, CategorizationResult]:
+    tx = TransactionRepo(db).get_for_business(tx_id, business_id)
     if not tx:
         raise NotFound("transaction", tx_id)
     latest = CategorizationRepo(db).latest_for_transaction(tx_id)
@@ -78,8 +87,9 @@ def approve(
     transaction_id: str,
     payload: ApproveReview,
     db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
 ) -> ReviewDecisionOut:
-    tx, latest = _latest_or_404(db, transaction_id)
+    tx, latest = _latest_or_404(db, transaction_id, actor.business_id)
     # Safety backstop: an answer flagged for accountant follow-up must not
     # silently finalize the predicted category. The /questions UI should
     # route such answers to the accountant-review endpoint instead. This
@@ -90,6 +100,7 @@ def approve(
             "Use POST /review-queue/{transaction_id}/accountant-review instead."
         )
     decision = ReviewDecision(
+        business_id=tx.business_id,
         transaction_id=tx.id,
         categorization_result_id=latest.id,
         reviewer_action=ReviewerAction.APPROVE,
@@ -128,11 +139,13 @@ def correct(
     transaction_id: str,
     payload: CorrectReview,
     db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
 ) -> ReviewDecisionOut:
-    tx, latest = _latest_or_404(db, transaction_id)
+    tx, latest = _latest_or_404(db, transaction_id, actor.business_id)
     if not CategoryRepo(db).exists(payload.selected_category_code):
         raise ValidationFailed("Unknown category code", code=payload.selected_category_code)
     decision = ReviewDecision(
+        business_id=tx.business_id,
         transaction_id=tx.id,
         categorization_result_id=latest.id,
         reviewer_action=ReviewerAction.CORRECT,
@@ -193,9 +206,11 @@ def mark_uncategorizable(
     transaction_id: str,
     payload: UncategorizableReview,
     db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
 ) -> ReviewDecisionOut:
-    tx, latest = _latest_or_404(db, transaction_id)
+    tx, latest = _latest_or_404(db, transaction_id, actor.business_id)
     decision = ReviewDecision(
+        business_id=tx.business_id,
         transaction_id=tx.id,
         categorization_result_id=latest.id,
         reviewer_action=ReviewerAction.MARK_UNCATEGORIZABLE,
@@ -233,6 +248,7 @@ def mark_for_accountant_review(
     transaction_id: str,
     payload: AccountantReviewRequest,
     db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
 ) -> ReviewDecisionOut:
     """Defer a row to an accountant.
 
@@ -242,8 +258,9 @@ def mark_for_accountant_review(
     accountant-review follow-up section with the owner's question +
     answer label inline.
     """
-    tx, latest = _latest_or_404(db, transaction_id)
+    tx, latest = _latest_or_404(db, transaction_id, actor.business_id)
     decision = ReviewDecision(
+        business_id=tx.business_id,
         transaction_id=tx.id,
         categorization_result_id=latest.id,
         reviewer_action=ReviewerAction.MARK_FOR_ACCOUNTANT_REVIEW,
