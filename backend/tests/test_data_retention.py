@@ -31,8 +31,8 @@ def db_session() -> Session:
         poolclass=StaticPool,
     )
     Base.metadata.create_all(bind=engine)
-    SessionLocal = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False)
-    session = SessionLocal()
+    make_session = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False)
+    session = make_session()
     yield session
     session.close()
     engine.dispose()
