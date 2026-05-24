@@ -41,6 +41,9 @@ const DEMO = readPage("demo/page.tsx");
 const LEDGER = readPage("ledger/page.tsx");
 const EVALS = readPage("evals/page.tsx");
 const APP_DASH = readPage("app/page.tsx");
+const CLEANUP = readPage("cleanup/page.tsx");
+const QUESTIONS = readPage("questions/page.tsx");
+const HANDOFF = readPage("handoff/page.tsx");
 
 // ── Homepage ──────────────────────────────────────────────────────────────
 
@@ -273,5 +276,119 @@ describe("app dashboard content", () => {
 
   it("flags portfolio demo mode when active", () => {
     expect(APP_DASH).toContain("Portfolio demo mode");
+  });
+});
+
+// ── Cleanup ──────────────────────────────────────────────────────────────
+
+
+describe("cleanup page content", () => {
+  it("frames the page as monthly bookkeeping cleanup", () => {
+    expect(CLEANUP).toContain("Monthly bookkeeping cleanup");
+    expect(CLEANUP.toLowerCase()).toMatch(/this month/);
+  });
+
+  it("renders all six guided steps", () => {
+    expect(CLEANUP).toContain("Import this month");
+    expect(CLEANUP).toContain("Classify obvious vendors");
+    expect(CLEANUP).toContain("Review uncertain items");
+    expect(CLEANUP).toContain("Answer owner questions");
+    expect(CLEANUP).toContain("Verify the ledger");
+    expect(CLEANUP).toContain("Export accountant handoff package");
+  });
+
+  it("links each step to its workflow page", () => {
+    // Step actionHref values are populated via ternary expressions, so we
+    // assert that each target URL literal appears anywhere in the source.
+    for (const href of [
+      "/transactions/import",
+      "/transactions",
+      "/review",
+      "/questions",
+      "/ledger",
+      "/handoff",
+    ]) {
+      expect(CLEANUP).toContain(`"${href}"`);
+    }
+  });
+
+  it("renders the CleanupImpactSummary when handoff data is available", () => {
+    expect(CLEANUP).toContain("CleanupImpactSummary");
+  });
+
+  it("offers an empty-state shortcut to the guided demo and CSV import", () => {
+    expect(CLEANUP).toContain('href="/demo"');
+    expect(CLEANUP).toContain('href="/transactions/import"');
+  });
+});
+
+// ── Questions ────────────────────────────────────────────────────────────
+
+
+describe("questions page content", () => {
+  it("frames itself as plain-English questions", () => {
+    expect(QUESTIONS).toContain("Owner questions");
+    expect(QUESTIONS.toLowerCase()).toMatch(/plain[\s-]english/);
+  });
+
+  it("ships at least four question templates", () => {
+    // The TEMPLATES array contains four pattern-matched templates plus a default.
+    expect(QUESTIONS).toContain("What was this transfer for?");
+    expect(QUESTIONS).toContain("What was this purchase mainly for?");
+    expect(QUESTIONS).toContain("Was this vehicle expense business-related?");
+    expect(QUESTIONS).toContain("Is this a business software or service subscription?");
+  });
+
+  it("records owner answers as reviewer notes via existing endpoints", () => {
+    expect(QUESTIONS).toContain("correctReview");
+    expect(QUESTIONS).toContain("approveReview");
+    expect(QUESTIONS).toContain("markUncategorizable");
+  });
+
+  it("does not force accounting jargon as the first thing the owner sees", () => {
+    // The first multiple-choice label inside each template is plain English,
+    // never a bare COA code.
+    expect(QUESTIONS).toMatch(/Vendor payment|Office supplies|Business fuel|Software subscription/);
+  });
+
+  it("links to the full review queue as an escape hatch", () => {
+    expect(QUESTIONS).toContain('href="/review"');
+  });
+});
+
+// ── Handoff ──────────────────────────────────────────────────────────────
+
+
+describe("handoff page content", () => {
+  it("renders all required handoff sections", () => {
+    expect(HANDOFF).toContain("Accountant handoff package");
+    expect(HANDOFF).toContain("Ready for accountant");
+    expect(HANDOFF).toContain("Needs owner / accountant review");
+    expect(HANDOFF).toContain("Questions answered by owner");
+    expect(HANDOFF).toContain("Corrections learned this month");
+  });
+
+  it("renders TrustPanel + CleanupImpactSummary", () => {
+    expect(HANDOFF).toContain("TrustPanel");
+    expect(HANDOFF).toContain("CleanupImpactSummary");
+  });
+
+  it("offers both markdown handoff and CSV ledger downloads", () => {
+    expect(HANDOFF).toContain("getHandoffMarkdownUrl");
+    expect(HANDOFF).toContain("getLedgerExportUrl");
+    expect(HANDOFF.toLowerCase()).toContain("download handoff summary");
+    expect(HANDOFF.toLowerCase()).toContain("download full ledger csv");
+  });
+
+  it("includes the honesty footer on trust + time-saved", () => {
+    expect(HANDOFF).toContain("workflow-level, not raw model accuracy");
+    // JSX wraps lines; check tokens individually.
+    expect(HANDOFF).toContain("financial guarantee");
+    expect(HANDOFF.toLowerCase()).toContain("not a");
+  });
+
+  it("links into the questions and review workflows", () => {
+    expect(HANDOFF).toContain('href="/questions"');
+    expect(HANDOFF).toContain('href="/review"');
   });
 });

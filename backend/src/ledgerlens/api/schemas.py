@@ -213,6 +213,49 @@ class LedgerOut(BaseModel):
     trust: LedgerTrust
 
 
+# ── Handoff (small-business cleanup report) ────────────────────────────────
+
+
+class CleanupImpact(BaseModel):
+    """Conservative cleanup-impact estimate, surfaced to the owner.
+
+    The "minutes saved" figure is *not* a financial number. It uses two
+    deliberately conservative per-transaction estimates (1.5 minutes for
+    a deterministic-layer hit, 2.0 for a memory replay) and labels the
+    result as an estimate in the UI.
+    """
+
+    transactions_imported: int
+    handled_by_rules_or_memory: int
+    handled_by_correction_memory: int
+    routed_to_review: int
+    corrections_learned: int
+    estimated_minutes_saved: float
+
+
+class HandoffOwnerAnswer(BaseModel):
+    """An owner's plain-English answer captured during the review flow."""
+
+    transaction_id: str
+    transaction_description: str
+    answer: str  # reviewer_note text
+    selected_category_code: str | None
+    selected_category_name: str | None
+    reviewer_action: str  # "approve" | "correct" | "mark_uncategorizable"
+
+
+class HandoffOut(BaseModel):
+    generated_at: datetime
+    cleanup_period_label: str
+    trust: LedgerTrust
+    impact: CleanupImpact
+
+    ready_for_accountant: list[LedgerRow]
+    needs_review: list[LedgerRow]
+    owner_answers: list[HandoffOwnerAnswer]
+    corrections_learned: list["CorrectionMemoryOut"]
+
+
 # ── Audit ───────────────────────────────────────────────────────────────────
 
 
