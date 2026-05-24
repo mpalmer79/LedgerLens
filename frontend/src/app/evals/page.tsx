@@ -570,26 +570,119 @@ export default function EvalsPage() {
                     </tbody>
                   </table>
                 </div>
-                {/* Unmapped intents — useful debugging signal */}
+                {/* Per-business mapped-rule breakdown (PR #43) */}
                 {(() => {
                   const mapped = comparison.runs.find(
                     (r) => r.categorizer === "rule-categorizer-mapped-v1",
                   );
-                  if (!mapped?.mapping?.enabled) return null;
-                  const top = mapped.mapping.top_unmapped_intents.slice(0, 5);
-                  if (top.length === 0) return null;
+                  const perBusiness = mapped?.mapping?.per_business;
+                  const summary = mapped?.mapping?.summary;
+                  if (!perBusiness) return null;
+                  const entries = Object.entries(perBusiness);
+                  if (entries.length === 0) return null;
+                  const BUSINESS_NAMES: Record<string, string> = {
+                    "auto-repair": "Granite State Auto Service",
+                    "coffee-shop": "Lighthouse Roasters",
+                    "design-agency": "Northwind Design Co.",
+                  };
                   return (
-                    <p className="mt-3 text-[12px] text-text-subtle">
-                      Top unmapped intents:{" "}
-                      {top.map((e, i) => (
-                        <span key={e.intent}>
-                          <span className="mono">{e.intent}</span> ({e.count})
-                          {i < top.length - 1 ? ", " : ""}
-                        </span>
-                      ))}
-                      . These rule matches fell back to the rule&apos;s default
-                      category code because no per-business override exists yet.
-                    </p>
+                    <div className="mt-6">
+                      <h3 className="font-display text-[18px] font-medium text-text-primary">
+                        Per-business mapped-rule breakdown
+                      </h3>
+                      <p className="mt-1 text-[13px] text-text-secondary">
+                        How the mapped rule layer performs on each eval
+                        business. Mapping fires when a rule&apos;s{" "}
+                        <span className="mono">intent</span> has a curated
+                        override; fallback uses the rule&apos;s seed-COA
+                        default; review is the safe-abstention bucket.
+                      </p>
+                      {summary && (summary.best_business_id || summary.weakest_business_id) && (
+                        <p className="mt-2 text-[12px] text-text-subtle">
+                          {summary.best_business_id && (
+                            <>
+                              Best mapped-row accuracy:{" "}
+                              <span className="font-medium text-text-primary">
+                                {BUSINESS_NAMES[summary.best_business_id] ?? summary.best_business_id}
+                              </span>
+                            </>
+                          )}
+                          {summary.best_business_id && summary.weakest_business_id && " · "}
+                          {summary.weakest_business_id && (
+                            <>
+                              Biggest rule gap:{" "}
+                              <span className="font-medium text-text-primary">
+                                {BUSINESS_NAMES[summary.weakest_business_id] ??
+                                  summary.weakest_business_id}
+                              </span>
+                            </>
+                          )}
+                        </p>
+                      )}
+                      <div className="mt-3 overflow-x-auto rounded-lg border border-brand-200 bg-brand-100">
+                        <table className="w-full text-left text-[13px]">
+                          <thead className="border-b border-surface-border">
+                            <tr>
+                              <th className="field-label px-3 py-2">Business</th>
+                              <th className="field-label px-3 py-2 text-right">Mapped</th>
+                              <th className="field-label px-3 py-2 text-right">Fallback</th>
+                              <th className="field-label px-3 py-2 text-right">Review</th>
+                              <th className="field-label px-3 py-2 text-right">Correct (mapped)</th>
+                              <th className="field-label px-3 py-2">Top unmapped intents</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {entries.map(([bid, b], i) => (
+                              <tr key={bid} className={i % 2 === 1 ? "bg-surface-sunken/30" : ""}>
+                                <td className="px-3 py-2 text-text-primary">
+                                  <p className="font-medium">
+                                    {BUSINESS_NAMES[bid] ?? bid}
+                                  </p>
+                                  <p className="mono text-[11px] text-text-subtle">{bid}</p>
+                                </td>
+                                <td className="mono px-3 py-2 text-right">
+                                  {b.mapped_intent_count}
+                                </td>
+                                <td className="mono px-3 py-2 text-right">
+                                  {b.fallback_to_default_count}
+                                </td>
+                                <td className="mono px-3 py-2 text-right text-amber-700">
+                                  {b.routed_to_review_count}
+                                </td>
+                                <td className="mono px-3 py-2 text-right text-brand-700">
+                                  {b.correct_when_mapped} / {b.mapped_intent_count}
+                                </td>
+                                <td className="px-3 py-2 text-[11px] text-text-secondary">
+                                  {b.top_unmapped_intents.length === 0 ? (
+                                    <span className="text-text-subtle">— (all intents mapped)</span>
+                                  ) : (
+                                    b.top_unmapped_intents
+                                      .slice(0, 3)
+                                      .map((e) => `${e.intent} (${e.count})`)
+                                      .join(", ")
+                                  )}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                      <p className="mt-2 text-[11px] text-text-subtle">
+                        Correct-when-mapped shows ground-truth matches among
+                        the rows where the mapping fired. The honest read:
+                        coverage and intent-correctness are not the same as
+                        end-to-end COA accuracy — see{" "}
+                        <a
+                          href={`${REPO_URL}/blob/main/docs/RULE_GAP_ANALYSIS.md`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="underline"
+                        >
+                          docs/RULE_GAP_ANALYSIS.md
+                        </a>{" "}
+                        for the engineering follow-up.
+                      </p>
+                    </div>
                   );
                 })()}
                 <p className="mt-4 rounded-md border border-amber-200 bg-amber-50 p-3 text-[12px] text-amber-900">

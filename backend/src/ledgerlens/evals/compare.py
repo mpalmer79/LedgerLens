@@ -124,12 +124,16 @@ COA_CAVEAT = (
     "the default seed chart of accounts, while the three synthetic eval "
     "businesses each use their own COA numbering. The `rules-only-mapped` "
     "mode resolves each rule's intent through a per-business map "
-    "(see `ledgerlens.data.business_rule_maps`) and produces non-zero "
-    "accuracy on the auto-repair eval slice where a curated map exists. "
-    "Coffee-shop and design-agency still fall back to the generic "
-    "intent map and show modest improvement. The deeper value of the rule "
-    "layer in production is cost reduction (zero model spend on matched "
-    "rows), not raw accuracy on this synthetic benchmark."
+    "(see `ledgerlens.data.business_rule_maps`) — curated maps now exist "
+    "for **all three** eval businesses (auto-repair, coffee-shop, "
+    "design-agency). Two of the three businesses' maps additionally use "
+    "`block_fallback_intents` to refuse the rule's seed-COA default when "
+    "it would silently miscategorize on the dataset COA (e.g. seed 6120 = "
+    "Meals on coffee-shop is Office Supplies; we route to review instead). "
+    "The deeper value of the rule layer in production is cost reduction "
+    "(zero model spend on matched rows), not raw accuracy on this "
+    "synthetic benchmark — see `docs/RULE_GAP_ANALYSIS.md` for the "
+    "concrete next-best rule work."
 )
 
 
@@ -212,9 +216,9 @@ def render_markdown(summaries: list[RunSummary]) -> str:
             "",
             "## What this report does NOT show",
             "",
-            "- Per-tenant intent maps for every eval business. Only the "
-            "auto-repair business has a curated map today; coffee-shop and "
-            "design-agency mapped runs fall back to the generic seed-COA map.",
+            "- Per-business breakdowns of mapped/fallback/review counts. "
+            "See `metrics.overall.mapping.per_business` in the mapped run JSON "
+            "or the `/evals` Business-specific rule mapping section.",
             "- Confidence calibration after temperature scaling / Platt scaling. "
             "Raw model probabilities only.",
             "- Real correction-memory hit rates from a production stream. The "

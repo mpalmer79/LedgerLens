@@ -71,6 +71,7 @@ def _slice(
     *,
     valid_codes: set[str] | None = None,
     model_only_cost_per_100: float | None = None,
+    tx_to_business: dict[str, str] | None = None,
 ) -> MetricsSlice:
     # Restrict ground truth to the transactions present in this prediction slice.
     # Without this, per-category support/recall would count every transaction in
@@ -95,7 +96,7 @@ def _slice(
             model_only_cost_per_100=model_only_cost_per_100,
         ),
         calibration=metrics.calibration_metrics(predictions, sliced_truth),
-        mapping=metrics.mapping_metrics(predictions, sliced_truth),
+        mapping=metrics.mapping_metrics(predictions, sliced_truth, tx_to_business=tx_to_business),
     )
 
 
@@ -111,6 +112,7 @@ def run_eval(dataset: Dataset, categorizer: Categorizer) -> RunResult:
     all_transactions: list[Transaction] = []
     ground_truth: dict[str, str] = {}
     valid_codes: set[str] = set()
+    tx_to_business: dict[str, str] = {}
 
     for business_data, tx in dataset.iter_transactions():
         result = categorizer.categorize(
@@ -121,6 +123,7 @@ def run_eval(dataset: Dataset, categorizer: Categorizer) -> RunResult:
         predictions.append(result)
         all_transactions.append(tx)
         ground_truth[tx.id] = tx.proposed_category_code
+        tx_to_business[tx.id] = business_data.business.id
         for account in business_data.chart_of_accounts:
             valid_codes.add(account.code)
 
@@ -138,7 +141,12 @@ def run_eval(dataset: Dataset, categorizer: Categorizer) -> RunResult:
             git_sha=_git_sha(),
         ),
         metrics=RunMetrics(
-            overall=_slice(predictions, ground_truth, valid_codes=valid_codes),
+            overall=_slice(
+                predictions,
+                ground_truth,
+                valid_codes=valid_codes,
+                tx_to_business=tx_to_business,
+            ),
             non_adversarial=_slice(non_adv, ground_truth, valid_codes=valid_codes),
             adversarial=_slice(adv, ground_truth, valid_codes=valid_codes),
         ),

@@ -207,19 +207,21 @@ export default function RulesPage() {
 
       <div className="mt-6 rounded-lg border border-brand-200 bg-brand-100 p-4">
         <p className="text-[13px] text-text-primary">
-          See how mapped deterministic rules perform in evals.
+          Mapped-rule eval coverage now includes auto repair, coffee shop, and
+          design agency datasets.
         </p>
         <p className="mt-1 text-[12px] text-text-secondary">
-          The eval harness ships a generic rules-only baseline alongside a
-          mapped variant. The mapped variant resolves each rule&apos;s intent
-          through the active business&apos;s mapping before applying it to the
-          dataset&apos;s chart of accounts.
+          Each eval business has its own curated intent map (separate from the
+          production demo&apos;s Granite State map shown above). The mapped
+          variant resolves each rule&apos;s intent through the eval
+          business&apos;s mapping; missing intents safely route to review
+          instead of forcing a wrong category.
         </p>
         <Link
           href="/evals#business-specific-rule-mapping"
           className="mt-3 inline-flex items-center gap-1 rounded-md bg-brand-600 px-3 py-1.5 text-[13px] font-medium text-white hover:bg-brand-500"
         >
-          View rule-mapping evals →
+          View multi-business rule evals →
         </Link>
       </div>
     </AppShell>
