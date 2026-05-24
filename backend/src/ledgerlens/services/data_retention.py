@@ -93,9 +93,7 @@ def delete_business_workflow_data(
     )
 
     # 2. Review decisions.
-    rev_result = db.execute(
-        delete(ReviewDecision).where(ReviewDecision.business_id == business_id)
-    )
+    rev_result = db.execute(delete(ReviewDecision).where(ReviewDecision.business_id == business_id))
 
     # 3. Correction memory rows. We delete by business_id (the row's own
     #    tenant scope) rather than by source_transaction_id, so legacy
@@ -105,9 +103,7 @@ def delete_business_workflow_data(
     )
 
     # 4. Transactions themselves.
-    tx_result = db.execute(
-        delete(Transaction).where(Transaction.business_id == business_id)
-    )
+    tx_result = db.execute(delete(Transaction).where(Transaction.business_id == business_id))
 
     summary = DeletionSummary(
         business_id=business_id,

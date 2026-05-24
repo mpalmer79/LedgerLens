@@ -71,9 +71,7 @@ def create_batch(
     errors: list[dict[str, object]] = []
     for i, item in enumerate(payload.transactions):
         try:
-            created.append(
-                TransactionRepo(db).add(_to_model(item, business_id=actor.business_id))
-            )
+            created.append(TransactionRepo(db).add(_to_model(item, business_id=actor.business_id)))
         except Exception as exc:  # noqa: BLE001
             errors.append({"index": i, "error": type(exc).__name__, "message": str(exc)})
     if created:
@@ -106,11 +104,7 @@ def list_transactions(
         .limit(limit)
         .all()
     )
-    total = (
-        db.query(Transaction)
-        .filter(Transaction.business_id == actor.business_id)
-        .count()
-    )
+    total = db.query(Transaction).filter(Transaction.business_id == actor.business_id).count()
     return TransactionListOut(
         total=total,
         items=[TransactionOut.model_validate(t) for t in items],
