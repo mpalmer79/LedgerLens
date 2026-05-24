@@ -113,6 +113,26 @@ def main() -> int:
         return 0
 
     # Case 3: app tables exist but alembic_version is missing.
+    # For the public demo (fictional data only), the operator can opt in
+    # to an automatic drop-and-recreate by setting DEMO_ALLOW_DB_RESET=true.
+    import os
+
+    if os.environ.get("DEMO_ALLOW_DB_RESET", "").lower() == "true":
+        print(
+            "[bootstrap] DEMO_ALLOW_DB_RESET=true — dropping all tables and "
+            "re-running migrations from scratch. This is safe because the "
+            "public demo contains only fictional sample data."
+        )
+        engine = create_engine(url)
+        try:
+            Base.metadata.drop_all(bind=engine)
+        finally:
+            engine.dispose()
+        print("[bootstrap] tables dropped; running: alembic upgrade head")
+        command.upgrade(_alembic_config(), "head")
+        print("[bootstrap] migration complete (fresh schema)")
+        return 0
+
     print(
         "[bootstrap] REFUSING TO STAMP AUTOMATICALLY.\n"
         "[bootstrap] App tables exist but the alembic_version table is missing.\n"
@@ -121,12 +141,12 @@ def main() -> int:
         "[bootstrap]\n"
         "[bootstrap] Choose one (operator decision — never silent):\n"
         "[bootstrap]\n"
-        "[bootstrap]   A. RESET (recommended for the public demo, data is fictional):\n"
-        "[bootstrap]      Drop the Postgres DB on Railway, redeploy. The next boot\n"
-        "[bootstrap]      will hit the 'fresh database' path above.\n"
+        "[bootstrap]   A. SET DEMO_ALLOW_DB_RESET=true on Railway and redeploy.\n"
+        "[bootstrap]      The next boot will drop all tables and re-run migrations.\n"
+        "[bootstrap]      Safe for the public demo — data is fictional.\n"
         "[bootstrap]\n"
-        "[bootstrap]   B. STAMP (only if you have verified column-by-column that\n"
-        "[bootstrap]      the live schema matches the head revision):\n"
+        "[bootstrap]   B. STAMP MANUALLY (only if you have verified column-by-column\n"
+        "[bootstrap]      that the live schema matches the head revision):\n"
         "[bootstrap]      Run `alembic stamp head` once against the live DB, then\n"
         "[bootstrap]      redeploy. Subsequent boots will hit the upgrade path.\n"
         "[bootstrap]\n"
