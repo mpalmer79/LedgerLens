@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-24T03:48:43+00:00",
+  "generated_at": "2026-05-24T04:10:56+00:00",
   "runs": [
     {
       "categorizer": "claude-haiku-v1",
@@ -18,13 +18,13 @@
     {
       "categorizer": "rule-categorizer-mapped-v1",
       "filename": "2026-05-24-rule-categorizer-mapped-v1.json",
-      "timestamp_utc": "2026-05-24T03:47:51+00:00",
+      "timestamp_utc": "2026-05-24T04:10:03+00:00",
       "transactions": 302,
-      "overall_accuracy": 0.006622516556291391,
-      "non_adversarial_accuracy": 0.007380073800738007,
-      "adversarial_accuracy": 0.0,
+      "overall_accuracy": 0.023178807947019868,
+      "non_adversarial_accuracy": 0.01845018450184502,
+      "adversarial_accuracy": 0.06451612903225806,
       "cost_per_100": 0.0,
-      "p95_latency_ms": 0.02608800059533678,
+      "p95_latency_ms": 0.02379299985477701,
       "routing": {
         "total": 302,
         "auto_approved": 27,
@@ -33,7 +33,7 @@
         "failed": 0,
         "auto_approved_rate": 0.08940397350993377,
         "review_rate": 0.1490066225165563,
-        "auto_approved_accuracy": 0.07407407407407407,
+        "auto_approved_accuracy": 0.2222222222222222,
         "model_called": 0,
         "model_called_rate": 0.0,
         "zero_cost": 302,
@@ -50,7 +50,7 @@
         "overall": {
           "label": "overall",
           "count": 302,
-          "ece": 0.2008,
+          "ece": 0.1842,
           "mce": 0.8793,
           "buckets": [
             {
@@ -81,7 +81,7 @@
               "bucket": "0.4-0.5",
               "count": 4,
               "predicted_confidence_mean": 0.4,
-              "actual_accuracy": 0.0
+              "actual_accuracy": 0.25
             },
             {
               "bucket": "0.5-0.6",
@@ -111,10 +111,10 @@
               "bucket": "0.9-1.0",
               "count": 27,
               "predicted_confidence_mean": 0.9255555555555556,
-              "actual_accuracy": 0.07407407407407407
+              "actual_accuracy": 0.2222222222222222
             }
           ],
-          "warning": "High-confidence bucket (0.9-1.0, n=27) actual accuracy 7.41% is materially below the 90% expectation. Auto-approved predictions in this range cannot be trusted blindly."
+          "warning": "High-confidence bucket (0.9-1.0, n=27) actual accuracy 22.22% is materially below the 90% expectation. Auto-approved predictions in this range cannot be trusted blindly."
         },
         "model_only": {
           "label": "model_only",
@@ -188,7 +188,7 @@
         "deterministic": {
           "label": "deterministic",
           "count": 302,
-          "ece": 0.2008,
+          "ece": 0.1842,
           "mce": 0.8793,
           "buckets": [
             {
@@ -219,7 +219,7 @@
               "bucket": "0.4-0.5",
               "count": 4,
               "predicted_confidence_mean": 0.4,
-              "actual_accuracy": 0.0
+              "actual_accuracy": 0.25
             },
             {
               "bucket": "0.5-0.6",
@@ -249,35 +249,22 @@
               "bucket": "0.9-1.0",
               "count": 27,
               "predicted_confidence_mean": 0.9255555555555556,
-              "actual_accuracy": 0.07407407407407407
+              "actual_accuracy": 0.2222222222222222
             }
           ],
-          "warning": "High-confidence bucket (0.9-1.0, n=27) actual accuracy 7.41% is materially below the 90% expectation. Auto-approved predictions in this range cannot be trusted blindly."
+          "warning": "High-confidence bucket (0.9-1.0, n=27) actual accuracy 22.22% is materially below the 90% expectation. Auto-approved predictions in this range cannot be trusted blindly."
         }
       },
       "mapping": {
         "enabled": true,
-        "mapped_intent_count": 5,
-        "fallback_to_default_count": 67,
+        "mapped_intent_count": 72,
+        "fallback_to_default_count": 0,
         "routed_to_review_count": 0,
-        "unmapped_intent_count": 67,
-        "mapping_override_count": 5,
-        "correct_when_mapped": 2,
+        "unmapped_intent_count": 0,
+        "mapping_override_count": 72,
+        "correct_when_mapped": 7,
         "correct_when_fallback": 0,
-        "top_unmapped_intents": [
-          {
-            "intent": "merchant_fees",
-            "count": 40
-          },
-          {
-            "intent": "software_subscription",
-            "count": 24
-          },
-          {
-            "intent": "office_supplies",
-            "count": 3
-          }
-        ],
+        "top_unmapped_intents": [],
         "top_rule_intents": [
           {
             "intent": "merchant_fees",
@@ -295,19 +282,102 @@
             "intent": "meals_entertainment",
             "count": 1
           }
-        ]
+        ],
+        "per_business": {
+          "auto-repair": {
+            "enabled": true,
+            "mapped_intent_count": 5,
+            "fallback_to_default_count": 0,
+            "routed_to_review_count": 0,
+            "unmapped_intent_count": 0,
+            "mapping_override_count": 5,
+            "correct_when_mapped": 2,
+            "correct_when_fallback": 0,
+            "top_unmapped_intents": [],
+            "top_rule_intents": [
+              {
+                "intent": "office_supplies",
+                "count": 3
+              },
+              {
+                "intent": "meals_entertainment",
+                "count": 1
+              },
+              {
+                "intent": "software_subscription",
+                "count": 1
+              }
+            ]
+          },
+          "coffee-shop": {
+            "enabled": true,
+            "mapped_intent_count": 28,
+            "fallback_to_default_count": 0,
+            "routed_to_review_count": 0,
+            "unmapped_intent_count": 0,
+            "mapping_override_count": 28,
+            "correct_when_mapped": 5,
+            "correct_when_fallback": 0,
+            "top_unmapped_intents": [],
+            "top_rule_intents": [
+              {
+                "intent": "merchant_fees",
+                "count": 22
+              },
+              {
+                "intent": "office_supplies",
+                "count": 3
+              },
+              {
+                "intent": "software_subscription",
+                "count": 3
+              }
+            ]
+          },
+          "design-agency": {
+            "enabled": true,
+            "mapped_intent_count": 39,
+            "fallback_to_default_count": 0,
+            "routed_to_review_count": 0,
+            "unmapped_intent_count": 0,
+            "mapping_override_count": 39,
+            "correct_when_mapped": 0,
+            "correct_when_fallback": 0,
+            "top_unmapped_intents": [],
+            "top_rule_intents": [
+              {
+                "intent": "software_subscription",
+                "count": 21
+              },
+              {
+                "intent": "merchant_fees",
+                "count": 18
+              }
+            ]
+          }
+        },
+        "summary": {
+          "best_business_id": "coffee-shop",
+          "weakest_business_id": "design-agency",
+          "businesses_with_mapping_enabled": [
+            "coffee-shop",
+            "auto-repair",
+            "design-agency"
+          ],
+          "top_unmapped_intents_overall": []
+        }
       }
     },
     {
       "categorizer": "rule-categorizer-v1",
       "filename": "2026-05-24-rule-categorizer-v1.json",
-      "timestamp_utc": "2026-05-24T03:47:46+00:00",
+      "timestamp_utc": "2026-05-24T04:10:02+00:00",
       "transactions": 302,
       "overall_accuracy": 0.0,
       "non_adversarial_accuracy": 0.0,
       "adversarial_accuracy": 0.0,
       "cost_per_100": 0.0,
-      "p95_latency_ms": 0.02269200012960937,
+      "p95_latency_ms": 0.028622000172617845,
       "routing": {
         "total": 302,
         "auto_approved": 27,
@@ -548,7 +618,51 @@
         "correct_when_mapped": 0,
         "correct_when_fallback": 0,
         "top_unmapped_intents": [],
-        "top_rule_intents": []
+        "top_rule_intents": [],
+        "per_business": {
+          "auto-repair": {
+            "enabled": false,
+            "mapped_intent_count": 0,
+            "fallback_to_default_count": 0,
+            "routed_to_review_count": 0,
+            "unmapped_intent_count": 0,
+            "mapping_override_count": 0,
+            "correct_when_mapped": 0,
+            "correct_when_fallback": 0,
+            "top_unmapped_intents": [],
+            "top_rule_intents": []
+          },
+          "coffee-shop": {
+            "enabled": false,
+            "mapped_intent_count": 0,
+            "fallback_to_default_count": 0,
+            "routed_to_review_count": 0,
+            "unmapped_intent_count": 0,
+            "mapping_override_count": 0,
+            "correct_when_mapped": 0,
+            "correct_when_fallback": 0,
+            "top_unmapped_intents": [],
+            "top_rule_intents": []
+          },
+          "design-agency": {
+            "enabled": false,
+            "mapped_intent_count": 0,
+            "fallback_to_default_count": 0,
+            "routed_to_review_count": 0,
+            "unmapped_intent_count": 0,
+            "mapping_override_count": 0,
+            "correct_when_mapped": 0,
+            "correct_when_fallback": 0,
+            "top_unmapped_intents": [],
+            "top_rule_intents": []
+          }
+        },
+        "summary": {
+          "best_business_id": null,
+          "weakest_business_id": null,
+          "businesses_with_mapping_enabled": [],
+          "top_unmapped_intents_overall": []
+        }
       }
     },
     {
@@ -794,6 +908,6 @@
     }
   ],
   "notes": [
-    "Rules are tenant-specific. The `rules-only` (generic) baseline targets the default seed chart of accounts, while the three synthetic eval businesses each use their own COA numbering. The `rules-only-mapped` mode resolves each rule's intent through a per-business map (see `ledgerlens.data.business_rule_maps`) and produces non-zero accuracy on the auto-repair eval slice where a curated map exists. Coffee-shop and design-agency still fall back to the generic intent map and show modest improvement. The deeper value of the rule layer in production is cost reduction (zero model spend on matched rows), not raw accuracy on this synthetic benchmark."
+    "Rules are tenant-specific. The `rules-only` (generic) baseline targets the default seed chart of accounts, while the three synthetic eval businesses each use their own COA numbering. The `rules-only-mapped` mode resolves each rule's intent through a per-business map (see `ledgerlens.data.business_rule_maps`) \u2014 curated maps now exist for **all three** eval businesses (auto-repair, coffee-shop, design-agency). Two of the three businesses' maps additionally use `block_fallback_intents` to refuse the rule's seed-COA default when it would silently miscategorize on the dataset COA (e.g. seed 6120 = Meals on coffee-shop is Office Supplies; we route to review instead). The deeper value of the rule layer in production is cost reduction (zero model spend on matched rows), not raw accuracy on this synthetic benchmark \u2014 see `docs/RULE_GAP_ANALYSIS.md` for the concrete next-best rule work."
   ]
 }

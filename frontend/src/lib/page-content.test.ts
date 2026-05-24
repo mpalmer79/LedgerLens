@@ -316,6 +316,17 @@ describe("evals page content", () => {
     expect(EVALS).toContain("workflow-level");
     expect(EVALS.toLowerCase()).toContain("not raw");
   });
+
+  it("renders the per-business mapped-rule breakdown table", () => {
+    expect(EVALS).toContain("Per-business mapped-rule breakdown");
+    expect(EVALS).toContain("Granite State Auto Service");
+    expect(EVALS).toContain("Lighthouse Roasters");
+    expect(EVALS).toContain("Northwind Design Co.");
+    expect(EVALS).toContain("Best mapped-row accuracy");
+    expect(EVALS).toContain("Biggest rule gap");
+    expect(EVALS).toContain("Top unmapped intents");
+    expect(EVALS).toContain("RULE_GAP_ANALYSIS.md");
+  });
 });
 
 // ── App dashboard ─────────────────────────────────────────────────────────
@@ -606,6 +617,12 @@ describe("rules page content", () => {
 
   it("links to /evals#business-specific-rule-mapping", () => {
     expect(RULES).toContain("/evals#business-specific-rule-mapping");
-    expect(RULES).toContain("View rule-mapping evals");
+    expect(RULES).toContain("View multi-business rule evals");
+  });
+
+  it("notes that mapped-rule evals cover all three eval businesses", () => {
+    expect(RULES.toLowerCase()).toContain("auto repair");
+    expect(RULES.toLowerCase()).toContain("coffee shop");
+    expect(RULES.toLowerCase()).toContain("design agency");
   });
 });

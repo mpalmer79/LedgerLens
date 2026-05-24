@@ -77,7 +77,7 @@ export type MappingIntentCount = {
   count: number;
 };
 
-export type MappingMetrics = {
+export type MappingBlock = {
   enabled: boolean;
   mapped_intent_count: number;
   fallback_to_default_count: number;
@@ -88,6 +88,18 @@ export type MappingMetrics = {
   correct_when_fallback: number;
   top_unmapped_intents: MappingIntentCount[];
   top_rule_intents: MappingIntentCount[];
+};
+
+export type MappingSummary = {
+  best_business_id: string | null;
+  weakest_business_id: string | null;
+  businesses_with_mapping_enabled: string[];
+  top_unmapped_intents_overall: MappingIntentCount[];
+};
+
+export type MappingMetrics = MappingBlock & {
+  per_business?: Record<string, MappingBlock>;
+  summary?: MappingSummary;
 };
 
 export type MetricsSlice = {

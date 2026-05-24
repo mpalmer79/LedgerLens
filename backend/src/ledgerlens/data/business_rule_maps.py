@@ -38,18 +38,43 @@ from ledgerlens.data.sample_scenario import SAMPLE_SCENARIO
 
 @dataclass(frozen=True)
 class BusinessRuleMap:
-    """An (intent → COA category code) map for a single business."""
+    """An (intent → COA category code) map for a single business.
+
+    The optional `block_fallback_intents` set lists intents the active
+    business knows should NEVER auto-resolve via the rule's own
+    `category_code` fallback. This matters when a rule's hardcoded
+    default code (calibrated to the seed COA) happens to refer to a
+    completely different category in this business's COA — for example
+    the bundled Intuit rule defaults to 6070 (Software Subscriptions in
+    the seed COA), but on the design-agency eval COA 6070 is "Merchant
+    Processing Fees." Silently auto-applying 6070 there would post
+    Intuit as a merchant fee, which is wrong. Listing
+    `software_subscription` in `block_fallback_intents` for that map
+    causes the rule layer to abstain (route to review) instead.
+    """
 
     business_id: str
     intent_to_code: dict[str, str]
+    block_fallback_intents: frozenset[str] = frozenset()
 
     def resolve(self, intent: str | None) -> str | None:
         """Return the COA code mapped to this intent, or None if there is no
-        explicit override. None means "let the rule's own category_code stand."
+        explicit override. None means "let the rule's own category_code stand
+        unless the intent is also in `block_fallback_intents`."
         """
         if not intent:
             return None
         return self.intent_to_code.get(intent)
+
+    def is_fallback_blocked(self, intent: str | None) -> bool:
+        """True iff this business explicitly wants the rule layer to NOT
+        fall back to `rule.category_code` for this intent. The caller
+        should route to review when this returns True and no override
+        exists.
+        """
+        if not intent:
+            return False
+        return intent in self.block_fallback_intents
 
 
 # ── Default mapping ─────────────────────────────────────────────────────────
@@ -177,11 +202,109 @@ AUTO_REPAIR_EVAL_INTENT_MAP = BusinessRuleMap(
 )
 
 
+# ── Lighthouse Roasters (coffee-shop eval dataset) ─────────────────────────
+#
+# Inventory-heavy COA with multi-level COGS. Mappings target the actual
+# coffee-shop COA codes. Several intents are deliberately routed to review
+# via `block_fallback_intents` because the rule's seed-COA default code
+# means something entirely different on this COA (e.g. seed 6120 =
+# Meals & Entertainment vs coffee-shop 6120 = Office Supplies).
+COFFEE_SHOP_EVAL_INTENT_MAP = BusinessRuleMap(
+    business_id="coffee_shop_eval",
+    intent_to_code={
+        # Operating expenses
+        "rent": "6010",
+        "utilities": "6020",  # Electric (gas/water is 6030)
+        "payroll": "6040",  # Wages - Baristas
+        "payroll_taxes": "6060",
+        "insurance": "6090",  # General Liability
+        "office_supplies": "6120",  # Mapped explicitly: seed's 6060 → Payroll Taxes here
+        "software_subscription": "6170",  # Mapped explicitly: seed's 6070 → Payroll Service Fees
+        "professional_services": "6180",
+        "marketing_advertising": "6160",
+        "merchant_fees": "6100",  # Merchant Processing Fees (same code as seed; safe)
+        "fuel_vehicle": "6210",  # Vehicle & Delivery (seed's 6130 collides with Cleaning here)
+        "repairs_maintenance": "6140",
+        "vehicle_maintenance": "6140",
+        "internet_telecom": "6200",
+        "training_education": "6230",
+        "tools_equipment": "6150",
+        "supplies_general": "6130",  # Cleaning & Sanitation
+        # Revenue
+        "customer_revenue": "4010",  # Retail Beverages
+        "service_revenue": "4010",  # no service line; map to beverages
+        # Owner-side
+        "owner_draw": "3030",
+        "owner_contribution": "3010",
+    },
+    block_fallback_intents=frozenset(
+        {
+            # rule default 6120 = Office Supplies on this COA — Starbucks/Dunkin
+            # rules would silently classify as Office Supplies. Route to review.
+            "meals_entertainment",
+            # rule default 6110 = Bank Service Charges on this COA. Route to review.
+            "travel",
+        }
+    ),
+)
+
+
+# ── Northwind Design Co. (design-agency eval dataset) ──────────────────────
+#
+# Service business, no inventory. Software-dense COA with five separate
+# software accounts (6100–6140). Many seed-COA defaults are unsafe here
+# because design-agency uses the same code numbers for different concepts
+# (e.g. seed's 6070 = Software is design-agency's 6070 = Merchant Fees).
+DESIGN_AGENCY_EVAL_INTENT_MAP = BusinessRuleMap(
+    business_id="design_agency_eval",
+    intent_to_code={
+        # Operating expenses
+        "rent": "6010",  # Coworking & Office Rent
+        "payroll_taxes": "6030",  # Self-Employment Tax Set-Aside
+        "insurance": "6050",  # Professional Liability
+        "office_supplies": "6150",  # Mapped: seed's 6060 → Health Insurance here
+        "software_subscription": "6140",  # Mapped: seed's 6070 → Merchant Fees here
+        "professional_services": "6180",  # Accounting (legal is 6190)
+        "marketing_advertising": "6170",
+        "merchant_fees": "6070",  # Merchant Processing Fees
+        "meals_entertainment": "6220",  # design-agency HAS this category
+        "travel": "6210",  # Conferences & Travel
+        "tools_equipment": "6160",  # Computer Hardware - Expensed
+        "training_education": "6200",  # Professional Development
+        "internet_telecom": "6230",
+        # Revenue
+        "customer_revenue": "4010",  # Web Design
+        "service_revenue": "4030",  # Retainer
+        # Owner-side
+        "owner_draw": "3030",
+        "owner_contribution": "3010",
+    },
+    block_fallback_intents=frozenset(
+        {
+            # Design agency is a sole proprietor — no Wages account. Rule
+            # default 6030 = Self-Employment Tax here, not wages.
+            "payroll",
+            # No utilities account. Rule default 6020 = Owner Salary - N/A.
+            "utilities",
+            # No vehicle accounts. Rule default 6130 = Software - Communication.
+            "fuel_vehicle",
+            "vehicle_maintenance",
+            # No facility maintenance. Rule default 6140 = Software - Other.
+            "repairs_maintenance",
+            "supplies_general",
+            "waste_services",
+        }
+    ),
+)
+
+
 # ── Registry ─────────────────────────────────────────────────────────────────
 _REGISTRY: dict[str, BusinessRuleMap] = {
     DEFAULT_INTENT_MAP.business_id: DEFAULT_INTENT_MAP,
     GRANITE_STATE_INTENT_MAP.business_id: GRANITE_STATE_INTENT_MAP,
     AUTO_REPAIR_EVAL_INTENT_MAP.business_id: AUTO_REPAIR_EVAL_INTENT_MAP,
+    COFFEE_SHOP_EVAL_INTENT_MAP.business_id: COFFEE_SHOP_EVAL_INTENT_MAP,
+    DESIGN_AGENCY_EVAL_INTENT_MAP.business_id: DESIGN_AGENCY_EVAL_INTENT_MAP,
 }
 
 

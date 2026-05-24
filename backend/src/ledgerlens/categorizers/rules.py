@@ -43,10 +43,11 @@ from ledgerlens.services.rule_categorizer import (
 # scoped ids ("auto_repair_eval"). This is the single translation point.
 EVAL_BUSINESS_MAP_IDS: dict[str, str] = {
     "auto-repair": "auto_repair_eval",
-    # coffee-shop and design-agency don't yet have curated maps; the resolver
-    # falls back to DEFAULT_INTENT_MAP for them, which is still a meaningful
-    # signal — a generic SMB COA mapping is exactly what the rules-only-mapped
-    # baseline should land on absent a per-business curated map.
+    "coffee-shop": "coffee_shop_eval",
+    "design-agency": "design_agency_eval",
+    # Unknown eval business ids fall through to DEFAULT_INTENT_MAP via
+    # `get_business_rule_map`. That preserves the v1 baseline behavior for
+    # any future dataset we ship without a curated map yet.
 }
 
 
@@ -206,6 +207,9 @@ class RuleOnlyCategorizer:
 
         strongest = matched[0]
         if self.use_business_mapping:
+            bid = self._business_id_override or _resolve_eval_business_id(business)
+            rule_map = get_business_rule_map(bid)
+            override = rule_map.resolve(strongest.intent)
             resolved_code = self._resolve_code(strongest, business, coa_codes)
             if resolved_code is None:
                 rule_intent = strongest.intent or "(no intent)"
@@ -225,8 +229,11 @@ class RuleOnlyCategorizer:
                     matched_rule_intent=strongest.intent,
                     mapping_outcome="routed_to_review",
                 )
-            # Decide outcome label.
-            if strongest.intent and resolved_code != strongest.category_code:
+            # Outcome label: "mapped" when the business has an explicit
+            # override for the intent (even when the override happens to
+            # resolve to the same code as the rule's default); otherwise
+            # "fallback_to_default."
+            if override is not None and override in coa_codes:
                 outcome = "mapped"
             else:
                 outcome = "fallback_to_default"
@@ -265,13 +272,20 @@ class RuleOnlyCategorizer:
         Order of precedence:
 
         1. Active business mapping → mapped code (must exist on dataset COA).
-        2. Rule's own `category_code` (must exist on dataset COA).
-        3. None — caller routes the row to review.
+        2. If the business explicitly blocks fallback for this intent
+           (`block_fallback_intents`), return None → route to review. This
+           prevents silent miscategorization when the rule's hardcoded
+           `category_code` means something different on this business's COA.
+        3. Rule's own `category_code` (must exist on dataset COA).
+        4. None — caller routes the row to review.
         """
         bid = self._business_id_override or _resolve_eval_business_id(business)
-        mapped = get_business_rule_map(bid).resolve(rule.intent)
+        rule_map = get_business_rule_map(bid)
+        mapped = rule_map.resolve(rule.intent)
         if mapped and mapped in coa_codes:
             return mapped
+        if rule_map.is_fallback_blocked(rule.intent):
+            return None
         if rule.category_code in coa_codes:
             return rule.category_code
         return None

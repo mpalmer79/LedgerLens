@@ -468,9 +468,63 @@ def calibration_metrics(
 # ── Per-business rule intent mapping metrics ───────────────────────────────
 
 
+def _aggregate_mapping(
+    predictions: list[CategorizationResult],
+    ground_truth: dict[str, str],
+) -> dict[str, object]:
+    """Aggregate the mapping provenance for a single prediction set."""
+    outcomes: dict[str, int] = {
+        "mapped": 0,
+        "fallback_to_default": 0,
+        "routed_to_review": 0,
+    }
+    unmapped_intents: dict[str, int] = {}
+    rule_intents: dict[str, int] = {}
+    enabled = False
+    correct_when_mapped = 0
+    correct_when_fallback = 0
+    for p in predictions:
+        if p.mapping_outcome is None and p.matched_rule_intent is None:
+            continue
+        enabled = True
+        if p.matched_rule_intent:
+            rule_intents[p.matched_rule_intent] = rule_intents.get(p.matched_rule_intent, 0) + 1
+        if p.mapping_outcome:
+            outcomes[p.mapping_outcome] = outcomes.get(p.mapping_outcome, 0) + 1
+            unmapped = p.mapping_outcome in {"fallback_to_default", "routed_to_review"}
+            if unmapped and p.matched_rule_intent:
+                unmapped_intents[p.matched_rule_intent] = (
+                    unmapped_intents.get(p.matched_rule_intent, 0) + 1
+                )
+        truth = ground_truth.get(p.transaction_id)
+        if truth is None:
+            continue
+        if p.mapping_outcome == "mapped" and p.predicted_category_code == truth:
+            correct_when_mapped += 1
+        elif p.mapping_outcome == "fallback_to_default" and p.predicted_category_code == truth:
+            correct_when_fallback += 1
+
+    top_unmapped = sorted(unmapped_intents.items(), key=lambda kv: kv[1], reverse=True)[:10]
+    top_rule = sorted(rule_intents.items(), key=lambda kv: kv[1], reverse=True)[:10]
+    return {
+        "enabled": enabled,
+        "mapped_intent_count": outcomes["mapped"],
+        "fallback_to_default_count": outcomes["fallback_to_default"],
+        "routed_to_review_count": outcomes["routed_to_review"],
+        "unmapped_intent_count": outcomes["fallback_to_default"] + outcomes["routed_to_review"],
+        "mapping_override_count": outcomes["mapped"],
+        "correct_when_mapped": correct_when_mapped,
+        "correct_when_fallback": correct_when_fallback,
+        "top_unmapped_intents": [{"intent": k, "count": v} for k, v in top_unmapped],
+        "top_rule_intents": [{"intent": k, "count": v} for k, v in top_rule],
+    }
+
+
 def mapping_metrics(
     predictions: list[CategorizationResult],
     ground_truth: dict[str, str],
+    *,
+    tx_to_business: dict[str, str] | None = None,
 ) -> dict[str, object]:
     """Aggregate the `matched_rule_intent` + `mapping_outcome` provenance
     fields that the mapped rule categorizers stamp on each prediction.
@@ -478,6 +532,11 @@ def mapping_metrics(
     The block only carries signal when at least one prediction has
     `mapping_outcome != None` (i.e. a mapped rule categorizer was used).
     For non-mapped runs every field is zero and `enabled=False`.
+
+    When `tx_to_business` is provided, the result also carries a
+    `per_business` dict keyed by business id (each value is a full
+    aggregation block), an `overall` rollup, and a small `summary`
+    naming the best / weakest businesses by `correct_when_mapped`.
 
     Definitions, all transaction counts:
 
@@ -502,53 +561,48 @@ def mapping_metrics(
     routing block (see `routing_metrics`) already reports total review-route
     rate; this block just attributes it to mapping failure when relevant.
     """
-    outcomes: dict[str, int] = {
-        "mapped": 0,
-        "fallback_to_default": 0,
-        "routed_to_review": 0,
-    }
-    unmapped_intents: dict[str, int] = {}
-    rule_intents: dict[str, int] = {}
-    enabled = False
-    correct_when_mapped = 0
-    correct_when_fallback = 0
-    for p in predictions:
-        if p.mapping_outcome is None and p.matched_rule_intent is None:
-            continue
-        enabled = True
-        if p.matched_rule_intent:
-            rule_intents[p.matched_rule_intent] = rule_intents.get(p.matched_rule_intent, 0) + 1
-        if p.mapping_outcome:
-            outcomes[p.mapping_outcome] = outcomes.get(p.mapping_outcome, 0) + 1
-            unmapped = p.mapping_outcome in {"fallback_to_default", "routed_to_review"}
-            if unmapped and p.matched_rule_intent:
-                unmapped_intents[p.matched_rule_intent] = (
-                    unmapped_intents.get(p.matched_rule_intent, 0) + 1
-                )
-        # Track per-outcome correctness against ground truth for the rows
-        # where mapping actually fired with a category. Routed-to-review
-        # rows produce UNCATEGORIZABLE — we report their accuracy as 0
-        # against ground truth (the row was abstained on by design, not
-        # incorrectly predicted).
-        truth = ground_truth.get(p.transaction_id)
-        if truth is None:
-            continue
-        if p.mapping_outcome == "mapped" and p.predicted_category_code == truth:
-            correct_when_mapped += 1
-        elif p.mapping_outcome == "fallback_to_default" and p.predicted_category_code == truth:
-            correct_when_fallback += 1
+    overall = _aggregate_mapping(predictions, ground_truth)
+    if tx_to_business is None:
+        return overall
 
-    top_unmapped = sorted(unmapped_intents.items(), key=lambda kv: kv[1], reverse=True)[:10]
-    top_rule = sorted(rule_intents.items(), key=lambda kv: kv[1], reverse=True)[:10]
-    return {
-        "enabled": enabled,
-        "mapped_intent_count": outcomes["mapped"],
-        "fallback_to_default_count": outcomes["fallback_to_default"],
-        "routed_to_review_count": outcomes["routed_to_review"],
-        "unmapped_intent_count": outcomes["fallback_to_default"] + outcomes["routed_to_review"],
-        "mapping_override_count": outcomes["mapped"],
-        "correct_when_mapped": correct_when_mapped,
-        "correct_when_fallback": correct_when_fallback,
-        "top_unmapped_intents": [{"intent": k, "count": v} for k, v in top_unmapped],
-        "top_rule_intents": [{"intent": k, "count": v} for k, v in top_rule],
+    # Group predictions by business id, then aggregate each subset.
+    by_business: dict[str, list[CategorizationResult]] = {}
+    for p in predictions:
+        bid = tx_to_business.get(p.transaction_id)
+        if bid is None:
+            continue
+        by_business.setdefault(bid, []).append(p)
+
+    per_business: dict[str, dict[str, object]] = {}
+    for bid, subset in by_business.items():
+        per_business[bid] = _aggregate_mapping(subset, ground_truth)
+
+    # Summary: best / weakest business by mapped-row correctness, plus the
+    # top unmapped intents across the whole run.
+    eligible = [(bid, b) for bid, b in per_business.items() if b["enabled"]]
+    best: str | None = None
+    weakest: str | None = None
+    if eligible:
+        # Sort by correct_when_mapped desc, then by mapped_intent_count desc.
+        def _score(kv: tuple[str, dict[str, object]]) -> tuple[int, int]:
+            block = kv[1]
+            correct = block.get("correct_when_mapped", 0)
+            mapped = block.get("mapped_intent_count", 0)
+            return (
+                correct if isinstance(correct, int) else 0,
+                mapped if isinstance(mapped, int) else 0,
+            )
+
+        eligible.sort(key=_score, reverse=True)
+        best = eligible[0][0]
+        weakest = eligible[-1][0]
+
+    overall_with_breakdown: dict[str, object] = dict(overall)
+    overall_with_breakdown["per_business"] = per_business
+    overall_with_breakdown["summary"] = {
+        "best_business_id": best,
+        "weakest_business_id": weakest,
+        "businesses_with_mapping_enabled": [bid for bid, _ in eligible],
+        "top_unmapped_intents_overall": overall["top_unmapped_intents"],
     }
+    return overall_with_breakdown
