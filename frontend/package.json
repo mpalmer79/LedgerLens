@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint src",
     "test": "vitest run",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "images:verify": "node scripts/verify-homepage-images.mjs"
   },
   "dependencies": {
     "@types/three": "^0.160.0",

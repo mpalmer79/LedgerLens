@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   Database,
@@ -8,6 +9,8 @@ import {
   Wallet,
   Workflow,
 } from "lucide-react";
+
+import { PhotoCredits } from "@/components/marketing/PhotoCredits";
 
 import { CheckApiButton } from "@/components/CheckApiButton";
 import { MarketingNav } from "@/components/marketing/MarketingNav";
@@ -44,8 +47,29 @@ export default function Page() {
         </div>
       </section>
 
+      {/* Calm-workspace mood band. Restrained — establishes voice without
+          competing with the hero copy. Lives above the hero, decorative;
+          alt text describes the scene for screen readers. */}
+      <section
+        className="px-4 sm:px-6 lg:px-8 pt-10"
+        data-testid="homepage-hero-image"
+      >
+        <div className="mx-auto max-w-6xl">
+          <div className="relative aspect-[16/5] w-full overflow-hidden rounded-xl border border-surface-border">
+            <Image
+              src="/images/stock/hero/calm-workspace-morning.jpg"
+              alt="Tidy desk with laptop and notebook in soft morning light, representing a calm monthly bookkeeping cleanup workflow"
+              fill
+              priority
+              sizes="(min-width: 1024px) 1024px, 100vw"
+              className="object-cover"
+            />
+          </div>
+        </div>
+      </section>
+
       {/* Hero — business-first + premium trust card */}
-      <section className="px-4 sm:px-6 lg:px-8 pt-16 pb-12 md:pt-20">
+      <section className="px-4 sm:px-6 lg:px-8 pt-10 pb-12 md:pt-14">
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-5">
           <div className="lg:col-span-3">
             <p className="mb-4 text-[12px] font-medium uppercase tracking-[0.5px] text-brand-600">
@@ -191,18 +215,36 @@ export default function Page() {
             </ul>
           </div>
         </div>
-        <div className="mt-6 rounded-lg border border-surface-border bg-surface-panel p-5">
-          <p className="text-[11px] font-medium uppercase tracking-wide text-text-subtle">
-            What you get in the handoff package
-          </p>
-          <ul className="mt-3 grid grid-cols-2 gap-y-2 text-[13px] text-text-primary sm:grid-cols-3">
-            <li>✓ Reviewed categorization summary</li>
-            <li>✓ Unresolved questions</li>
-            <li>✓ Owner answers</li>
-            <li>✓ Corrections learned</li>
-            <li>✓ CSV export</li>
-            <li>✓ Markdown handoff report</li>
-          </ul>
+
+        {/* Trust/checklist flatlay — supports the "procedurally verified"
+            language above. Decorative; the alt text describes the scene. */}
+        <div
+          className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-[2fr_1fr]"
+          data-testid="homepage-trust-image"
+        >
+          <div className="rounded-lg border border-surface-border bg-surface-panel p-5">
+            <p className="text-[11px] font-medium uppercase tracking-wide text-text-subtle">
+              What you get in the handoff package
+            </p>
+            <ul className="mt-3 grid grid-cols-2 gap-y-2 text-[13px] text-text-primary sm:grid-cols-3">
+              <li>✓ Reviewed categorization summary</li>
+              <li>✓ Unresolved questions</li>
+              <li>✓ Owner answers</li>
+              <li>✓ Corrections learned</li>
+              <li>✓ CSV export</li>
+              <li>✓ Markdown handoff report</li>
+            </ul>
+          </div>
+          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg border border-surface-border">
+            <Image
+              src="/images/stock/trust/verified-checklist-flatlay.jpg"
+              alt="Top-down view of a checklist and pen on a wooden surface, representing procedural review before accountant handoff"
+              fill
+              loading="lazy"
+              sizes="(min-width: 640px) 33vw, 100vw"
+              className="object-cover"
+            />
+          </div>
         </div>
       </section>
 
@@ -224,13 +266,28 @@ export default function Page() {
             <p className="mt-1 text-[12px] text-text-secondary">
               Independent auto repair shop, New Hampshire · fictional sample data.
             </p>
-            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
-              <PreviewTile label="Transactions imported" value="42" />
-              <PreviewTile label="Verified finalized rows" value="28" tone="good" />
-              <PreviewTile label="Owner questions answered" value="10" />
-              <PreviewTile label="Accountant follow-up items" value="4" tone="warn" />
-              <PreviewTile label="Corrections learned" value="5" />
-              <PreviewTile label="Verification rate" value="100%" tone="good" />
+            <div
+              className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-[1fr_2fr]"
+              data-testid="homepage-auto-shop-image"
+            >
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-md border border-surface-border">
+                <Image
+                  src="/images/stock/auto-shop/independent-garage.jpg"
+                  alt="Independent auto repair shop exterior in daylight, representing the fictional Granite State Auto Repair demo scenario"
+                  fill
+                  loading="lazy"
+                  sizes="(min-width: 640px) 33vw, 100vw"
+                  className="object-cover"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                <PreviewTile label="Transactions imported" value="42" />
+                <PreviewTile label="Verified finalized rows" value="28" tone="good" />
+                <PreviewTile label="Owner questions answered" value="10" />
+                <PreviewTile label="Accountant follow-up items" value="4" tone="warn" />
+                <PreviewTile label="Corrections learned" value="5" />
+                <PreviewTile label="Verification rate" value="100%" tone="good" />
+              </div>
             </div>
             <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
               <PreviewBlock title="Ready for accountant">
@@ -311,6 +368,22 @@ export default function Page() {
           The product story is bookkeeping. The engineering story is layered AI design with
           cost control and auditability built in.
         </p>
+
+        {/* Engineering / workflow-architecture image. Wide strip; decorative. */}
+        <div
+          className="mt-6 relative aspect-[16/5] w-full overflow-hidden rounded-lg border border-surface-border"
+          data-testid="homepage-engineering-image"
+        >
+          <Image
+            src="/images/stock/engineering/workflow-architecture.jpg"
+            alt="Workflow planning scene with notebook and laptop, representing an AI workflow system built with guardrails"
+            fill
+            loading="lazy"
+            sizes="(min-width: 1024px) 1024px, 100vw"
+            className="object-cover"
+          />
+        </div>
+
         <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <TechCard
             icon={<Workflow size={20} className="text-brand-600" />}
@@ -368,13 +441,30 @@ export default function Page() {
         className="mx-auto mt-20 max-w-5xl px-4 sm:px-6 lg:px-8"
         data-testid="homepage-faq"
       >
-        <h2 className="font-display text-[22px] font-medium text-text-primary">
-          Owner questions, answered plainly
-        </h2>
-        <p className="mt-1 text-[13px] text-text-subtle">
-          The kind of questions an owner asks before spending 15 minutes
-          on a new tool.
-        </p>
+        <div
+          className="grid grid-cols-1 gap-6 sm:grid-cols-[2fr_1fr] sm:items-end"
+          data-testid="homepage-faq-image"
+        >
+          <div>
+            <h2 className="font-display text-[22px] font-medium text-text-primary">
+              Owner questions, answered plainly
+            </h2>
+            <p className="mt-1 text-[13px] text-text-subtle">
+              The kind of questions an owner asks before spending 15 minutes
+              on a new tool.
+            </p>
+          </div>
+          <div className="relative aspect-[3/4] w-full max-w-[14em] justify-self-end overflow-hidden rounded-md border border-surface-border sm:max-w-[16em]">
+            <Image
+              src="/images/stock/faq/calm-owner-review.jpg"
+              alt="Small business owner reviewing documents calmly near a laptop, no readable financial data visible"
+              fill
+              loading="lazy"
+              sizes="(min-width: 640px) 33vw, 100vw"
+              className="object-cover"
+            />
+          </div>
+        </div>
         <dl className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
           <FaqItem
             q="Is this a product I can buy?"
@@ -591,6 +681,7 @@ export default function Page() {
             built to demonstrate AI-systems engineering practice. No financial data leaves
             your environment.
           </p>
+          <PhotoCredits />
         </div>
       </footer>
     </div>
