@@ -22,7 +22,10 @@ A row is **finalized** when its `categorization_status` is `auto_approved` or `c
 
 - `needs_review` — by definition awaiting human input.
 - `uncategorizable` — the pipeline (or a human) explicitly excluded it.
+- `accountant_review_required` — a human reviewed the row and explicitly deferred to an accountant. The owner-answer context is preserved on the `ReviewDecision`; the categorization is not finalized and no predicted category is adopted.
 - `pending` / `failed` — never categorized successfully.
+
+Defensive backstop: any `auto_approved` / `corrected` row whose latest review decision carries `accountant_follow_up_required=True` is treated as **not verified** by `_is_verified()`, regardless of how the row got into that state. The `/approve` endpoint also returns 422 on such payloads, so the bug that prompted this protection cannot reach `auto_approved` through the API. The defensive check exists for pre-existing data and any non-API path.
 
 The combinations that produce an **unverified finalized** row — and therefore must stay at zero on a finalized demo ledger:
 

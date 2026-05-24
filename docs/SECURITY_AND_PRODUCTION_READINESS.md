@@ -85,14 +85,21 @@ not strict — but Phase A is a prerequisite for everything else.
 
 - `slowapi` or equivalent rate-limit middleware (per IP for
   unauthenticated routes; per user/tenant for authenticated).
+  **⏳ Not implemented.**
 - `X-Request-Id` middleware: generate if absent, echo on responses,
-  thread through structured logs.
-- `structlog` or `loguru` JSON logger; replace stdlib `logging` in
-  hot paths.
-- `redact_pii(payload)` utility used by the logger to strip
-  description / merchant strings before emission.
+  thread through structured logs. **✅ Implemented.** See
+  `backend/src/ledgerlens/observability.py` and
+  `docs/OBSERVABILITY_AND_REDACTION.md`. CORS exposes the header so
+  the browser can read it.
+- Structured logging foundation: stdlib `logging` with a request-id
+  filter + a baseline format string. **✅ Implemented (idempotent
+  `configure_logging()`).** JSON formatter is the next upgrade.
+- `sanitize_for_log(value)` utility + targeted helpers
+  (`redact_email`, `redact_phone`, `redact_account_number_like`,
+  `redact_card_like`). **✅ Implemented with full test coverage.**
 - Frontend `<ErrorState>` surfaces request id in the technical
-  details panel.
+  details panel. **⏳ Not yet wired — utility exists, surface
+  follow-up.**
 
 ### Phase C — Alembic migrations + backup/restore + retention/deletion
 

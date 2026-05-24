@@ -100,28 +100,36 @@ The `/handoff` UI renders the v2 entries with their own card style; rows
 where `accountant_follow_up_required == true` get an amber border + a
 "Needs accountant follow-up" badge.
 
-## 4. How accountant follow-up is flagged
+## 4. How accountant follow-up is flagged (v2 safe semantics)
 
-Each template's `Answer` carries an optional `accountantFollowUp: boolean`
-and an optional `suggestedResolution: string`. The `/questions` page:
+Each template's `Answer` carries an explicit `resolutionAction`:
 
-- Renders the answer button with an amber border + a small "· accountant
-  review" subtitle when `accountantFollowUp` is true.
-- Sends `accountant_follow_up_required: true` to the backend on submit.
+| Action | Backend call | Status after | Verified? |
+|---|---|---|---|
+| `"correct"` | `correctReview` (requires `categoryCode`) | `CORRECTED` | yes |
+| `"approve_prediction"` | `approveReview` | `AUTO_APPROVED` | yes |
+| `"needs_accountant_review"` | `markForAccountantReview` (new) | `ACCOUNTANT_REVIEW_REQUIRED` | **no** |
+| `"exclude"` | `markUncategorizable` | `UNCATEGORIZABLE` | no |
 
-The handoff service does **not** change a row's verification status based
-on the follow-up flag. The trust metric is still: a row is verified iff
-it came through a rule auto-approval, a correction-memory replay, or an
-explicit human review. A row can be verified AND flagged for accountant
-follow-up — the two concepts are orthogonal.
+The `/questions` page renders any answer with
+`resolutionAction === "needs_accountant_review"` with an amber border
+plus a "· accountant review" subtitle. The handler is a `switch` on
+`resolutionAction` — it does not infer the backend endpoint from
+`categoryCode` presence.
+
+Backend backstop: `POST /approve` returns 422 if
+`accountant_follow_up_required=true`, so a frontend regression cannot
+silently re-introduce the bug.
 
 ## 5. What does and does not become verified
 
 | Owner answer | What happens | Verified by trust metric? |
 |---|---|---|
-| A choice with `categoryCode` (e.g. "Shop inventory" → 5010) | `/correct` is called with the code. `ReviewDecision` records the owner answer + the corrected code. Status becomes `CORRECTED`. | **Yes** — human review with a chosen category. |
-| A choice without `categoryCode` (e.g. "Refund of a business expense") | `/approve` is called with `reviewer_note`. The predicted category sticks. The owner answer is persisted. Status becomes `AUTO_APPROVED` via review. | **Yes** — the row was explicitly reviewed by a human. |
-| "Skip — exclude from books" | `/uncategorizable` is called. Status becomes `UNCATEGORIZABLE`. | **No** — uncategorizable rows are not finalized. |
+| A choice with `resolutionAction: "correct"` (e.g. "Shop inventory" → 5010) | `/correct` is called with the code. `ReviewDecision` records the owner answer + the corrected code. Status becomes `CORRECTED`. | **Yes** — human review with a chosen category. |
+| `resolutionAction: "approve_prediction"` (e.g. "It's a normal business expense — approve the predicted category") | `/approve` is called. Status becomes `AUTO_APPROVED`. | **Yes** — the row was explicitly approved by a human. |
+| `resolutionAction: "needs_accountant_review"` (e.g. "Needs accountant review", "Not sure", "Refund — confirm with accountant") | `/accountant-review` is called. Status becomes `ACCOUNTANT_REVIEW_REQUIRED`. **No predicted category is adopted.** | **No** — the row is not finalized. |
+| `resolutionAction: "exclude"` (e.g. "Personal / non-business") | `/uncategorizable` is called. Status becomes `UNCATEGORIZABLE`. | **No** — uncategorizable rows are not finalized. |
+| "Skip — exclude from books" (the skip button) | `/uncategorizable` is called. Status becomes `UNCATEGORIZABLE`. | **No** — uncategorizable rows are not finalized. |
 | "Needs accountant review" + a category code | The row is corrected, but the follow-up flag is set. Accountant sees the flag in the handoff. | **Yes** — same as any reviewed row. The flag is metadata, not a verification gate. |
 | "Not sure" | `/approve` with the note; follow-up flag set. | **Yes** — but the flag tells the accountant to double-check. |
 

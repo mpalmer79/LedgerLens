@@ -52,17 +52,28 @@ the sections below.
    implementation and `docs/CSV_IMPORT_MAPPING_WIZARD_REVIEW.md`
    for the sprint review.
 2. **Account-mapping wizard** — owners or their accountant can
-   tweak the intent → COA map per business.
+   tweak the intent → COA map per business. **🟡 Partial — read-only
+   explorer shipped at `/mapping`.** Editing requires the auth /
+   tenant foundation (see `AUTH_TENANT_FOUNDATION.md`). See
+   `docs/CATEGORY_MAPPING_WIZARD.md`.
 3. **Mobile-first review queue** — one card at a time, big
-   buttons, sticky save/skip.
+   buttons, sticky save/skip. **🟡 Partial — `/review` now offers
+   four explicit primary actions on a 1-/2-/4-column responsive
+   grid with 44px tap targets and a progress indicator, and the
+   safe accountant-review path is a first-class button.** A
+   dedicated one-card-per-viewport variant is still future work.
+   See `docs/REVIEW_SAFETY_AND_MOBILE_QUEUE.md`.
 4. **Sample CSV templates** — bundle 3-5 real-bank-shaped CSVs
    so owners can practice the mapping wizard.
 5. **Bulk review actions** — "approve all NAPA as
    parts_inventory" / "skip all owner transfers."
 6. **Accountant comments / follow-up workflow** — accountant
    role inside LedgerLens with reply threads on review items.
+   Needs the auth / tenant foundation.
 7. **Export mapping for QuickBooks / Xero / Sheets** — IIF /
-   QBO XML / Xero CSV / Google Sheets-friendly column set.
+   QBO XML / Xero CSV / Google Sheets-friendly column set. The
+   accountant-friendly reviewed-categorization CSV shipped this
+   sprint is the first step. See `docs/ACCOUNTANT_CSV_EXPORTS.md`.
 
 ## 4. Mobile-first review queue design
 
