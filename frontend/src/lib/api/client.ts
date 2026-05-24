@@ -636,3 +636,76 @@ export type DemoReadiness = {
 };
 
 export const getDemoReady = () => apiFetch<DemoReadiness>("/demo/ready");
+
+// ── Saved CSV import profiles ─────────────────────────────────────────────
+
+export type CsvImportProfile = {
+  id: string;
+  business_id: string;
+  name: string;
+  source: string;
+  amount_mode: "signed" | "debit_credit";
+  date_column: string;
+  description_column: string;
+  amount_column: string | null;
+  debit_column: string | null;
+  credit_column: string | null;
+  merchant_column: string | null;
+  account_column: string | null;
+  memo_column: string | null;
+  reference_column: string | null;
+  expected_headers: string[];
+};
+
+export type CsvImportProfileList = {
+  business_id: string;
+  business_name: string | null;
+  profiles: CsvImportProfile[];
+  warnings: string[];
+};
+
+export type CsvImportProfilePayload = {
+  name: string;
+  amount_mode: "signed" | "debit_credit";
+  date_column: string;
+  description_column: string;
+  amount_column?: string | null;
+  debit_column?: string | null;
+  credit_column?: string | null;
+  merchant_column?: string | null;
+  account_column?: string | null;
+  memo_column?: string | null;
+  reference_column?: string | null;
+  expected_headers: string[];
+};
+
+export type CsvImportProfileValidation = {
+  profile_id: string;
+  profile_name: string;
+  matched_headers: string[];
+  missing_headers: string[];
+  extra_headers: string[];
+  profile_applicable: boolean;
+  warnings: string[];
+};
+
+export const listImportProfiles = () =>
+  apiFetch<CsvImportProfileList>("/import-profiles");
+
+export const createImportProfile = (payload: CsvImportProfilePayload) =>
+  apiFetch<CsvImportProfile>("/import-profiles", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+
+export const validateImportProfileHeaders = (
+  profileId: string,
+  headers: string[],
+) =>
+  apiFetch<CsvImportProfileValidation>(
+    `/import-profiles/${encodeURIComponent(profileId)}/validate`,
+    {
+      method: "POST",
+      body: JSON.stringify({ headers }),
+    },
+  );

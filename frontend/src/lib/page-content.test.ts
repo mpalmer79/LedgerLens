@@ -1235,3 +1235,45 @@ describe("AppShell readiness truth (Workstream A)", () => {
     expect(APP_SHELL).not.toMatch(/href="tel:/);
   });
 });
+
+describe("import wizard saved profile UI (Workstream B)", () => {
+  it("renders the profile selector with the spec test-id", () => {
+    expect(IMPORT).toContain('data-testid="saved-import-profiles"');
+    expect(IMPORT).toContain('data-testid="import-profile-select"');
+    expect(IMPORT).toContain("No saved profile — detect columns");
+  });
+
+  it("calls the saved-profile API surface", () => {
+    expect(IMPORT).toContain("listImportProfiles");
+    expect(IMPORT).toContain("validateImportProfileHeaders");
+    expect(IMPORT).toContain("createImportProfile");
+  });
+
+  it("renders the save-current-mapping form when a CSV is parsed", () => {
+    expect(IMPORT).toContain('data-testid="save-profile-name"');
+    expect(IMPORT).toContain('data-testid="save-profile-button"');
+    expect(IMPORT).toContain("Save mapping as profile");
+    // The save button blocks until required mappings are present.
+    expect(IMPORT).toContain("missingRequired.length > 0");
+  });
+
+  it("explains that profiles save headers only — no rows", () => {
+    expect(IMPORT).toMatch(/Profiles\s+save column names and mapping choices only/);
+    expect(IMPORT).toContain("no rows are saved");
+  });
+
+  it("surfaces missing-header and extra-header warnings", () => {
+    expect(IMPORT).toContain('data-testid="profile-validation"');
+    expect(IMPORT).toContain("missing the saved profile");
+    expect(IMPORT).toContain("Extra columns are okay");
+    expect(IMPORT).toContain("bank may have changed the export format");
+  });
+
+  it("keeps the public-demo warning and demo disclaimers intact", () => {
+    expect(IMPORT).toContain("Public demo — do not upload real bank data");
+    expect(IMPORT.toLowerCase()).not.toMatch(/safe for real bank/);
+    expect(IMPORT.toLowerCase()).not.toMatch(/100\s*%\s*ai/);
+    expect(IMPORT).not.toMatch(/href="mailto:/);
+    expect(IMPORT).not.toMatch(/href="tel:/);
+  });
+});

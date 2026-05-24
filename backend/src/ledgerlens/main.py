@@ -14,6 +14,7 @@ from ledgerlens.api import (
     demo,
     handoff,
     health,
+    import_profiles,
     ledger,
     mapping,
     review,
@@ -89,6 +90,7 @@ def create_app() -> FastAPI:
     application.include_router(handoff.router)
     application.include_router(admin.router)
     application.include_router(mapping.router)
+    application.include_router(import_profiles.router)
 
     return application
 
