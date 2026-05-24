@@ -114,6 +114,7 @@ function providerTone(provider: string): string {
 export default function DemoPage() {
   const [state, setState] = useState<DemoState>(INITIAL);
   const [globalError, setGlobalError] = useState<string | null>(null);
+  const [resetting, setResetting] = useState(false);
 
   const setStep = useCallback(
     (key: keyof DemoState["steps"], patch: Partial<StepState>) => {
@@ -128,15 +129,24 @@ export default function DemoPage() {
   useEffect(() => {
     let cancelled = false;
     (async () => {
+      // Status + samples are critical (the guided demo needs them). Scenario
+      // is decorative — surface it only if it loads. If it fails the rest of
+      // the page still works.
       try {
-        const [status, samples, scenario] = await Promise.all([
+        const [status, samples] = await Promise.all([
           getDemoStatus(),
           getDemoSampleTransactions(),
-          getDemoScenario(),
         ]);
-        if (!cancelled) setState((s) => ({ ...s, status, samples, scenario }));
+        if (!cancelled) setState((s) => ({ ...s, status, samples }));
       } catch (err) {
         if (!cancelled) setGlobalError(describeError(err));
+        return;
+      }
+      try {
+        const scenario = await getDemoScenario();
+        if (!cancelled) setState((s) => ({ ...s, scenario }));
+      } catch {
+        // Scenario card just won't render. Not blocking.
       }
     })();
     return () => {
@@ -145,16 +155,22 @@ export default function DemoPage() {
   }, []);
 
   const handleReset = async () => {
+    if (resetting) return; // double-click guard
+    setResetting(true);
+    setGlobalError(null);
     try {
       await resetDemo();
       const status = await getDemoStatus();
-      setState({ ...INITIAL, samples: state.samples, status });
+      setState({ ...INITIAL, samples: state.samples, scenario: state.scenario, status });
     } catch (err) {
       setGlobalError(describeError(err));
+    } finally {
+      setResetting(false);
     }
   };
 
   const handleSeed = async () => {
+    if (state.steps.seed.status === "running") return; // double-click guard
     setStep("seed", { status: "running", error: null });
     try {
       const seed = await seedDemo();
@@ -248,10 +264,10 @@ export default function DemoPage() {
           <button
             type="button"
             onClick={handleReset}
-            className="text-[12px] text-text-subtle hover:text-text-primary"
-            disabled={!inDemoMode}
+            className="text-[12px] text-text-subtle hover:text-text-primary disabled:opacity-50"
+            disabled={!inDemoMode || resetting}
           >
-            Reset demo data
+            {resetting ? "Resetting…" : "Reset demo data"}
           </button>
         </div>
         <p className="mt-2 max-w-3xl text-[14px] text-text-secondary">

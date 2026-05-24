@@ -229,6 +229,19 @@ describe("demo page content", () => {
     expect(DEMO).toContain("getDemoScenario");
     expect(DEMO).toContain("Fictional sample data");
   });
+
+  it("guards seed/reset buttons against double-click", () => {
+    expect(DEMO).toContain("resetting");
+    expect(DEMO).toContain("Resetting…");
+    // Both seed and reset short-circuit if already in flight.
+    expect(DEMO).toContain("double-click guard");
+  });
+
+  it("treats scenario load as non-critical so it can fail silently", () => {
+    // Status + samples are in a try block; scenario load is in its own
+    // try block that swallows errors so the rest of the page works.
+    expect(DEMO).toContain("Scenario card just won't render");
+  });
 });
 
 // ── Ledger ────────────────────────────────────────────────────────────────
@@ -310,6 +323,13 @@ describe("app dashboard content", () => {
   it("flags portfolio demo mode when active", () => {
     expect(APP_DASH).toContain("Portfolio demo mode");
   });
+
+  it("uses the shared ErrorState with a retry handler", () => {
+    expect(APP_DASH).toContain("ErrorState");
+    expect(APP_DASH).toContain("onRetry");
+    // Secondary action points back to the cleanup checklist (the primary CTA).
+    expect(APP_DASH).toContain("Open cleanup checklist");
+  });
 });
 
 // ── Cleanup ──────────────────────────────────────────────────────────────
@@ -363,6 +383,13 @@ describe("cleanup page content", () => {
     expect(CLEANUP).toContain("Granite State Auto Repair");
     expect(CLEANUP).toContain("Try the sample scenario");
   });
+
+  it("uses the shared LoadingState and ErrorState on the load path", () => {
+    expect(CLEANUP).toContain("LoadingState");
+    expect(CLEANUP).toContain("ErrorState");
+    // Retry path is wired up via the load() callback.
+    expect(CLEANUP).toContain("onRetry");
+  });
 });
 
 // ── Questions ────────────────────────────────────────────────────────────
@@ -413,6 +440,20 @@ describe("questions page content", () => {
   it("links to the full review queue as an escape hatch", () => {
     expect(QUESTIONS).toContain('href="/review"');
   });
+
+  it("uses shared ErrorState/EmptyState for page-level data states", () => {
+    expect(QUESTIONS).toContain("ErrorState");
+    expect(QUESTIONS).toContain("EmptyState");
+    expect(QUESTIONS).toContain("LoadingState");
+    // Empty-state body names the next steps.
+    expect(QUESTIONS).toContain("No owner questions right now");
+    expect(QUESTIONS).toContain("View accountant handoff");
+  });
+
+  it("surfaces inline per-card save errors instead of clearing the queue", () => {
+    expect(QUESTIONS).toContain("saveErrors");
+    expect(QUESTIONS).toContain("Could not save this answer");
+  });
 });
 
 // ── Handoff ──────────────────────────────────────────────────────────────
@@ -456,5 +497,24 @@ describe("handoff page content", () => {
     expect(HANDOFF).toContain("scenario.business_name");
     expect(HANDOFF).toContain("Sample data");
     expect(HANDOFF.toLowerCase()).toContain("demo handoff");
+  });
+
+  it("uses shared ErrorState/EmptyState/LoadingState", () => {
+    expect(HANDOFF).toContain("ErrorState");
+    expect(HANDOFF).toContain("EmptyState");
+    expect(HANDOFF).toContain("LoadingState");
+  });
+
+  it("renders a no-handoff-yet empty state with cleanup CTAs", () => {
+    expect(HANDOFF).toContain("No handoff package yet");
+    expect(HANDOFF).toContain("Start monthly cleanup");
+    expect(HANDOFF).toContain("Try the sample scenario");
+  });
+
+  it("probes the export URL and surfaces inline download errors", () => {
+    expect(HANDOFF).toContain("handleDownload");
+    expect(HANDOFF).toContain('method: "HEAD"');
+    expect(HANDOFF).toContain("Could not download the markdown handoff");
+    expect(HANDOFF).toContain("Could not download the ledger CSV");
   });
 });
