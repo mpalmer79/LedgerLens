@@ -10,9 +10,9 @@ import {
 } from "lucide-react";
 
 import { CheckApiButton } from "@/components/CheckApiButton";
+import { MarketingNav } from "@/components/marketing/MarketingNav";
 import { TrustPipeline } from "@/components/TrustPipeline";
 import { VideoDemo } from "@/components/VideoDemo";
-import { Logomark } from "@/components/ui/Logomark";
 import {
   ARCHITECTURE_URL,
   GITHUB_PROFILE_URL,
@@ -25,51 +25,12 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "unset";
 
 export default function Page() {
   return (
-    <div className="bg-surface-page text-text-primary min-h-screen">
-      {/* Top nav */}
-      <nav className="border-b border-surface-border px-8 py-4">
-        <div className="mx-auto flex max-w-6xl items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-text-primary">
-            <Logomark size={24} className="text-brand-600" />
-            <span className="font-display text-[18px] font-medium">LedgerLens</span>
-          </Link>
-          <div className="flex items-center gap-5 text-[13px]">
-            <Link
-              href="/demo"
-              className="rounded-md bg-brand-600 px-3 py-1.5 font-medium text-white hover:bg-brand-500"
-            >
-              Start the 3-minute demo →
-            </Link>
-            <Link href="/technical-story" className="text-text-secondary hover:text-text-primary">
-              Technical story
-            </Link>
-            <Link href="/evals" className="text-text-secondary hover:text-text-primary">
-              Evals
-            </Link>
-            <Link href="/app" className="text-text-secondary hover:text-text-primary">
-              App
-            </Link>
-            <Link
-              href="/about"
-              className="font-medium text-text-primary hover:text-brand-700"
-            >
-              About Michael
-            </Link>
-            <a
-              href={REPO_URL}
-              className="text-text-secondary hover:text-text-primary"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </a>
-          </div>
-        </div>
-      </nav>
+    <div className="bg-surface-page text-text-primary min-h-screen overflow-x-hidden">
+      <MarketingNav />
 
       {/* Portfolio-demo chip */}
       <section className="border-b border-surface-border bg-surface-sunken/40">
-        <div className="mx-auto flex max-w-6xl items-start gap-3 px-8 py-4">
+        <div className="mx-auto flex max-w-6xl items-start gap-3 px-4 sm:px-6 lg:px-8 py-4">
           <span className="mt-0.5 inline-block whitespace-nowrap rounded bg-brand-100 px-2 py-1 text-[11px] font-medium uppercase tracking-wide text-brand-800">
             Portfolio demo
           </span>
@@ -84,13 +45,13 @@ export default function Page() {
       </section>
 
       {/* Hero — business-first + premium trust card */}
-      <section className="px-8 pt-16 pb-12 md:pt-20">
+      <section className="px-4 sm:px-6 lg:px-8 pt-16 pb-12 md:pt-20">
         <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 lg:grid-cols-5">
           <div className="lg:col-span-3">
             <p className="mb-4 text-[12px] font-medium uppercase tracking-[0.5px] text-brand-600">
               For small-business bookkeeping cleanup
             </p>
-            <h1 className="font-display text-4xl font-medium leading-[1.1] text-text-primary md:text-5xl">
+            <h1 className="font-display text-[clamp(28px,7vw,48px)] font-medium leading-[1.1] text-text-primary md:text-5xl break-words">
               Turn messy bank transactions into a{" "}
               <span className="text-brand-600">verified small-business ledger.</span>
             </h1>
@@ -144,7 +105,7 @@ export default function Page() {
               <p className="inline-block rounded bg-brand-600 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-white">
                 Trust boundary
               </p>
-              <p className="mt-4 font-display text-[56px] font-medium leading-none text-brand-900">
+              <p className="mt-4 font-display text-[clamp(40px,10vw,56px)] font-medium leading-none text-brand-900">
                 100%
               </p>
               <p className="mt-1 text-[14px] font-medium uppercase tracking-wide text-brand-700">
@@ -167,7 +128,7 @@ export default function Page() {
       </section>
 
       {/* Visual pipeline — the system story in one row */}
-      <section className="mx-auto mt-12 max-w-6xl px-8">
+      <section className="mx-auto mt-12 max-w-6xl px-4 sm:px-6 lg:px-8">
         <h2 className="font-display text-[22px] font-medium text-text-primary">
           The pipeline in one row
         </h2>
@@ -187,7 +148,7 @@ export default function Page() {
       </section>
 
       {/* Three business value cards */}
-      <section className="mx-auto mt-20 max-w-6xl px-8">
+      <section className="mx-auto mt-20 max-w-6xl px-4 sm:px-6 lg:px-8">
         <h2 className="font-display text-[24px] font-medium text-text-primary">
           Why a small-business owner cares
         </h2>
@@ -211,7 +172,7 @@ export default function Page() {
       </section>
 
       {/* Recruiter-facing technical credibility */}
-      <section className="mx-auto mt-20 max-w-6xl px-8">
+      <section className="mx-auto mt-20 max-w-6xl px-4 sm:px-6 lg:px-8">
         <h2 className="font-display text-[24px] font-medium text-text-primary">
           Built like an AI workflow system, not an LLM wrapper.
         </h2>
@@ -272,7 +233,7 @@ export default function Page() {
       </section>
 
       {/* About-Michael strip */}
-      <section className="mx-auto mt-20 max-w-5xl px-8">
+      <section className="mx-auto mt-20 max-w-5xl px-4 sm:px-6 lg:px-8">
         <div className="rounded-lg border border-surface-border bg-surface-panel p-6">
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
             <div className="sm:col-span-2">
@@ -318,7 +279,7 @@ export default function Page() {
       </section>
 
       {/* Live API health */}
-      <section className="mx-auto mt-20 max-w-3xl px-8">
+      <section className="mx-auto mt-20 max-w-3xl px-4 sm:px-6 lg:px-8">
         <h2 className="mb-6 text-center font-display text-[16px] font-medium text-text-primary">
           Live API health
         </h2>
@@ -326,7 +287,7 @@ export default function Page() {
       </section>
 
       {/* Footer */}
-      <footer className="mt-24 border-t border-surface-border px-8 py-12">
+      <footer className="mt-24 border-t border-surface-border px-4 sm:px-6 lg:px-8 py-12">
         <div className="mx-auto max-w-6xl">
           <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
             <div>

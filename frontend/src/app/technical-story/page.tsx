@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { MarketingNav } from "@/components/marketing/MarketingNav";
 import { TrustPipeline } from "@/components/TrustPipeline";
-import { Logomark } from "@/components/ui/Logomark";
 import {
   ARCHITECTURE_URL,
   GITHUB_PROFILE_URL,
@@ -72,44 +72,15 @@ const STACK: string[] = [
 
 export default function TechnicalStoryPage() {
   return (
-    <div className="bg-surface-page text-text-primary min-h-screen">
-      <nav className="border-b border-surface-border px-8 py-4">
-        <div className="mx-auto flex max-w-6xl items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 text-text-primary">
-            <Logomark size={24} className="text-brand-600" />
-            <span className="font-display text-[18px] font-medium">LedgerLens</span>
-          </Link>
-          <div className="flex items-center gap-6 text-[13px]">
-            <Link
-              href="/demo"
-              className="rounded-md bg-brand-600 px-3 py-1.5 font-medium text-white hover:bg-brand-500"
-            >
-              Start the 3-minute demo →
-            </Link>
-            <Link href="/about" className="text-text-secondary hover:text-text-primary">
-              About
-            </Link>
-            <Link href="/evals" className="text-text-secondary hover:text-text-primary">
-              Eval evidence
-            </Link>
-            <a
-              href={REPO_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-text-secondary hover:text-text-primary"
-            >
-              GitHub
-            </a>
-          </div>
-        </div>
-      </nav>
+    <div className="bg-surface-page text-text-primary min-h-screen overflow-x-hidden">
+      <MarketingNav />
 
-      <main className="mx-auto max-w-5xl px-8 py-16">
+      <main className="mx-auto max-w-5xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
         <header>
           <p className="text-[12px] font-medium uppercase tracking-[0.5px] text-brand-600">
             Engineering story
           </p>
-          <h1 className="mt-3 font-display text-4xl font-medium text-text-primary">
+          <h1 className="mt-3 font-display text-[clamp(26px,6vw,40px)] font-medium leading-tight text-text-primary">
             Built like an AI workflow system, not an LLM wrapper.
           </h1>
           <p className="mt-4 max-w-3xl text-[16px] leading-relaxed text-text-secondary">
@@ -174,7 +145,32 @@ export default function TechnicalStoryPage() {
 
         {/* 3. Why not an LLM wrapper */}
         <Section number="03" title="Why this is not an LLM wrapper">
-          <div className="overflow-x-auto">
+          {/* Mobile: stacked cards. ≥ sm: comparison table. */}
+          <ul className="space-y-3 sm:hidden">
+            {LLM_VS_LEDGER.map((row) => (
+              <li
+                key={`m-${row.capability}`}
+                className="rounded-md border border-surface-border bg-surface-page p-3 text-[13px]"
+              >
+                <p className="text-[11px] font-medium uppercase tracking-wide text-text-subtle">
+                  {row.capability}
+                </p>
+                <p className="mt-2 text-text-subtle">
+                  <span className="mono text-[10px] uppercase tracking-wide">LLM wrapper</span>
+                  <br />
+                  {row.wrapper}
+                </p>
+                <p className="mt-2 text-text-primary">
+                  <span className="mono text-[10px] uppercase tracking-wide text-brand-700">
+                    LedgerLens
+                  </span>
+                  <br />
+                  {row.ledger}
+                </p>
+              </li>
+            ))}
+          </ul>
+          <div className="hidden overflow-x-auto sm:block">
             <table className="w-full table-fixed text-left text-[13px]">
               <thead className="border-b border-surface-border">
                 <tr>

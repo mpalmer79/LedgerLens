@@ -70,7 +70,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="bg-surface-page text-text-primary min-h-screen">
       <header className="border-b border-surface-border bg-surface-panel">
-        <div className="mx-auto max-w-6xl px-6 py-3">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 py-3">
           <div className="flex items-center justify-between">
             <Link href="/app" className="flex items-center gap-2 text-text-primary">
               <Logomark size={22} className="text-brand-600" />
@@ -89,7 +89,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               </Link>
             </div>
           </div>
-          <nav className="mt-3 -mb-px flex flex-wrap gap-x-5 gap-y-1 overflow-x-auto text-[14px]">
+          <nav className="mt-3 -mb-px flex flex-nowrap gap-x-4 overflow-x-auto whitespace-nowrap text-[14px] sm:flex-wrap sm:gap-x-5 sm:gap-y-1 sm:whitespace-normal scrollbar-thin">
             {NAV.map((item) => {
               const active =
                 pathname === item.href ||
@@ -111,7 +111,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </nav>
         </div>
       </header>
-      <main className="mx-auto max-w-6xl px-6 py-8">{children}</main>
+      <main className="mx-auto max-w-6xl px-4 sm:px-6 py-8">{children}</main>
     </div>
   );
 }
