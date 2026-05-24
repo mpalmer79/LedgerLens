@@ -10,6 +10,7 @@ import {
   Workflow,
 } from "lucide-react";
 
+import { HomepageImageSlot } from "@/components/app/HomepageImageSlot";
 import { PhotoCredits } from "@/components/marketing/PhotoCredits";
 
 import { CheckApiButton } from "@/components/CheckApiButton";
@@ -54,27 +55,20 @@ export default function Page() {
         </div>
       </section>
 
-      {/* Calm-workspace mood band. Restrained — establishes voice without
-          competing with the hero copy. Lives above the hero, decorative;
-          alt text describes the scene for screen readers. Hidden until a
-          real local photo + matching credit have been added; see
-          docs/HOMEPAGE_IMAGE_MANUAL_SOURCING_MANIFEST.md. */}
-      {heroImage?.enabled && (
+      {/* Hero image slot — shows a placeholder wireframe until a real
+          local photo is enabled in the manifest. */}
+      {heroImage && (
         <section
           className="px-4 sm:px-6 lg:px-8 pt-10"
           data-testid="homepage-hero-image"
         >
           <div className="mx-auto max-w-6xl">
-            <div className="relative aspect-[16/5] w-full overflow-hidden rounded-xl border border-surface-border">
-              <Image
-                src={heroImage.src}
-                alt={heroImage.alt}
-                fill
-                priority
-                sizes="(min-width: 1024px) 1024px, 100vw"
-                className="object-cover"
-              />
-            </div>
+            <HomepageImageSlot
+              image={heroImage}
+              className="aspect-[16/5] rounded-xl border border-surface-border"
+              priority
+              sizes="(min-width: 1024px) 1024px, 100vw"
+            />
           </div>
         </section>
       )}
@@ -246,17 +240,12 @@ export default function Page() {
               <li>✓ Markdown handoff report</li>
             </ul>
           </div>
-          {trustImage?.enabled && (
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg border border-surface-border">
-              <Image
-                src={trustImage.src}
-                alt={trustImage.alt}
-                fill
-                loading="lazy"
-                sizes="(min-width: 640px) 33vw, 100vw"
-                className="object-cover"
-              />
-            </div>
+          {trustImage && (
+            <HomepageImageSlot
+              image={trustImage}
+              className="aspect-[4/3] rounded-lg border border-surface-border"
+              sizes="(min-width: 640px) 33vw, 100vw"
+            />
           )}
         </div>
       </section>
@@ -280,22 +269,15 @@ export default function Page() {
               Independent auto repair shop, New Hampshire · fictional sample data.
             </p>
             <div
-              className={`mt-4 grid grid-cols-1 gap-4 ${
-                autoShopImage?.enabled ? "sm:grid-cols-[1fr_2fr]" : ""
-              }`}
+              className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-[1fr_2fr]"
               data-testid="homepage-auto-shop-image"
             >
-              {autoShopImage?.enabled && (
-                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-md border border-surface-border">
-                  <Image
-                    src={autoShopImage.src}
-                    alt={autoShopImage.alt}
-                    fill
-                    loading="lazy"
-                    sizes="(min-width: 640px) 33vw, 100vw"
-                    className="object-cover"
-                  />
-                </div>
+              {autoShopImage && (
+                <HomepageImageSlot
+                  image={autoShopImage}
+                  className="aspect-[4/3] rounded-md border border-surface-border"
+                  sizes="(min-width: 640px) 33vw, 100vw"
+                />
               )}
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 <PreviewTile label="Transactions imported" value="42" />
@@ -386,21 +368,16 @@ export default function Page() {
           cost control and auditability built in.
         </p>
 
-        {/* Engineering / workflow-architecture image. Wide strip; decorative.
-            Hidden until a real local photo + matching credit have been added;
-            see docs/HOMEPAGE_IMAGE_MANUAL_SOURCING_MANIFEST.md. */}
-        {engineeringImage?.enabled && (
+        {/* Engineering / workflow-architecture image. Wide strip; decorative. */}
+        {engineeringImage && (
           <div
-            className="mt-6 relative aspect-[16/5] w-full overflow-hidden rounded-lg border border-surface-border"
+            className="mt-6"
             data-testid="homepage-engineering-image"
           >
-            <Image
-              src={engineeringImage.src}
-              alt={engineeringImage.alt}
-              fill
-              loading="lazy"
+            <HomepageImageSlot
+              image={engineeringImage}
+              className="aspect-[16/5] rounded-lg border border-surface-border"
               sizes="(min-width: 1024px) 1024px, 100vw"
-              className="object-cover"
             />
           </div>
         )}
@@ -463,9 +440,7 @@ export default function Page() {
         data-testid="homepage-faq"
       >
         <div
-          className={`grid grid-cols-1 gap-6 sm:items-end ${
-            faqImage?.enabled ? "sm:grid-cols-[2fr_1fr]" : ""
-          }`}
+          className="grid grid-cols-1 gap-6 sm:grid-cols-[2fr_1fr] sm:items-end"
           data-testid="homepage-faq-image"
         >
           <div>
@@ -477,17 +452,12 @@ export default function Page() {
               on a new tool.
             </p>
           </div>
-          {faqImage?.enabled && (
-            <div className="relative aspect-[3/4] w-full max-w-[14em] justify-self-end overflow-hidden rounded-md border border-surface-border sm:max-w-[16em]">
-              <Image
-                src={faqImage.src}
-                alt={faqImage.alt}
-                fill
-                loading="lazy"
-                sizes="(min-width: 640px) 33vw, 100vw"
-                className="object-cover"
-              />
-            </div>
+          {faqImage && (
+            <HomepageImageSlot
+              image={faqImage}
+              className="aspect-[3/4] max-w-[14em] justify-self-end rounded-md border border-surface-border sm:max-w-[16em]"
+              sizes="(min-width: 640px) 33vw, 100vw"
+            />
           )}
         </div>
         <dl className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
