@@ -30,9 +30,16 @@ describe("HOMEPAGE_IMAGES manifest", () => {
     expect(got).toEqual([...expected].sort());
   });
 
-  it("disables every slot by default", () => {
-    for (const img of HOMEPAGE_IMAGES) {
-      expect(img.enabled).toBe(false);
+  it("only enables slots that have a file on disk", () => {
+    const enabledSections = HOMEPAGE_IMAGES.filter((i) => i.enabled).map(
+      (i) => i.section,
+    );
+    expect(enabledSections).toContain("hero");
+    const disabledSections = HOMEPAGE_IMAGES.filter((i) => !i.enabled).map(
+      (i) => i.section,
+    );
+    for (const s of ["trust", "auto-shop", "engineering", "faq"]) {
+      expect(disabledSections).toContain(s);
     }
   });
 

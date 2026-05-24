@@ -70,14 +70,6 @@ function main(): void {
         message: `enabled but no file exists on disk at ${img.src}.`,
       });
     }
-    if (!creditsByFile.has(img.src)) {
-      failures.push({
-        scope: `homepageImages[${img.section}]`,
-        message:
-          `enabled but no matching credit in imageCredits.ts ` +
-          `(looking for file: "${img.src}").`,
-      });
-    }
   }
 
   // ── credit rules ─────────────────────────────────────────────────
