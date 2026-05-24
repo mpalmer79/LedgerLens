@@ -4,8 +4,16 @@
  * invisible. The keyframes below fade scenes in for their window, then
  * out. The progress bar runs the full 30 seconds.
  *
- * Reduced-motion users see the final "verified ledger" frame as a
+ * Reduced-motion users see the final "accountant handoff" frame as a
  * static image (no animation, no loop) so the punchline still lands.
+ *
+ * Scene windows (% of 30s, 5+5+5+6+5+4 = 30s):
+ *   scene1:  0 – 16.7%  (0 – 5s)
+ *   scene2: 16.7 – 33.3% (5 – 10s)
+ *   scene3: 33.3 – 50%  (10 – 15s)
+ *   scene4: 50 – 70%    (15 – 21s)
+ *   scene5: 70 – 86.7%  (21 – 26s)
+ *   scene6: 86.7 – 100% (26 – 30s)
  */
 
 .root {
@@ -101,28 +109,20 @@
   will-change: opacity, transform;
 }
 
-/* Six 30-s scene timelines.
- * Each scene takes its window, eased in/out around the entry/exit edges.
- * windows:
- *  0–5 / 5–10 / 10–16 / 16–22 / 22–27 / 27–30  (5+5+6+6+5+3 = 30)
- */
-.scene1 {
-  animation: walkthrough-scene-1 30s infinite;
-}
-.scene2 {
-  animation: walkthrough-scene-2 30s infinite;
-}
-.scene3 {
-  animation: walkthrough-scene-3 30s infinite;
-}
-.scene4 {
-  animation: walkthrough-scene-4 30s infinite;
-}
-.scene5 {
-  animation: walkthrough-scene-5 30s infinite;
-}
-.scene6 {
-  animation: walkthrough-scene-6 30s infinite;
+.scene1 { animation: walkthrough-scene-1 30s infinite; }
+.scene2 { animation: walkthrough-scene-2 30s infinite; }
+.scene3 { animation: walkthrough-scene-3 30s infinite; }
+.scene4 { animation: walkthrough-scene-4 30s infinite; }
+.scene5 { animation: walkthrough-scene-5 30s infinite; }
+.scene6 { animation: walkthrough-scene-6 30s infinite; }
+
+.stepLabel {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: #9bd2a4;
+  margin-bottom: 8px;
 }
 
 .sceneTitle {
@@ -136,31 +136,32 @@
 }
 
 .sceneSub {
-  margin-top: 12px;
+  margin-top: 10px;
   font-size: clamp(12px, 1.6vw, 14px);
   color: #c9e2cd;
   max-width: 78%;
   line-height: 1.4;
 }
 
+/* Scene 1 — messy transactions list. */
 .txList {
-  margin-top: 22px;
-  width: min(520px, 86%);
+  margin-top: 18px;
+  width: min(520px, 90%);
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
 }
 
 .tx {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 12px;
+  padding: 7px 12px;
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   font-family: var(--font-mono), 'IBM Plex Mono', ui-monospace, monospace;
-  font-size: 12px;
+  font-size: 11.5px;
   color: #e6f3e8;
 }
 
@@ -169,126 +170,257 @@
   font-weight: 500;
 }
 
-/* Pipeline (scene 3) */
-.pipeline {
-  margin-top: 22px;
+/* Scene 2 — obvious-vendors classified list. */
+.obviousList {
+  margin-top: 18px;
+  width: min(560px, 92%);
   display: flex;
-  align-items: stretch;
-  gap: 8px;
-  width: min(620px, 92%);
+  flex-direction: column;
+  gap: 5px;
 }
 
-.pipeNode {
-  flex: 1;
-  border: 1.5px solid rgba(93, 181, 104, 0.45);
+.obviousRow {
+  display: grid;
+  grid-template-columns: 1.7fr auto 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: rgba(28, 61, 34, 0.55);
+  border: 1px solid rgba(93, 181, 104, 0.35);
+  font-size: 12px;
+}
+
+.obviousDesc {
+  font-family: var(--font-mono), monospace;
+  color: #e6f3e8;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.obviousVia {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(93, 181, 104, 0.18);
+  color: #9bd2a4;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.obviousCat {
+  color: #ffffff;
+  font-weight: 500;
+  text-align: right;
+}
+
+/* Scene 3 — owner question card. */
+.questionCard {
+  margin-top: 18px;
+  width: min(480px, 92%);
+  padding: 16px 18px;
+  border-radius: 12px;
+  border: 1.5px solid rgba(93, 181, 104, 0.55);
+  background: rgba(28, 61, 34, 0.6);
+  text-align: left;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.qContext {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  color: #c9e2cd;
+  letter-spacing: 0.2px;
+}
+
+.qPrompt {
+  margin-top: 6px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.qChoices {
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.qChoice {
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(93, 181, 104, 0.45);
+  background: rgba(255, 255, 255, 0.04);
+  font-size: 11px;
+  color: #ffffff;
+}
+
+/* Scene 4 — answers create accountant context. */
+.answerList {
+  margin-top: 18px;
+  width: min(560px, 92%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.answerRow {
+  display: grid;
+  grid-template-columns: 1.6fr auto 1.1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
   border-radius: 8px;
-  padding: 10px 8px;
+  border: 1px solid rgba(93, 181, 104, 0.4);
+  background: rgba(28, 61, 34, 0.55);
+  font-size: 12px;
+  text-align: left;
+}
+
+.answerDesc {
+  font-family: var(--font-mono), monospace;
+  color: #e6f3e8;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.answerArrow {
+  color: #5db568;
+  font-weight: 700;
+}
+
+.answerNote {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/* Scene 5 — split: Ready for accountant vs Needs review. */
+.splitGrid {
+  margin-top: 18px;
+  width: min(620px, 94%);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.splitColumn {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(93, 181, 104, 0.5);
   background: rgba(28, 61, 34, 0.6);
   text-align: left;
 }
 
-.pipeNode b {
-  display: block;
-  font-size: 10px;
-  letter-spacing: 1.4px;
-  color: #9bd2a4;
-  text-transform: uppercase;
-  font-weight: 600;
-}
-
-.pipeNode span {
-  display: block;
-  margin-top: 4px;
-  font-size: 13px;
-  color: #ffffff;
-}
-
-.pipeArrow {
-  align-self: center;
-  color: #5db568;
-  font-size: 18px;
-  font-weight: 600;
-}
-
-/* Review card (scene 4) */
-.reviewCard {
-  margin-top: 22px;
-  width: min(420px, 90%);
-  padding: 14px 16px;
-  border-radius: 10px;
-  border: 1.5px solid rgba(217, 164, 74, 0.6);
+.splitColumnReview {
+  border-color: rgba(217, 164, 74, 0.6);
   background: rgba(70, 50, 18, 0.4);
-  text-align: left;
-  font-family: var(--font-mono), monospace;
 }
 
-.reviewLine {
-  font-size: 12px;
+.splitHeading {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: #9bd2a4;
+}
+
+.splitColumnReview .splitHeading {
   color: #f0d39b;
 }
 
-.reviewLineMain {
-  margin-top: 4px;
-  font-size: 14px;
-  color: #ffffff;
-}
-
-.pill {
-  display: inline-block;
+.splitList {
   margin-top: 8px;
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: #d9a44a;
-  color: #2a1d05;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  font-family: var(--font-ui), system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
-/* Memory card (scene 5) */
-.memoryCard {
-  margin-top: 22px;
-  width: min(460px, 90%);
-  padding: 14px 16px;
+.splitRow {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.splitDesc {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  color: #e6f3e8;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.splitCategory {
+  font-size: 11px;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.splitNote {
+  font-size: 11px;
+  color: #f0d39b;
+}
+
+.splitFooter {
+  margin-top: 12px;
+  font-size: 11px;
+  color: #c9e2cd;
+  font-style: italic;
+}
+
+/* Scene 6 — accountant handoff package + trust card. */
+.handoffPreview {
+  margin-top: 14px;
+  width: min(480px, 92%);
+  padding: 12px 14px;
   border-radius: 10px;
-  border: 1.5px solid #5db568;
-  background: rgba(28, 61, 34, 0.6);
+  border: 1px solid rgba(93, 181, 104, 0.45);
+  background: rgba(28, 61, 34, 0.55);
   text-align: left;
 }
 
-.memLabel {
-  font-size: 10px;
-  letter-spacing: 1.4px;
-  text-transform: uppercase;
+.handoffFile {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
   color: #9bd2a4;
-  font-weight: 600;
+  letter-spacing: 0.4px;
 }
 
-.memMapping {
-  margin-top: 6px;
-  font-family: var(--font-mono), monospace;
-  font-size: 13px;
+.handoffSections {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
   color: #ffffff;
 }
 
-.memArrow {
+.handoffSections li {
+  padding-left: 10px;
+  position: relative;
+}
+
+.handoffSections li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
   color: #5db568;
-  margin: 0 6px;
 }
 
-.memNote {
-  margin-top: 8px;
-  font-size: 11px;
-  color: #c9e2cd;
-}
-
-/* Trust card (scene 6) */
+/* Trust card on scene 6 (preserved verbatim from the prior version). */
 .trustCard {
-  margin-top: 18px;
+  margin-top: 14px;
   width: min(520px, 92%);
-  padding: 18px 22px;
+  padding: 16px 20px;
   border-radius: 12px;
   background: linear-gradient(135deg, #5db568, #2e5f32);
   border: 1px solid rgba(255, 255, 255, 0.18);
@@ -307,7 +439,7 @@
 .trustNumber {
   margin-top: 4px;
   font-family: var(--font-display), 'Newsreader', Georgia, serif;
-  font-size: clamp(38px, 6vw, 58px);
+  font-size: clamp(34px, 6vw, 54px);
   font-weight: 600;
   line-height: 1;
   color: #ffffff;
@@ -321,7 +453,7 @@
 }
 
 .trustNote {
-  margin-top: 10px;
+  margin-top: 8px;
   font-size: 12px;
   color: #e6f3e8;
 }
@@ -348,15 +480,14 @@
   animation: walkthrough-progress 30s infinite linear;
 }
 
-/* Keyframes
- * Each scene fades in over ~0.5s, holds, then fades out over ~0.5s.
- * Window edges (percent of 30s):
- *   scene1:  0–17%   (0–5s)
- *   scene2: 17–33%   (5–10s)
- *   scene3: 33–53%   (10–16s)
- *   scene4: 53–73%   (16–22s)
- *   scene5: 73–90%   (22–27s)
- *   scene6: 90–100%  (27–30s)
+/* Keyframes — each scene fades in over ~0.5s, holds, then fades out
+ * over ~0.5s. Window edges (percent of 30s):
+ *   scene1:  0 –  16.7%
+ *   scene2: 16.7 – 33.3%
+ *   scene3: 33.3 –  50%
+ *   scene4:  50  –  70%
+ *   scene5:  70  – 86.7%
+ *   scene6: 86.7 – 100%
  */
 @keyframes walkthrough-scene-1 {
   0% { opacity: 0; transform: translateY(8px); }
@@ -376,31 +507,31 @@
 
 @keyframes walkthrough-scene-3 {
   0%, 33% { opacity: 0; transform: translateY(8px); }
-  37% { opacity: 1; transform: translateY(0); }
-  51% { opacity: 1; transform: translateY(0); }
-  54% { opacity: 0; transform: translateY(-6px); }
+  36% { opacity: 1; transform: translateY(0); }
+  48% { opacity: 1; transform: translateY(0); }
+  51% { opacity: 0; transform: translateY(-6px); }
   100% { opacity: 0; transform: translateY(8px); }
 }
 
 @keyframes walkthrough-scene-4 {
-  0%, 53% { opacity: 0; transform: translateY(8px); }
-  57% { opacity: 1; transform: translateY(0); }
-  71% { opacity: 1; transform: translateY(0); }
-  74% { opacity: 0; transform: translateY(-6px); }
+  0%, 50% { opacity: 0; transform: translateY(8px); }
+  53% { opacity: 1; transform: translateY(0); }
+  68% { opacity: 1; transform: translateY(0); }
+  71% { opacity: 0; transform: translateY(-6px); }
   100% { opacity: 0; transform: translateY(8px); }
 }
 
 @keyframes walkthrough-scene-5 {
-  0%, 73% { opacity: 0; transform: translateY(8px); }
-  76% { opacity: 1; transform: translateY(0); }
-  88% { opacity: 1; transform: translateY(0); }
-  91% { opacity: 0; transform: translateY(-6px); }
+  0%, 70% { opacity: 0; transform: translateY(8px); }
+  73% { opacity: 1; transform: translateY(0); }
+  85% { opacity: 1; transform: translateY(0); }
+  88% { opacity: 0; transform: translateY(-6px); }
   100% { opacity: 0; transform: translateY(8px); }
 }
 
 @keyframes walkthrough-scene-6 {
-  0%, 89% { opacity: 0; transform: translateY(8px); }
-  93% { opacity: 1; transform: translateY(0); }
+  0%, 86% { opacity: 0; transform: translateY(8px); }
+  90% { opacity: 1; transform: translateY(0); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
@@ -409,7 +540,7 @@
   100% { transform: scaleX(1); }
 }
 
-/* Reduced-motion: show the trust card as a static frame, no loop. */
+/* Reduced-motion: show the handoff trust card as a static frame, no loop. */
 @media (prefers-reduced-motion: reduce) {
   .scene1, .scene2, .scene3, .scene4, .scene5,
   .progressFill {
@@ -425,5 +556,28 @@
   }
   .progressFill {
     transform: scaleX(1);
+  }
+}
+
+/* Small-viewport tightening — keep cards readable at 360–430px. */
+@media (max-width: 480px) {
+  .stage {
+    inset: 50px 14px 32px 14px;
+  }
+  .obviousRow {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    text-align: left;
+  }
+  .obviousVia,
+  .obviousCat {
+    text-align: left;
+  }
+  .answerRow {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .splitGrid {
+    grid-template-columns: 1fr;
   }
 }

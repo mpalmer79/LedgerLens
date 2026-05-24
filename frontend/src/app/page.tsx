@@ -268,7 +268,7 @@ export default function Page() {
         </div>
       </section>
 
-      {/* 30-second walkthrough */}
+      {/* 30-second cleanup-to-handoff walkthrough */}
       <section className="mt-16">
         <VideoDemo />
       </section>
