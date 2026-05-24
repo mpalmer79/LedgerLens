@@ -9,6 +9,7 @@ from ledgerlens.models.category_mapping_profile import (
     CategoryMappingProfile,
 )
 from ledgerlens.models.correction_memory import CorrectionMemory
+from ledgerlens.models.csv_import_profile import CsvImportProfile
 from ledgerlens.models.membership import Membership, MembershipRole
 from ledgerlens.models.review_decision import ReviewDecision, ReviewerAction
 from ledgerlens.models.tenant import Tenant
@@ -23,6 +24,7 @@ __all__ = [
     "CategoryMappingEntry",
     "CategoryMappingProfile",
     "CorrectionMemory",
+    "CsvImportProfile",
     "Membership",
     "MembershipRole",
     "ResultStatus",

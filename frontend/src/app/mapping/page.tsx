@@ -8,9 +8,11 @@ import { ErrorState, LoadingState } from "@/components/ui/DataState";
 import {
   ApiError,
   getMappingProfile,
+  previewMappingChange,
   resetMappingProfile,
   updateMappingEntry,
   type MappingEntry,
+  type MappingPreview,
   type MappingProfile,
 } from "@/lib/api/client";
 
@@ -65,8 +67,46 @@ function buildDrafts(entries: MappingEntry[]): DraftMap {
   return out;
 }
 
+type PreviewState = {
+  loading: boolean;
+  data: MappingPreview | null;
+  error: string | null;
+};
+
 export default function CategoryMappingPage() {
   const [state, setState] = useState<State>(INITIAL_STATE);
+  // Per-intent preview state. Keyed by intent so multiple rows can be
+  // explored independently.
+  const [previews, setPreviews] = useState<Record<string, PreviewState>>({});
+
+  const runPreview = useCallback(async (intent: string, draft: {
+    category_code: string;
+    block_fallback: boolean;
+  }) => {
+    setPreviews((prev) => ({
+      ...prev,
+      [intent]: { loading: true, data: null, error: null },
+    }));
+    try {
+      const data = await previewMappingChange({
+        intent,
+        proposed_category_code:
+          draft.category_code === "" ? null : draft.category_code,
+        block_fallback: draft.block_fallback,
+        limit: 200,
+      });
+      setPreviews((prev) => ({
+        ...prev,
+        [intent]: { loading: false, data, error: null },
+      }));
+    } catch (err) {
+      const msg = err instanceof ApiError ? err.userMessage : String(err);
+      setPreviews((prev) => ({
+        ...prev,
+        [intent]: { loading: false, data: null, error: msg },
+      }));
+    }
+  }, []);
 
   const load = useCallback(async () => {
     setState((s) => ({ ...s, loading: true, error: null }));
@@ -320,6 +360,13 @@ export default function CategoryMappingPage() {
                       </button>
                     </div>
 
+                    <PreviewImpactSection
+                      intent={e.intent}
+                      draft={draft}
+                      preview={previews[e.intent]}
+                      onPreview={() => void runPreview(e.intent, draft)}
+                    />
+
                     <div className="mt-3">
                       <label className="field-label" htmlFor={`notes-${e.intent}`}>
                         Notes (optional)
@@ -431,5 +478,150 @@ function StatusBadge({ status }: { status: MappingEntry["status"] }) {
     >
       {entry.label}
     </span>
+  );
+}
+
+function PreviewImpactSection({
+  intent,
+  draft,
+  preview,
+  onPreview,
+}: {
+  intent: string;
+  draft: { category_code: string; block_fallback: boolean; notes: string };
+  preview: PreviewState | undefined;
+  onPreview: () => void;
+}) {
+  return (
+    <details
+      className="mt-3 rounded border border-surface-border bg-surface-page"
+      data-testid={`preview-impact-${intent}`}
+    >
+      <summary className="cursor-pointer select-none px-3 py-2 text-[12px] font-medium text-text-primary hover:bg-surface-sunken">
+        Preview impact — apply flow not implemented yet
+      </summary>
+      <div className="border-t border-surface-border p-3 text-[12px]">
+        <p className="text-text-subtle">
+          Nothing has been changed yet. The preview is read-only.
+          Human-corrected and accountant-follow-up rows are protected.
+          Mapping edits affect future categorization immediately;
+          updating current rows requires explicit review.
+        </p>
+        <div className="mt-2 flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={onPreview}
+            disabled={preview?.loading}
+            className="min-h-[36px] rounded border border-surface-border bg-surface-panel px-3 py-1.5 text-[12px] font-medium text-text-primary hover:bg-surface-sunken disabled:opacity-50"
+            data-testid={`preview-impact-button-${intent}`}
+          >
+            {preview?.loading ? "Previewing…" : "Run preview"}
+          </button>
+          <span className="text-[11px] text-text-subtle">
+            Uses{" "}
+            {draft.block_fallback
+              ? "block_fallback = true (would route to review)"
+              : draft.category_code
+                ? `proposed code [${draft.category_code}]`
+                : "the rule's own default code"}
+            .
+          </span>
+        </div>
+        {preview?.error && (
+          <p
+            role="alert"
+            className="mt-2 rounded border border-red-200 bg-red-50 p-2 text-[11px] text-red-800"
+          >
+            {preview.error}
+          </p>
+        )}
+        {preview?.data && (
+          <PreviewSummaryAndRows preview={preview.data} intent={intent} />
+        )}
+      </div>
+    </details>
+  );
+}
+
+function PreviewSummaryAndRows({
+  preview,
+  intent,
+}: {
+  preview: MappingPreview;
+  intent: string;
+}) {
+  return (
+    <div className="mt-3" data-testid={`preview-result-${intent}`}>
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+        <SummaryCard label="Affected" value={String(preview.affected_count)} />
+        <SummaryCard label="Eligible" value={String(preview.eligible_count)} />
+        <SummaryCard
+          label="Would route to review"
+          value={String(preview.would_route_to_review_count)}
+        />
+        <SummaryCard label="Protected" value={String(preview.ineligible_count)} />
+      </div>
+      {preview.rows.length === 0 ? (
+        <p className="mt-3 text-[12px] text-text-subtle">
+          No matching rows in the current workspace.
+        </p>
+      ) : (
+        <ul
+          className="mt-3 space-y-2"
+          data-testid={`preview-rows-${intent}`}
+        >
+          {preview.rows.slice(0, 25).map((r) => (
+            <li
+              key={r.transaction_id}
+              className={
+                r.eligible
+                  ? "rounded border border-surface-border bg-surface-panel p-3 text-[12px]"
+                  : "rounded border border-amber-300 bg-amber-50 p-3 text-[12px] text-amber-900"
+              }
+            >
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
+                <span className="mono text-text-subtle">{r.transaction_date}</span>
+                <span
+                  className={
+                    r.eligible
+                      ? "rounded bg-emerald-100 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-emerald-800"
+                      : "rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-amber-900"
+                  }
+                >
+                  {r.eligible ? "eligible" : "protected"}
+                </span>
+              </div>
+              <p className="mt-1 text-text-primary">{r.description}</p>
+              <p className="mt-1 text-text-secondary">
+                Current:{" "}
+                {r.current_category_code ? (
+                  <span className="mono">
+                    [{r.current_category_code}] {r.current_category_name ?? "—"}
+                  </span>
+                ) : (
+                  <span className="italic">unmapped</span>
+                )}{" "}
+                → Proposed:{" "}
+                {r.proposed_category_code ? (
+                  <span className="mono">
+                    [{r.proposed_category_code}] {r.proposed_category_name ?? "—"}
+                  </span>
+                ) : (
+                  <span className="italic">route to review</span>
+                )}
+              </p>
+              {r.reason && (
+                <p className="mt-1 italic">Reason: {r.reason}</p>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+      {preview.rows.length > 25 && (
+        <p className="mt-2 text-[11px] text-text-subtle">
+          Showing first 25 of {preview.rows.length} rows.
+        </p>
+      )}
+    </div>
   );
 }

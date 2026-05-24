@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   AlertTriangle,
   ArrowRight,
@@ -13,7 +13,15 @@ import {
 
 import { AppShell } from "@/components/app/AppShell";
 import { ErrorState } from "@/components/ui/DataState";
-import { ApiError, importCsv } from "@/lib/api/client";
+import {
+  ApiError,
+  createImportProfile,
+  importCsv,
+  listImportProfiles,
+  validateImportProfileHeaders,
+  type CsvImportProfile,
+  type CsvImportProfileValidation,
+} from "@/lib/api/client";
 import {
   detectAccount,
   detectAmount,
@@ -72,6 +80,142 @@ export default function ImportPage() {
   const [importError, setImportError] = useState<unknown>(null);
   const [submitting, setSubmitting] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+
+  // ── Saved CSV import profile state ───────────────────────────────
+  const [profiles, setProfiles] = useState<CsvImportProfile[] | null>(null);
+  const [profilesError, setProfilesError] = useState<string | null>(null);
+  const [selectedProfileId, setSelectedProfileId] = useState<string>("");
+  const [profileValidation, setProfileValidation] =
+    useState<CsvImportProfileValidation | null>(null);
+  const [profileWarnings, setProfileWarnings] = useState<string[]>([]);
+  const [saveProfileName, setSaveProfileName] = useState<string>("");
+  const [savingProfile, setSavingProfile] = useState(false);
+  const [saveProfileError, setSaveProfileError] = useState<string | null>(null);
+  const [saveProfileOk, setSaveProfileOk] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const list = await listImportProfiles();
+        if (cancelled) return;
+        setProfiles(list.profiles);
+        setProfileWarnings(list.warnings);
+      } catch (err) {
+        if (cancelled) return;
+        setProfiles([]);
+        setProfilesError(err instanceof ApiError ? err.userMessage : String(err));
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const selectedProfile = useMemo(
+    () => profiles?.find((p) => p.id === selectedProfileId) ?? null,
+    [profiles, selectedProfileId],
+  );
+
+  /** Apply a profile's mappings to the wizard state. */
+  const applyProfileMappings = useCallback(
+    (profile: CsvImportProfile) => {
+      setAmountMode(profile.amount_mode);
+      setMapping({
+        date: profile.date_column,
+        description: profile.description_column,
+        amount: profile.amount_column,
+        debit: profile.debit_column,
+        credit: profile.credit_column,
+        merchant: profile.merchant_column,
+        memo: profile.memo_column,
+        reference: profile.reference_column,
+        account: profile.account_column,
+      });
+    },
+    [],
+  );
+
+  /** When a profile is picked AND a CSV is already parsed, validate headers. */
+  useEffect(() => {
+    if (!selectedProfile) {
+      setProfileValidation(null);
+      return;
+    }
+    if (!parsed) {
+      // Pre-apply mappings even before headers exist.
+      applyProfileMappings(selectedProfile);
+      return;
+    }
+    let cancelled = false;
+    (async () => {
+      try {
+        const result = await validateImportProfileHeaders(
+          selectedProfile.id,
+          parsed.headers,
+        );
+        if (cancelled) return;
+        setProfileValidation(result);
+        if (result.profile_applicable) {
+          applyProfileMappings(selectedProfile);
+        }
+      } catch {
+        if (cancelled) return;
+        setProfileValidation(null);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedProfile, parsed, applyProfileMappings]);
+
+  /** Save the current wizard mappings as a new profile. */
+  const saveCurrentMappingAsProfile = useCallback(async () => {
+    if (!parsed || !saveProfileName.trim()) return;
+    setSavingProfile(true);
+    setSaveProfileError(null);
+    setSaveProfileOk(null);
+    try {
+      const profile = await createImportProfile({
+        name: saveProfileName.trim(),
+        amount_mode: amountMode,
+        date_column: mapping.date ?? "",
+        description_column: mapping.description ?? "",
+        amount_column: mapping.amount,
+        debit_column: mapping.debit,
+        credit_column: mapping.credit,
+        merchant_column: mapping.merchant,
+        account_column: mapping.account,
+        memo_column: mapping.memo,
+        reference_column: mapping.reference,
+        expected_headers: parsed.headers,
+      });
+      setProfiles((prev) => [profile, ...(prev ?? [])]);
+      setSelectedProfileId(profile.id);
+      setSaveProfileName("");
+      setSaveProfileOk(`Saved profile "${profile.name}".`);
+    } catch (err) {
+      setSaveProfileError(err instanceof ApiError ? err.userMessage : String(err));
+    } finally {
+      setSavingProfile(false);
+    }
+  }, [
+    parsed,
+    saveProfileName,
+    amountMode,
+    mapping,
+  ]);
+
+  const missingRequired = useMemo(() => {
+    const need: string[] = [];
+    if (!mapping.date) need.push("date");
+    if (!mapping.description) need.push("description");
+    if (amountMode === "signed" && !mapping.amount) need.push("amount");
+    if (amountMode === "debit_credit" && (!mapping.debit || !mapping.credit)) {
+      need.push("debit + credit");
+    }
+    return need;
+  }, [amountMode, mapping]);
 
   /** Accept a parsed CSV — apply auto-detection and advance the wizard. */
   const acceptParsed = useCallback((parsedCsv: ParsedCsv, sourceLabel: string) => {
@@ -208,6 +352,137 @@ export default function ImportPage() {
           </p>
         </div>
       </header>
+
+      <section
+        className="mt-4 rounded-md border border-surface-border bg-surface-panel p-4"
+        data-testid="saved-import-profiles"
+      >
+        <div className="flex flex-wrap items-baseline justify-between gap-2">
+          <div className="min-w-0">
+            <p className="text-[11px] font-medium uppercase tracking-wide text-brand-600">
+              Saved import profile
+            </p>
+            <p className="mt-1 text-[12px] text-text-secondary">
+              Pick a saved profile to auto-fill the column mappings. Profiles
+              save column names and mapping choices only — not transaction rows.
+            </p>
+          </div>
+        </div>
+        <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-[1fr_auto] sm:items-center">
+          <label className="text-[12px] text-text-subtle" htmlFor="profile-select">
+            Saved profile
+          </label>
+          <select
+            id="profile-select"
+            className="min-h-[44px] w-full rounded border border-surface-border bg-surface-page px-2 text-[13px] sm:w-[28em]"
+            value={selectedProfileId}
+            onChange={(e) => setSelectedProfileId(e.target.value)}
+            data-testid="import-profile-select"
+          >
+            <option value="">No saved profile — detect columns</option>
+            {(profiles ?? []).map((p) => (
+              <option key={p.id} value={p.id}>
+                {p.name}
+                {p.source === "seed" ? " (sample)" : ""}
+              </option>
+            ))}
+          </select>
+        </div>
+        {profilesError && (
+          <p className="mt-2 text-[12px] text-amber-800" role="alert">
+            Could not load saved profiles: {profilesError}
+          </p>
+        )}
+        {profileValidation && parsed && (
+          <div
+            className="mt-3 rounded border border-surface-border bg-surface-page p-3 text-[12px]"
+            data-testid="profile-validation"
+          >
+            {profileValidation.profile_applicable ? (
+              <p className="text-emerald-700">
+                ✓ This profile matches all required columns in the uploaded
+                CSV.
+              </p>
+            ) : (
+              <p className="text-amber-800">
+                This CSV is missing the saved profile&apos;s columns:{" "}
+                <span className="mono">
+                  {profileValidation.missing_headers.join(", ")}
+                </span>
+                . Your bank may have changed the export format.
+              </p>
+            )}
+            {profileValidation.extra_headers.length > 0 && (
+              <p className="mt-1 text-text-subtle">
+                Extra columns are okay. LedgerLens ignores columns you do not
+                map:{" "}
+                <span className="mono">
+                  {profileValidation.extra_headers.join(", ")}
+                </span>
+                .
+              </p>
+            )}
+          </div>
+        )}
+        {parsed && (
+          <div className="mt-4 rounded border border-surface-border bg-surface-page p-3">
+            <p className="text-[12px] font-medium text-text-primary">
+              Save current mapping as a profile
+            </p>
+            <p className="mt-1 text-[12px] text-text-subtle">
+              Reuse the same column mappings next month. Profiles store the
+              header names from this upload — no rows are saved.
+            </p>
+            <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-[1fr_auto]">
+              <input
+                type="text"
+                placeholder="e.g. TD Bank checking"
+                value={saveProfileName}
+                onChange={(e) => setSaveProfileName(e.target.value)}
+                className="min-h-[44px] w-full rounded border border-surface-border bg-surface-page px-2 text-[13px]"
+                data-testid="save-profile-name"
+              />
+              <button
+                type="button"
+                disabled={
+                  savingProfile ||
+                  !saveProfileName.trim() ||
+                  missingRequired.length > 0
+                }
+                onClick={() => void saveCurrentMappingAsProfile()}
+                className="min-h-[44px] rounded bg-brand-600 px-3 py-2 text-[13px] font-medium text-white hover:bg-brand-500 disabled:opacity-50"
+                data-testid="save-profile-button"
+              >
+                {savingProfile ? "Saving…" : "Save mapping as profile"}
+              </button>
+            </div>
+            {missingRequired.length > 0 && (
+              <p className="mt-2 text-[12px] text-amber-800">
+                Save disabled — finish the required mappings first
+                ({missingRequired.join(", ")}).
+              </p>
+            )}
+            {saveProfileError && (
+              <p className="mt-2 text-[12px] text-red-700" role="alert">
+                {saveProfileError}
+              </p>
+            )}
+            {saveProfileOk && (
+              <p className="mt-2 text-[12px] text-emerald-700" role="status">
+                {saveProfileOk} Reuse it next month to skip the column
+                mapping.
+              </p>
+            )}
+          </div>
+        )}
+        {profileWarnings.length > 0 && (
+          <ul className="mt-3 space-y-1 text-[11px] text-text-subtle">
+            {profileWarnings.map((w) => (
+              <li key={w}>{w}</li>
+            ))}
+          </ul>
+        )}
+      </section>
 
       <StepBar step={step} />
 

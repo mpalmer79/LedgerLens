@@ -27,6 +27,7 @@ from ledgerlens.services.category_mapping import (
     reset_to_seed,
     update_entry,
 )
+from ledgerlens.services.mapping_preview import preview_mapping_change
 
 router = APIRouter(prefix="/mapping", tags=["mapping"])
 
@@ -176,6 +177,113 @@ def reset_profile(db: Session = Depends(get_db)) -> MappingProfileOut:
     """Reset the active profile back to the seeded registry defaults."""
     reset_to_seed(db)
     return _to_profile_out(db)
+
+
+# ── Recategorization preview ──────────────────────────────────────────
+
+
+class MappingPreviewPayload(BaseModel):
+    intent: str = Field(min_length=1, max_length=64)
+    proposed_category_code: str | None = Field(default=None, max_length=16)
+    block_fallback: bool = False
+    limit: int = Field(default=200, ge=1, le=1000)
+
+
+class MappingPreviewRow(BaseModel):
+    transaction_id: str
+    transaction_date: str
+    description: str
+    merchant: str | None
+    amount_cents: int
+    current_category_code: str | None
+    current_category_name: str | None
+    proposed_category_code: str | None
+    proposed_category_name: str | None
+    matched_intent: str | None
+    status: str
+    eligible: bool
+    reason: str | None
+
+
+class MappingPreviewOut(BaseModel):
+    intent: str
+    proposed_category_code: str | None
+    block_fallback: bool
+    affected_count: int
+    eligible_count: int
+    ineligible_count: int
+    would_route_to_review_count: int
+    rows: list[MappingPreviewRow]
+    warnings: list[str]
+
+
+@router.post("/preview", response_model=MappingPreviewOut)
+def preview_mapping(
+    payload: MappingPreviewPayload, db: Session = Depends(get_db)
+) -> MappingPreviewOut:
+    """Read-only preview of how a mapping change would affect existing
+    rows. No mutation happens.
+
+    Ineligible rows (human-corrected, accountant-follow-up, accountant-
+    review-required, uncategorizable, correction-memory-categorized)
+    are returned with a `reason` so the UI can render them as
+    protected.
+    """
+    intent = payload.intent.strip()
+    if not intent:
+        raise ValidationFailed("intent is required.")
+    if payload.proposed_category_code:
+        code = payload.proposed_category_code.strip()
+        if code:
+            from ledgerlens.models import AccountCategory
+
+            exists = db.query(AccountCategory).filter(AccountCategory.code == code).one_or_none()
+            if exists is None:
+                raise ValidationFailed(
+                    f"Unknown category code '{code}'. Pick a code from the active "
+                    "chart of accounts.",
+                    code=code,
+                )
+    # Validate the intent is one the active business knows about.
+    rule_map = get_business_rule_map(active_business_id())
+    if intent not in rule_map.intent_to_code and intent not in rule_map.block_fallback_intents:
+        raise ValidationFailed(f"Unknown intent '{intent}' for the active business.")
+
+    summary = preview_mapping_change(
+        db,
+        intent=intent,
+        proposed_category_code=payload.proposed_category_code,
+        block_fallback=payload.block_fallback,
+        limit=payload.limit,
+    )
+    return MappingPreviewOut(
+        intent=intent,
+        proposed_category_code=payload.proposed_category_code,
+        block_fallback=payload.block_fallback,
+        affected_count=summary.affected_count,
+        eligible_count=summary.eligible_count,
+        ineligible_count=summary.ineligible_count,
+        would_route_to_review_count=summary.would_route_to_review_count,
+        rows=[
+            MappingPreviewRow(
+                transaction_id=r.transaction_id,
+                transaction_date=r.transaction_date,
+                description=r.description,
+                merchant=r.merchant,
+                amount_cents=r.amount_cents,
+                current_category_code=r.current_category_code,
+                current_category_name=r.current_category_name,
+                proposed_category_code=r.proposed_category_code,
+                proposed_category_name=r.proposed_category_name,
+                matched_intent=r.matched_intent,
+                status=r.status,
+                eligible=r.eligible,
+                reason=r.reason,
+            )
+            for r in summary.rows
+        ],
+        warnings=summary.warnings,
+    )
 
 
 __all__ = ["ACTIVE_PROFILE_NAME", "router"]

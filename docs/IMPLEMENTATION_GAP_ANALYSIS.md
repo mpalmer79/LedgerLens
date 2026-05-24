@@ -391,3 +391,37 @@ Still explicitly not in scope:
 - No "re-categorize after mapping edit" flow.
 - No commercial signup, no contact form (deliberate — keeps the
   no-PII / no-fake-SaaS contract intact).
+
+---
+
+## 13. Release-readiness sprint — three workstreams
+
+What landed (see `docs/RELEASE_READINESS_NEXT_THREE_REVIEW.md`):
+
+- **AppShell readiness truth.** Five readiness states; `/health` for
+  process liveness; `/demo/ready` for demo-data readiness. The
+  misleading "API: ok" copy is gone. 5 new tests.
+- **Saved CSV import profiles.** New `CsvImportProfile` model +
+  Alembic revision `cc70b95bb129`. Service layer + 5 routes
+  (`/import-profiles` list/create/update/delete + `validate` +
+  `reset`). Seeded "Granite State sample bank CSV" profile auto-
+  fills the sample CSV mapping. Wizard UI gains a selector + a save
+  form. Profiles store headers + mapping choices only — never row
+  data. 20 backend + 6 frontend new tests.
+- **Mapping recategorization preview.** New `POST /mapping/preview`
+  read-only endpoint. `/mapping` row gains a "Preview impact" panel
+  with eligible / protected badges. Human-corrected, accountant-
+  follow-up, ACCOUNTANT_REVIEW_REQUIRED, UNCATEGORIZABLE, and
+  correction-memory rows are all protected. Apply is deferred until
+  Auth Phase 2. 9 backend + 6 frontend new tests.
+
+Counts: backend 266 → 295. Frontend 262 → 279.
+
+Still explicitly not in scope:
+
+- Selected-row apply for mapping changes (deferred to auth Phase 2
+  so audit events can carry an `actor_user_id`).
+- Per-business switcher on `/mapping` or `/import-profiles`
+  (depends on auth Phase 2).
+- Smart header-rename suggester on profile validation.
+- JSON-formatted log shipping / external log sink.

@@ -1185,3 +1185,142 @@ describe("/handoff static fallback (Phase 2)", () => {
     expect(STATIC_HANDOFF).not.toMatch(/href="tel:/);
   });
 });
+
+describe("AppShell readiness truth (Workstream A)", () => {
+  it("does not ship the misleading 'API: ok' wording any more", () => {
+    expect(APP_SHELL).not.toContain('"API: ok"');
+    // The old single-source HealthDot is replaced.
+    expect(APP_SHELL).not.toMatch(/HealthDot/);
+    expect(APP_SHELL).not.toMatch(/useBackendHealth\(/);
+  });
+
+  it("renders the five readiness states the spec calls for", () => {
+    for (const state of [
+      "checking",
+      "process_ok_demo_ready",
+      "process_ok_demo_degraded",
+      "process_ok_demo_unavailable",
+      "process_unreachable",
+    ]) {
+      expect(APP_SHELL).toContain(`"${state}"`);
+    }
+  });
+
+  it("calls /health for liveness and /demo/ready for demo readiness", () => {
+    expect(APP_SHELL).toContain("getHealth()");
+    expect(APP_SHELL).toContain("getDemoReady()");
+  });
+
+  it("renders the labelled status indicator with both signals", () => {
+    expect(APP_SHELL).toContain('data-testid="appshell-readiness"');
+    expect(APP_SHELL).toContain('"Process: ok"');
+    expect(APP_SHELL).toContain('"Demo: ready"');
+    expect(APP_SHELL).toContain('"Demo: degraded"');
+    expect(APP_SHELL).toContain('"Demo: unavailable"');
+    expect(APP_SHELL).toContain('"Backend: unreachable"');
+    // Accessible tooltip distinguishing the two concerns.
+    expect(APP_SHELL).toContain(
+      "Process liveness is separate from demo database readiness",
+    );
+  });
+
+  it("does not overclaim full demo readiness from /health alone", () => {
+    // The lowercase corpus has no remaining 'api: ok' badge text.
+    expect(APP_SHELL.toLowerCase()).not.toContain("api: ok");
+    // No accidental claim that the demo is production-ready / safe.
+    expect(APP_SHELL.toLowerCase()).not.toContain("production ready");
+    expect(APP_SHELL.toLowerCase()).not.toContain("safe for real bank");
+    expect(APP_SHELL.toLowerCase()).not.toMatch(/100\s*%\s*ai/);
+    expect(APP_SHELL).not.toMatch(/href="mailto:/);
+    expect(APP_SHELL).not.toMatch(/href="tel:/);
+  });
+});
+
+describe("import wizard saved profile UI (Workstream B)", () => {
+  it("renders the profile selector with the spec test-id", () => {
+    expect(IMPORT).toContain('data-testid="saved-import-profiles"');
+    expect(IMPORT).toContain('data-testid="import-profile-select"');
+    expect(IMPORT).toContain("No saved profile — detect columns");
+  });
+
+  it("calls the saved-profile API surface", () => {
+    expect(IMPORT).toContain("listImportProfiles");
+    expect(IMPORT).toContain("validateImportProfileHeaders");
+    expect(IMPORT).toContain("createImportProfile");
+  });
+
+  it("renders the save-current-mapping form when a CSV is parsed", () => {
+    expect(IMPORT).toContain('data-testid="save-profile-name"');
+    expect(IMPORT).toContain('data-testid="save-profile-button"');
+    expect(IMPORT).toContain("Save mapping as profile");
+    // The save button blocks until required mappings are present.
+    expect(IMPORT).toContain("missingRequired.length > 0");
+  });
+
+  it("explains that profiles save headers only — no rows", () => {
+    expect(IMPORT).toMatch(/Profiles\s+save column names and mapping choices only/);
+    expect(IMPORT).toContain("no rows are saved");
+  });
+
+  it("surfaces missing-header and extra-header warnings", () => {
+    expect(IMPORT).toContain('data-testid="profile-validation"');
+    expect(IMPORT).toContain("missing the saved profile");
+    expect(IMPORT).toContain("Extra columns are okay");
+    expect(IMPORT).toContain("bank may have changed the export format");
+  });
+
+  it("keeps the public-demo warning and demo disclaimers intact", () => {
+    expect(IMPORT).toContain("Public demo — do not upload real bank data");
+    expect(IMPORT.toLowerCase()).not.toMatch(/safe for real bank/);
+    expect(IMPORT.toLowerCase()).not.toMatch(/100\s*%\s*ai/);
+    expect(IMPORT).not.toMatch(/href="mailto:/);
+    expect(IMPORT).not.toMatch(/href="tel:/);
+  });
+});
+
+describe("mapping recategorization preview (Workstream C)", () => {
+  it("renders a per-intent preview-impact section with the spec testid", () => {
+    expect(MAPPING).toContain("data-testid={`preview-impact-${intent}`}");
+    expect(MAPPING).toContain("data-testid={`preview-impact-button-${intent}`}");
+  });
+
+  it("calls the read-only preview endpoint", () => {
+    expect(MAPPING).toContain("previewMappingChange");
+  });
+
+  it("labels the section as preview-only with no apply", () => {
+    expect(MAPPING).toContain(
+      "Preview impact — apply flow not implemented yet",
+    );
+    expect(MAPPING).toContain("Nothing has been changed yet");
+    expect(MAPPING).toContain(
+      "Human-corrected and accountant-follow-up rows are protected",
+    );
+    expect(MAPPING).toContain(
+      "updating current rows requires explicit review",
+    );
+  });
+
+  it("renders eligible / protected badges on the row list", () => {
+    expect(MAPPING).toContain('"eligible"');
+    expect(MAPPING).toContain('"protected"');
+    expect(MAPPING).toContain("Affected");
+    expect(MAPPING).toContain("Would route to review");
+    expect(MAPPING).toContain("Protected");
+  });
+
+  it("does not introduce a silent apply CTA", () => {
+    // No button literally labelled "Apply" appears in the preview UI.
+    expect(MAPPING).not.toMatch(/>\s*Apply\s*</);
+    expect(MAPPING).not.toContain("Apply selected");
+    expect(MAPPING).not.toContain("Recategorize all");
+  });
+
+  it("does not overclaim production safety or accounting correctness", () => {
+    expect(MAPPING.toLowerCase()).not.toContain("production saas");
+    expect(MAPPING.toLowerCase()).not.toContain("safe for real bank");
+    expect(MAPPING.toLowerCase()).not.toMatch(/100\s*%\s*ai/);
+    expect(MAPPING).not.toMatch(/href="mailto:/);
+    expect(MAPPING).not.toMatch(/href="tel:/);
+  });
+});

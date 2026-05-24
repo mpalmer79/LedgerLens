@@ -636,3 +636,117 @@ export type DemoReadiness = {
 };
 
 export const getDemoReady = () => apiFetch<DemoReadiness>("/demo/ready");
+
+// ── Saved CSV import profiles ─────────────────────────────────────────────
+
+export type CsvImportProfile = {
+  id: string;
+  business_id: string;
+  name: string;
+  source: string;
+  amount_mode: "signed" | "debit_credit";
+  date_column: string;
+  description_column: string;
+  amount_column: string | null;
+  debit_column: string | null;
+  credit_column: string | null;
+  merchant_column: string | null;
+  account_column: string | null;
+  memo_column: string | null;
+  reference_column: string | null;
+  expected_headers: string[];
+};
+
+export type CsvImportProfileList = {
+  business_id: string;
+  business_name: string | null;
+  profiles: CsvImportProfile[];
+  warnings: string[];
+};
+
+export type CsvImportProfilePayload = {
+  name: string;
+  amount_mode: "signed" | "debit_credit";
+  date_column: string;
+  description_column: string;
+  amount_column?: string | null;
+  debit_column?: string | null;
+  credit_column?: string | null;
+  merchant_column?: string | null;
+  account_column?: string | null;
+  memo_column?: string | null;
+  reference_column?: string | null;
+  expected_headers: string[];
+};
+
+export type CsvImportProfileValidation = {
+  profile_id: string;
+  profile_name: string;
+  matched_headers: string[];
+  missing_headers: string[];
+  extra_headers: string[];
+  profile_applicable: boolean;
+  warnings: string[];
+};
+
+export const listImportProfiles = () =>
+  apiFetch<CsvImportProfileList>("/import-profiles");
+
+export const createImportProfile = (payload: CsvImportProfilePayload) =>
+  apiFetch<CsvImportProfile>("/import-profiles", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+
+export const validateImportProfileHeaders = (
+  profileId: string,
+  headers: string[],
+) =>
+  apiFetch<CsvImportProfileValidation>(
+    `/import-profiles/${encodeURIComponent(profileId)}/validate`,
+    {
+      method: "POST",
+      body: JSON.stringify({ headers }),
+    },
+  );
+
+// ── Mapping recategorization preview ──────────────────────────────────────
+
+export type MappingPreviewRow = {
+  transaction_id: string;
+  transaction_date: string;
+  description: string;
+  merchant: string | null;
+  amount_cents: number;
+  current_category_code: string | null;
+  current_category_name: string | null;
+  proposed_category_code: string | null;
+  proposed_category_name: string | null;
+  matched_intent: string | null;
+  status: string;
+  eligible: boolean;
+  reason: string | null;
+};
+
+export type MappingPreview = {
+  intent: string;
+  proposed_category_code: string | null;
+  block_fallback: boolean;
+  affected_count: number;
+  eligible_count: number;
+  ineligible_count: number;
+  would_route_to_review_count: number;
+  rows: MappingPreviewRow[];
+  warnings: string[];
+};
+
+export const previewMappingChange = (payload: {
+  intent: string;
+  proposed_category_code: string | null;
+  block_fallback: boolean;
+  limit?: number;
+}) =>
+  apiFetch<MappingPreview>("/mapping/preview", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
