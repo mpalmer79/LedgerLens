@@ -48,7 +48,7 @@ describe("VideoDemo — fallback behavior", () => {
     const html = await renderWith("");
     // Generated walkthrough markers (badge + a final-scene phrase) appear.
     expect(html).toContain("Generated walkthrough");
-    expect(html).toContain("verified finalized demo ledger");
+    expect(html).toContain("procedurally verified demo rows");
     // No iframe in the fallback.
     expect(html).not.toContain("<iframe");
     // The "coming soon" placeholder is gone.

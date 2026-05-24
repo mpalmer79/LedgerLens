@@ -89,8 +89,15 @@ export default function HandoffPage() {
         )}
         <p className="mt-2 max-w-3xl text-[14px] text-text-secondary">
           {handoff?.scenario
-            ? "This demo handoff shows how verified rows, owner answers, unresolved items, and learned corrections would be packaged for accountant review."
-            : "A reviewed ledger summary with unresolved questions, review notes, and the correction memory you saved this month. Paste it into an email or download the markdown to forward to your bookkeeper or accountant."}
+            ? "This demo handoff shows how procedurally verified rows, owner answers, unresolved items, and learned corrections would be packaged for accountant review."
+            : "A reviewed categorization summary with unresolved questions, review notes, and the correction memory you saved this month. Paste it into an email or download the markdown to forward to your bookkeeper or accountant for substantive review."}
+        </p>
+        <p className="mt-2 max-w-3xl rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-[12px] text-amber-900">
+          This is a <strong>handoff package</strong>, not CPA-reviewed books.
+          &ldquo;Verified&rdquo; means a defensible authority (rule, correction memory,
+          or human review) signed off on each row procedurally — it is not a guarantee
+          of accounting or tax correctness, and it is not a substitute for accounting
+          review.
         </p>
       </header>
 

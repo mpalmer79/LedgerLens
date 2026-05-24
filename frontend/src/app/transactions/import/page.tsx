@@ -86,7 +86,23 @@ export default function ImportPage() {
         <h1 className="font-display text-[28px] font-medium text-text-primary">
           Import transactions
         </h1>
-        <p className="mt-1 text-[14px] text-text-secondary">
+        <div
+          role="alert"
+          className="mt-3 max-w-3xl rounded-md border border-amber-300 bg-amber-50 p-3 text-[13px] text-amber-900"
+        >
+          <p className="font-medium">
+            Public demo — do not upload real bank data.
+          </p>
+          <p className="mt-1 text-[12px]">
+            Use sample or synthetic CSV data only. Do not upload real bank
+            statements, customer information, employee information, account
+            numbers, or sensitive financial data. There is no authentication
+            and no tenant isolation on this deploy — uploaded rows are
+            visible to anyone with the URL. A sample CSV is one click away
+            below.
+          </p>
+        </div>
+        <p className="mt-3 text-[14px] text-text-secondary">
           Upload a CSV of bank transactions, or paste CSV content directly.
           Supported columns:{" "}
           <span className="mono text-[12px]">

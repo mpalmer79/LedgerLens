@@ -211,7 +211,7 @@ export function GeneratedWalkthrough() {
           <div className={styles.trustCard}>
             <p className={styles.trustLabel}>Trust boundary</p>
             <p className={styles.trustNumber}>100%</p>
-            <p className={styles.trustHeadline}>verified finalized demo ledger</p>
+            <p className={styles.trustHeadline}>procedurally verified demo rows</p>
             <p className={styles.trustNote}>
               0 uncertain rows silently finalized · workflow-level trust metric, not raw
               model accuracy

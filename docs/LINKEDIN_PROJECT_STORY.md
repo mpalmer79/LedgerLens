@@ -4,7 +4,7 @@ Use this doc to seed LinkedIn posts, GitHub README excerpts, and interview talki
 
 ## 1. Short project description
 
-LedgerLens is an AI-assisted bookkeeping workflow prototype for small businesses. It turns messy bank transactions into a **verified** categorized ledger by combining deterministic rules, human correction memory, review routing, and an audit trail. The public deploy runs at zero paid spend.
+LedgerLens is an AI-assisted bookkeeping cleanup and accountant handoff assistant for small businesses. It turns messy bank transactions into a **procedurally verified** categorization package by combining deterministic rules, human correction memory, review routing, and an internal state-change audit log. "Procedurally verified" means a defensible authority (rule, memory, or human review) signed off on each row — it is **not** a guarantee of accounting or tax correctness, and **not** a substitute for CPA review. The public deploy runs at zero paid spend.
 
 ## 2. Business problem
 
@@ -43,7 +43,7 @@ It deliberately isn't. Raw model accuracy on adversarial bookkeeping data is aro
 
 ## 7. What technical skills it demonstrates
 
-- **Full-stack engineering** — FastAPI + SQLAlchemy 2.0 + Postgres-ready persistence; Next.js 14 + typed API client; Dockerfile-based Railway deploys.
+- **Full-stack engineering** — FastAPI + SQLAlchemy 2.0 + Postgres-compatible persistence; Next.js 14 + typed API client; Dockerfile-based Railway deploys.
 - **AI systems design** — layered decision logic, model fallback gated by config, deterministic correction memory, rule layer with safety filters, confidence routing.
 - **Reliability & auditability** — `AuditEvent` on every state change; `/health` and `/ready` separated; structured error envelopes; mode-aware readiness reporting.
 - **Cost & operational thinking** — demo-stub mode; regression test that asserts the Anthropic SDK is never imported; lazy provider construction; deploy doc with the exact Railway env vars.
@@ -63,7 +63,7 @@ It deliberately isn't. Raw model accuracy on adversarial bookkeeping data is aro
 >
 > Most "AI bookkeeping" tools either guess the category (and quietly contaminate the books) or wrap a chat UI around a model and call it done. Neither helps the owner produce something an accountant can actually use.
 >
-> So I built a **monthly cleanup assistant**. The deliverable is a **verified accountant handoff package** — markdown summary + CSV ledger — that the owner sends to their bookkeeper or CPA at month-end.
+> So I built a **monthly cleanup assistant**. The deliverable is a **procedurally verified accountant handoff package** — markdown summary + categorized CSV — that the owner sends to their bookkeeper or accountant for substantive review at month-end. (LedgerLens is a cleanup-and-handoff assistant, not accounting software.)
 >
 > The workflow:
 > 1. Import this month's messy bank activity.
@@ -77,7 +77,7 @@ It deliberately isn't. Raw model accuracy on adversarial bookkeeping data is aro
 >
 > The deployed instance runs at $0 paid spend (demo-stub mode; the Anthropic SDK is never imported — there's a regression test for that).
 >
-> Stack: FastAPI · SQLAlchemy · Postgres-ready · Next.js · TypeScript · Docker · Railway · Anthropic (opt-in) · pytest · vitest · mypy --strict.
+> Stack: FastAPI · SQLAlchemy · Postgres-compatible · Next.js · TypeScript · Docker · Railway · Anthropic (opt-in) · pytest · vitest · mypy --strict.
 >
 > Built as the next step in my pivot from automotive retail / enterprise implementation into AI software. Code, ADRs, eval artifacts, and the verified-ledger trust contract — all on GitHub. Open to AI engineering / applied AI / solutions engineering / full-stack / AI workflow automation roles.
 
@@ -89,7 +89,7 @@ It deliberately isn't. Raw model accuracy on adversarial bookkeeping data is aro
 >
 > The headline metric is workflow-level, not model-level: 100% of finalized demo-ledger rows are verified before export. Raw model accuracy is reported honestly (~63%) on the eval page — but it's not the trust boundary for a financial workflow.
 >
-> Stack: FastAPI · Next.js · Postgres-ready · Docker · Railway · pytest · vitest · mypy --strict. $0 paid API spend on the public deploy.
+> Stack: FastAPI · Next.js · Postgres-compatible · Docker · Railway · pytest · vitest · mypy --strict. $0 paid API spend on the public deploy.
 >
 > Three-minute guided demo + the live cleanup + handoff pages at the link. GitHub in the comments.
 
@@ -130,7 +130,7 @@ If the main hook doesn't fit your voice, try one of these instead. Each one lead
 
 1. **The cost-control hook.** "I built an AI bookkeeping prototype that runs at $0 on the public demo deploy. The model is never imported in demo mode — there's a regression test that fails if it ever is. Here's how the trust boundary works without it."
 
-2. **The career-pivot hook.** "After 25 years in automotive retail and enterprise implementation, I shipped my first portfolio AI product. LedgerLens turns messy bank transactions into a verified ledger by combining deterministic rules, correction memory, review routing, and human-in-the-loop. The architecture story is the part I'm proudest of."
+2. **The career-pivot hook.** "After 25 years in automotive retail and enterprise implementation, I shipped my first portfolio AI product. LedgerLens turns messy bank transactions into a reviewed categorization package by combining deterministic rules, correction memory, review routing, and human-in-the-loop. The architecture story is the part I'm proudest of."
 
 3. **The honest-AI hook.** "Most 'AI bookkeeping' tools either guess and quietly contaminate the books or wrap a chat UI around a model and call it done. LedgerLens does neither — it routes uncertainty to a human and only counts a row as 'finalized' when it was decided by a defensible authority. Three-minute guided demo at [link]."
 
@@ -150,7 +150,7 @@ If anyone asks "what does 100% verified actually mean?", use this exact answer:
 
 ## Suggested GitHub README excerpt
 
-> **LedgerLens** is an AI-assisted bookkeeping workflow prototype for small businesses. It turns messy bank transactions into a verified categorized ledger by combining deterministic rules, human correction memory, review routing, and audit trails.
+> **LedgerLens** is an AI-assisted bookkeeping workflow prototype for small businesses. It turns messy bank transactions into a reviewed categorization package by combining deterministic rules, human correction memory, review routing, and audit trails.
 >
 > The headline metric is workflow-level, not model-level: **100% of finalized guided-demo ledger rows are verified before export.** Raw model accuracy (~63% overall) is reported honestly on `/evals` — see [`docs/TRUST_METRIC.md`](docs/TRUST_METRIC.md) for the precise contract.
 >

@@ -1,18 +1,53 @@
 # LedgerLens
 
-**A bookkeeping cleanup assistant for small businesses.** Helps owners turn messy monthly bank transactions into a **verified accountant handoff package** by combining deterministic rules, human correction memory, owner questions, review routing, audit trails, and ledger export.
+**A bookkeeping cleanup and accountant handoff assistant for small-business transaction review.** Turns messy monthly bank transactions into a reviewed categorization package + accountant handoff. **Not accounting software.** Not a substitute for a CPA.
 
 [![Live demo](https://img.shields.io/badge/demo-ledgerlens.up.railway.app-2e5f32)](https://ledgerlens.up.railway.app)
 [![Guided demo](https://img.shields.io/badge/3--minute-guided%20demo-244c27)](https://ledgerlens.up.railway.app/demo)
-[![Trust metric](https://img.shields.io/badge/trust-100%25%20verified%20before%20export-2e5f32)](docs/TRUST_METRIC.md)
+[![Trust metric](https://img.shields.io/badge/trust-100%25%20procedurally%20verified-2e5f32)](docs/TRUST_METRIC.md)
 
-## TL;DR
+## What LedgerLens is
 
 - **Who it's for** — small-business owners doing monthly bookkeeping cleanup; the engineering audience evaluating an AI-systems portfolio.
-- **The headline outcome** — a **verified accountant handoff package** (markdown summary + CSV ledger) that an owner can send to their bookkeeper or CPA at month-end.
+- **The headline outcome** — a **handoff package** (markdown summary + CSV transaction export) that an owner can send to their bookkeeper or accountant for substantive review at month-end.
 - **The approach** — a layered pipeline (`correction memory → deterministic rules → fallback → confidence routing → human review → audit`) that only calls the model when the earlier layers can't decide safely.
-- **The headline number** — **100% of finalized guided-demo ledger rows are verified before export.** Workflow-level guarantee, not a raw-AI-accuracy claim. A finalized row counts as verified only when it came through a deterministic rule auto-approval, a correction-memory replay, or an explicit human review. See [`docs/TRUST_METRIC.md`](docs/TRUST_METRIC.md).
+- **The headline number** — **100% of finalized guided-demo rows are procedurally verified before handoff.** A finalized row counts as verified only when it came through a deterministic rule auto-approval, a correction-memory replay, or an explicit human review. **Workflow trust boundary, not a guarantee of accounting or tax correctness.** See [`docs/TRUST_METRIC.md`](docs/TRUST_METRIC.md).
 - **The deployed instance** — runs in **zero-cost demo mode**. The `anthropic` SDK is never imported. A regression test asserts that.
+
+## What LedgerLens is NOT
+
+- **Not production accounting software.** No double-entry, no accrual, no bank reconciliation, no tax handling, no split transactions, no multi-currency. See [`docs/ACCOUNTING_DOMAIN_BOUNDARY.md`](docs/ACCOUNTING_DOMAIN_BOUNDARY.md).
+- **Not multi-tenant SaaS.** No auth, no user model, no tenant model, no tenant-scoped row queries. See [`docs/SECURITY_AND_PRODUCTION_READINESS.md`](docs/SECURITY_AND_PRODUCTION_READINESS.md) for the production roadmap.
+- **Not a substitute for a CPA.** "Verified" here is procedural (a defensible authority signed off on the row), not substantive (a CPA confirmed the books).
+- **Not safe for real bank data uploads.** The public demo is intended for synthetic / sample CSVs only. The `/transactions/import` page warns explicitly.
+
+## Public demo warning
+
+> **The public demo runs on synthetic sample data and has no authentication, no tenant isolation, and no PII redaction.**
+>
+> Do not upload real bank statements, customer information, employee information, account numbers, or sensitive financial data. Use the bundled sample CSV or invented data only.
+
+## Sample data disclaimer
+
+The bundled demo scenario — **Granite State Auto Repair, March 2026** — is a **fictional independent auto repair shop**. It is not a real business, not a real customer, and not anyone's actual books. Every page that names it carries a "Sample / fictional scenario" badge. See [`docs/SAMPLE_BUSINESS_SCENARIO.md`](docs/SAMPLE_BUSINESS_SCENARIO.md).
+
+## Accounting-domain boundary
+
+LedgerLens produces a **reviewed categorization** + an **accountant handoff package**, **not** a double-entry accounting ledger. A real accounting ledger contains structured debit/credit entries that obey the accounting equation. LedgerLens emits a categorized transaction sheet with verification metadata; an accountant takes that output and books the offsetting entries in their accounting system (QuickBooks, Xero, Sage). LedgerLens is a step **before** the ledger, not a replacement for it.
+
+Full boundary: [`docs/ACCOUNTING_DOMAIN_BOUNDARY.md`](docs/ACCOUNTING_DOMAIN_BOUNDARY.md).
+
+## Security and production-readiness status
+
+LedgerLens is a **portfolio-grade workflow demo**, not production SaaS. The following gaps are documented honestly, not hidden:
+
+- **No auth, no tenant model, no rate limiting.** Phase A in the production roadmap.
+- **No PII redaction before LLM calls.** Demo-stub mode is the only firewall today. Phase D.
+- **No production migration management.** SQLAlchemy 2.0 models can run against Postgres in principle, but Alembic is not wired. Phase C.
+- **No backups, no retention policy, no deletion endpoint.** Phase C.
+- **No structured logging, no request IDs.** Phase B.
+
+Full posture + roadmap: [`docs/SECURITY_AND_PRODUCTION_READINESS.md`](docs/SECURITY_AND_PRODUCTION_READINESS.md).
 
 ## What problem does it solve?
 
@@ -22,13 +57,13 @@ LedgerLens does three things instead:
 
 1. **Handles the obvious vendors automatically** with deterministic rules + correction memory.
 2. **Asks plain-English questions** about the uncertain ones (no accounting jargon as the first step).
-3. **Produces a verified handoff package** the owner can send to their accountant.
+3. **Produces a handoff package** the owner can send to their accountant for substantive review.
 
 ## What is the handoff package?
 
 A single, downloadable artifact at [`/handoff`](https://ledgerlens.up.railway.app/handoff) containing:
 
-- **Verified ledger summary** — finalized rows backed by a rule, memory, or human review.
+- **Procedurally verified rows** — finalized rows backed by a rule, memory, or human review.
 - **Unresolved review items** — anything that still needs accountant or owner follow-up, explicitly flagged.
 - **Owner answers** — the plain-English notes you wrote during the questions workflow, included for accountant context.
 - **Corrections learned** — new (merchant → category) rules saved this month for reuse next month.
@@ -69,7 +104,7 @@ LedgerLens is a **working prototype** that demonstrates an end-to-end AI bookkee
 | Claude Haiku 4.5 categorizer with tool_use structured output | **Shipped** — `backend/src/ledgerlens/categorizers/claude_haiku.py` |
 | Eval dashboard at `/evals` | **Shipped** — reads latest run JSON at build time |
 | Backend API: transactions, categorize, review queue, ledger export, audit | **Shipped** — see "API surface" below |
-| Persistent storage (SQLite for demo, Postgres-ready) | **Shipped** — SQLAlchemy 2.0 models, idempotent table creation, seeded chart of accounts |
+| Persistent storage (SQLite for demo; Postgres-compatible models) | **Shipped** — SQLAlchemy 2.0 models that can run against Postgres in principle, idempotent table creation, seeded chart of accounts. **Production migration management (Alembic), backups, and retention policies are documented as roadmap items, not implemented.** |
 | Frontend workflow pages (`/app`, `/transactions`, `/transactions/import`, `/transactions/[id]`, `/review`, `/ledger`) | **Shipped** — typed API client, real backend calls |
 | **Correction memory** (deterministic merchant-keyed lookup) | **Shipped** — `/corrections` page, `services/correction_memory.py`, future similar transactions categorize from prior human corrections at zero model cost |
 | **Hybrid rules + model categorizer** (deterministic rule layer before the model) | **Shipped (this PR)** — `/rules` page, `services/rule_categorizer.py`, ~25 curated rules in `data/category_rules.json`; obvious transactions categorize at zero model cost; ambiguous rules route to review |
@@ -203,7 +238,7 @@ Browser (Next.js 14, Tailwind, Three.js)
    ↓
 FastAPI backend (Python 3.12)
    ├─ routers: transactions, categorize, review, ledger, audit, health, categories
-   ├─ SQLAlchemy 2.0 + SQLite (Postgres-ready)
+   ├─ SQLAlchemy 2.0 + SQLite (Postgres-compatible models; no Alembic yet)
    ├─ confidence-threshold routing (auto / review / uncategorizable)
    └─ audit log on every state change
    ↓
@@ -292,6 +327,29 @@ Calling out gaps because honesty beats overclaiming:
 - **No security baseline polish.** CSV size/row limits exist; structured logs with request IDs, log redaction utility, and narrow-CORS in prod are planned.
 
 These aren't bugs — they're explicit non-goals documented in [`docs/IMPLEMENTATION_GAP_ANALYSIS.md`](docs/IMPLEMENTATION_GAP_ANALYSIS.md). Each has a position in the priority list.
+
+## Production roadmap
+
+See [`docs/SECURITY_AND_PRODUCTION_READINESS.md`](docs/SECURITY_AND_PRODUCTION_READINESS.md) for the full phased roadmap. Summary:
+
+- **Phase A** — auth + tenant model + tenant-scoped row queries.
+- **Phase B** — rate limiting + request IDs + structured logging + log redaction.
+- **Phase C** — Alembic migrations + backup/restore + retention/deletion policy.
+- **Phase D** — PII detection / redaction before LLM + per-tenant model-spend controls.
+- **Phase E** — dependency scanning beyond Dependabot + SBOM + security CI.
+
+And the small-business UX roadmap ([`docs/SMALL_BUSINESS_UX_ROADMAP.md`](docs/SMALL_BUSINESS_UX_ROADMAP.md)):
+
+- CSV import mapping wizard (drop, preview, column mapping, debit/credit detection, save profile).
+- Account-mapping wizard (intent → COA per business).
+- Mobile-first review queue (one card at a time, big buttons, sticky save/skip, owner note above answers).
+
+## Test / CI status
+
+- **Backend** — `pytest` (202 tests), `ruff check`, `ruff format --check`, `mypy --strict`. All gated by CI ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)).
+- **Frontend** — `npm test -- --run` (160+ tests, Vitest), `npm run lint` (ESLint), `npm run build`. All gated by CI.
+- **Evals** — `python -m ledgerlens.evals.run --categorizer <mode>` for rules-only / rules-only-mapped / claude-haiku-v1 / hybrid-rules-model / stub. Committed artifacts under [`evals/runs/`](evals/runs/) (see [`docs/MAPPED_RULE_EVALS.md`](docs/MAPPED_RULE_EVALS.md) + [`docs/MULTI_BUSINESS_MAPPED_RULE_EVALS.md`](docs/MULTI_BUSINESS_MAPPED_RULE_EVALS.md)).
+- **Dependabot** — weekly updates for npm (frontend) + pip (backend), monthly for GitHub Actions. Configured in [`.github/dependabot.yml`](.github/dependabot.yml).
 
 ## About
 

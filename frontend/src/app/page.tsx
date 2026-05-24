@@ -56,9 +56,10 @@ export default function Page() {
               <span className="text-brand-600">verified handoff.</span>
             </h1>
             <p className="mt-5 max-w-2xl text-[17px] leading-relaxed text-text-secondary">
-              LedgerLens helps small business owners import bank activity, classify
-              obvious vendors, answer plain-English review questions, and export a
-              verified ledger package — without blindly trusting AI.
+              LedgerLens helps small business owners turn messy monthly bank
+              transactions into a reviewed categorization package and accountant
+              handoff — without blindly trusting AI. It&apos;s a cleanup and
+              accountant handoff assistant, not accounting software.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
@@ -121,12 +122,13 @@ export default function Page() {
                 100%
               </p>
               <p className="mt-1 text-[14px] font-medium uppercase tracking-wide text-brand-700">
-                verified finalized demo ledger
+                procedurally verified demo rows
               </p>
               <p className="mt-3 text-[13px] leading-relaxed text-brand-800">
                 Finalized rows are backed by human review, correction memory, or
                 deterministic rules <strong>before they appear in the handoff package.</strong>{" "}
-                Workflow-level trust metric — not raw model accuracy.
+                Workflow trust boundary — not a guarantee of accounting or tax correctness,
+                and not a substitute for CPA review.
               </p>
               <Link
                 href="/evals"
@@ -318,7 +320,7 @@ export default function Page() {
           <TechCard
             icon={<Database size={20} className="text-brand-600" />}
             title="Full-stack persistence"
-            body="FastAPI + SQLAlchemy 2.0 + Postgres-ready (SQLite for demo). Idempotent migrations, seeded chart of accounts, lazy provider config."
+            body="FastAPI + SQLAlchemy 2.0 models that can run against Postgres in principle (SQLite for the demo). Production migration management, backups, and retention policies are documented as roadmap items."
           />
           <TechCard
             icon={<ShieldCheck size={20} className="text-brand-600" />}

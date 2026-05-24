@@ -153,11 +153,13 @@ export default function EvalsPage() {
                 <div className="rounded-md border-2 border-brand-600 bg-surface-panel p-3">
                   <p className="field-label">Product metric</p>
                   <p className="mt-1 font-display text-[15px] font-medium text-brand-900">
-                    Verified finalized ledger
+                    Procedurally verified rows
                   </p>
                   <p className="mt-1 text-[12px] text-text-secondary">
-                    Measures whether finalized ledger rows are backed by human review,
-                    correction memory, or deterministic rules.
+                    Measures whether finalized rows are backed by human review,
+                    correction memory, or deterministic rules. Workflow trust
+                    boundary — not a guarantee of accounting or tax
+                    correctness.
                   </p>
                 </div>
               </div>
@@ -170,6 +172,22 @@ export default function EvalsPage() {
                 >
                   Read the trust-metric doc →
                 </a>
+              </p>
+              <p className="mt-3 text-[11px] italic text-brand-800">
+                The eval numbers measure categorization behavior — whether the
+                rule layer + model fallback land on the right COA code on
+                synthetic eval data. They do not measure accounting correctness.
+                A row that gets the right category here is still subject to
+                the accounting-domain limitations documented in{" "}
+                <a
+                  href={`${REPO_URL}/blob/main/docs/ACCOUNTING_DOMAIN_BOUNDARY.md`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline"
+                >
+                  docs/ACCOUNTING_DOMAIN_BOUNDARY.md
+                </a>
+                .
               </p>
             </section>
 

@@ -513,7 +513,7 @@ export default function DemoPage() {
       {/* Step 6: ledger */}
       <Step
         n={6}
-        title="The final output is a verified ledger, not an AI answer"
+        title="The final output is a procedurally verified categorization, not an AI answer"
         explainer={
           <>
             LedgerLens does not claim the model is perfect.{" "}
@@ -582,7 +582,7 @@ export default function DemoPage() {
           />
           <ProofCard
             title="Human-in-the-loop"
-            body="Review queue, correction memory built from real human decisions, audit trail on every state change, ledger export reflects review state."
+            body="Review queue, correction memory built from real human decisions, internal state-change audit log on every action, categorization export reflects review state."
           />
           <ProofCard
             title="Eval awareness"
@@ -752,7 +752,7 @@ function DemoOutcome({ ledger }: { ledger: Ledger }) {
         {allVerified
           ? "Verification rate is 100% — every row is backed by a deterministic rule, a correction-memory replay, or a human review."
           : trust.finalized_count === 0
-            ? "Run categorization and review the uncertain items above to populate the verified ledger."
+            ? "Run categorization and review the uncertain items above to populate the procedurally verified categorization."
             : `${trust.unverified_finalized_count} finalized row${
                 trust.unverified_finalized_count === 1 ? "" : "s"
               } still need human sign-off before the ledger can be considered verified.`}
