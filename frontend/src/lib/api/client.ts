@@ -709,3 +709,44 @@ export const validateImportProfileHeaders = (
       body: JSON.stringify({ headers }),
     },
   );
+
+// ── Mapping recategorization preview ──────────────────────────────────────
+
+export type MappingPreviewRow = {
+  transaction_id: string;
+  transaction_date: string;
+  description: string;
+  merchant: string | null;
+  amount_cents: number;
+  current_category_code: string | null;
+  current_category_name: string | null;
+  proposed_category_code: string | null;
+  proposed_category_name: string | null;
+  matched_intent: string | null;
+  status: string;
+  eligible: boolean;
+  reason: string | null;
+};
+
+export type MappingPreview = {
+  intent: string;
+  proposed_category_code: string | null;
+  block_fallback: boolean;
+  affected_count: number;
+  eligible_count: number;
+  ineligible_count: number;
+  would_route_to_review_count: number;
+  rows: MappingPreviewRow[];
+  warnings: string[];
+};
+
+export const previewMappingChange = (payload: {
+  intent: string;
+  proposed_category_code: string | null;
+  block_fallback: boolean;
+  limit?: number;
+}) =>
+  apiFetch<MappingPreview>("/mapping/preview", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });

@@ -1277,3 +1277,50 @@ describe("import wizard saved profile UI (Workstream B)", () => {
     expect(IMPORT).not.toMatch(/href="tel:/);
   });
 });
+
+describe("mapping recategorization preview (Workstream C)", () => {
+  it("renders a per-intent preview-impact section with the spec testid", () => {
+    expect(MAPPING).toContain("data-testid={`preview-impact-${intent}`}");
+    expect(MAPPING).toContain("data-testid={`preview-impact-button-${intent}`}");
+  });
+
+  it("calls the read-only preview endpoint", () => {
+    expect(MAPPING).toContain("previewMappingChange");
+  });
+
+  it("labels the section as preview-only with no apply", () => {
+    expect(MAPPING).toContain(
+      "Preview impact — apply flow not implemented yet",
+    );
+    expect(MAPPING).toContain("Nothing has been changed yet");
+    expect(MAPPING).toContain(
+      "Human-corrected and accountant-follow-up rows are protected",
+    );
+    expect(MAPPING).toContain(
+      "updating current rows requires explicit review",
+    );
+  });
+
+  it("renders eligible / protected badges on the row list", () => {
+    expect(MAPPING).toContain('"eligible"');
+    expect(MAPPING).toContain('"protected"');
+    expect(MAPPING).toContain("Affected");
+    expect(MAPPING).toContain("Would route to review");
+    expect(MAPPING).toContain("Protected");
+  });
+
+  it("does not introduce a silent apply CTA", () => {
+    // No button literally labelled "Apply" appears in the preview UI.
+    expect(MAPPING).not.toMatch(/>\s*Apply\s*</);
+    expect(MAPPING).not.toContain("Apply selected");
+    expect(MAPPING).not.toContain("Recategorize all");
+  });
+
+  it("does not overclaim production safety or accounting correctness", () => {
+    expect(MAPPING.toLowerCase()).not.toContain("production saas");
+    expect(MAPPING.toLowerCase()).not.toContain("safe for real bank");
+    expect(MAPPING.toLowerCase()).not.toMatch(/100\s*%\s*ai/);
+    expect(MAPPING).not.toMatch(/href="mailto:/);
+    expect(MAPPING).not.toMatch(/href="tel:/);
+  });
+});
