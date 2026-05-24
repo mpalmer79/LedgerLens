@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import { AppShell } from "@/components/app/AppShell";
 import { CleanupImpactSummary } from "@/components/app/CleanupImpactSummary";
+import { StaticHandoffSamplePreview } from "@/components/app/StaticHandoffSamplePreview";
 import { TrustPanel } from "@/components/app/TrustPanel";
 import { EmptyState, ErrorState, LoadingState } from "@/components/ui/DataState";
 import {
@@ -104,18 +105,7 @@ export default function HandoffPage() {
       </header>
 
       {state.error !== null && (
-        <ErrorState
-          error={state.error}
-          onRetry={() => void load()}
-          secondaryAction={
-            <Link
-              href="/cleanup"
-              className="text-[13px] font-medium text-text-secondary hover:text-text-primary"
-            >
-              Back to cleanup checklist →
-            </Link>
-          }
-        />
+        <StaticHandoffSamplePreview onRetry={() => void load()} />
       )}
 
       {state.loading && <LoadingState label="Loading the handoff package…" />}

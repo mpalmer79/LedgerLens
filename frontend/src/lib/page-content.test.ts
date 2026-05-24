@@ -1007,3 +1007,181 @@ describe("demo unavailable fallback (Phase 7)", () => {
     }
   });
 });
+
+const START = readPage("start/page.tsx");
+const APP_SHELL = readFileSync(
+  join(SRC, "components", "app", "AppShell.tsx"),
+  "utf-8",
+);
+const STATIC_HANDOFF = readFileSync(
+  join(SRC, "components", "app", "StaticHandoffSamplePreview.tsx"),
+  "utf-8",
+);
+
+describe("owner /start page", () => {
+  it("renders the five-step owner workflow with stable testid", () => {
+    expect(START).toContain('data-testid="start-steps"');
+    // The data-testid is built with a template literal; the literal
+    // string "start-step-" appears once and each step number resolves
+    // at render time from the STEPS array.
+    expect(START).toContain("`start-step-${step.number}`");
+    for (const num of ["01", "02", "03", "04", "05"]) {
+      expect(START).toContain(`number: "${num}"`);
+    }
+    // The five step titles are present.
+    expect(START).toContain("Use the sample CSV or synthetic test data");
+    expect(START).toContain("Import and map CSV columns");
+    expect(START).toContain("Confirm category mappings");
+    expect(START).toContain("Answer plain-English owner questions");
+    expect(START).toContain("Export the accountant handoff");
+  });
+
+  it("links each step at the right workflow surface", () => {
+    // Step CTA paths live in object literals — assert the literal paths.
+    expect(START).toContain('href: "/demo"');
+    expect(START).toContain('href: "/transactions/import"');
+    expect(START).toContain('href: "/mapping"');
+    expect(START).toContain('href: "/questions"');
+    expect(START).toContain('href: "/handoff"');
+  });
+
+  it("ships the workflow FAQ on /start", () => {
+    expect(START).toContain('data-testid="start-faq"');
+    expect(START).toContain("Is this a product I can buy?");
+    expect(START).toContain("Can I upload real bank data?");
+    expect(START).toContain("Does it connect to my bank?");
+    expect(START).toContain("Does it use QuickBooks, Xero, or Plaid?");
+    expect(START).toContain("ambiguous vendors like Amazon or Costco");
+    expect(START).toContain("Can my accountant log in?");
+    expect(START).toContain('What does \\"verified\\" mean?');
+    expect(START).toContain("Where does the data live");
+    expect(START).toContain("What would production require?");
+  });
+
+  it("repeats the public-demo warning above the steps", () => {
+    expect(START).toContain('data-testid="start-public-demo-warning"');
+    expect(START).toMatch(/Do not upload real bank\s+data/);
+  });
+
+  it("includes the hiring-manager portfolio CTA without email/phone/resume", () => {
+    expect(START).toContain("portfolio prototype");
+    expect(START).toContain("View technical story");
+    expect(START).toContain("View GitHub repo");
+    expect(START).not.toMatch(/href="mailto:/);
+    expect(START).not.toMatch(/href="tel:/);
+    expect(START.toLowerCase()).not.toContain("resume.pdf");
+    expect(START.toLowerCase()).not.toContain("request a demo");
+    // The FAQ legitimately mentions "no pricing" — what we care about is
+    // that there's no positive pricing claim (`$N / month`, `free trial`).
+    expect(START).not.toMatch(/\$\s*\d+\s*\/?\s*(mo|month|yr|year)/i);
+    expect(START.toLowerCase()).not.toContain("free trial");
+  });
+
+  it("does not overclaim production safety or accounting correctness", () => {
+    expect(START.toLowerCase()).not.toContain("production saas");
+    expect(START.toLowerCase()).not.toContain("safe for real bank");
+    expect(START.toLowerCase()).not.toMatch(/100\s*%\s*ai/);
+    // Not asserting the page mentions "true accounting ledger" — it
+    // doesn't have to. We just guard against an unnegated claim.
+    if (/true accounting ledger/i.test(START)) {
+      expect(START).toMatch(/not a true accounting ledger/i);
+    }
+  });
+});
+
+describe("owner-grouped navigation", () => {
+  it("renders the owner-path nav first and the technical nav second", () => {
+    expect(APP_SHELL).toContain('data-testid="owner-nav"');
+    expect(APP_SHELL).toContain('data-testid="advanced-nav"');
+    // Owner-nav order is the five-step workflow.
+    expect(APP_SHELL).toContain('{ href: "/start", label: "Start" }');
+    expect(APP_SHELL).toContain('{ href: "/transactions/import", label: "Import" }');
+    expect(APP_SHELL).toContain('{ href: "/cleanup", label: "Cleanup" }');
+    expect(APP_SHELL).toContain('{ href: "/questions", label: "Questions" }');
+    expect(APP_SHELL).toContain('{ href: "/handoff", label: "Handoff" }');
+  });
+
+  it("technical nav still exposes every advanced page", () => {
+    for (const href of [
+      "/demo",
+      "/app",
+      "/transactions",
+      "/review",
+      "/mapping",
+      "/corrections",
+      "/rules",
+      "/ledger",
+      "/evals",
+    ]) {
+      expect(APP_SHELL).toContain(`href: "${href}"`);
+    }
+  });
+
+  it("labels the two nav groups visibly", () => {
+    expect(APP_SHELL).toContain("Owner path");
+    expect(APP_SHELL).toContain("Technical");
+  });
+});
+
+describe("homepage FAQ + portfolio CTA", () => {
+  it("renders the workflow FAQ block", () => {
+    expect(HOMEPAGE).toContain('data-testid="homepage-faq"');
+    expect(HOMEPAGE).toContain("Is this a product I can buy?");
+    expect(HOMEPAGE).toContain("Can I upload real bank data?");
+    expect(HOMEPAGE).toContain("Does it connect to my bank?");
+  });
+
+  it("renders the portfolio CTA with technical-story / GitHub / LinkedIn", () => {
+    expect(HOMEPAGE).toContain('data-testid="homepage-portfolio-cta"');
+    expect(HOMEPAGE).toContain("portfolio prototype");
+    expect(HOMEPAGE).toContain("View technical story");
+    expect(HOMEPAGE).toContain("View GitHub");
+    expect(HOMEPAGE).toContain("Connect on LinkedIn");
+  });
+
+  it("does not add commercial conversion (email/phone/resume/pricing/request-demo)", () => {
+    // No email / phone / resume / mailto / tel.
+    expect(HOMEPAGE).not.toMatch(/href="mailto:/);
+    expect(HOMEPAGE).not.toMatch(/href="tel:/);
+    expect(HOMEPAGE.toLowerCase()).not.toMatch(/resume\.pdf|cv\.pdf|"\/resume"|"\/cv"/);
+    expect(HOMEPAGE.toLowerCase()).not.toContain("request a demo");
+    expect(HOMEPAGE.toLowerCase()).not.toContain("contact form");
+    // No pricing copy.
+    expect(HOMEPAGE).not.toMatch(/\$\s*\d+\s*\/?\s*(mo|month|yr|year)/i);
+    expect(HOMEPAGE.toLowerCase()).not.toContain("free trial");
+  });
+});
+
+describe("/handoff static fallback (Phase 2)", () => {
+  it("StaticHandoffSamplePreview renders polished sample data + retry", () => {
+    expect(STATIC_HANDOFF).toContain('data-testid="static-handoff-sample"');
+    expect(STATIC_HANDOFF).toContain("Static sample preview");
+    expect(STATIC_HANDOFF).toContain("live backend temporarily unavailable");
+    expect(STATIC_HANDOFF).toContain('data-testid="static-handoff-retry"');
+    // Reviewed categorization, owner answers, accountant follow-up sections.
+    expect(STATIC_HANDOFF).toContain("Reviewed categorization summary");
+    expect(STATIC_HANDOFF).toContain("Questions answered by owner");
+    expect(STATIC_HANDOFF).toContain("Owner flagged for accountant review");
+    expect(STATIC_HANDOFF).toContain("Accountant CSV exports");
+    // Not-tax-advice disclaimer survives in the fallback too.
+    expect(STATIC_HANDOFF).toContain("not tax advice");
+    // The Granite State fictional sample is the source of the rows.
+    expect(STATIC_HANDOFF).toContain("Granite State Auto Repair");
+  });
+
+  it("/handoff renders the static fallback when the backend fails", () => {
+    expect(HANDOFF).toContain("StaticHandoffSamplePreview");
+    // Replaces the old ErrorState on the error branch.
+    expect(HANDOFF).toMatch(
+      /state\.error !== null[\s\S]*?<StaticHandoffSamplePreview/,
+    );
+  });
+
+  it("static fallback does not claim live data or production accuracy", () => {
+    expect(STATIC_HANDOFF.toLowerCase()).not.toContain("real bank");
+    expect(STATIC_HANDOFF.toLowerCase()).not.toMatch(/100\s*%\s*ai/);
+    expect(STATIC_HANDOFF.toLowerCase()).not.toMatch(/production[\s-]?ready/);
+    expect(STATIC_HANDOFF).not.toMatch(/href="mailto:/);
+    expect(STATIC_HANDOFF).not.toMatch(/href="tel:/);
+  });
+});

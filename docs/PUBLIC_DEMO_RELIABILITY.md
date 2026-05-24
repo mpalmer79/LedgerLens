@@ -241,3 +241,25 @@ scripts/smoke_public_demo.sh
 Exits non-zero if any of `/health`, `/ready`, `/demo/ready`,
 `/demo/status`, the frontend `/`, `/app`, `/demo`, or the CORS
 preflight fails.
+
+## Static handoff fallback (owner-onboarding sprint)
+
+`/handoff` is now resilient when the backend errors. The page renders
+`<StaticHandoffSamplePreview>` instead of a dark spinner / generic
+`<ErrorState>`. The fallback:
+
+- Shows the Granite State Auto Repair March 2026 sample with summary
+  stats, a reviewed-categorization table, owner answers, accountant
+  follow-up rows, and the CSV-export explanation.
+- Carries a visible **"Static sample preview — live backend
+  temporarily unavailable"** badge so the user never confuses it for
+  live data.
+- Keeps the "not tax advice" disclaimer + the three CTAs (Retry,
+  Owner: where do I start?, Technical story).
+
+`/app` and `/demo` continue to use `<DemoUnavailablePanel>` (shipped
+in the public-demo incident hotfix). `/start` is a pure static
+route — no backend dependency at all.
+
+Together: every owner-facing or money-shot page is presentable
+through any partial backend outage.

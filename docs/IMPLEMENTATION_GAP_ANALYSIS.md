@@ -359,3 +359,35 @@ Still explicitly not in scope:
 - Re-categorize existing rows after schema migration.
 - Automatic stamp/repair (refused by design — operator must decide).
 - JSON-formatted log shipping to an external sink.
+
+---
+
+## 12. Owner onboarding + portfolio conversion sprint
+
+What landed (see `docs/OWNER_EXPERIENCE_AND_CONVERSION_AUDIT.md`
+and `docs/OWNER_ONBOARDING_AND_CONVERSION_REVIEW.md`):
+
+- New `/start` page — five-step owner workflow, full FAQ, public-
+  demo warning, hiring-manager CTA. Pure static (no backend
+  dependency).
+- New `<StaticHandoffSamplePreview>` rendered by `/handoff` when
+  the backend errors. Polished Granite State sample so the
+  money-shot page is never blank.
+- `AppShell` nav split into labelled Owner path + Technical
+  groups; technical group recedes visually.
+- Homepage workflow FAQ (8 questions) + hiring-manager portfolio
+  CTA pointing at technical story / GitHub / LinkedIn.
+- 15 new frontend tests; frontend test count 247 → 262. Backend
+  untouched (266 still passing).
+
+Still explicitly not in scope:
+
+- AppShell health-dot still driven by `/health` only (not
+  `/demo/ready`). Easy follow-up.
+- Static handoff sample is hard-coded (not a build-time snapshot
+  of live data). It will drift over time.
+- Mobile nav still scrolls on small phones; a drawer would scale
+  better.
+- No "re-categorize after mapping edit" flow.
+- No commercial signup, no contact form (deliberate — keeps the
+  no-PII / no-fake-SaaS contract intact).

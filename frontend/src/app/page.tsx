@@ -363,6 +363,105 @@ export default function Page() {
         </p>
       </section>
 
+      {/* Workflow FAQ — busy-owner questions answered plainly */}
+      <section
+        className="mx-auto mt-20 max-w-5xl px-4 sm:px-6 lg:px-8"
+        data-testid="homepage-faq"
+      >
+        <h2 className="font-display text-[22px] font-medium text-text-primary">
+          Owner questions, answered plainly
+        </h2>
+        <p className="mt-1 text-[13px] text-text-subtle">
+          The kind of questions an owner asks before spending 15 minutes
+          on a new tool.
+        </p>
+        <dl className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <FaqItem
+            q="Is this a product I can buy?"
+            a="No. LedgerLens is a portfolio project, not a commercial SaaS. There is no signup, no pricing, no subscription."
+          />
+          <FaqItem
+            q="Can I upload real bank data?"
+            a="No. The public demo runs on a single shared database with no authentication and no per-tenant isolation. Use the bundled sample CSV or invented data only."
+          />
+          <FaqItem
+            q="Does it connect to my bank?"
+            a="No. There is no Plaid, MX, or Yodlee integration. CSV import is the only data path."
+          />
+          <FaqItem
+            q="Does it use QuickBooks or Xero?"
+            a="No. The CSV exports are formatted for human accountant review. They are not QuickBooks / QBO / IIF / Xero import files."
+          />
+          <FaqItem
+            q="What happens to ambiguous vendors like Amazon?"
+            a="They route to the owner-question flow with a short multiple-choice template. The model never silently chooses a category for an ambiguous vendor."
+          />
+          <FaqItem
+            q="Can my accountant log in?"
+            a="Not yet. Auth Phase 1 ships the user / tenant / membership schema; login + the accountant role land in Phase 2."
+          />
+          <FaqItem
+            q='What does "verified" mean?'
+            a="Workflow-verified, not CPA-verified. A row counts as verified when its final category came through a deterministic rule, a correction-memory replay, or an explicit human review. It is not a claim about accounting or tax correctness."
+          />
+          <FaqItem
+            q="What would production require?"
+            a="Auth + tenant isolation, PII redaction before any LLM call, backups + retention policy, payment integration if billed, and a real Plaid / accounting-software integration. The full roadmap is in the security-and-production-readiness doc."
+          />
+        </dl>
+        <p className="mt-4 text-[12px] text-text-subtle">
+          Full answers + the production-readiness roadmap live at{" "}
+          <Link href="/start" className="text-brand-700 underline">
+            /start
+          </Link>
+          .
+        </p>
+      </section>
+
+      {/* Portfolio CTA — hiring manager next step */}
+      <section
+        className="mx-auto mt-12 max-w-5xl px-4 sm:px-6 lg:px-8"
+        data-testid="homepage-portfolio-cta"
+      >
+        <div className="rounded-lg border border-brand-200 bg-brand-100 p-5">
+          <p className="text-[11px] font-medium uppercase tracking-wide text-brand-800">
+            For hiring managers and collaborators
+          </p>
+          <h2 className="mt-1 font-display text-[20px] font-medium text-text-primary">
+            LedgerLens is a portfolio prototype
+          </h2>
+          <p className="mt-2 max-w-3xl text-[13px] text-text-secondary">
+            If you&apos;re reviewing Michael Palmer for AI workflow, software
+            engineering, or solutions roles, start with the technical story
+            or the GitHub repo.
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Link
+              href="/technical-story"
+              className="inline-flex min-h-[44px] items-center rounded bg-brand-600 px-3 py-2 text-[13px] font-medium text-white hover:bg-brand-500"
+            >
+              View technical story →
+            </Link>
+            <a
+              href={REPO_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-[44px] items-center rounded border border-surface-border bg-surface-panel px-3 py-2 text-[13px] font-medium text-text-primary hover:bg-surface-sunken"
+            >
+              View GitHub
+            </a>
+            <a
+              href={LINKEDIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-[44px] items-center rounded border border-surface-border bg-surface-panel px-3 py-2 text-[13px] font-medium text-text-primary hover:bg-surface-sunken"
+            >
+              Connect on LinkedIn
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* About-Michael strip */}
       <section className="mx-auto mt-20 max-w-5xl px-4 sm:px-6 lg:px-8">
         <div className="rounded-lg border border-surface-border bg-surface-panel p-6">
@@ -503,6 +602,15 @@ type CardProps = {
   title: string;
   body: string;
 };
+
+function FaqItem({ q, a }: { q: string; a: string }) {
+  return (
+    <div className="rounded border border-surface-border bg-surface-panel p-4">
+      <dt className="text-[13px] font-medium text-text-primary">{q}</dt>
+      <dd className="mt-2 text-[13px] text-text-secondary">{a}</dd>
+    </div>
+  );
+}
 
 function ValueCard({ icon, title, body }: CardProps) {
   return (
