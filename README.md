@@ -41,11 +41,11 @@ Full boundary: [`docs/ACCOUNTING_DOMAIN_BOUNDARY.md`](docs/ACCOUNTING_DOMAIN_BOU
 
 LedgerLens is a **portfolio-grade workflow demo**, not production SaaS. The following gaps are documented honestly, not hidden:
 
-- **No auth, no tenant model, no rate limiting.** Phase A in the production roadmap.
+- **Auth/Tenant Foundation: Phase 1 schema shipped.** `User`, `Tenant`, `Membership`, `Business`, `CategoryMappingProfile`, `CategoryMappingEntry` models exist. Demo tenant + business are seeded. Honest `/admin` shell at the route of the same name renders the foundation status. **No production login, no protected routes, no tenant scoping on existing queries yet.** See [`docs/AUTH_TENANT_PHASE_1.md`](docs/AUTH_TENANT_PHASE_1.md).
 - **No PII redaction before LLM calls.** Demo-stub mode is the only firewall today. Phase D.
-- **No production migration management.** SQLAlchemy 2.0 models can run against Postgres in principle, but Alembic is not wired. Phase C.
-- **No backups, no retention policy, no deletion endpoint.** Phase C.
-- **No structured logging, no request IDs.** Phase B.
+- **Alembic migration baseline shipped.** `alembic.ini`, `alembic/env.py`, and one baseline migration cover the full schema. The demo deploy still bootstraps via `Base.metadata.create_all()`; the production migration path is `alembic upgrade head`. No backups / retention policy / deletion endpoint yet — Phase C.
+- **Structured logging foundation + request IDs shipped.** `X-Request-ID` middleware + `configure_logging()` baseline + redaction utility. JSON formatter and log shipping are the next upgrade.
+- **No production login.** No `password_hash`, no `Session` table, no JWT, no protected routes.
 
 Full posture + roadmap: [`docs/SECURITY_AND_PRODUCTION_READINESS.md`](docs/SECURITY_AND_PRODUCTION_READINESS.md).
 

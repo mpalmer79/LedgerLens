@@ -848,3 +848,49 @@ describe("review page mobile-first content", () => {
     expect(REVIEW).toMatch(/pending — pick an explicit action per card/);
   });
 });
+
+const ADMIN = readPage("admin/page.tsx");
+
+describe("admin / tenant foundation page", () => {
+  it("renders foundation status with explicit not-production framing", () => {
+    expect(ADMIN).toContain("Tenant foundation");
+    expect(ADMIN).toContain("schema foundation only");
+    expect(ADMIN).toContain("Authentication and tenant isolation are not fully implemented");
+    expect(ADMIN).toMatch(/Do not upload real bank\s+data/);
+  });
+
+  it("lists every model the foundation phase adds + their status", () => {
+    expect(ADMIN).toContain("User model");
+    expect(ADMIN).toContain("Tenant / Organization model");
+    expect(ADMIN).toContain("Membership model");
+    expect(ADMIN).toContain("Business model");
+    expect(ADMIN).toContain("Route protection");
+    expect(ADMIN).toContain("Production auth");
+    expect(ADMIN).toContain("Full tenant enforcement");
+    // Each of those is marked as "not implemented" / "not complete" via
+    // explicit string literals in the component.
+    expect(ADMIN).toContain("not implemented");
+    expect(ADMIN).toContain("not complete");
+  });
+
+  it("does not ship a fake login form", () => {
+    // No password / email input that would imply a real auth flow.
+    expect(ADMIN).not.toContain('type="password"');
+    expect(ADMIN).not.toContain('type="email"');
+    expect(ADMIN).not.toMatch(/<form[\s>]/);
+    // The placeholder is honest about why login is missing.
+    expect(ADMIN).toContain("Login UI is intentionally not implemented");
+  });
+
+  it("links to the relevant docs (not mailto, not tel)", () => {
+    expect(ADMIN).toContain("SECURITY_AND_PRODUCTION_READINESS.md");
+    expect(ADMIN).toContain("AUTH_TENANT_FOUNDATION.md");
+    expect(ADMIN).toContain("ACCOUNTING_DOMAIN_BOUNDARY.md");
+    expect(ADMIN).not.toMatch(/href="mailto:/);
+    expect(ADMIN).not.toMatch(/href="tel:/);
+  });
+
+  it("calls the foundation status endpoint to source the snapshot", () => {
+    expect(ADMIN).toContain("getFoundationStatus");
+  });
+});

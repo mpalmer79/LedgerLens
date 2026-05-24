@@ -78,11 +78,24 @@ the limitation:
 
 ## 6. Future editable / persistent mapping plan
 
-Once tenant persistence exists:
+The schema foundation already exists as of Auth/Tenant Phase 1 (see
+[`AUTH_TENANT_PHASE_1.md`](AUTH_TENANT_PHASE_1.md)):
 
-1. Backend: add a `BusinessIntentMap` ORM table seeded from the
-   current Python file. The `/rules` mapping snapshot reads from
-   the table instead of the Python file.
+- `CategoryMappingProfile(id, business_id, name, is_active, …)`
+- `CategoryMappingEntry(id, profile_id, intent, category_code,
+  category_name, block_fallback, …)`
+
+These tables are **created by the migration but not yet read or
+written by any code path.** The active mapping is still resolved
+from `backend/src/ledgerlens/data/business_rule_maps.py` so the
+public demo and existing tests are unchanged.
+
+Once login / sessions land in Phase 2:
+
+1. Backend: seed `CategoryMappingProfile` rows for the demo business
+   from the Python map. `/rules` mapping snapshot reads from the
+   table with the Python file as a fallback for unseeded
+   businesses.
 2. Backend: `PATCH /businesses/{id}/intent-map/{intent}` lets an
    owner-role user change a mapping. Validates against the
    business's COA. 422 if the code is not in the COA.

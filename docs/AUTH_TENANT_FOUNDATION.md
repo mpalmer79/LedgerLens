@@ -137,19 +137,34 @@ Phased rollout to avoid breaking the demo:
   "sign in" link with a pre-provisioned guest user.
 - **Phase 3 → 4**: low risk if Phase 2-3 land cleanly.
 
-What this PR does:
+## Phase 1 status — what shipped
 
-- This file (the blueprint).
-- The /mapping page + /rules endpoint already make the
-  per-business mapping visible. They are read-only and explicitly
-  call out that production tenanting is not implemented.
-- The category mapping wizard is deferred until Phase 2 ships.
+**✅ Phase 1 landed in a follow-up sprint.** See
+[`AUTH_TENANT_PHASE_1.md`](AUTH_TENANT_PHASE_1.md) for the full
+write-up. Highlights:
 
-What this PR does NOT do:
+- `User`, `Tenant`, `Membership` (+ `MembershipRole`), `Business`,
+  `CategoryMappingProfile`, `CategoryMappingEntry` models exist
+  with unique constraints where appropriate.
+- Alembic baseline (`alembic.ini`, `alembic/env.py`, one baseline
+  revision) wired to `Base.metadata`.
+- Demo seed (`seed_demo_tenant()`) idempotently creates the
+  demo tenant + business.
+- `GET /admin/foundation/status` returns an honest snapshot;
+  `/admin` frontend renders it with explicit "not production"
+  framing and no fake login form.
+- 13 backend + 5 frontend new tests pin the schema, seed
+  idempotency, status-endpoint contract, public-demo regression,
+  and the alembic migration parity with `create_all`.
 
-- No `User`, `Tenant`, `Membership`, or `Session` tables.
-- No login UI, password reset, or JWT issuance.
-- No tenant scoping on existing repositories.
-- No protected routes.
+What Phase 1 still does **not** do:
+
+- No `password_hash`, no `Session` table.
+- No login UI, no signup flow, no password reset.
+- No JWT or cookie-based session middleware.
+- No protected routes — every endpoint remains public.
+- No tenant scoping on `Transaction`, `CategorizationResult`,
+  `ReviewDecision`, `CorrectionMemory`, `AuditEvent`.
+- No editable category mapping UI.
 
 Each of those is its own follow-up PR, sequenced as above.

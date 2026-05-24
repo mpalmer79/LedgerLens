@@ -564,3 +564,22 @@ export const getHandoffReviewedCsvUrl = () =>
  * the reviewed CSV so the accountant doesn't have to filter. */
 export const getHandoffFollowupCsvUrl = () =>
   `${getApiBaseUrl()}/handoff/export.followup.csv`;
+
+// ── Admin / foundation status ─────────────────────────────────────────────
+
+export type FoundationStatus = {
+  auth_implemented: boolean;
+  tenant_models_present: boolean;
+  tenant_enforcement_complete: boolean;
+  demo_tenant_available: boolean;
+  demo_business_available: boolean;
+  production_ready: boolean;
+  user_count: number;
+  tenant_count: number;
+  membership_count: number;
+  business_count: number;
+  warnings: string[];
+};
+
+export const getFoundationStatus = () =>
+  apiFetch<FoundationStatus>("/admin/foundation/status");

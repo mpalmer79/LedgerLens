@@ -6,6 +6,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from ledgerlens.api import (
+    admin,
     audit,
     categories,
     categorize,
@@ -21,7 +22,7 @@ from ledgerlens.api import (
 from ledgerlens.config import get_settings
 from ledgerlens.db import _get_sessionmaker, init_db
 from ledgerlens.observability import RequestIdMiddleware, configure_logging
-from ledgerlens.seed import seed_chart_of_accounts
+from ledgerlens.seed import seed_chart_of_accounts, seed_demo_tenant
 
 configure_logging()
 logger = logging.getLogger("ledgerlens.startup")
@@ -42,6 +43,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         init_db()
         with _get_sessionmaker()() as session:
             seed_chart_of_accounts(session)
+            seed_demo_tenant(session)
     except Exception:  # noqa: BLE001 — log-and-continue; /ready surfaces real state
         logger.exception(
             "startup: init_db / seed_chart_of_accounts failed; "
@@ -84,6 +86,7 @@ def create_app() -> FastAPI:
     application.include_router(rules.rule_match_router)
     application.include_router(demo.router)
     application.include_router(handoff.router)
+    application.include_router(admin.router)
 
     return application
 

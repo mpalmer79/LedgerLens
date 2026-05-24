@@ -8,8 +8,9 @@ fixtures and should stay separate from production data.
 
 from sqlalchemy.orm import Session
 
-from ledgerlens.models import AccountCategory
+from ledgerlens.models import AccountCategory, Business, Tenant
 from ledgerlens.repositories import CategoryRepo
+from ledgerlens.tenant_context import DEMO_BUSINESS_SLUG, DEMO_TENANT_SLUG
 
 DEFAULT_COA: list[tuple[str, str, str, str]] = [
     # (code, name, type, description)
@@ -58,3 +59,33 @@ def seed_chart_of_accounts(db: Session) -> int:
         )
     db.commit()
     return len(DEFAULT_COA)
+
+
+def seed_demo_tenant(db: Session) -> tuple[Tenant, Business]:
+    """Idempotently seed the public-demo tenant + business.
+
+    Both rows use clearly demo-flavored slugs so a real deploy
+    can't accidentally collide. No user is seeded — Phase 2 will
+    add a demo user when login lands.
+    """
+    tenant = db.query(Tenant).filter(Tenant.slug == DEMO_TENANT_SLUG).one_or_none()
+    if tenant is None:
+        tenant = Tenant(name="LedgerLens Demo Organization", slug=DEMO_TENANT_SLUG)
+        db.add(tenant)
+        db.flush()  # populate tenant.id for the business FK
+
+    business = (
+        db.query(Business)
+        .filter(Business.tenant_id == tenant.id, Business.slug == DEMO_BUSINESS_SLUG)
+        .one_or_none()
+    )
+    if business is None:
+        business = Business(
+            tenant_id=tenant.id,
+            name="Granite State Auto Repair",
+            slug=DEMO_BUSINESS_SLUG,
+            industry="auto_repair",
+        )
+        db.add(business)
+    db.commit()
+    return tenant, business

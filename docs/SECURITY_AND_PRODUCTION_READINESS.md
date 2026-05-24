@@ -71,15 +71,23 @@ not strict — but Phase A is a prerequisite for everything else.
 
 ### Phase A — auth + tenant model + route protection
 
-- User table (email, password hash via `passlib`, role enum).
-- Tenant table (id, name, COA snapshot reference, settings).
-- `user_tenant_membership` join.
-- JWT / session middleware on the FastAPI app.
+- User table (email, password hash, role enum). **🟡 Partial — `User`
+  table exists; `password_hash` and `Session` table land in Phase
+  A.2.** See `AUTH_TENANT_PHASE_1.md`.
+- Tenant table. **✅ Implemented.**
+- `user_tenant_membership` join. **✅ Implemented as `Membership`
+  with `(user_id, tenant_id)` unique + `MembershipRole` enum.**
+- Business table. **✅ Implemented.**
+- JWT / session middleware on the FastAPI app. **⏳ Not
+  implemented.**
 - Every ORM model gains `tenant_id`; every query gets a tenant
   filter; SQLAlchemy event-listener or repository wrapper to
-  prevent accidental cross-tenant queries.
+  prevent accidental cross-tenant queries. **⏳ Not implemented —
+  existing tables remain unscoped.**
 - Frontend gains a sign-in screen, a tenant selector, and an
-  auth-aware API client.
+  auth-aware API client. **⏳ Not implemented. `/admin` shell
+  exists with an honest "not production" snapshot and no fake
+  login form.**
 
 ### Phase B — rate limiting + request IDs + structured logging + redaction
 
@@ -104,10 +112,17 @@ not strict — but Phase A is a prerequisite for everything else.
 ### Phase C — Alembic migrations + backup/restore + retention/deletion
 
 - `alembic init`, generate baseline migration from current models,
-  wire `alembic upgrade head` into Railway startup script.
-- Daily Railway-side Postgres backup with retention.
-- Retention job: prune `AuditEvent` older than N days.
+  wire `alembic upgrade head` into Railway startup script. **✅
+  Alembic baseline shipped** (`alembic.ini`, `alembic/env.py`, one
+  baseline revision tested against an empty SQLite DB). The Railway
+  startup wiring is the next follow-up — the demo still uses
+  `Base.metadata.create_all()` at lifespan boot.
+- Daily Railway-side Postgres backup with retention. **⏳ Not
+  implemented.**
+- Retention job: prune `AuditEvent` older than N days. **⏳ Not
+  implemented.**
 - `DELETE /tenant/{id}/data` endpoint with audit-event of its own.
+  **⏳ Not implemented.**
 
 ### Phase D — PII redaction before LLM + model-provider controls + audit retention
 
