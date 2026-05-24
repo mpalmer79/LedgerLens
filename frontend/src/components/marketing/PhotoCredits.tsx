@@ -1,14 +1,24 @@
-import { HOMEPAGE_IMAGE_CREDITS } from "@/data/imageCredits";
+import { imageCredits } from "@/data/imageCredits";
 
 /**
- * Consolidated photo-credit block.
+ * Consolidated photo-credit block for the homepage footer.
  *
- * Rendered in the homepage footer inside a collapsed `<details>`
- * so it does not crowd the page. Reads `HOMEPAGE_IMAGE_CREDITS`;
- * the verify script asserts that every entry matches an actual
- * file on disk.
+ * Behavior:
+ * - When `imageCredits` is empty (the default — no real photos
+ *   shipped yet), the component renders **null**. Nothing visible
+ *   is added to the homepage.
+ * - When `imageCredits` has entries, renders a collapsed
+ *   `<details>` block listing each credit (section, photographer
+ *   linked to the source URL, license).
+ *
+ * The verify script asserts that every entry here matches a file on
+ * disk under `public/images/stock/`.
  */
 export function PhotoCredits() {
+  if (imageCredits.length === 0) {
+    return null;
+  }
+
   return (
     <details
       className="mt-12 rounded border border-surface-border bg-surface-panel p-4 text-[12px] text-text-subtle"
@@ -18,7 +28,7 @@ export function PhotoCredits() {
         Photo credits
       </summary>
       <ul className="mt-3 space-y-1">
-        {HOMEPAGE_IMAGE_CREDITS.map((c) => (
+        {imageCredits.map((c) => (
           <li key={c.file}>
             <span className="mono text-text-subtle">{c.section}</span>
             <span aria-hidden="true"> · </span>

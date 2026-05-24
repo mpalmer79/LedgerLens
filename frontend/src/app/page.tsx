@@ -16,6 +16,7 @@ import { CheckApiButton } from "@/components/CheckApiButton";
 import { MarketingNav } from "@/components/marketing/MarketingNav";
 import { TrustPipeline } from "@/components/TrustPipeline";
 import { VideoDemo } from "@/components/VideoDemo";
+import { getHomepageImage } from "@/data/homepageImages";
 import {
   ARCHITECTURE_URL,
   GITHUB_PROFILE_URL,
@@ -23,6 +24,12 @@ import {
   REPO_URL,
   TRUST_METRIC_DOC_URL,
 } from "@/lib/site";
+
+const heroImage = getHomepageImage("hero");
+const trustImage = getHomepageImage("trust");
+const autoShopImage = getHomepageImage("auto-shop");
+const engineeringImage = getHomepageImage("engineering");
+const faqImage = getHomepageImage("faq");
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? "unset";
 
@@ -49,24 +56,28 @@ export default function Page() {
 
       {/* Calm-workspace mood band. Restrained — establishes voice without
           competing with the hero copy. Lives above the hero, decorative;
-          alt text describes the scene for screen readers. */}
-      <section
-        className="px-4 sm:px-6 lg:px-8 pt-10"
-        data-testid="homepage-hero-image"
-      >
-        <div className="mx-auto max-w-6xl">
-          <div className="relative aspect-[16/5] w-full overflow-hidden rounded-xl border border-surface-border">
-            <Image
-              src="/images/stock/hero/calm-workspace-morning.jpg"
-              alt="Tidy desk with laptop and notebook in soft morning light, representing a calm monthly bookkeeping cleanup workflow"
-              fill
-              priority
-              sizes="(min-width: 1024px) 1024px, 100vw"
-              className="object-cover"
-            />
+          alt text describes the scene for screen readers. Hidden until a
+          real local photo + matching credit have been added; see
+          docs/HOMEPAGE_IMAGE_MANUAL_SOURCING_MANIFEST.md. */}
+      {heroImage?.enabled && (
+        <section
+          className="px-4 sm:px-6 lg:px-8 pt-10"
+          data-testid="homepage-hero-image"
+        >
+          <div className="mx-auto max-w-6xl">
+            <div className="relative aspect-[16/5] w-full overflow-hidden rounded-xl border border-surface-border">
+              <Image
+                src={heroImage.src}
+                alt={heroImage.alt}
+                fill
+                priority
+                sizes="(min-width: 1024px) 1024px, 100vw"
+                className="object-cover"
+              />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Hero — business-first + premium trust card */}
       <section className="px-4 sm:px-6 lg:px-8 pt-10 pb-12 md:pt-14">
@@ -235,16 +246,18 @@ export default function Page() {
               <li>✓ Markdown handoff report</li>
             </ul>
           </div>
-          <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg border border-surface-border">
-            <Image
-              src="/images/stock/trust/verified-checklist-flatlay.jpg"
-              alt="Top-down view of a checklist and pen on a wooden surface, representing procedural review before accountant handoff"
-              fill
-              loading="lazy"
-              sizes="(min-width: 640px) 33vw, 100vw"
-              className="object-cover"
-            />
-          </div>
+          {trustImage?.enabled && (
+            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-lg border border-surface-border">
+              <Image
+                src={trustImage.src}
+                alt={trustImage.alt}
+                fill
+                loading="lazy"
+                sizes="(min-width: 640px) 33vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+          )}
         </div>
       </section>
 
@@ -267,19 +280,23 @@ export default function Page() {
               Independent auto repair shop, New Hampshire · fictional sample data.
             </p>
             <div
-              className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-[1fr_2fr]"
+              className={`mt-4 grid grid-cols-1 gap-4 ${
+                autoShopImage?.enabled ? "sm:grid-cols-[1fr_2fr]" : ""
+              }`}
               data-testid="homepage-auto-shop-image"
             >
-              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-md border border-surface-border">
-                <Image
-                  src="/images/stock/auto-shop/independent-garage.jpg"
-                  alt="Independent auto repair shop exterior in daylight, representing the fictional Granite State Auto Repair demo scenario"
-                  fill
-                  loading="lazy"
-                  sizes="(min-width: 640px) 33vw, 100vw"
-                  className="object-cover"
-                />
-              </div>
+              {autoShopImage?.enabled && (
+                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-md border border-surface-border">
+                  <Image
+                    src={autoShopImage.src}
+                    alt={autoShopImage.alt}
+                    fill
+                    loading="lazy"
+                    sizes="(min-width: 640px) 33vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+              )}
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 <PreviewTile label="Transactions imported" value="42" />
                 <PreviewTile label="Verified finalized rows" value="28" tone="good" />
@@ -369,20 +386,24 @@ export default function Page() {
           cost control and auditability built in.
         </p>
 
-        {/* Engineering / workflow-architecture image. Wide strip; decorative. */}
-        <div
-          className="mt-6 relative aspect-[16/5] w-full overflow-hidden rounded-lg border border-surface-border"
-          data-testid="homepage-engineering-image"
-        >
-          <Image
-            src="/images/stock/engineering/workflow-architecture.jpg"
-            alt="Workflow planning scene with notebook and laptop, representing an AI workflow system built with guardrails"
-            fill
-            loading="lazy"
-            sizes="(min-width: 1024px) 1024px, 100vw"
-            className="object-cover"
-          />
-        </div>
+        {/* Engineering / workflow-architecture image. Wide strip; decorative.
+            Hidden until a real local photo + matching credit have been added;
+            see docs/HOMEPAGE_IMAGE_MANUAL_SOURCING_MANIFEST.md. */}
+        {engineeringImage?.enabled && (
+          <div
+            className="mt-6 relative aspect-[16/5] w-full overflow-hidden rounded-lg border border-surface-border"
+            data-testid="homepage-engineering-image"
+          >
+            <Image
+              src={engineeringImage.src}
+              alt={engineeringImage.alt}
+              fill
+              loading="lazy"
+              sizes="(min-width: 1024px) 1024px, 100vw"
+              className="object-cover"
+            />
+          </div>
+        )}
 
         <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <TechCard
@@ -442,7 +463,9 @@ export default function Page() {
         data-testid="homepage-faq"
       >
         <div
-          className="grid grid-cols-1 gap-6 sm:grid-cols-[2fr_1fr] sm:items-end"
+          className={`grid grid-cols-1 gap-6 sm:items-end ${
+            faqImage?.enabled ? "sm:grid-cols-[2fr_1fr]" : ""
+          }`}
           data-testid="homepage-faq-image"
         >
           <div>
@@ -454,16 +477,18 @@ export default function Page() {
               on a new tool.
             </p>
           </div>
-          <div className="relative aspect-[3/4] w-full max-w-[14em] justify-self-end overflow-hidden rounded-md border border-surface-border sm:max-w-[16em]">
-            <Image
-              src="/images/stock/faq/calm-owner-review.jpg"
-              alt="Small business owner reviewing documents calmly near a laptop, no readable financial data visible"
-              fill
-              loading="lazy"
-              sizes="(min-width: 640px) 33vw, 100vw"
-              className="object-cover"
-            />
-          </div>
+          {faqImage?.enabled && (
+            <div className="relative aspect-[3/4] w-full max-w-[14em] justify-self-end overflow-hidden rounded-md border border-surface-border sm:max-w-[16em]">
+              <Image
+                src={faqImage.src}
+                alt={faqImage.alt}
+                fill
+                loading="lazy"
+                sizes="(min-width: 640px) 33vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+          )}
         </div>
         <dl className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
           <FaqItem

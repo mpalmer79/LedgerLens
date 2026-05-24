@@ -1,67 +1,47 @@
 /**
- * Homepage stock-photography credits.
+ * Homepage photo credits.
  *
- * One entry per file in `public/images/stock/`. The
- * `scripts/verify-homepage-images.ts` script asserts each file
- * referenced here exists on disk and that no homepage image is
- * missing a credit.
+ * One entry per real local photo shipped under `public/images/stock/`.
+ * The array is **intentionally empty by default** — there are no real
+ * photos in the repo today, so there are no credits to claim.
  *
- * The shipping repo carries labeled placeholder JPGs at the
- * paths below so the build and verify script pass immediately.
- * The operator replaces them with real Unsplash / Pexels /
- * Pixabay photos per `docs/HOMEPAGE_IMAGE_SELECTION_MANIFEST.md`
- * — when they do, update the photographer / sourceUrl / license
- * fields in the matching entry.
+ * Operator workflow when adding a real photo:
+ *
+ * 1. Save the downloaded file under
+ *    `frontend/public/images/stock/<section>/<filename>.jpg`.
+ * 2. Add an entry to `imageCredits` below with the real
+ *    photographer, sourceUrl, and license.
+ * 3. Flip the matching slot in `homepageImages.ts` to `enabled: true`.
+ * 4. Run `npm run images:verify` to confirm everything lines up.
+ *
+ * Do **not** add placeholder or fake credit data here. The verify
+ * script trusts every entry as a real attribution; fake entries
+ * would silently misrepresent the source of an image.
  */
 
-export type ImageLicense = "Unsplash" | "Pexels" | "Pixabay" | "Placeholder" | "Other";
+export type ImageLicense = "Unsplash" | "Pexels" | "Pixabay" | "Other";
 
 export type ImageCredit = {
-  /** Path under `/public` (always starts with `/images/stock/`). */
+  /** Public path under `frontend/public/`. Always starts with `/images/stock/`. */
   file: string;
-  /** Photographer name or "(placeholder)" until a real image is dropped in. */
+  /** Real photographer name as listed on the source platform. */
   photographer: string;
-  /** Direct URL to the original on the source platform. */
+  /** Direct URL to the original on the source platform (must be https). */
   sourceUrl: string;
+  /** License the photo is published under. */
   license: ImageLicense;
-  /** Logical section the image is used in. Must match the homepage's slot. */
+  /** Logical section the image is used in. Must match `homepageImages.ts`. */
   section: "hero" | "trust" | "auto-shop" | "engineering" | "faq";
 };
 
-export const HOMEPAGE_IMAGE_CREDITS: ReadonlyArray<ImageCredit> = [
-  {
-    file: "/images/stock/hero/calm-workspace-morning.jpg",
-    photographer: "(placeholder — replace per manifest)",
-    sourceUrl: "https://github.com/mpalmer79/LedgerLens/blob/main/docs/HOMEPAGE_IMAGE_SELECTION_MANIFEST.md",
-    license: "Placeholder",
-    section: "hero",
-  },
-  {
-    file: "/images/stock/trust/verified-checklist-flatlay.jpg",
-    photographer: "(placeholder — replace per manifest)",
-    sourceUrl: "https://github.com/mpalmer79/LedgerLens/blob/main/docs/HOMEPAGE_IMAGE_SELECTION_MANIFEST.md",
-    license: "Placeholder",
-    section: "trust",
-  },
-  {
-    file: "/images/stock/auto-shop/independent-garage.jpg",
-    photographer: "(placeholder — replace per manifest)",
-    sourceUrl: "https://github.com/mpalmer79/LedgerLens/blob/main/docs/HOMEPAGE_IMAGE_SELECTION_MANIFEST.md",
-    license: "Placeholder",
-    section: "auto-shop",
-  },
-  {
-    file: "/images/stock/engineering/workflow-architecture.jpg",
-    photographer: "(placeholder — replace per manifest)",
-    sourceUrl: "https://github.com/mpalmer79/LedgerLens/blob/main/docs/HOMEPAGE_IMAGE_SELECTION_MANIFEST.md",
-    license: "Placeholder",
-    section: "engineering",
-  },
-  {
-    file: "/images/stock/faq/calm-owner-review.jpg",
-    photographer: "(placeholder — replace per manifest)",
-    sourceUrl: "https://github.com/mpalmer79/LedgerLens/blob/main/docs/HOMEPAGE_IMAGE_SELECTION_MANIFEST.md",
-    license: "Placeholder",
-    section: "faq",
-  },
-];
+// ── Add real credits below as photos are added. ──────────────────────
+// Example shape (do not commit until the matching file is on disk):
+//
+// {
+//   file: "/images/stock/hero/calm-workspace-morning.jpg",
+//   photographer: "Real Name From Unsplash Page",
+//   sourceUrl: "https://unsplash.com/photos/<id>",
+//   license: "Unsplash",
+//   section: "hero",
+// },
+export const imageCredits: ReadonlyArray<ImageCredit> = [];
