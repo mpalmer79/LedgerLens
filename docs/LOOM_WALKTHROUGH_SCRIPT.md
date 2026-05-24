@@ -38,3 +38,13 @@ Total run-time: **30 seconds**. Record in one take. Conversational, not breathle
 ## What to do if the recording is awkward
 
 It will be. Re-record once. Two takes max — the storyboard is the same as the live demo, so the worst case is "viewer walks the live demo instead." That is acceptable.
+
+## Option B: use the generated walkthrough
+
+The homepage already renders a polished, code-generated walkthrough animation when `NEXT_PUBLIC_LOOM_URL` is empty — see `docs/GENERATED_WALKTHROUGH.md`. That means the launch can ship without a real Loom recording and the homepage still looks intentional, not "coming soon."
+
+- To capture a real video from the generated walkthrough, open `/walkthrough` on the deploy. It's a clean full-screen render with no nav.
+- Use Loom, OBS, QuickTime, or any screen recorder. Capture the inner card; the animation auto-loops every 30 seconds, so start recording at the first appearance of the "LedgerLens" intro scene.
+- Upload, copy the embed URL, set `NEXT_PUBLIC_LOOM_URL` on the Railway frontend service, redeploy. The Loom replaces the generated animation on the next build.
+
+You can record the live `/demo` workflow (Option A above) **or** the generated walkthrough (Option B). Either one swaps in when the env var is set; the placeholder swaps out.
