@@ -105,12 +105,15 @@ def delete_business_workflow_data(
     # 4. Transactions themselves.
     tx_result = db.execute(delete(Transaction).where(Transaction.business_id == business_id))
 
+    def _rows(result: object) -> int:
+        return int(getattr(result, "rowcount", 0) or 0)
+
     summary = DeletionSummary(
         business_id=business_id,
-        deleted_transactions=int(tx_result.rowcount or 0),
-        deleted_categorization_results=int(cat_result.rowcount or 0),
-        deleted_review_decisions=int(rev_result.rowcount or 0),
-        deleted_correction_memory=int(mem_result.rowcount or 0),
+        deleted_transactions=_rows(tx_result),
+        deleted_categorization_results=_rows(cat_result),
+        deleted_review_decisions=_rows(rev_result),
+        deleted_correction_memory=_rows(mem_result),
     )
     db.flush()
     if commit:

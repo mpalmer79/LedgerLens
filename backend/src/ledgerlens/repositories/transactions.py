@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import builtins
 from collections.abc import Iterable
 
 from sqlalchemy import desc, select
@@ -17,8 +18,8 @@ class TransactionRepo:
         self.db.flush()
         return tx
 
-    def add_many(self, txs: Iterable[Transaction]) -> list[Transaction]:
-        out = list(txs)
+    def add_many(self, txs: Iterable[Transaction]) -> builtins.list[Transaction]:
+        out = builtins.list(txs)
         self.db.add_all(out)
         self.db.flush()
         return out
@@ -45,14 +46,14 @@ class TransactionRepo:
         *,
         limit: int = 100,
         offset: int = 0,
-    ) -> list[Transaction]:
+    ) -> builtins.list[Transaction]:
         stmt = (
             select(Transaction)
             .order_by(desc(Transaction.transaction_date), desc(Transaction.created_at))
             .limit(limit)
             .offset(offset)
         )
-        return list(self.db.scalars(stmt))
+        return builtins.list(self.db.scalars(stmt))
 
     def list_for_business(
         self,
@@ -60,7 +61,7 @@ class TransactionRepo:
         *,
         limit: int = 100,
         offset: int = 0,
-    ) -> list[Transaction]:
+    ) -> builtins.list[Transaction]:
         """List transactions scoped to one business.
 
         A ``None`` ``business_id`` matches only legacy rows whose tenant
@@ -76,7 +77,7 @@ class TransactionRepo:
             .limit(limit)
             .offset(offset)
         )
-        return list(self.db.scalars(stmt))
+        return builtins.list(self.db.scalars(stmt))
 
     def count(self) -> int:
         from sqlalchemy import func
