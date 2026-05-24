@@ -181,6 +181,26 @@ def test_human_approval_promotes_anthropic_to_verified(
     assert body["trust"]["human_reviewed_count"] == 1
 
 
+def test_accountant_review_row_is_unfinalized(client: TestClient, fake_factory: MagicMock) -> None:
+    """A row deferred to an accountant must not be finalized or verified."""
+    fake_factory.return_value = _fake_cat("6080", 0.5)
+    tx_id = _create_tx(client, description="ACH DEBIT UNKNOWN", merchant=None)
+    _categorize(client, tx_id)
+    res = client.post(
+        f"/review-queue/{tx_id}/accountant-review",
+        json={
+            "owner_question_key": "unknown_ach_transfer",
+            "owner_answer_label": "Needs accountant review",
+        },
+    )
+    assert res.status_code == 201
+
+    trust = client.get("/ledger").json()["trust"]
+    assert trust["finalized_count"] == 0
+    assert trust["verified_count"] == 0
+    assert trust["review_required_count"] >= 1
+
+
 # ── CSV export carries the verified column ────────────────────────────────
 
 

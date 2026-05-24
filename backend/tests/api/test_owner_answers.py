@@ -93,9 +93,13 @@ def test_correct_endpoint_persists_v2_fields(client: TestClient, fake_factory: M
     assert body["accountant_follow_up_required"] is False
 
 
-def test_approve_endpoint_flags_accountant_follow_up(
+def test_approve_endpoint_rejects_accountant_follow_up_flag(
     client: TestClient, fake_factory: MagicMock
 ) -> None:
+    """Safety backstop: a payload with accountant_follow_up_required=True
+    must NOT be accepted by /approve — it would silently finalize the
+    predicted category. The /questions UI must route such answers to the
+    accountant-review endpoint instead."""
     fake_factory.return_value = _fake_cat("9999", 0.4)
     tx_id = _seed_pending(client, description="OWNER TRANSFER TO PERSONAL")
 
@@ -109,10 +113,90 @@ def test_approve_endpoint_flags_accountant_follow_up(
             "accountant_follow_up_required": True,
         },
     )
-    assert res.status_code == 201
+    assert res.status_code == 422, res.text
+    detail = res.json()["detail"]
+    assert detail["error"] == "validation_failed"
+    assert "accountant-review" in detail["message"]
+
+
+def test_approve_endpoint_still_accepts_explicit_approve(
+    client: TestClient, fake_factory: MagicMock
+) -> None:
+    """A v2 caller can still approve the predicted category when the answer
+    is explicit ('approve this prediction') and accountant_follow_up_required
+    is False."""
+    fake_factory.return_value = _fake_cat("9999", 0.4)
+    tx_id = _seed_pending(client, description="ADOBE CREATIVE CLOUD", merchant="Adobe")
+
+    res = client.post(
+        f"/review-queue/{tx_id}/approve",
+        json={
+            "reviewer_note": "Owner: approved predicted category.",
+            "owner_question_key": "default_uncertain_transaction",
+            "owner_answer_label": "It's a normal business expense",
+            "accountant_follow_up_required": False,
+        },
+    )
+    assert res.status_code == 201, res.text
     body = res.json()
+    assert body["accountant_follow_up_required"] is False
+
+
+def test_accountant_review_endpoint_records_follow_up_decision(
+    client: TestClient, fake_factory: MagicMock
+) -> None:
+    """The new /accountant-review endpoint records a ReviewDecision that
+    does not finalize the predicted category."""
+    fake_factory.return_value = _fake_cat("6080", 0.5)
+    tx_id = _seed_pending(client, description="ACH DEBIT — UNKNOWN COUNTERPARTY")
+
+    res = client.post(
+        f"/review-queue/{tx_id}/accountant-review",
+        json={
+            "reviewer_note": "Owner: needs accountant review.",
+            "owner_question_key": "unknown_ach_transfer",
+            "owner_question_text": "What was this transfer for?",
+            "owner_answer_label": "Needs accountant review",
+            "owner_note": "Counterparty not familiar; ask bookkeeper.",
+            # Even if the inbound value is missing, the endpoint forces True.
+        },
+    )
+    assert res.status_code == 201, res.text
+    body = res.json()
+    assert body["reviewer_action"] == "mark_for_accountant_review"
+    assert body["selected_category_code"] is None
     assert body["accountant_follow_up_required"] is True
     assert body["owner_answer_label"] == "Needs accountant review"
+
+
+def test_accountant_review_does_not_finalize_predicted_category(
+    client: TestClient, fake_factory: MagicMock
+) -> None:
+    """An accountant-review row is not finalized and not verified."""
+    fake_factory.return_value = _fake_cat("6080", 0.5)
+    tx_id = _seed_pending(client, description="ACH DEBIT — UNKNOWN VENDOR")
+
+    client.post(
+        f"/review-queue/{tx_id}/accountant-review",
+        json={
+            "owner_question_key": "unknown_ach_transfer",
+            "owner_answer_label": "Needs accountant review",
+        },
+    )
+
+    ledger = client.get("/ledger").json()
+    row = next(r for r in ledger["rows"] if r["transaction_id"] == tx_id)
+    # Must not be auto-approved or corrected.
+    assert row["categorization_status"] == "accountant_review_required"
+    # No category code adopted.
+    assert row["category_code"] is None
+    # Trust metric does not count it as finalized or verified.
+    trust = ledger["trust"]
+    # The single seeded tx is the only row; it must not be counted finalized.
+    assert trust["finalized_count"] == 0
+    assert trust["verified_count"] == 0
+    # It does appear in the unresolved/review-required count.
+    assert ledger["unresolved"] >= 1
 
 
 def test_uncategorizable_endpoint_persists_v2_fields(

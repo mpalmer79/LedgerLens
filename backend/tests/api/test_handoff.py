@@ -130,6 +130,55 @@ def test_handoff_review_items_surface_under_needs_review(
     assert "needs_review" in statuses
 
 
+def test_handoff_excludes_accountant_review_from_ready(
+    client: TestClient, fake_factory: MagicMock
+) -> None:
+    """A row marked for accountant review must NOT appear in
+    `ready_for_accountant`, even though it carries a ReviewDecision.
+    It belongs in the dedicated follow-up bucket."""
+    fake_factory.return_value = _fake_cat("6080", 0.4)
+    tx_id = _create_tx(client, description="ACH DEBIT UNKNOWN REF 919")
+    _categorize(client, tx_id)
+    client.post(
+        f"/review-queue/{tx_id}/accountant-review",
+        json={
+            "owner_question_key": "unknown_ach_transfer",
+            "owner_answer_label": "Needs accountant review",
+            "owner_note": "Not familiar with this counterparty.",
+        },
+    )
+
+    body = client.get("/handoff").json()
+    ready_ids = {r["transaction_id"] for r in body["ready_for_accountant"]}
+    flagged_ids = {r["transaction_id"] for r in body["accountant_review_required"]}
+    assert tx_id not in ready_ids
+    assert tx_id in flagged_ids
+
+    # And the trust panel does not count it as verified.
+    assert body["trust"]["verified_count"] == 0
+    assert body["trust"]["finalized_count"] == 0
+
+
+def test_handoff_markdown_flags_accountant_review_section(
+    client: TestClient, fake_factory: MagicMock
+) -> None:
+    fake_factory.return_value = _fake_cat("6080", 0.4)
+    tx_id = _create_tx(client, description="ACH DEBIT UNKNOWN REF 7714")
+    _categorize(client, tx_id)
+    client.post(
+        f"/review-queue/{tx_id}/accountant-review",
+        json={
+            "owner_question_key": "unknown_ach_transfer",
+            "owner_answer_label": "Needs accountant review",
+            "owner_note": "Need to confirm — could be a loan payment.",
+        },
+    )
+    md = client.get("/handoff/export.md").text
+    assert "## Owner flagged for accountant review" in md
+    assert "Needs accountant review" in md
+    assert "Need to confirm" in md
+
+
 # ── Owner-note pass-through ───────────────────────────────────────────────
 
 
@@ -192,7 +241,10 @@ def test_handoff_markdown_export_includes_required_sections(
     assert "# LedgerLens — accountant handoff package" in body
     assert "## Cleanup summary" in body
     assert "## Ready for accountant" in body
-    assert "## Needs owner / accountant review" in body
+    # The needs-review section is now split into "owner flagged" and
+    # "pending — model could not finalize".
+    assert "## Owner flagged for accountant review" in body
+    assert "## Pending — model could not finalize" in body
     assert "## Questions answered by owner" in body
     assert "## Corrections learned this month" in body
     assert "## Notes for the accountant" in body

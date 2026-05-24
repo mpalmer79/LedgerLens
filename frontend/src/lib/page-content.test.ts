@@ -550,8 +550,8 @@ describe("questions page content", () => {
     expect(QUESTIONS).toContain('key: "parts_vendor"');
     expect(QUESTIONS).toContain('key: "customer_deposit"');
     expect(QUESTIONS).toContain('key: "default_uncertain_transaction"');
-    // accountantFollowUp + suggestedResolution are surfaced.
-    expect(QUESTIONS).toContain("accountantFollowUp");
+    // resolutionAction + suggestedResolution are the v2 structured fields.
+    expect(QUESTIONS).toContain("resolutionAction");
     expect(QUESTIONS).toContain("suggestedResolution");
   });
 
@@ -569,10 +569,23 @@ describe("questions page content", () => {
     expect(QUESTIONS).toContain("border-amber-300");
   });
 
-  it("records owner answers as reviewer notes via existing endpoints", () => {
+  it("records owner answers via the four explicit resolution endpoints", () => {
     expect(QUESTIONS).toContain("correctReview");
     expect(QUESTIONS).toContain("approveReview");
     expect(QUESTIONS).toContain("markUncategorizable");
+    // SAFETY: "Needs accountant review" answers route to the dedicated
+    // accountant-review endpoint, not the approve endpoint.
+    expect(QUESTIONS).toContain("markForAccountantReview");
+  });
+
+  it("never silently approves a Needs accountant review answer", () => {
+    // The /accountant-review path must be the one called for the
+    // needs_accountant_review resolution action.
+    expect(QUESTIONS).toContain('case "needs_accountant_review"');
+    expect(QUESTIONS).toContain("markForAccountantReview(id");
+    // The handler is a switch on resolutionAction — not an inference
+    // from categoryCode presence.
+    expect(QUESTIONS).toContain("switch (answer.resolutionAction)");
   });
 
   it("does not force accounting jargon as the first thing the owner sees", () => {

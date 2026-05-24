@@ -361,6 +361,25 @@ export const markUncategorizable = (
     body: JSON.stringify({ reviewer_note: note ?? null, ...ownerFields }),
   });
 
+/**
+ * Defer a row to an accountant. The categorization result transitions to
+ * `accountant_review_required`. No predicted category is adopted. The row
+ * is not finalized and not counted as verified by the trust metric.
+ */
+export const markForAccountantReview = (
+  transactionId: string,
+  note?: string,
+  ownerFields: OwnerAnswerFields = {},
+) =>
+  apiFetch<ReviewDecision>(`/review-queue/${transactionId}/accountant-review`, {
+    method: "POST",
+    body: JSON.stringify({
+      reviewer_note: note ?? null,
+      ...ownerFields,
+      accountant_follow_up_required: true,
+    }),
+  });
+
 // ── Ledger ─────────────────────────────────────────────────────────────────
 
 export const getLedger = () => apiFetch<Ledger>("/ledger");
