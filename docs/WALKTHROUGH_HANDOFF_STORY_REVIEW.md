@@ -68,6 +68,17 @@ The walkthrough card aspect ratio is locked at 16:9 by `VideoDemo`. Per the new 
 
 ## 6. Recommended next PR
 
+> **Update (PR #39):** The next-PR recommendation in this section
+> ("Sample handoff package fixture / realistic sample data") shipped as
+> the **Granite State Auto Repair** monthly cleanup scenario — 42
+> realistic March 2026 transactions plus the fictional business
+> identity surfaced on the homepage, `/demo`, `/cleanup`, `/handoff`,
+> and the walkthrough animation. See
+> `docs/SAMPLE_BUSINESS_SCENARIO.md` and
+> `docs/SAMPLE_SCENARIO_REVIEW.md`.
+
+### Original recommendation (preserved for traceability)
+
 The strongest follow-ups, in priority order:
 
 1. **Polish `/questions` with an optional free-text note field** so owners can attach context the multiple-choice answers can't capture. This deepens the "accountant context" promised by Scene 4 of the new walkthrough.

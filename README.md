@@ -47,6 +47,14 @@ The export is **not tax advice**. It's a cleanup and handoff aid that gives the 
 - **Eval evidence** — [`/evals`](https://ledgerlens.up.railway.app/evals). Honest raw model-only numbers (model accuracy ≈ 63%, adversarial ≈ 42%).
 - **Run locally** — see the [`Running locally`](#running-locally) section below.
 
+## Sample scenario: Granite State Auto Repair
+
+LedgerLens ships one fictional sample business so the guided demo, the cleanup checklist, and the accountant handoff all tell the same story end-to-end.
+
+**Granite State Auto Repair** — an independent auto repair shop in New Hampshire cleaning up its **March 2026** bank activity before sending records to its accountant. The dataset is **42 transactions** spanning a realistic monthly mix: parts (NAPA, AutoZone, O'Reilly, Advance Auto, LKQ, tire distributor), payroll (ADP bi-weekly + tax), utilities and rent (Eversource, Comcast, Waste Management, NH Property Management, Manchester Water), software (QuickBooks, Mitchell1, Google Workspace), fuel (Shell, Irving, Mobil), insurance and finance (Hanover, TD Bank, First Citizens), revenue deposits (Stripe, Square, customer checks, cash), and the ambiguous rows a real monthly cleanup turns up — ACH transfers, paper checks, Amazon, Costco, Home Depot, Lowe's, Venmo, ATM withdrawals, and an OWNER TRANSFER row that's clearly a personal-vs-business judgement call.
+
+The scenario is **fictional sample data**. It is not a real business. Every surface that names it carries a "Sample / fictional scenario" badge. See [`docs/SAMPLE_BUSINESS_SCENARIO.md`](docs/SAMPLE_BUSINESS_SCENARIO.md) for the full scenario reference and [`docs/examples/granite-state-auto-repair-handoff.md`](docs/examples/granite-state-auto-repair-handoff.md) for a representative handoff package output.
+
 ## Why not claim 100% AI accuracy?
 
 Because ambiguous bookkeeping data requires business context, and adversarial cases exist precisely because a junior bookkeeper would forward them. Pretending the model gets every case right is dishonest. LedgerLens instead verifies *what becomes final*: finalized rows must be backed by human review, correction memory, or deterministic rules. Raw model accuracy on the synthetic eval dataset is around **63% overall** and **42% on the adversarial slice** — and that's reported honestly on [`/evals`](https://ledgerlens.up.railway.app/evals) and the committed run artifacts in `evals/runs/`.

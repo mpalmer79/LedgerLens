@@ -16,19 +16,19 @@
 import styles from "./GeneratedWalkthrough.module.css";
 
 const MESSY_TRANSACTIONS: { description: string; amount: string }[] = [
-  { description: "COMCAST BUSINESS INTERNET MAR", amount: "-$189.00" },
-  { description: "QUICKBOOKS ONLINE PLUS", amount: "-$80.00" },
-  { description: "ADP PAYROLL BI-WEEKLY", amount: "-$7,423.80" },
-  { description: "SHELL FUEL 03801", amount: "-$78.21" },
-  { description: "AMAZON MARKETPLACE", amount: "-$214.47" },
-  { description: "ACH TRANSFER VENDOR REF 99812", amount: "-$421.00" },
+  { description: "NAPA AUTO PARTS INV 88421", amount: "-$342.50" },
+  { description: "ADP PAYROLL BI-WEEKLY", amount: "-$7,842.30" },
+  { description: "COMCAST BUSINESS INTERNET MAR", amount: "-$299.00" },
+  { description: "SHELL FUEL 03801 NASHUA", amount: "-$87.21" },
+  { description: "AMAZON MARKETPLACE ORDER 113-44", amount: "-$214.47" },
+  { description: "ACH TRANSFER VENDOR REF 41281", amount: "-$675.00" },
 ];
 
 const OBVIOUS_VENDORS: { description: string; via: string; category: string }[] = [
-  { description: "COMCAST BUSINESS INTERNET", via: "Rule", category: "Utilities" },
   { description: "QUICKBOOKS ONLINE PLUS", via: "Rule", category: "Software" },
-  { description: "ADP PAYROLL BI-WEEKLY", via: "Rule", category: "Payroll" },
-  { description: "SHELL FUEL 03801", via: "Memory", category: "Vehicle expense" },
+  { description: "ADP PAYROLL BI-WEEKLY", via: "Memory", category: "Payroll" },
+  { description: "SHELL FUEL 03801 NASHUA", via: "Rule", category: "Fuel & Vehicle" },
+  { description: "NAPA AUTO PARTS INV 88421", via: "Memory", category: "Cost of goods sold" },
 ];
 
 const QUESTION_CHOICES: string[] = [
@@ -41,7 +41,7 @@ const QUESTION_CHOICES: string[] = [
 
 const ANSWER_NOTES: { description: string; answer: string }[] = [
   {
-    description: "ACH TRANSFER VENDOR REF 99812",
+    description: "ACH TRANSFER VENDOR REF 41281",
     answer: "Needs accountant review",
   },
   {
@@ -51,14 +51,14 @@ const ANSWER_NOTES: { description: string; answer: string }[] = [
 ];
 
 const READY_ROWS: { description: string; category: string }[] = [
-  { description: "COMCAST BUSINESS INTERNET", category: "Utilities" },
-  { description: "QUICKBOOKS ONLINE PLUS", category: "Software" },
+  { description: "NAPA AUTO PARTS", category: "Cost of goods sold" },
   { description: "ADP PAYROLL BI-WEEKLY", category: "Payroll" },
+  { description: "SHELL FUEL 03801", category: "Fuel & Vehicle" },
   { description: "AMAZON MARKETPLACE", category: "Office supplies" },
 ];
 
 const NEEDS_REVIEW_ROWS: { description: string; note: string }[] = [
-  { description: "ACH TRANSFER VENDOR REF 99812", note: "Needs accountant review" },
+  { description: "ACH TRANSFER VENDOR REF 41281", note: "Needs accountant review" },
 ];
 
 export function GeneratedWalkthrough() {
@@ -122,7 +122,7 @@ export function GeneratedWalkthrough() {
           </p>
           <div className={styles.questionCard} aria-hidden="true">
             <p className={styles.qContext}>
-              ACH TRANSFER VENDOR REF 99812 · −$421.00
+              ACH TRANSFER VENDOR REF 41281 · −$675.00
             </p>
             <p className={styles.qPrompt}>What was this ACH transfer for?</p>
             <ul className={styles.qChoices}>
@@ -200,7 +200,7 @@ export function GeneratedWalkthrough() {
             one package.
           </p>
           <div className={styles.handoffPreview} aria-hidden="true">
-            <p className={styles.handoffFile}>handoff-2026-03.md</p>
+            <p className={styles.handoffFile}>handoff-granite-state-auto-repair-2026-03.md</p>
             <ul className={styles.handoffSections}>
               <li>Ready for accountant · 4 rows</li>
               <li>Needs review · 1 row + owner note</li>

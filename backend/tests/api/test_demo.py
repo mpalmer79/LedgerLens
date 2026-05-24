@@ -139,3 +139,67 @@ def test_sample_transactions_returns_payload_without_writing(
     assert all("description" in row and "amount_cents" in row for row in body)
     # Database is unchanged.
     assert client.get("/demo/status").json()["transaction_count"] == 0
+
+
+# ── Sample-business scenario ───────────────────────────────────────────────
+
+
+def test_scenario_endpoint_returns_granite_state_profile(client: TestClient) -> None:
+    """The shared sample-business-scenario profile is exposed read-only and
+    safe to call in any mode."""
+    res = client.get("/demo/scenario")
+    assert res.status_code == 200
+    body = res.json()
+    assert body["business_name"] == "Granite State Auto Repair"
+    assert body["cleanup_month"] == "March 2026"
+    assert body["location"] == "New Hampshire"
+    assert "fictional" in body["scenario_summary"].lower()
+    assert "fictional" in body["demo_disclaimer"].lower()
+    assert body["handoff_filename"] == "handoff-granite-state-auto-repair-2026-03.md"
+
+
+def test_seed_loads_granite_state_42_row_dataset(
+    client: TestClient, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The Granite State Auto Repair scenario seeds 42 rows spanning a
+    realistic March 2026 transaction mix (parts, payroll, utilities,
+    subscriptions, fuel, deposits, ambiguous transfers)."""
+    _force_demo_mode(monkeypatch)
+    res = client.post("/demo/seed")
+    assert res.status_code == 201
+    body = res.json()
+    assert body["count"] == 42
+    assert body["scenario"] == "Granite State Auto Repair"
+    assert body["cleanup_month"] == "March 2026"
+
+    descriptions = " | ".join(tx["description"] for tx in body["created"])
+    # Auto-repair-specific vendors are represented.
+    assert "NAPA AUTO PARTS" in descriptions
+    assert "AUTOZONE COMMERCIAL" in descriptions
+    assert "O'REILLY AUTO PARTS" in descriptions
+    assert "ADP PAYROLL" in descriptions
+    assert "MITCHELL1" in descriptions
+    # Ambiguous owner-decision items are represented.
+    assert "ACH TRANSFER VENDOR REF" in descriptions
+    assert "OWNER TRANSFER TO PERSONAL" in descriptions
+    assert "ATM WITHDRAWAL" in descriptions
+    # Revenue deposits are represented.
+    assert "STRIPE DEPOSIT PAYOUT" in descriptions
+    assert "CUSTOMER CHECK DEPOSIT" in descriptions
+    # Positive amounts exist (deposits) — not just expenses.
+    assert any(tx["amount_cents"] > 0 for tx in body["created"])
+
+
+def test_seed_does_not_import_anthropic_sdk(
+    client: TestClient, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Regression guard: the demo seed path must not import the Anthropic
+    SDK, so the public deploy stays at $0 paid spend."""
+    import sys
+
+    _force_demo_mode(monkeypatch)
+    # Drop anthropic from sys.modules so a fresh import would be visible.
+    sys.modules.pop("anthropic", None)
+    res = client.post("/demo/seed")
+    assert res.status_code == 201
+    assert "anthropic" not in sys.modules

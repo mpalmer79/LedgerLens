@@ -223,6 +223,18 @@ export default function CleanupPage() {
           handoff package. LedgerLens handles the obvious rows, turns uncertain ones into
           plain-English questions, and remembers your corrections for next month.
         </p>
+        {state.handoff?.scenario && (
+          <p className="mt-3 inline-flex flex-wrap items-center gap-2 rounded-md border border-surface-border bg-surface-panel px-3 py-1.5 text-[12px] text-text-secondary">
+            <span className="rounded-full bg-brand-100 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-brand-800">
+              Sample data
+            </span>
+            Cleaning up {state.handoff.scenario.cleanup_month} books for{" "}
+            <span className="font-medium text-text-primary">
+              {state.handoff.scenario.business_name}
+            </span>
+            .
+          </p>
+        )}
       </header>
 
       {state.error && (
@@ -238,15 +250,17 @@ export default function CleanupPage() {
             New here?
           </h2>
           <p className="mt-1 text-[13px] text-text-secondary">
-            The fastest way to see the workflow is the 3-minute guided demo. Or import
-            your own bank CSV.
+            Try the{" "}
+            <span className="font-medium text-text-primary">Granite State Auto Repair</span>{" "}
+            sample scenario — a fictional independent auto repair shop cleaning up March 2026
+            books. Or import your own bank CSV.
           </p>
           <div className="mt-3 flex flex-wrap gap-3">
             <Link
               href="/demo"
               className="rounded-md bg-brand-600 px-4 py-2 text-[13px] font-medium text-white hover:bg-brand-500"
             >
-              Start guided demo →
+              Try the sample scenario →
             </Link>
             <Link
               href="/transactions/import"

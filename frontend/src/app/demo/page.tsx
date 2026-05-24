@@ -11,6 +11,7 @@ import {
   categorizeBatch,
   correctReview,
   getDemoSampleTransactions,
+  getDemoScenario,
   getDemoStatus,
   getLedger,
   getLedgerExportUrl,
@@ -18,6 +19,7 @@ import {
   resetDemo,
   seedDemo,
   type DemoSampleTransaction,
+  type DemoScenario,
   type DemoStatus,
 } from "@/lib/api/client";
 import type {
@@ -37,6 +39,7 @@ type StepState = {
 
 type DemoState = {
   status: DemoStatus | null;
+  scenario: DemoScenario | null;
   samples: DemoSampleTransaction[] | null;
   seeded: Transaction[];
   batchResults: CategorizationResult[];
@@ -55,6 +58,7 @@ type DemoState = {
 
 const INITIAL: DemoState = {
   status: null,
+  scenario: null,
   samples: null,
   seeded: [],
   batchResults: [],
@@ -125,11 +129,12 @@ export default function DemoPage() {
     let cancelled = false;
     (async () => {
       try {
-        const [status, samples] = await Promise.all([
+        const [status, samples, scenario] = await Promise.all([
           getDemoStatus(),
           getDemoSampleTransactions(),
+          getDemoScenario(),
         ]);
-        if (!cancelled) setState((s) => ({ ...s, status, samples }));
+        if (!cancelled) setState((s) => ({ ...s, status, samples, scenario }));
       } catch (err) {
         if (!cancelled) setGlobalError(describeError(err));
       }
@@ -268,6 +273,37 @@ export default function DemoPage() {
           </p>
         )}
       </header>
+
+      {/* Sample cleanup scenario card — names the fictional business. */}
+      {state.scenario && (
+        <section className="mt-6 rounded-lg border border-surface-border bg-surface-panel p-5">
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <p className="text-[11px] font-medium uppercase tracking-wide text-brand-700">
+              Sample cleanup scenario
+            </p>
+            <span className="rounded-full border border-surface-border bg-surface-page px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-text-subtle">
+              Fictional sample data
+            </span>
+          </div>
+          <h2 className="mt-2 font-display text-[20px] font-medium text-text-primary">
+            {state.scenario.business_name} · {state.scenario.cleanup_month}
+          </h2>
+          <p className="mt-1 text-[13px] text-text-secondary">
+            {state.scenario.business_type} · {state.scenario.location}
+          </p>
+          <p className="mt-3 max-w-3xl text-[13px] text-text-secondary">
+            {state.scenario.scenario_summary}
+          </p>
+          <ul className="mt-3 grid grid-cols-1 gap-1 text-[12px] text-text-secondary md:grid-cols-2">
+            <li>· {state.samples?.length ?? 42} imported transactions</li>
+            <li>· repeat vendors handled by rules or correction memory</li>
+            <li>· ambiguous rows routed to plain-English owner questions</li>
+            <li>· unresolved items flagged for accountant review</li>
+            <li>· handoff package created at the end</li>
+          </ul>
+          <p className="mt-3 text-[11px] text-text-subtle">{state.scenario.demo_disclaimer}</p>
+        </section>
+      )}
 
       {/* What to look for — first-time-visitor framing. */}
       <section className="mt-6 rounded-lg border border-brand-200 bg-brand-100 p-4">

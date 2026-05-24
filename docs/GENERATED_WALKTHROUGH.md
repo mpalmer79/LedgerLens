@@ -11,12 +11,14 @@ Six CSS-keyframe scenes that loop on a single 30-second timeline:
 
 | t (s) | Scene | Visual headline |
 |---:|---|---|
-| 0 – 5 | Monthly cleanup intro | "Start with messy bank activity from this month." + the messy-transactions list (Comcast, QuickBooks, ADP, Shell, Amazon, ACH transfer). |
-| 5 – 10 | Obvious vendors handled first | "Rules and correction memory classify repeatable items before AI fallback." + four classified rows tagged `Rule` or `Memory`. |
+| 0 – 5 | Monthly cleanup intro | "Start with messy bank activity from this month." + the messy-transactions list (NAPA Auto Parts, ADP Payroll, Comcast Business, Shell Fuel, Amazon Marketplace, ACH transfer). |
+| 5 – 10 | Obvious vendors handled first | "Rules and correction memory classify repeatable items before AI fallback." + four classified rows tagged `Rule` or `Memory` (QuickBooks, ADP Payroll, Shell, NAPA). |
 | 10 – 15 | Owner questions | "AI should not guess what the owner knows." + an owner question card for the unknown ACH transfer with five plain-English choices. |
 | 15 – 21 | Accountant context | "Plain-English answers are saved as review notes for the handoff." + two answer rows (ACH → Needs accountant review; Amazon → Office supplies). |
-| 21 – 26 | Verified vs review | "Finalized rows are backed by review, rules, or correction memory." + a side-by-side **Ready for accountant** vs **Needs review** split. |
-| 26 – 30 | Handoff package | "Verified ledger, owner answers, unresolved items, and learned corrections in one package." + `handoff-2026-03.md` preview + the trust card. Final card: **100% verified finalized demo ledger** + "0 uncertain rows silently finalized." |
+| 21 – 26 | Verified vs review | "Finalized rows are backed by review, rules, or correction memory." + a side-by-side **Ready for accountant** vs **Needs review** split (NAPA, ADP, Shell, Amazon ready; ACH transfer needs review). |
+| 26 – 30 | Handoff package | "Verified ledger, owner answers, unresolved items, and learned corrections in one package." + `handoff-granite-state-auto-repair-2026-03.md` preview + the trust card. Final card: **100% verified finalized demo ledger** + "0 uncertain rows silently finalized." |
+
+The vendor names align with the **Granite State Auto Repair** sample scenario (see `docs/SAMPLE_BUSINESS_SCENARIO.md`) so the walkthrough, the `/demo` scenario card, and the live handoff page all tell the same story.
 
 A progress bar across the bottom advances over the full 30 seconds; the
 animation loops infinitely. Reduced-motion users see the final

@@ -79,10 +79,13 @@ describe("homepage content", () => {
     expect(HOMEPAGE).toContain("After LedgerLens");
   });
 
-  it("renders the example handoff preview card", () => {
-    expect(HOMEPAGE).toContain("Example handoff preview");
-    expect(HOMEPAGE).toContain("illustrative");
-    expect(HOMEPAGE).toContain("Accountant handoff package");
+  it("renders the example handoff preview card with the sample-scenario name", () => {
+    expect(HOMEPAGE).toContain("Example: Granite State Auto Repair");
+    expect(HOMEPAGE).toContain("Fictional sample scenario");
+    expect(HOMEPAGE).toContain("March 2026 cleanup before accountant handoff");
+    // Illustrative numbers match the audit doc's expected outcome.
+    expect(HOMEPAGE).toContain('value="42"');
+    expect(HOMEPAGE).toContain('value="28"');
   });
 
   it("links to /about and includes Michael's name as the builder line", () => {
@@ -104,6 +107,11 @@ describe("homepage content", () => {
 
   it("uses overflow-x-hidden to prevent accidental horizontal scroll", () => {
     expect(HOMEPAGE).toContain("overflow-x-hidden");
+  });
+
+  it("includes the Granite State Auto Repair sample scenario on the homepage", () => {
+    expect(HOMEPAGE).toContain("Granite State Auto Repair");
+    expect(HOMEPAGE.toLowerCase()).toContain("fictional sample");
   });
 });
 
@@ -214,6 +222,12 @@ describe("demo page content", () => {
 
   it('renders the "verified, not an AI answer" headline on step 6', () => {
     expect(DEMO).toContain("verified ledger, not an AI answer");
+  });
+
+  it("renders the sample-cleanup-scenario card driven by /demo/scenario", () => {
+    expect(DEMO).toContain("Sample cleanup scenario");
+    expect(DEMO).toContain("getDemoScenario");
+    expect(DEMO).toContain("Fictional sample data");
   });
 });
 
@@ -339,6 +353,16 @@ describe("cleanup page content", () => {
     expect(CLEANUP).toContain('href="/demo"');
     expect(CLEANUP).toContain('href="/transactions/import"');
   });
+
+  it("surfaces the sample-scenario context when demo data is present", () => {
+    // Header badge reads off the scenario from the handoff response.
+    expect(CLEANUP).toContain("Sample data");
+    expect(CLEANUP).toContain("scenario.business_name");
+    expect(CLEANUP).toContain("scenario.cleanup_month");
+    // Empty-state names the Granite State Auto Repair scenario.
+    expect(CLEANUP).toContain("Granite State Auto Repair");
+    expect(CLEANUP).toContain("Try the sample scenario");
+  });
 });
 
 // ── Questions ────────────────────────────────────────────────────────────
@@ -356,6 +380,22 @@ describe("questions page content", () => {
     expect(QUESTIONS).toContain("What was this purchase mainly for?");
     expect(QUESTIONS).toContain("Was this vehicle expense business-related?");
     expect(QUESTIONS).toContain("Is this a business software or service subscription?");
+  });
+
+  it("includes auto-shop-friendly templates introduced with the sample scenario", () => {
+    // Parts vendors (NAPA / AutoZone / O'Reilly / Advance / LKQ / tire dist).
+    expect(QUESTIONS).toContain("What were these parts for?");
+    expect(QUESTIONS).toContain("Shop inventory");
+    expect(QUESTIONS).toContain("Customer job");
+    // Owner-side transfers / cash withdrawals.
+    expect(QUESTIONS).toContain("What was this transfer?");
+    expect(QUESTIONS).toContain("Owner draw");
+    // Deposits — revenue side.
+    expect(QUESTIONS).toContain("Is this a customer deposit or other revenue?");
+    expect(QUESTIONS).toContain("Customer payment (revenue)");
+    // Home improvement stores.
+    expect(QUESTIONS).toContain("Shop supplies");
+    expect(QUESTIONS).toContain("Building repair");
   });
 
   it("records owner answers as reviewer notes via existing endpoints", () => {
@@ -409,5 +449,12 @@ describe("handoff page content", () => {
   it("links into the questions and review workflows", () => {
     expect(HANDOFF).toContain('href="/questions"');
     expect(HANDOFF).toContain('href="/review"');
+  });
+
+  it("surfaces the sample-scenario context when handoff.scenario is set", () => {
+    expect(HANDOFF).toContain("handoff?.scenario");
+    expect(HANDOFF).toContain("scenario.business_name");
+    expect(HANDOFF).toContain("Sample data");
+    expect(HANDOFF.toLowerCase()).toContain("demo handoff");
   });
 });

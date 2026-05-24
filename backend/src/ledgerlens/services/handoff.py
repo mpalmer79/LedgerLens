@@ -29,8 +29,10 @@ from ledgerlens.api.schemas import (
     CorrectionMemoryOut,
     HandoffOut,
     HandoffOwnerAnswer,
+    HandoffScenario,
     LedgerRow,
 )
+from ledgerlens.data.sample_scenario import SAMPLE_SCENARIO
 from ledgerlens.models import CorrectionMemory, ReviewDecision
 from ledgerlens.repositories import CategoryRepo, TransactionRepo
 
@@ -125,6 +127,23 @@ def _recent_corrections(db: Session, limit: int = 100) -> list[CorrectionMemory]
     )
 
 
+def _scenario_for(rows: list[LedgerRow]) -> HandoffScenario | None:
+    """Return the sample-business scenario when the handoff contains any
+    demo-sourced rows. The scenario is what surfaces the fictional
+    business name and disclaimer; non-demo handoffs get no scenario.
+    """
+    if not any((r.source or "") == "demo" for r in rows):
+        return None
+    return HandoffScenario(
+        business_name=SAMPLE_SCENARIO["business_name"],
+        business_type=SAMPLE_SCENARIO["business_type"],
+        location=SAMPLE_SCENARIO["location"],
+        cleanup_month=SAMPLE_SCENARIO["cleanup_month"],
+        handoff_filename=SAMPLE_SCENARIO["handoff_filename"],
+        demo_disclaimer=SAMPLE_SCENARIO["demo_disclaimer"],
+    )
+
+
 def build_handoff(db: Session) -> HandoffOut:
     """Assemble the handoff report from current persisted state."""
     rows = _build_rows(db)
@@ -136,6 +155,7 @@ def build_handoff(db: Session) -> HandoffOut:
     answers = _owner_answers(db)
     corrections = _recent_corrections(db)
     corrections_out = [CorrectionMemoryOut.model_validate(c) for c in corrections]
+    scenario = _scenario_for(rows)
 
     return HandoffOut(
         generated_at=datetime.now(UTC),
@@ -146,13 +166,23 @@ def build_handoff(db: Session) -> HandoffOut:
         needs_review=needs_review,
         owner_answers=answers,
         corrections_learned=corrections_out,
+        scenario=scenario,
     )
 
 
 def render_markdown(handoff: HandoffOut) -> str:
     """Render the handoff as a single markdown document an owner can paste."""
     out: list[str] = []
-    out.append("# LedgerLens — accountant handoff package")
+    if handoff.scenario is not None:
+        s = handoff.scenario
+        out.append(f"# {s.business_name} — {s.cleanup_month} accountant handoff")
+        out.append("")
+        out.append(
+            f"_{s.business_type} · {s.location} · "
+            f"fictional sample scenario for demonstration only._"
+        )
+    else:
+        out.append("# LedgerLens — accountant handoff package")
     out.append("")
     out.append(f"**Period:** {handoff.cleanup_period_label}")
     out.append(f"**Generated:** {handoff.generated_at.isoformat(timespec='seconds')}")
@@ -247,5 +277,10 @@ def render_markdown(handoff: HandoffOut) -> str:
         "deterministic auto-approval, 2.0 min per memory replay). It is not a "
         "financial guarantee."
     )
+    out.append(
+        "- This handoff package is not tax advice and is not a substitute for accounting review."
+    )
+    if handoff.scenario is not None:
+        out.append(f"- {handoff.scenario.demo_disclaimer}")
     out.append("")
     return "\n".join(out)

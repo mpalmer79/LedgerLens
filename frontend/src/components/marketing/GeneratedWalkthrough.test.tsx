@@ -61,8 +61,14 @@ describe("GeneratedWalkthrough — content", () => {
     expect(html).toContain("Not sure");
   });
 
+  it("uses auto-repair-flavored sample transactions in scenes 1-5", () => {
+    expect(html).toContain("NAPA AUTO PARTS");
+    expect(html).toContain("ADP PAYROLL BI-WEEKLY");
+    expect(html).toContain("SHELL FUEL");
+  });
+
   it("renders owner-answer review notes routed at the handoff", () => {
-    expect(html).toContain("ACH TRANSFER VENDOR REF 99812");
+    expect(html).toContain("ACH TRANSFER VENDOR REF 41281");
     expect(html).toContain("AMAZON MARKETPLACE");
   });
 
@@ -72,8 +78,8 @@ describe("GeneratedWalkthrough — content", () => {
     expect(html).toContain("Workflow-level verification, not raw model accuracy.");
   });
 
-  it("renders the handoff package preview file label and section list", () => {
-    expect(html).toContain("handoff-2026-03.md");
+  it("renders the handoff package preview file label with the sample-scenario name", () => {
+    expect(html).toContain("handoff-granite-state-auto-repair-2026-03.md");
     expect(html).toContain("Owner answers this month");
     expect(html).toContain("Corrections learned");
   });
