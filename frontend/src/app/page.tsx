@@ -186,7 +186,7 @@ export default function Page() {
               <li>· Obvious vendors classified by rules or correction memory</li>
               <li>· Uncertain rows routed to plain-English owner questions</li>
               <li>· Your answers captured as review notes for the accountant</li>
-              <li>· Verified ledger rows separated from unresolved items</li>
+              <li>· Procedurally verified rows separated from unresolved items</li>
               <li>· Markdown + CSV handoff package ready to send</li>
             </ul>
           </div>
@@ -196,7 +196,7 @@ export default function Page() {
             What you get in the handoff package
           </p>
           <ul className="mt-3 grid grid-cols-2 gap-y-2 text-[13px] text-text-primary sm:grid-cols-3">
-            <li>✓ Verified ledger summary</li>
+            <li>✓ Reviewed categorization summary</li>
             <li>✓ Unresolved questions</li>
             <li>✓ Owner answers</li>
             <li>✓ Corrections learned</li>

@@ -46,9 +46,9 @@ const STEPS: Step[] = [
   },
   {
     icon: <ClipboardCheck size={18} className="text-brand-700" />,
-    label: "Verified ledger export",
+    label: "Reviewed categorization handoff",
     explainer:
-      "Only rows backed by review, memory, or a rule auto-approval are counted as finalized. The CSV carries a per-row verified column.",
+      "Only rows backed by review, memory, or a rule auto-approval are counted as finalized. The accountant handoff CSV carries a per-row verified column. This is a categorization handoff, not a true accounting ledger.",
     tone: "final",
   },
 ];

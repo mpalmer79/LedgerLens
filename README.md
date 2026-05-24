@@ -68,7 +68,7 @@ A single, downloadable artifact at [`/handoff`](https://ledgerlens.up.railway.ap
 - **Owner answers** — the plain-English notes you wrote during the questions workflow, included for accountant context.
 - **Corrections learned** — new (merchant → category) rules saved this month for reuse next month.
 - **Markdown summary** — `/handoff/export.md`, paste-into-email format.
-- **CSV ledger export** — `/ledger/export.csv`, with a per-row `verified` column.
+- **Reviewed categorization CSV export** — `/ledger/export.csv`, with a per-row `verified` column. Not a true accounting ledger.
 
 The export is **not tax advice**. It's a cleanup and handoff aid that gives the accountant clean inputs.
 

@@ -570,7 +570,7 @@ export default function DemoPage() {
         <ul className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
           <ProofCard
             title="Full-stack workflow"
-            body="FastAPI + SQLAlchemy + Postgres-ready persistence, Next.js + typed client, Railway-deployed Dockerfile builds."
+            body="FastAPI + SQLAlchemy models, SQLite for the public demo (Postgres-compatible in principle), Next.js + typed client, Railway-deployed Dockerfile builds."
           />
           <ProofCard
             title="AI-safe routing"

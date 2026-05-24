@@ -745,3 +745,73 @@ describe("rules page content", () => {
     expect(RULES.toLowerCase()).toMatch(/owner\s+questions/);
   });
 });
+
+// ── Claims-regression sweep ───────────────────────────────────────────────
+//
+// Live-surface phrases that conflict with the productization boundary.
+// Any reintroduction would re-open a hole the boundary PR closed.
+
+const REVIEW = readPage("review/page.tsx");
+const LAYOUT = readPage("layout.tsx");
+const TRUST_PIPELINE = readFileSync(
+  join(SRC, "components", "TrustPipeline.tsx"),
+  "utf-8",
+);
+const SITE_LIB = readFileSync(join(SRC, "lib", "site.ts"), "utf-8");
+const GENERATED_WALKTHROUGH = readFileSync(
+  join(SRC, "components", "marketing", "GeneratedWalkthrough.tsx"),
+  "utf-8",
+);
+
+describe("claims regression sweep — live surfaces", () => {
+  it("no live route says 'verified ledger export'", () => {
+    for (const [name, src] of [
+      ["homepage", HOMEPAGE],
+      ["about", ABOUT],
+      ["tech_story", TECH_STORY],
+      ["demo", DEMO],
+      ["app", APP_DASH],
+      ["review", REVIEW],
+      ["handoff", HANDOFF],
+      ["layout", LAYOUT],
+      ["TrustPipeline", TRUST_PIPELINE],
+      ["site lib", SITE_LIB],
+      ["GeneratedWalkthrough", GENERATED_WALKTHROUGH],
+    ] as const) {
+      expect(
+        src.toLowerCase().includes("verified ledger"),
+        `${name} should not contain 'verified ledger'`,
+      ).toBe(false);
+    }
+  });
+
+  it("/app does not tell users to bring a real bank export", () => {
+    expect(APP_DASH.toLowerCase()).not.toContain("bring a real bank");
+    expect(APP_DASH.toLowerCase()).not.toContain("real bank export");
+  });
+
+  it("/demo no longer says bare 'Postgres-ready'", () => {
+    expect(DEMO).not.toContain("Postgres-ready persistence");
+    // The replacement makes the dev-vs-deploy reality explicit.
+    expect(DEMO.toLowerCase()).toContain("postgres-compatible in principle");
+  });
+
+  it("/review no longer says 'final ledger export'", () => {
+    expect(REVIEW.toLowerCase()).not.toContain("final ledger export");
+    expect(REVIEW.toLowerCase()).toContain("reviewed categorization export");
+  });
+
+  it("homepage says 'procedurally verified' not 'verified ledger rows'", () => {
+    expect(HOMEPAGE.toLowerCase()).toContain("procedurally verified rows");
+    expect(HOMEPAGE.toLowerCase()).not.toContain("verified ledger rows");
+  });
+
+  it("TrustPipeline final step labels itself as a categorization handoff", () => {
+    expect(TRUST_PIPELINE).toContain("Reviewed categorization handoff");
+    expect(TRUST_PIPELINE).not.toContain("Verified ledger export");
+  });
+
+  it("site lib title/description no longer claims a verified ledger", () => {
+    expect(SITE_LIB.toLowerCase()).not.toMatch(/verified[\s-]ledger/);
+  });
+});

@@ -109,7 +109,7 @@ export default function ReviewPage() {
           <li>The correction is stored as a deterministic memory rule.</li>
           <li>Similar future transactions are categorized from memory at zero cost.</li>
           <li>The audit trail records the decision with reviewer and timestamp.</li>
-          <li>The final ledger export uses your reviewed category, not the prediction.</li>
+          <li>The reviewed categorization export uses your reviewed category, not the prediction.</li>
         </ul>
       </aside>
 

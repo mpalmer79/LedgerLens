@@ -196,8 +196,8 @@ export function GeneratedWalkthrough() {
           <p className={styles.stepLabel}>Step 6 of 6</p>
           <p className={styles.sceneTitle}>Export the accountant handoff package</p>
           <p className={styles.sceneSub}>
-            Verified ledger, owner answers, unresolved items, and learned corrections in
-            one package.
+            Reviewed categorization, owner answers, unresolved items, and learned corrections
+            in one package.
           </p>
           <div className={styles.handoffPreview} aria-hidden="true">
             <p className={styles.handoffFile}>handoff-granite-state-auto-repair-2026-03.md</p>
