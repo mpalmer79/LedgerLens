@@ -9,15 +9,31 @@ import { ApiError, getHealth } from "@/lib/api/client";
 
 type NavItem = { href: string; label: string };
 
-const NAV: NavItem[] = [
-  { href: "/demo", label: "Guided demo" },
+/**
+ * Owner path — the five steps a non-technical visitor follows.
+ * Order matches the /start workflow + the small-business UX
+ * roadmap. Kept short on purpose; cognitive overload was the
+ * single biggest complaint in the owner-experience audit.
+ */
+const OWNER_NAV: NavItem[] = [
+  { href: "/start", label: "Start" },
+  { href: "/transactions/import", label: "Import" },
   { href: "/cleanup", label: "Cleanup" },
   { href: "/questions", label: "Questions" },
   { href: "/handoff", label: "Handoff" },
+];
+
+/**
+ * Advanced / developer surface. Surfaced separately so a hiring
+ * manager can still reach every page without burying the owner
+ * path in noise.
+ */
+const ADVANCED_NAV: NavItem[] = [
+  { href: "/demo", label: "Guided demo" },
   { href: "/app", label: "Dashboard" },
-  { href: "/transactions/import", label: "Import" },
   { href: "/transactions", label: "Transactions" },
   { href: "/review", label: "Review queue" },
+  { href: "/mapping", label: "Mapping" },
   { href: "/corrections", label: "Learned corrections" },
   { href: "/rules", label: "Rules" },
   { href: "/ledger", label: "Ledger" },
@@ -92,8 +108,18 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               </Link>
             </div>
           </div>
-          <nav className="mt-3 -mb-px flex flex-nowrap gap-x-4 overflow-x-auto whitespace-nowrap text-[14px] sm:flex-wrap sm:gap-x-5 sm:gap-y-1 sm:whitespace-normal scrollbar-thin">
-            {NAV.map((item) => {
+          <nav
+            className="mt-3 -mb-px flex flex-nowrap items-center gap-x-4 overflow-x-auto whitespace-nowrap text-[14px] sm:flex-wrap sm:gap-x-5 sm:gap-y-1 sm:whitespace-normal scrollbar-thin"
+            aria-label="Owner workflow"
+            data-testid="owner-nav"
+          >
+            <span
+              className="select-none text-[10px] font-medium uppercase tracking-wide text-text-subtle"
+              aria-hidden="true"
+            >
+              Owner path
+            </span>
+            {OWNER_NAV.map((item) => {
               const active =
                 pathname === item.href ||
                 (item.href !== "/app" && pathname?.startsWith(item.href));
@@ -105,6 +131,36 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                     active
                       ? "border-b-2 border-brand-600 pb-2 font-medium text-text-primary"
                       : "border-b-2 border-transparent pb-2 text-text-secondary hover:text-text-primary"
+                  }
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
+          <nav
+            className="mt-1 -mb-px flex flex-nowrap items-center gap-x-3 overflow-x-auto whitespace-nowrap text-[12px] sm:flex-wrap sm:gap-x-4 sm:gap-y-1 sm:whitespace-normal scrollbar-thin"
+            aria-label="Technical and advanced"
+            data-testid="advanced-nav"
+          >
+            <span
+              className="select-none text-[10px] font-medium uppercase tracking-wide text-text-subtle"
+              aria-hidden="true"
+            >
+              Technical
+            </span>
+            {ADVANCED_NAV.map((item) => {
+              const active =
+                pathname === item.href ||
+                (item.href !== "/app" && pathname?.startsWith(item.href));
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={
+                    active
+                      ? "border-b-2 border-brand-600 pb-1.5 font-medium text-text-primary"
+                      : "border-b-2 border-transparent pb-1.5 text-text-subtle hover:text-text-primary"
                   }
                 >
                   {item.label}

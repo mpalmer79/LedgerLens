@@ -77,6 +77,13 @@ the sections below.
    QBO XML / Xero CSV / Google Sheets-friendly column set. The
    accountant-friendly reviewed-categorization CSV shipped this
    sprint is the first step. See `docs/ACCOUNTANT_CSV_EXPORTS.md`.
+8. **Owner start-here flow + static handoff fallback + portfolio
+   CTA.** **✅ Shipped.** `/start` walks an owner through the five
+   steps with a workflow FAQ; `/handoff` falls back to a polished
+   Granite State sample on backend errors; AppShell nav splits
+   Owner path from Technical; homepage gains a workflow FAQ and a
+   hiring-manager CTA. See
+   `docs/OWNER_ONBOARDING_AND_CONVERSION_REVIEW.md`.
 
 ## 4. Mobile-first review queue design
 
