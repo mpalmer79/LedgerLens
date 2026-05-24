@@ -1,14 +1,10 @@
 /**
  * Homepage stock-photography manifest.
  *
- * One entry per visual slot the homepage can show. Each entry is
- * **disabled by default** until a real local photo is downloaded
- * into `public/images/stock/...` and a matching credit is added to
- * `imageCredits.ts`.
- *
- * The homepage reads this manifest and skips rendering any slot
- * where `enabled === false`, so the page is build-safe and visually
- * clean even before any file exists on disk.
+ * One entry per visual slot the homepage can show. Each entry starts
+ * **disabled** — the homepage renders a professional placeholder panel
+ * that shows the section label, filename, and aspect until a real
+ * local photo + matching credit are added.
  *
  * Operator workflow:
  *
@@ -48,6 +44,10 @@ export type HomepageImage = {
   aspect: "21:9" | "16:9" | "4:3" | "3:2" | "3:4" | "portrait";
   /** Where on the homepage this image is intended to land. */
   placement: string;
+  /** Short title shown on the placeholder panel when disabled. */
+  placeholderTitle: string;
+  /** Subtitle shown below the title on the placeholder panel. */
+  placeholderNote: string;
 };
 
 export const HOMEPAGE_IMAGES: ReadonlyArray<HomepageImage> = [
@@ -60,6 +60,8 @@ export const HOMEPAGE_IMAGES: ReadonlyArray<HomepageImage> = [
     enabled: false,
     aspect: "21:9",
     placement: "homepage hero",
+    placeholderTitle: "Hero image slot",
+    placeholderNote: "1600×900 · calm-workspace-morning.jpg",
   },
   {
     section: "trust",
@@ -70,6 +72,8 @@ export const HOMEPAGE_IMAGES: ReadonlyArray<HomepageImage> = [
     enabled: false,
     aspect: "3:2",
     placement: "trust boundary section",
+    placeholderTitle: "Trust image slot",
+    placeholderNote: "verified-checklist-flatlay.jpg",
   },
   {
     section: "auto-shop",
@@ -80,6 +84,8 @@ export const HOMEPAGE_IMAGES: ReadonlyArray<HomepageImage> = [
     enabled: false,
     aspect: "16:9",
     placement: "Granite State Auto Repair sample scenario",
+    placeholderTitle: "Auto shop scenario image slot",
+    placeholderNote: "independent-garage.jpg",
   },
   {
     section: "engineering",
@@ -90,6 +96,8 @@ export const HOMEPAGE_IMAGES: ReadonlyArray<HomepageImage> = [
     enabled: false,
     aspect: "16:9",
     placement: "AI workflow engineering section",
+    placeholderTitle: "Workflow architecture image slot",
+    placeholderNote: "workflow-architecture.jpg",
   },
   {
     section: "faq",
@@ -100,6 +108,8 @@ export const HOMEPAGE_IMAGES: ReadonlyArray<HomepageImage> = [
     enabled: false,
     aspect: "3:2",
     placement: "owner FAQ section",
+    placeholderTitle: "Owner review image slot",
+    placeholderNote: "calm-owner-review.jpg",
   },
 ];
 

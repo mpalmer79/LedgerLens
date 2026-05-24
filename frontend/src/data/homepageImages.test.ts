@@ -1,7 +1,8 @@
 /**
  * Homepage image manifest contract.
  *
- * Five slots, all disabled by default, no fake/remote sources.
+ * Five slots, all disabled by default, placeholder metadata on each,
+ * no fake/remote sources.
  */
 import { describe, expect, it } from "vitest";
 
@@ -29,7 +30,7 @@ describe("HOMEPAGE_IMAGES manifest", () => {
     expect(got).toEqual([...expected].sort());
   });
 
-  it("disables every slot by default (no fake placeholders)", () => {
+  it("disables every slot by default", () => {
     for (const img of HOMEPAGE_IMAGES) {
       expect(img.enabled).toBe(false);
     }
@@ -48,10 +49,16 @@ describe("HOMEPAGE_IMAGES manifest", () => {
     }
   });
 
+  it("ships placeholderTitle and placeholderNote on every slot", () => {
+    for (const img of HOMEPAGE_IMAGES) {
+      expect(img.placeholderTitle.length).toBeGreaterThan(0);
+      expect(img.placeholderNote.length).toBeGreaterThan(0);
+    }
+  });
+
   it("provides a working getHomepageImage lookup", () => {
     expect(getHomepageImage("hero")?.section).toBe("hero");
     expect(getHomepageImage("faq")?.section).toBe("faq");
-    // Unknown section → undefined.
     expect(getHomepageImage("nope" as HomepageImageSection)).toBeUndefined();
   });
 

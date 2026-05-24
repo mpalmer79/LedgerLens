@@ -1468,20 +1468,23 @@ describe("homepage stock photography (prep — disabled by default)", () => {
     );
   });
 
-  it("homepage reads the manifest and conditionally renders each slot", () => {
-    expect(HOMEPAGE).toContain('import Image from "next/image"');
+  it("homepage uses HomepageImageSlot for all five image positions", () => {
+    expect(HOMEPAGE).toContain(
+      'import { HomepageImageSlot } from "@/components/app/HomepageImageSlot"',
+    );
     expect(HOMEPAGE).toContain(
       'import { getHomepageImage } from "@/data/homepageImages"',
     );
-    // Each slot must guard its <Image> render on the enabled flag.
-    for (const guard of [
-      "heroImage?.enabled",
-      "trustImage?.enabled",
-      "autoShopImage?.enabled",
-      "engineeringImage?.enabled",
-      "faqImage?.enabled",
+    // Each slot is rendered unconditionally (placeholder when disabled,
+    // real image when enabled) — the slot component handles the switch.
+    for (const testId of [
+      "homepage-hero-image",
+      "homepage-trust-image",
+      "homepage-auto-shop-image",
+      "homepage-engineering-image",
+      "homepage-faq-image",
     ]) {
-      expect(HOMEPAGE).toContain(guard);
+      expect(HOMEPAGE).toContain(`data-testid="${testId}"`);
     }
     // No remote hosts hot-linked anywhere.
     expect(HOMEPAGE).not.toMatch(
