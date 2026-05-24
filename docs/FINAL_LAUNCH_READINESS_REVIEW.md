@@ -113,8 +113,97 @@ In order of visibility from top to bottom:
 - [ ] Pin the post for a week.
 - [ ] Send the recruiter DM follow-up template (also in `docs/LINKEDIN_PROJECT_STORY.md`) to two or three target hiring managers.
 
-## 10. Final recommendation: ready / not ready to launch
+## 10. Manual responsive QA checklist
 
-**Ready to launch.** The remaining manual work (Loom recording) does not block the post — the placeholder is honest and the storyboard is shipped. Three conditions on the Railway side need a one-time human verification (env vars, OG preview, mobile pass) which are scripted above as a 5-minute checklist.
+Run this before publishing the LinkedIn post. Use Chrome DevTools' device toolbar at the listed widths, or open the deploy URL on an actual phone / tablet — both work.
+
+### Mobile (375 px-class phone, e.g. iPhone 14)
+
+#### Homepage `/`
+- [ ] No horizontal page scroll. The hero, trust card, video, pipeline, and footer all fit inside 375 px.
+- [ ] Header shows the logomark + a compact "Demo →" button + a hamburger icon. The full link row is not visible (collapsed).
+- [ ] Tap the hamburger; the menu sheet opens with Demo, Technical story, Evals, App, **About Michael**, GitHub. Closes on tap-outside / Escape / link tap.
+- [ ] Hero h1 reads in two or three lines — no single oversized word forces an awkward break.
+- [ ] Trust card sits *below* the hero copy (not beside it) and its "100%" number scales down so it's readable without overlapping.
+- [ ] Video / generated walkthrough card is in 16:9 aspect inside the viewport, no clipping.
+- [ ] Three business value cards stack vertically.
+- [ ] Six tech-credibility cards stack vertically.
+- [ ] About-Michael strip is readable; LinkedIn + GitHub buttons stack vertically and are full-width-tappable.
+- [ ] Footer columns stack vertically; every link is at least ~44 px tall (comfortable tap target).
+
+#### About `/about`
+- [ ] No horizontal scroll.
+- [ ] h1 wraps to two lines at most.
+- [ ] LinkedIn + GitHub buttons are full-width and clearly tappable.
+- [ ] Six background cards stack 1-up.
+- [ ] No email / phone / resume link visible anywhere (verified by the page-content test, but eyeball it).
+
+#### Technical Story `/technical-story`
+- [ ] No horizontal scroll.
+- [ ] Reviewer-takeaway card visible above the fold or one short scroll down.
+- [ ] **The LLM-wrapper-vs-LedgerLens comparison renders as stacked cards** (not a horizontally-scrolling table). Each card shows capability label, LLM wrapper behavior, and LedgerLens behavior in clearly separated paragraphs.
+- [ ] Stack-tag chips wrap to multiple lines cleanly.
+- [ ] TrustPipeline collapses to a single column.
+
+#### Demo `/demo`
+- [ ] No horizontal scroll.
+- [ ] "What to look for" panel is readable; copy not clipped.
+- [ ] Step 1's sample-transactions list either fits the viewport or scrolls inside its container.
+- [ ] Action buttons (Load sample, Run categorization, etc.) are full-width or clearly tappable.
+- [ ] Step 6's TrustPanel renders with all six tiles stacked or 2×3 — readable, not cramped.
+- [ ] DemoOutcome card's headline copy adapts based on verification state.
+
+#### Ledger `/ledger`
+- [ ] Trust panel headline is readable; tiles stack 2×3 or 3×2.
+- [ ] Unverified-row warning panel (when present) is impossible to miss.
+- [ ] "Every finalized row is verified" positive confirmation renders in green border when all rows are verified.
+- [ ] Ledger table scrolls horizontally inside its container; the rest of the page does not scroll sideways.
+- [ ] Export button stays visible and tappable.
+
+#### Evals `/evals`
+- [ ] No horizontal page scroll.
+- [ ] Trust-boundary callout is above the fold.
+- [ ] Model-metric / Product-metric side-by-side cards stack 1-up on phones.
+- [ ] Comparison and confusion tables scroll inside their containers, not the whole page.
+- [ ] Reliability scatter / Recharts components fit within the viewport.
+
+### Tablet (768 px-class portrait, e.g. iPad mini)
+
+#### Homepage `/`
+- [ ] Header switches to the inline desktop nav (`md:`). All links visible.
+- [ ] Hero copy + trust card may still stack — both layouts are acceptable.
+- [ ] Tech-credibility cards form a 2 × 3 grid.
+- [ ] Footer columns split into two columns.
+
+#### App dashboard `/app`
+- [ ] AppShell nav fits without horizontal scroll (`flex-wrap` at `sm:`).
+- [ ] Metric tiles form a 3-column grid (`sm:grid-cols-3`).
+- [ ] Empty-state cards form a 3-column grid.
+- [ ] Recent transactions + audit-events cards sit side-by-side at `lg:`.
+
+### Global checks (every page, every width)
+
+- [ ] **No horizontal page overflow.** The page body never has a scroll bar at the document level. Tables, code blocks, and the eval reliability chart may scroll inside their own containers — that is intentional and acceptable.
+- [ ] **Header / nav usability.** Either the inline desktop row is fully visible OR the hamburger sheet works (tap to open, tap-outside or Esc to close, all links navigate).
+- [ ] **About Michael is one tap away** from the homepage header — either as an inline link (≥ md) or via the hamburger (< md).
+- [ ] **CTA tap targets are comfortable.** Primary CTAs (Start demo, Read technical story, About Michael) are at least 40 × 40 px at every breakpoint. Secondary text links inside paragraphs have visible underlines.
+- [ ] **Trust copy preserved at every width.** "100% verified finalized demo ledger" appears on `/`, in `/demo` step 6, and on `/ledger`. "Workflow-level trust metric — not raw model accuracy" appears on `/` and `/technical-story`.
+
+### Automated checks backing the manual list
+
+| Contract | Test |
+|---|---|
+| Marketing nav exposes every required link + mobile cluster + ARIA | `src/components/marketing/MarketingNav.test.tsx` |
+| Generated walkthrough scenes + no "100% AI accuracy" | `src/components/marketing/GeneratedWalkthrough.test.tsx` |
+| VideoDemo Loom fallback + CTAs + storyboard | `src/components/VideoDemo.test.tsx` |
+| Homepage / about / technical-story / demo / ledger / evals / app copy | `src/lib/page-content.test.ts` |
+| Site title + description + LinkedIn + GitHub + no email/phone/resume | `src/lib/site.test.ts` |
+| OG image + favicon + Loom script doc presence | `src/lib/launch.test.ts` |
+
+`npm test` runs all of the above. 91 frontend tests at the latest count.
+
+## 11. Final recommendation: ready / not ready to launch
+
+**Ready to launch.** The remaining manual work (Loom recording, mobile/tablet eyeball pass) does not block the post — the placeholder is honest, the storyboard is shipped, the responsive contract is enforced by tests, and the new manual QA checklist (section 10 above) is a 10-minute pass.
 
 The single most consequential follow-up is **per-tenant rule generation** so the eval page's rules-only / hybrid numbers reflect the real value of the rule layer. That's the next session, not a launch blocker.
