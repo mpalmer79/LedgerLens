@@ -12,7 +12,6 @@ from ledgerlens.observability import (
     sanitize_for_log,
 )
 
-
 # ── Request-ID middleware ─────────────────────────────────────────────
 
 

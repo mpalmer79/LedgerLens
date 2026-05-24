@@ -312,3 +312,59 @@ def test_handoff_scenario_surfaces_for_demo_seeded_rows(
     assert "not tax advice" in md.lower()
     # Filename in Content-Disposition uses the scenario filename.
     assert "handoff-granite-state-auto-repair-2026-03.md" in res.headers["content-disposition"]
+
+
+# ── Reviewed / follow-up CSV exports ────────────────────────────────────
+
+
+def test_reviewed_csv_export_has_accountant_columns(
+    client: TestClient, fake_factory: MagicMock
+) -> None:
+    fake_factory.return_value = _fake_cat("9999", 0.0)
+    # Rule-handled Adobe row → finalized + verified → ready.
+    _categorize(client, _create_tx(client, description="ADOBE CC", merchant="Adobe"))
+
+    res = client.get("/handoff/export.reviewed.csv")
+    assert res.status_code == 200
+    assert res.headers["content-type"].startswith("text/csv")
+    header = res.text.splitlines()[0]
+    # Required accountant-friendly columns.
+    for col in [
+        "Date",
+        "Description",
+        "Suggested Category",
+        "Category Code",
+        "Review Status",
+        "Verification Source",
+        "Owner Answer",
+        "Owner Note",
+        "Accountant Follow-Up Required",
+        "Source",
+    ]:
+        assert col in header
+
+
+def test_reviewed_csv_export_excludes_follow_up_rows(
+    client: TestClient, fake_factory: MagicMock
+) -> None:
+    """A row marked for accountant review must not appear in the
+    reviewed CSV — that's the whole point of having a separate
+    follow-up export."""
+    fake_factory.return_value = _fake_cat("6080", 0.4)
+    tx_id = _create_tx(client, description="ACH DEBIT UNKNOWN REF 887")
+    _categorize(client, tx_id)
+    client.post(
+        f"/review-queue/{tx_id}/accountant-review",
+        json={
+            "owner_question_key": "unknown_ach_transfer",
+            "owner_answer_label": "Needs accountant review",
+        },
+    )
+
+    reviewed = client.get("/handoff/export.reviewed.csv").text
+    followup = client.get("/handoff/export.followup.csv").text
+    # Not in reviewed.
+    assert tx_id not in reviewed.split("\n", 1)[1] if "\n" in reviewed else True
+    # Present in follow-up.
+    assert tx_id in followup
+    assert "Needs accountant review" in followup

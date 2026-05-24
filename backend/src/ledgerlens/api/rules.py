@@ -67,12 +67,21 @@ def _build_mapping_snapshot(db: Session) -> BusinessRuleMapOut:
                 category_name=cat.name if cat else None,
             )
         )
+    # All intents that appear on rules; intents not in the active map are
+    # surfaced so the mapping explorer can warn the owner.
+    rules = load_rules(db)
+    rule_intents = sorted({r.intent for r in rules if r.intent})
+    mapped_keys = set(rule_map.intent_to_code.keys())
+    unmapped = [i for i in rule_intents if i not in mapped_keys]
+
     return BusinessRuleMapOut(
         business_id=bid,
         business_name=SAMPLE_SCENARIO["business_name"]
         if bid == "granite_state_auto_repair"
         else None,
         entries=entries,
+        block_fallback_intents=sorted(rule_map.block_fallback_intents),
+        unmapped_intents=unmapped,
     )
 
 

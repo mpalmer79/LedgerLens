@@ -9,7 +9,9 @@ import { TrustPanel } from "@/components/app/TrustPanel";
 import { EmptyState, ErrorState, LoadingState } from "@/components/ui/DataState";
 import {
   getHandoff,
+  getHandoffFollowupCsvUrl,
   getHandoffMarkdownUrl,
+  getHandoffReviewedCsvUrl,
   getLedgerExportUrl,
   type HandoffResponse,
 } from "@/lib/api/client";
@@ -183,26 +185,57 @@ export default function HandoffPage() {
             <div className="rounded-md border border-surface-border bg-surface-panel p-4">
               <button
                 type="button"
-                onClick={() => void handleDownload("csv", getLedgerExportUrl())}
+                onClick={() => void handleDownload("csv", getHandoffReviewedCsvUrl())}
                 disabled={state.downloadStatus?.kind === "csv" && state.downloadStatus.ok === null}
                 className="inline-flex items-center rounded-md border border-surface-border-strong px-4 py-2 text-[13px] font-medium text-text-primary hover:bg-surface-sunken disabled:opacity-60"
               >
-                Download full ledger CSV
+                Download reviewed categorization CSV
               </button>
               <p className="mt-2 text-[12px] text-text-secondary">
-                Use this for ledger import or spreadsheet review. Every row carries a
-                per-row <span className="mono">verified</span> column so downstream tooling
-                can filter unverified rows.
+                CSV formatted for accountant review. Includes only finalized + verified rows,
+                with owner answers and verification source inline. Not a QuickBooks import
+                file.
               </p>
               {state.downloadStatus?.kind === "csv" && state.downloadStatus.ok === false && (
                 <p
                   role="alert"
                   className="mt-2 rounded border border-red-200 bg-red-50 p-2 text-[12px] text-red-800"
                 >
-                  Could not download the ledger CSV. Please try again, or use the markdown
-                  handoff.
+                  Could not download the reviewed categorization CSV. Please try again, or
+                  use the markdown handoff.
                 </p>
               )}
+            </div>
+          </section>
+
+          <section className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div className="rounded-md border border-amber-300 bg-amber-50 p-4">
+              <a
+                href={getHandoffFollowupCsvUrl()}
+                className="inline-flex items-center rounded-md border border-amber-400 px-4 py-2 text-[13px] font-medium text-amber-900 hover:bg-amber-100"
+                download
+              >
+                Download follow-up / unresolved CSV
+              </a>
+              <p className="mt-2 text-[12px] text-amber-900">
+                Owner-flagged accountant-review rows and pending rows the model could not
+                finalize. Kept separate from the reviewed CSV so the accountant does not have
+                to filter.
+              </p>
+            </div>
+            <div className="rounded-md border border-surface-border bg-surface-panel p-4">
+              <a
+                href={getLedgerExportUrl()}
+                className="inline-flex items-center rounded-md border border-surface-border-strong px-4 py-2 text-[13px] font-medium text-text-primary hover:bg-surface-sunken"
+                download
+              >
+                Download full categorization CSV
+              </a>
+              <p className="mt-2 text-[12px] text-text-secondary">
+                Every row in the demo workspace, including unresolved and excluded ones.
+                Each row carries a per-row <span className="mono">verified</span> column.
+                Not a true accounting ledger.
+              </p>
             </div>
           </section>
 

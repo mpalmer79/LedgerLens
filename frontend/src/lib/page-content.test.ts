@@ -637,11 +637,18 @@ describe("handoff page content", () => {
     expect(HANDOFF.toLowerCase()).toMatch(/not\s+a\s+substitute\s+for\s+accounting\s+review/);
   });
 
-  it("offers both markdown handoff and CSV ledger downloads", () => {
+  it("offers markdown + reviewed + follow-up CSV downloads", () => {
     expect(HANDOFF).toContain("getHandoffMarkdownUrl");
+    expect(HANDOFF).toContain("getHandoffReviewedCsvUrl");
+    expect(HANDOFF).toContain("getHandoffFollowupCsvUrl");
     expect(HANDOFF).toContain("getLedgerExportUrl");
     expect(HANDOFF.toLowerCase()).toContain("download handoff summary");
-    expect(HANDOFF.toLowerCase()).toContain("download full ledger csv");
+    expect(HANDOFF.toLowerCase()).toContain("download reviewed categorization csv");
+    expect(HANDOFF.toLowerCase()).toContain("download follow-up / unresolved csv");
+    expect(HANDOFF.toLowerCase()).toContain("download full categorization csv");
+    // Don't claim QBO / IIF / direct QuickBooks compatibility.
+    expect(HANDOFF.toLowerCase()).toContain("not a quickbooks import");
+    expect(HANDOFF.toLowerCase()).toContain("not a true accounting ledger");
   });
 
   it("includes the honesty footer on trust + time-saved", () => {
@@ -679,7 +686,7 @@ describe("handoff page content", () => {
     expect(HANDOFF).toContain("handleDownload");
     expect(HANDOFF).toContain('method: "HEAD"');
     expect(HANDOFF).toContain("Could not download the markdown handoff");
-    expect(HANDOFF).toContain("Could not download the ledger CSV");
+    expect(HANDOFF).toContain("Could not download the reviewed categorization CSV");
   });
 
   it("renders the Owner Answers v2 structured fields", () => {
@@ -813,5 +820,31 @@ describe("claims regression sweep — live surfaces", () => {
 
   it("site lib title/description no longer claims a verified ledger", () => {
     expect(SITE_LIB.toLowerCase()).not.toMatch(/verified[\s-]ledger/);
+  });
+});
+
+describe("review page mobile-first content", () => {
+  it("offers all four explicit actions", () => {
+    expect(REVIEW).toContain("Approve prediction");
+    expect(REVIEW).toContain("Correct");
+    // The safe path the safety-fix added.
+    expect(REVIEW).toContain("Needs accountant review");
+    expect(REVIEW).toContain("Exclude / non-business");
+  });
+
+  it("Needs accountant review calls the safe endpoint, not approve", () => {
+    expect(REVIEW).toContain("markForAccountantReview");
+  });
+
+  it("action buttons have at least 44px tap targets", () => {
+    // The grid wraps the four buttons; each button declares min-h-[44px].
+    expect(REVIEW).toContain("min-h-[44px]");
+    // Mobile-first grid: 1 column on phone, 2 on small, 4 on large.
+    expect(REVIEW).toMatch(/grid-cols-1[^"]*sm:grid-cols-2[^"]*lg:grid-cols-4/);
+  });
+
+  it("shows a progress indicator", () => {
+    expect(REVIEW).toContain("review-progress");
+    expect(REVIEW).toMatch(/pending — pick an explicit action per card/);
   });
 });

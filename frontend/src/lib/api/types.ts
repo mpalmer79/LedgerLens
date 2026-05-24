@@ -120,6 +120,8 @@ export type BusinessRuleMap = {
   business_id: string;
   business_name: string | null;
   entries: BusinessRuleMapEntry[];
+  block_fallback_intents?: string[];
+  unmapped_intents?: string[];
 };
 
 export type RuleList = {

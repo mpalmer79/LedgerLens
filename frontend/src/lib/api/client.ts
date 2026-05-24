@@ -553,3 +553,14 @@ export const getHandoff = () => apiFetch<HandoffResponse>("/handoff");
 
 export const getHandoffMarkdownUrl = () =>
   `${getApiBaseUrl()}/handoff/export.md`;
+
+/** CSV of finalized + verified rows formatted for accountant review.
+ * Not a QuickBooks / QBO / IIF import file. */
+export const getHandoffReviewedCsvUrl = () =>
+  `${getApiBaseUrl()}/handoff/export.reviewed.csv`;
+
+/** CSV of rows that still need follow-up — owner-flagged accountant
+ * reviews and rows the model could not finalize. Kept separate from
+ * the reviewed CSV so the accountant doesn't have to filter. */
+export const getHandoffFollowupCsvUrl = () =>
+  `${getApiBaseUrl()}/handoff/export.followup.csv`;

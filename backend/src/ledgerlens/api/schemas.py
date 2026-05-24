@@ -422,6 +422,14 @@ class BusinessRuleMapOut(BaseModel):
     business_id: str
     business_name: str | None = None
     entries: list["BusinessRuleMapEntry"]
+    # Intents this business explicitly refuses to auto-categorize from
+    # the rule's own default code. Listed so the mapping explorer can
+    # surface "blocked fallback" rows.
+    block_fallback_intents: list[str] = []
+    # Intents that appear on rules but are not mapped here (no override,
+    # and not blocked). The rule layer falls back to the rule's own
+    # category_code. Surfaced so the explorer can warn the owner.
+    unmapped_intents: list[str] = []
 
 
 class BusinessRuleMapEntry(BaseModel):
