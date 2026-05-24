@@ -1185,3 +1185,53 @@ describe("/handoff static fallback (Phase 2)", () => {
     expect(STATIC_HANDOFF).not.toMatch(/href="tel:/);
   });
 });
+
+describe("AppShell readiness truth (Workstream A)", () => {
+  it("does not ship the misleading 'API: ok' wording any more", () => {
+    expect(APP_SHELL).not.toContain('"API: ok"');
+    // The old single-source HealthDot is replaced.
+    expect(APP_SHELL).not.toMatch(/HealthDot/);
+    expect(APP_SHELL).not.toMatch(/useBackendHealth\(/);
+  });
+
+  it("renders the five readiness states the spec calls for", () => {
+    for (const state of [
+      "checking",
+      "process_ok_demo_ready",
+      "process_ok_demo_degraded",
+      "process_ok_demo_unavailable",
+      "process_unreachable",
+    ]) {
+      expect(APP_SHELL).toContain(`"${state}"`);
+    }
+  });
+
+  it("calls /health for liveness and /demo/ready for demo readiness", () => {
+    expect(APP_SHELL).toContain("getHealth()");
+    expect(APP_SHELL).toContain("getDemoReady()");
+  });
+
+  it("renders the labelled status indicator with both signals", () => {
+    expect(APP_SHELL).toContain('data-testid="appshell-readiness"');
+    expect(APP_SHELL).toContain('"Process: ok"');
+    expect(APP_SHELL).toContain('"Demo: ready"');
+    expect(APP_SHELL).toContain('"Demo: degraded"');
+    expect(APP_SHELL).toContain('"Demo: unavailable"');
+    expect(APP_SHELL).toContain('"Backend: unreachable"');
+    // Accessible tooltip distinguishing the two concerns.
+    expect(APP_SHELL).toContain(
+      "Process liveness is separate from demo database readiness",
+    );
+  });
+
+  it("does not overclaim full demo readiness from /health alone", () => {
+    // The lowercase corpus has no remaining 'api: ok' badge text.
+    expect(APP_SHELL.toLowerCase()).not.toContain("api: ok");
+    // No accidental claim that the demo is production-ready / safe.
+    expect(APP_SHELL.toLowerCase()).not.toContain("production ready");
+    expect(APP_SHELL.toLowerCase()).not.toContain("safe for real bank");
+    expect(APP_SHELL.toLowerCase()).not.toMatch(/100\s*%\s*ai/);
+    expect(APP_SHELL).not.toMatch(/href="mailto:/);
+    expect(APP_SHELL).not.toMatch(/href="tel:/);
+  });
+});

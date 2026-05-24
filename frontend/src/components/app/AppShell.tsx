@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { Logomark } from "@/components/ui/Logomark";
-import { ApiError, getHealth } from "@/lib/api/client";
+import { ApiError, getDemoReady, getHealth } from "@/lib/api/client";
 
 type NavItem = { href: string; label: string };
 
@@ -40,19 +40,44 @@ const ADVANCED_NAV: NavItem[] = [
   { href: "/evals", label: "Eval evidence" },
 ];
 
-type HealthState = "checking" | "ok" | "unreachable";
+/**
+ * Five readiness states the header surfaces. `/health` answers
+ * process liveness; `/demo/ready` answers whether the demo data
+ * + workflow are usable. Treating them as one signal is exactly
+ * what misled reviewers in the recent incident — they're now
+ * separate.
+ */
+type ReadinessState =
+  | "checking"
+  | "process_ok_demo_ready"
+  | "process_ok_demo_degraded"
+  | "process_ok_demo_unavailable"
+  | "process_unreachable";
 
-function useBackendHealth(): HealthState {
-  const [state, setState] = useState<HealthState>("checking");
+function useBackendReadiness(): ReadinessState {
+  const [state, setState] = useState<ReadinessState>("checking");
 
   useEffect(() => {
     let cancelled = false;
     const check = async () => {
       try {
         await getHealth();
-        if (!cancelled) setState("ok");
       } catch (err) {
-        if (!cancelled) setState(err instanceof ApiError ? "unreachable" : "unreachable");
+        if (!cancelled) {
+          setState(err instanceof ApiError ? "process_unreachable" : "process_unreachable");
+        }
+        return;
+      }
+      // Process is alive; ask /demo/ready whether the demo data
+      // and workflow tables are queryable. A failure here keeps the
+      // header honest about partial outages.
+      try {
+        const ready = await getDemoReady();
+        if (!cancelled) {
+          setState(ready.ready ? "process_ok_demo_ready" : "process_ok_demo_degraded");
+        }
+      } catch {
+        if (!cancelled) setState("process_ok_demo_unavailable");
       }
     };
     check();
@@ -67,24 +92,73 @@ function useBackendHealth(): HealthState {
   return state;
 }
 
-function HealthDot({ state }: { state: HealthState }) {
-  const map = {
-    checking: { color: "bg-text-subtle", label: "Checking API…" },
-    ok: { color: "bg-brand-600", label: "API: ok" },
-    unreachable: { color: "bg-severity-critical", label: "API: unreachable" },
+/** Header status pill. Mobile-friendly; keeps two concerns visible
+ *  without expanding into a full status bar. */
+function ReadinessIndicator({ state }: { state: ReadinessState }) {
+  // Each entry: dot tone, process label, demo label.
+  const map: Record<
+    ReadinessState,
+    { tone: string; process: string; demo: string; aria: string }
+  > = {
+    checking: {
+      tone: "bg-text-subtle",
+      process: "Process: …",
+      demo: "Demo: …",
+      aria: "Checking backend status",
+    },
+    process_ok_demo_ready: {
+      tone: "bg-brand-600",
+      process: "Process: ok",
+      demo: "Demo: ready",
+      aria: "Backend process ok, demo data ready",
+    },
+    process_ok_demo_degraded: {
+      tone: "bg-amber-500",
+      process: "Process: ok",
+      demo: "Demo: degraded",
+      aria:
+        "Backend process is up but one or more demo dependencies are not ready",
+    },
+    process_ok_demo_unavailable: {
+      tone: "bg-amber-500",
+      process: "Process: ok",
+      demo: "Demo: unavailable",
+      aria:
+        "Backend process is up but demo readiness check did not respond",
+    },
+    process_unreachable: {
+      tone: "bg-severity-critical",
+      process: "Backend: unreachable",
+      demo: "",
+      aria: "Backend is unreachable",
+    },
   };
-  const { color, label } = map[state];
+  const entry = map[state];
   return (
-    <span className="inline-flex items-center gap-1.5 text-[12px] text-text-subtle">
-      <span className={`h-2 w-2 rounded-full ${color}`} aria-hidden="true" />
-      {label}
+    <span
+      className="inline-flex items-center gap-1.5 text-[11px] text-text-subtle"
+      data-testid="appshell-readiness"
+      data-readiness-state={state}
+      title="Process liveness is separate from demo database readiness."
+      aria-label={entry.aria}
+    >
+      <span className={`h-2 w-2 rounded-full ${entry.tone}`} aria-hidden="true" />
+      <span className="whitespace-nowrap">{entry.process}</span>
+      {entry.demo && (
+        <>
+          <span className="hidden text-text-subtle sm:inline" aria-hidden="true">
+            ·
+          </span>
+          <span className="hidden whitespace-nowrap sm:inline">{entry.demo}</span>
+        </>
+      )}
     </span>
   );
 }
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const health = useBackendHealth();
+  const readiness = useBackendReadiness();
 
   return (
     <div className="bg-surface-page text-text-primary min-h-screen">
@@ -99,7 +173,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               </span>
             </Link>
             <div className="flex items-center gap-4">
-              <HealthDot state={health} />
+              <ReadinessIndicator state={readiness} />
               <Link
                 href="/"
                 className="text-[12px] text-text-subtle hover:text-text-primary"
