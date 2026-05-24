@@ -44,9 +44,12 @@ class HybridRulesModelCategorizer:
     confidence is at least `auto_threshold`. Anything else falls through to
     the model — that mirrors the production behaviour where a below-auto
     rule routes to review and we don't auto-apply.
-    """
 
-    name = "hybrid-rules-model-v1"
+    `use_business_mapping=True` swaps the inner rules categorizer for one
+    that resolves rule intents through the active business's rule map. The
+    hybrid name flips to `hybrid-rules-model-mapped-v1` so eval artifacts
+    are labelled distinctly.
+    """
 
     def __init__(
         self,
@@ -54,10 +57,18 @@ class HybridRulesModelCategorizer:
         *,
         rules: RuleOnlyCategorizer | None = None,
         auto_threshold: float = 0.9,
+        use_business_mapping: bool = False,
     ) -> None:
         self._model = model
-        self._rules = rules if rules is not None else RuleOnlyCategorizer()
+        if rules is not None:
+            self._rules = rules
+        else:
+            self._rules = RuleOnlyCategorizer(use_business_mapping=use_business_mapping)
         self._auto_threshold = auto_threshold
+        self.use_business_mapping = use_business_mapping
+        self.name = (
+            "hybrid-rules-model-mapped-v1" if use_business_mapping else "hybrid-rules-model-v1"
+        )
 
     def categorize(
         self,

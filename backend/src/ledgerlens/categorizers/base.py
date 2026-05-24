@@ -14,6 +14,15 @@ class CategorizationResult(BaseModel):
     cost_usd: float = 0.0
     latency_ms: float = 0.0
     model: str | None = None
+    # Per-business rule mapping provenance — populated only by the mapped
+    # rule categorizers (rules-only-mapped, hybrid-rules-model-mapped).
+    # Stays None on every other prediction so existing JSON deserializes.
+    matched_rule_intent: str | None = None
+    # One of: "mapped" (override resolved a category), "fallback_to_default"
+    # (no mapping but the rule's own category_code worked), "routed_to_review"
+    # (no mapping, rule's own code invalid → predicted UNCATEGORIZABLE),
+    # or None (mapping disabled or no rule matched).
+    mapping_outcome: str | None = None
 
 
 @runtime_checkable

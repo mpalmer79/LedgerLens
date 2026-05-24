@@ -298,6 +298,24 @@ describe("evals page content", () => {
     expect(EVALS).toContain("deterministic rules");
     expect(EVALS).toContain("model fallback");
   });
+
+  it("renders the Business-specific rule mapping section when a mapped run exists", () => {
+    // The section is gated on `comparison.runs.some(r => r.mapping?.enabled)`.
+    expect(EVALS).toContain("Business-specific rule mapping");
+    expect(EVALS).toContain("business-specific-rule-mapping"); // anchor for /rules cross-link
+    expect(EVALS).toContain("rule-categorizer-mapped-v1");
+    expect(EVALS).toContain("Mapping outcomes");
+    expect(EVALS).toContain("Top unmapped intents");
+  });
+
+  it("calls out that mapped rules do not replace review", () => {
+    // JSX wraps the disclaimer across multiple lines, so we check tokens
+    // rather than the joined string.
+    expect(EVALS).toContain("do not make the model perfect");
+    expect(EVALS).toMatch(/not\s+replace\s+review/);
+    expect(EVALS).toContain("workflow-level");
+    expect(EVALS.toLowerCase()).toContain("not raw");
+  });
 });
 
 // ── App dashboard ─────────────────────────────────────────────────────────
@@ -584,5 +602,10 @@ describe("rules page content", () => {
   it("calls out unmapped-intent fallback behavior", () => {
     expect(RULES.toLowerCase()).toContain("safe fallback");
     expect(RULES).toContain("business_rule_maps");
+  });
+
+  it("links to /evals#business-specific-rule-mapping", () => {
+    expect(RULES).toContain("/evals#business-specific-rule-mapping");
+    expect(RULES).toContain("View rule-mapping evals");
   });
 });

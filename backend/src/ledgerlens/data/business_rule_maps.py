@@ -130,10 +130,58 @@ GRANITE_STATE_INTENT_MAP = BusinessRuleMap(
 )
 
 
+# ── Granite State Auto Service (auto-repair eval dataset) ─────────────────
+#
+# The eval dataset `evals/datasets/v0/auto-repair/` ships its own per-business
+# chart of accounts that *differs* from the default seed COA. Parts purchases
+# go to **1050 Inventory - Parts (Resale)** as an asset (then move to COGS
+# 5010 when installed), not directly to the seed COA's 5010 Cost of Goods
+# Sold. This mapping is the honest answer to "what does a real auto repair
+# shop COA look like?" — and it's what the `rules-only-mapped` eval mode uses.
+#
+# Distinct from `GRANITE_STATE_INTENT_MAP` (which is keyed to the production
+# demo's *default seed* COA). Two maps; same business identity; different COAs.
+AUTO_REPAIR_EVAL_INTENT_MAP = BusinessRuleMap(
+    business_id="auto_repair_eval",
+    intent_to_code={
+        # Parts go to inventory first; COGS only after they're consumed on a
+        # work order. The auto-repair COA models this explicitly.
+        "parts_inventory": "1050",
+        "tools_equipment": "6150",  # Small Tools (Expensed)
+        # Utilities split into electric vs gas/water vs telecom on this COA.
+        "utilities": "6020",  # Electric (default — the rule may match gas too)
+        "internet_telecom": "6250",  # Telephone & Internet
+        "waste_services": "6170",  # Waste Disposal
+        # Operating expenses
+        "rent": "6010",
+        "payroll": "6040",  # Wages - Technicians
+        "payroll_taxes": "6060",
+        "insurance": "6090",  # General Liability (rule may match workers comp 6080 too)
+        "software_subscription": "6190",
+        "professional_services": "6220",  # Professional Services - Accounting
+        "marketing_advertising": "6200",
+        "merchant_fees": "6110",
+        "office_supplies": "6140",
+        "fuel_vehicle": "6130",  # Shop Supplies — fuel for shop vehicles
+        "vehicle_maintenance": "6160",  # Repairs & Maintenance
+        "meals_entertainment": "6240",  # Continuing Education — closest neutral analog
+        "travel": "6240",
+        "training_education": "6240",
+        # Revenue side
+        "customer_revenue": "4010",  # Sales - Labor
+        "service_revenue": "4010",
+        # Owner side
+        "owner_draw": "3030",
+        "owner_contribution": "3010",
+    },
+)
+
+
 # ── Registry ─────────────────────────────────────────────────────────────────
 _REGISTRY: dict[str, BusinessRuleMap] = {
     DEFAULT_INTENT_MAP.business_id: DEFAULT_INTENT_MAP,
     GRANITE_STATE_INTENT_MAP.business_id: GRANITE_STATE_INTENT_MAP,
+    AUTO_REPAIR_EVAL_INTENT_MAP.business_id: AUTO_REPAIR_EVAL_INTENT_MAP,
 }
 
 

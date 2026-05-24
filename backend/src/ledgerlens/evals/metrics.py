@@ -463,3 +463,92 @@ def calibration_metrics(
             by_kind["deterministic"], ground_truth, label="deterministic"
         ),
     }
+
+
+# ── Per-business rule intent mapping metrics ───────────────────────────────
+
+
+def mapping_metrics(
+    predictions: list[CategorizationResult],
+    ground_truth: dict[str, str],
+) -> dict[str, object]:
+    """Aggregate the `matched_rule_intent` + `mapping_outcome` provenance
+    fields that the mapped rule categorizers stamp on each prediction.
+
+    The block only carries signal when at least one prediction has
+    `mapping_outcome != None` (i.e. a mapped rule categorizer was used).
+    For non-mapped runs every field is zero and `enabled=False`.
+
+    Definitions, all transaction counts:
+
+    - mapped_intent_count: rule matched, mapping resolved the intent to a
+      COA code, and the resolved code differs from the rule's default
+      `category_code` (the mapping "won").
+    - fallback_to_default_count: rule matched, no override existed for the
+      intent, the rule's own `category_code` was valid on the dataset COA
+      and was used.
+    - routed_to_review_count: rule matched but neither the mapping nor the
+      rule's own code resolved to a valid COA category → prediction is
+      `UNCATEGORIZABLE` (safe abstention, NOT a wrong prediction).
+    - unmapped_intent_count: rule matched and carried an intent, but no
+      mapping override existed (sum of fallback + routed-to-review where
+      the rule had an intent).
+    - mapping_override_count: synonym for mapped_intent_count, kept for
+      backwards-compatible naming in the audit doc.
+    - top_unmapped_intents / top_rule_intents: descending frequency lists.
+
+    Honesty note: `routed_to_review_count` is reported as its own bucket so
+    callers don't confuse safe abstention with a bad prediction. The
+    routing block (see `routing_metrics`) already reports total review-route
+    rate; this block just attributes it to mapping failure when relevant.
+    """
+    outcomes: dict[str, int] = {
+        "mapped": 0,
+        "fallback_to_default": 0,
+        "routed_to_review": 0,
+    }
+    unmapped_intents: dict[str, int] = {}
+    rule_intents: dict[str, int] = {}
+    enabled = False
+    correct_when_mapped = 0
+    correct_when_fallback = 0
+    for p in predictions:
+        if p.mapping_outcome is None and p.matched_rule_intent is None:
+            continue
+        enabled = True
+        if p.matched_rule_intent:
+            rule_intents[p.matched_rule_intent] = rule_intents.get(p.matched_rule_intent, 0) + 1
+        if p.mapping_outcome:
+            outcomes[p.mapping_outcome] = outcomes.get(p.mapping_outcome, 0) + 1
+            unmapped = p.mapping_outcome in {"fallback_to_default", "routed_to_review"}
+            if unmapped and p.matched_rule_intent:
+                unmapped_intents[p.matched_rule_intent] = (
+                    unmapped_intents.get(p.matched_rule_intent, 0) + 1
+                )
+        # Track per-outcome correctness against ground truth for the rows
+        # where mapping actually fired with a category. Routed-to-review
+        # rows produce UNCATEGORIZABLE — we report their accuracy as 0
+        # against ground truth (the row was abstained on by design, not
+        # incorrectly predicted).
+        truth = ground_truth.get(p.transaction_id)
+        if truth is None:
+            continue
+        if p.mapping_outcome == "mapped" and p.predicted_category_code == truth:
+            correct_when_mapped += 1
+        elif p.mapping_outcome == "fallback_to_default" and p.predicted_category_code == truth:
+            correct_when_fallback += 1
+
+    top_unmapped = sorted(unmapped_intents.items(), key=lambda kv: kv[1], reverse=True)[:10]
+    top_rule = sorted(rule_intents.items(), key=lambda kv: kv[1], reverse=True)[:10]
+    return {
+        "enabled": enabled,
+        "mapped_intent_count": outcomes["mapped"],
+        "fallback_to_default_count": outcomes["fallback_to_default"],
+        "routed_to_review_count": outcomes["routed_to_review"],
+        "unmapped_intent_count": outcomes["fallback_to_default"] + outcomes["routed_to_review"],
+        "mapping_override_count": outcomes["mapped"],
+        "correct_when_mapped": correct_when_mapped,
+        "correct_when_fallback": correct_when_fallback,
+        "top_unmapped_intents": [{"intent": k, "count": v} for k, v in top_unmapped],
+        "top_rule_intents": [{"intent": k, "count": v} for k, v in top_rule],
+    }

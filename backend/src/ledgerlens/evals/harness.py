@@ -30,6 +30,11 @@ class MetricsSlice(BaseModel):
     category_coverage: dict[str, Any] = {}
     routing: dict[str, Any] = {}
     calibration: dict[str, Any] = {}
+    # Per-business rule intent mapping provenance. `enabled=False` on
+    # non-mapped runs; all counts zero. Mapped runs report mapped /
+    # fallback / routed-to-review buckets + top intents. See
+    # `metrics.mapping_metrics` for the field-by-field contract.
+    mapping: dict[str, Any] = {}
 
 
 class RunMetrics(BaseModel):
@@ -90,6 +95,7 @@ def _slice(
             model_only_cost_per_100=model_only_cost_per_100,
         ),
         calibration=metrics.calibration_metrics(predictions, sliced_truth),
+        mapping=metrics.mapping_metrics(predictions, sliced_truth),
     )
 
 

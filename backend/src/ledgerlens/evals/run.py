@@ -23,11 +23,26 @@ def _build_hybrid() -> Categorizer:
     return HybridRulesModelCategorizer(model=_build_haiku())
 
 
+def _build_rules_only_mapped() -> Categorizer:
+    """rules-only with per-business intent mapping enabled. The active
+    business mapping is resolved per-dataset from
+    `categorizers.rules.EVAL_BUSINESS_MAP_IDS`."""
+    return RuleOnlyCategorizer(use_business_mapping=True)
+
+
+def _build_hybrid_mapped() -> Categorizer:
+    """Hybrid (rules → model) with per-business intent mapping enabled on
+    the rule layer."""
+    return HybridRulesModelCategorizer(model=_build_haiku(), use_business_mapping=True)
+
+
 CATEGORIZERS: dict[str, Callable[[], Categorizer]] = {
     "stub": StubCategorizer,
-    "rules-only": RuleOnlyCategorizer,
+    "rules-only": RuleOnlyCategorizer,  # generic baseline (rules' own codes)
+    "rules-only-mapped": _build_rules_only_mapped,
     "claude-haiku-v1": _build_haiku,
-    "hybrid-rules-model": _build_hybrid,
+    "hybrid-rules-model": _build_hybrid,  # generic baseline (rules' own codes)
+    "hybrid-rules-model-mapped": _build_hybrid_mapped,
 }
 
 
