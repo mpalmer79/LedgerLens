@@ -110,9 +110,7 @@ def test_delete_business_workflow_data_only_removes_target_business(
     _plant_chain(db_session, business_a.id, "A-only row")
     _plant_chain(db_session, business_b.id, "B-only row")
 
-    summary = delete_business_workflow_data(
-        db_session, business_id=business_b.id, commit=True
-    )
+    summary = delete_business_workflow_data(db_session, business_id=business_b.id, commit=True)
 
     assert summary.business_id == business_b.id
     assert summary.deleted_transactions == 1
@@ -123,10 +121,7 @@ def test_delete_business_workflow_data_only_removes_target_business(
 
     # Business A is intact.
     assert (
-        db_session.query(Transaction)
-        .filter(Transaction.business_id == business_a.id)
-        .count()
-        == 1
+        db_session.query(Transaction).filter(Transaction.business_id == business_a.id).count() == 1
     )
     assert (
         db_session.query(CorrectionMemory)
@@ -136,10 +131,7 @@ def test_delete_business_workflow_data_only_removes_target_business(
     )
     # Business B is gone.
     for model in (Transaction, CategorizationResult, ReviewDecision, CorrectionMemory):
-        assert (
-            db_session.query(model).filter(model.business_id == business_b.id).count()
-            == 0
-        )
+        assert db_session.query(model).filter(model.business_id == business_b.id).count() == 0
 
 
 def test_delete_business_workflow_data_refuses_empty_business_id(
@@ -153,13 +145,9 @@ def test_delete_business_workflow_data_is_idempotent(db_session: Session) -> Non
     business = _seed_business(db_session, "biz", "X")
     _plant_chain(db_session, business.id, "row")
 
-    first = delete_business_workflow_data(
-        db_session, business_id=business.id, commit=True
-    )
+    first = delete_business_workflow_data(db_session, business_id=business.id, commit=True)
     assert first.total_rows == 4
 
     # Second call on the same business returns zeroes; no exceptions.
-    second = delete_business_workflow_data(
-        db_session, business_id=business.id, commit=True
-    )
+    second = delete_business_workflow_data(db_session, business_id=business.id, commit=True)
     assert second.total_rows == 0

@@ -111,9 +111,7 @@ class CorrectionMemoryRepo:
             stmt = stmt.where(CorrectionMemory.active.is_(active))
         return int(self.db.scalar(stmt) or 0)
 
-    def get_for_business(
-        self, memory_id: str, business_id: str | None
-    ) -> CorrectionMemory | None:
+    def get_for_business(self, memory_id: str, business_id: str | None) -> CorrectionMemory | None:
         """Return the row only if it belongs to ``business_id``.
 
         A ``None`` ``business_id`` matches only legacy rows whose tenant

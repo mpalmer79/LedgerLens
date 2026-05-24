@@ -407,9 +407,7 @@ def _server_side_eligibility(
     match = find_rule_match(tx, db)
     if match.verdict != "apply" or match.rule is None or match.rule.intent != intent:
         return False, "rule layer no longer matches this intent for this transaction", tx, None
-    cat_query = db.query(CategorizationResult).filter(
-        CategorizationResult.transaction_id == tx.id
-    )
+    cat_query = db.query(CategorizationResult).filter(CategorizationResult.transaction_id == tx.id)
     if business_id is None:
         cat_query = cat_query.filter(CategorizationResult.business_id.is_(None))
     else:
