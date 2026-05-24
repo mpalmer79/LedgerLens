@@ -7,10 +7,12 @@ import { AppShell } from "@/components/app/AppShell";
 import { ErrorState, LoadingState } from "@/components/ui/DataState";
 import {
   ApiError,
+  applyMappingPreview,
   getMappingProfile,
   previewMappingChange,
   resetMappingProfile,
   updateMappingEntry,
+  type MappingApplyResult,
   type MappingEntry,
   type MappingPreview,
   type MappingProfile,
@@ -498,7 +500,7 @@ function PreviewImpactSection({
       data-testid={`preview-impact-${intent}`}
     >
       <summary className="cursor-pointer select-none px-3 py-2 text-[12px] font-medium text-text-primary hover:bg-surface-sunken">
-        Preview impact — apply flow not implemented yet
+        Preview impact (apply selected rows only)
       </summary>
       <div className="border-t border-surface-border p-3 text-[12px]">
         <p className="text-text-subtle">
@@ -536,7 +538,12 @@ function PreviewImpactSection({
           </p>
         )}
         {preview?.data && (
-          <PreviewSummaryAndRows preview={preview.data} intent={intent} />
+          <PreviewSummaryAndRows
+            preview={preview.data}
+            intent={intent}
+            proposedCategoryCode={draft.category_code}
+            blockFallback={draft.block_fallback}
+          />
         )}
       </div>
     </details>
@@ -546,10 +553,67 @@ function PreviewImpactSection({
 function PreviewSummaryAndRows({
   preview,
   intent,
+  proposedCategoryCode,
+  blockFallback,
 }: {
   preview: MappingPreview;
   intent: string;
+  proposedCategoryCode: string;
+  blockFallback: boolean;
 }) {
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [confirming, setConfirming] = useState(false);
+  const [applying, setApplying] = useState(false);
+  const [result, setResult] = useState<MappingApplyResult | null>(null);
+  const [applyError, setApplyError] = useState<string | null>(null);
+
+  const eligibleRows = preview.rows.filter((r) => r.eligible);
+  const allEligibleSelected =
+    eligibleRows.length > 0 && eligibleRows.every((r) => selected.has(r.transaction_id));
+
+  function toggle(id: string) {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
+  function selectAllEligible() {
+    setSelected(new Set(eligibleRows.map((r) => r.transaction_id)));
+  }
+  function clearSelection() {
+    setSelected(new Set());
+  }
+
+  async function runApply() {
+    setApplying(true);
+    setApplyError(null);
+    try {
+      const out = await applyMappingPreview({
+        intent,
+        proposed_category_code: blockFallback
+          ? null
+          : proposedCategoryCode === ""
+            ? null
+            : proposedCategoryCode,
+        block_fallback: blockFallback,
+        selected_transaction_ids: Array.from(selected),
+      });
+      setResult(out);
+      setSelected(new Set());
+    } catch (err) {
+      setApplyError(err instanceof ApiError ? err.userMessage : String(err));
+    } finally {
+      setApplying(false);
+      setConfirming(false);
+    }
+  }
+
+  const applyLabel = blockFallback
+    ? "Route selected rows to review"
+    : "Apply selected eligible rows";
+
   return (
     <div className="mt-3" data-testid={`preview-result-${intent}`}>
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -561,6 +625,116 @@ function PreviewSummaryAndRows({
         />
         <SummaryCard label="Protected" value={String(preview.ineligible_count)} />
       </div>
+
+      {eligibleRows.length > 0 && (
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={selectAllEligible}
+            disabled={allEligibleSelected || applying}
+            className="min-h-[36px] rounded border border-surface-border bg-surface-panel px-2 py-1 text-[12px] hover:bg-surface-sunken disabled:opacity-50"
+            data-testid={`preview-select-all-${intent}`}
+          >
+            Select all eligible
+          </button>
+          <button
+            type="button"
+            onClick={clearSelection}
+            disabled={selected.size === 0 || applying}
+            className="min-h-[36px] rounded border border-surface-border bg-surface-panel px-2 py-1 text-[12px] hover:bg-surface-sunken disabled:opacity-50"
+          >
+            Clear selection
+          </button>
+          <span className="text-[11px] text-text-subtle">
+            {selected.size} of {eligibleRows.length} eligible selected
+          </span>
+          <button
+            type="button"
+            onClick={() => setConfirming(true)}
+            disabled={selected.size === 0 || applying}
+            className="min-h-[44px] rounded bg-brand-600 px-3 py-2 text-[13px] font-medium text-white hover:bg-brand-500 disabled:opacity-50"
+            data-testid={`apply-selected-${intent}`}
+          >
+            {applyLabel}
+          </button>
+        </div>
+      )}
+
+      {confirming && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="mt-3 rounded border border-amber-300 bg-amber-50 p-3 text-[12px] text-amber-900"
+          data-testid={`apply-confirm-${intent}`}
+        >
+          <p className="font-medium">
+            This will update only the {selected.size} selected eligible row
+            {selected.size === 1 ? "" : "s"}. Human-corrected and
+            accountant-follow-up rows will remain protected.
+          </p>
+          <div className="mt-2 flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => void runApply()}
+              disabled={applying}
+              className="min-h-[44px] rounded bg-amber-700 px-3 py-2 text-[13px] font-medium text-white hover:bg-amber-800 disabled:opacity-50"
+              data-testid={`apply-confirm-button-${intent}`}
+            >
+              {applying ? "Applying…" : "Confirm and apply"}
+            </button>
+            <button
+              type="button"
+              onClick={() => setConfirming(false)}
+              disabled={applying}
+              className="min-h-[44px] rounded border border-amber-400 bg-surface-panel px-3 py-2 text-[13px] font-medium text-amber-900 hover:bg-surface-sunken disabled:opacity-50"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+
+      {applyError && (
+        <p
+          role="alert"
+          className="mt-2 rounded border border-red-200 bg-red-50 p-2 text-[12px] text-red-800"
+        >
+          {applyError}
+        </p>
+      )}
+
+      {result && (
+        <div
+          className="mt-3 rounded border border-emerald-300 bg-emerald-50 p-3 text-[12px] text-emerald-900"
+          data-testid={`apply-result-${intent}`}
+          role="status"
+        >
+          <p className="font-medium">
+            Applied {result.applied_count} of {result.requested_count} selected.{" "}
+            {result.rejected_count > 0 &&
+              `${result.rejected_count} rejected (see /audit for details).`}
+          </p>
+          {result.audit_event_id && (
+            <p className="mt-1 text-emerald-800">
+              Audit event recorded:{" "}
+              <Link href="/audit" className="underline">
+                view /audit
+              </Link>{" "}
+              · id <span className="mono">{result.audit_event_id}</span>.
+            </p>
+          )}
+          {result.rejected_rows.length > 0 && (
+            <ul className="mt-2 list-disc space-y-1 pl-5">
+              {result.rejected_rows.slice(0, 5).map((r) => (
+                <li key={r.transaction_id}>
+                  <span className="mono">{r.transaction_id}</span> — {r.reason}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+
       {preview.rows.length === 0 ? (
         <p className="mt-3 text-[12px] text-text-subtle">
           No matching rows in the current workspace.
@@ -570,51 +744,62 @@ function PreviewSummaryAndRows({
           className="mt-3 space-y-2"
           data-testid={`preview-rows-${intent}`}
         >
-          {preview.rows.slice(0, 25).map((r) => (
-            <li
-              key={r.transaction_id}
-              className={
-                r.eligible
-                  ? "rounded border border-surface-border bg-surface-panel p-3 text-[12px]"
-                  : "rounded border border-amber-300 bg-amber-50 p-3 text-[12px] text-amber-900"
-              }
-            >
-              <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <span className="mono text-text-subtle">{r.transaction_date}</span>
-                <span
-                  className={
-                    r.eligible
-                      ? "rounded bg-emerald-100 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-emerald-800"
-                      : "rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-amber-900"
-                  }
-                >
-                  {r.eligible ? "eligible" : "protected"}
-                </span>
-              </div>
-              <p className="mt-1 text-text-primary">{r.description}</p>
-              <p className="mt-1 text-text-secondary">
-                Current:{" "}
-                {r.current_category_code ? (
-                  <span className="mono">
-                    [{r.current_category_code}] {r.current_category_name ?? "—"}
+          {preview.rows.slice(0, 25).map((r) => {
+            const isSelected = selected.has(r.transaction_id);
+            return (
+              <li
+                key={r.transaction_id}
+                className={
+                  r.eligible
+                    ? "rounded border border-surface-border bg-surface-panel p-3 text-[12px]"
+                    : "rounded border border-amber-300 bg-amber-50 p-3 text-[12px] text-amber-900"
+                }
+              >
+                <div className="flex flex-wrap items-baseline justify-between gap-2">
+                  <label className="inline-flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      className="h-4 w-4"
+                      checked={isSelected}
+                      disabled={!r.eligible || applying}
+                      onChange={() => toggle(r.transaction_id)}
+                      data-testid={`preview-row-select-${r.transaction_id}`}
+                    />
+                    <span className="mono text-text-subtle">{r.transaction_date}</span>
+                  </label>
+                  <span
+                    className={
+                      r.eligible
+                        ? "rounded bg-emerald-100 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-emerald-800"
+                        : "rounded bg-amber-100 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-amber-900"
+                    }
+                  >
+                    {r.eligible ? "eligible" : "protected"}
                   </span>
-                ) : (
-                  <span className="italic">unmapped</span>
-                )}{" "}
-                → Proposed:{" "}
-                {r.proposed_category_code ? (
-                  <span className="mono">
-                    [{r.proposed_category_code}] {r.proposed_category_name ?? "—"}
-                  </span>
-                ) : (
-                  <span className="italic">route to review</span>
-                )}
-              </p>
-              {r.reason && (
-                <p className="mt-1 italic">Reason: {r.reason}</p>
-              )}
-            </li>
-          ))}
+                </div>
+                <p className="mt-1 text-text-primary">{r.description}</p>
+                <p className="mt-1 text-text-secondary">
+                  Current:{" "}
+                  {r.current_category_code ? (
+                    <span className="mono">
+                      [{r.current_category_code}] {r.current_category_name ?? "—"}
+                    </span>
+                  ) : (
+                    <span className="italic">unmapped</span>
+                  )}{" "}
+                  → Proposed:{" "}
+                  {r.proposed_category_code ? (
+                    <span className="mono">
+                      [{r.proposed_category_code}] {r.proposed_category_name ?? "—"}
+                    </span>
+                  ) : (
+                    <span className="italic">route to review</span>
+                  )}
+                </p>
+                {r.reason && <p className="mt-1 italic">Reason: {r.reason}</p>}
+              </li>
+            );
+          })}
         </ul>
       )}
       {preview.rows.length > 25 && (

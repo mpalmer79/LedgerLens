@@ -19,6 +19,11 @@ class AuditEvent(Base):
     actions, and ledger exports. Details are a JSON blob — kept loose
     intentionally so adding a new audited action does not require a schema
     change.
+
+    Phase 2 columns (`business_id`, `actor_user_id`,
+    `actor_display_name`, `request_id`) are all nullable so existing
+    rows keep working unchanged. Writes that go through the new
+    `services.audit_log.record_audit_event` always populate them.
     """
 
     __tablename__ = "audit_events"
@@ -28,6 +33,13 @@ class AuditEvent(Base):
     entity_id: Mapped[str | None] = mapped_column(String(64), nullable=True, index=True)
     action: Mapped[str] = mapped_column(String(64), nullable=False)
     details: Mapped[dict[str, Any]] = mapped_column(JSON, nullable=False, default=dict)
+
+    # Phase 2 — actor / business / request context.
+    business_id: Mapped[str | None] = mapped_column(String(64), nullable=True, index=True)
+    actor_user_id: Mapped[str | None] = mapped_column(String(32), nullable=True, index=True)
+    actor_display_name: Mapped[str | None] = mapped_column(String(128), nullable=True)
+    request_id: Mapped[str | None] = mapped_column(String(128), nullable=True)
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), default=lambda: datetime.now(UTC), index=True
     )

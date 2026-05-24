@@ -12,11 +12,13 @@ from fastapi import APIRouter, Depends
 from pydantic import BaseModel, Field, field_validator
 from sqlalchemy.orm import Session
 
+from ledgerlens.actor import DemoActor, get_demo_actor
 from ledgerlens.data.business_rule_maps import active_business_id, get_business_rule_map
 from ledgerlens.data.sample_scenario import SAMPLE_SCENARIO
 from ledgerlens.db import get_db
 from ledgerlens.errors import ValidationFailed
-from ledgerlens.models import AccountCategory
+from ledgerlens.models import AccountCategory, CategorizationResult, ResultStatus, Transaction
+from ledgerlens.services.audit_log import record_audit_event
 from ledgerlens.services.category_mapping import (
     ACTIVE_PROFILE_NAME,
     UnknownCategoryCodeError,
@@ -27,7 +29,11 @@ from ledgerlens.services.category_mapping import (
     reset_to_seed,
     update_entry,
 )
-from ledgerlens.services.mapping_preview import preview_mapping_change
+from ledgerlens.services.mapping_preview import (
+    _ineligibility_reason,
+    preview_mapping_change,
+)
+from ledgerlens.services.rule_categorizer import find_rule_match
 
 router = APIRouter(prefix="/mapping", tags=["mapping"])
 
@@ -152,12 +158,26 @@ def put_entry(
     intent: str,
     payload: MappingEntryUpdate,
     db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
 ) -> MappingProfileOut:
     """Upsert a single entry on the active profile."""
     intent = intent.strip()
     if not intent:
         raise ValidationFailed("Intent must be non-empty.")
     try:
+        # Snapshot the existing entry for the audit before/after.
+        _, entries = get_active_profile_with_entries(db, actor.business_id)
+        prev = next((e for e in entries if e.intent == intent), None)
+        before = (
+            {
+                "intent": intent,
+                "category_code": prev.category_code,
+                "block_fallback": prev.block_fallback,
+                "notes": prev.notes,
+            }
+            if prev
+            else None
+        )
         update_entry(
             db,
             intent=intent,
@@ -169,13 +189,38 @@ def put_entry(
         raise ValidationFailed(str(e)) from e
     except UnknownCategoryCodeError as e:
         raise ValidationFailed(str(e), code=payload.category_code or "") from e
+    record_audit_event(
+        db,
+        actor=actor,
+        action="mapping_profile.updated",
+        entity_type="mapping_entry",
+        entity_id=intent,
+        before=before,
+        after={
+            "intent": intent,
+            "category_code": payload.category_code,
+            "block_fallback": payload.block_fallback,
+            "notes": payload.notes,
+        },
+        commit=True,
+    )
     return _to_profile_out(db)
 
 
 @router.post("/profile/reset", response_model=MappingProfileOut)
-def reset_profile(db: Session = Depends(get_db)) -> MappingProfileOut:
+def reset_profile(
+    db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
+) -> MappingProfileOut:
     """Reset the active profile back to the seeded registry defaults."""
     reset_to_seed(db)
+    record_audit_event(
+        db,
+        actor=actor,
+        action="mapping_profile.reset",
+        entity_type="mapping_profile",
+        commit=True,
+    )
     return _to_profile_out(db)
 
 
@@ -219,7 +264,9 @@ class MappingPreviewOut(BaseModel):
 
 @router.post("/preview", response_model=MappingPreviewOut)
 def preview_mapping(
-    payload: MappingPreviewPayload, db: Session = Depends(get_db)
+    payload: MappingPreviewPayload,
+    db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
 ) -> MappingPreviewOut:
     """Read-only preview of how a mapping change would affect existing
     rows. No mutation happens.
@@ -256,6 +303,24 @@ def preview_mapping(
         block_fallback=payload.block_fallback,
         limit=payload.limit,
     )
+    # Audit: read-only event so the operator can see which previews
+    # ran. The details payload is a small summary (counts only) so
+    # the audit table stays small even for repeated previews.
+    record_audit_event(
+        db,
+        actor=actor,
+        action="mapping_preview.generated",
+        entity_type="mapping_entry",
+        entity_id=intent,
+        metadata={
+            "proposed_category_code": payload.proposed_category_code,
+            "block_fallback": payload.block_fallback,
+            "affected_count": summary.affected_count,
+            "eligible_count": summary.eligible_count,
+            "ineligible_count": summary.ineligible_count,
+        },
+        commit=True,
+    )
     return MappingPreviewOut(
         intent=intent,
         proposed_category_code=payload.proposed_category_code,
@@ -283,6 +348,174 @@ def preview_mapping(
             for r in summary.rows
         ],
         warnings=summary.warnings,
+    )
+
+
+# ── Safe selected-row apply ───────────────────────────────────────────
+
+
+class MappingApplyPayload(BaseModel):
+    intent: str = Field(min_length=1, max_length=64)
+    proposed_category_code: str | None = Field(default=None, max_length=16)
+    block_fallback: bool = False
+    selected_transaction_ids: list[str] = Field(min_length=1, max_length=500)
+
+
+class MappingApplyRejectedRow(BaseModel):
+    transaction_id: str
+    reason: str
+
+
+class MappingApplyOut(BaseModel):
+    intent: str
+    requested_count: int
+    applied_count: int
+    rejected_count: int
+    rejected_rows: list[MappingApplyRejectedRow]
+    audit_event_id: str | None
+    warnings: list[str]
+
+
+def _server_side_eligibility(
+    db: Session, transaction_id: str, intent: str
+) -> tuple[bool, str | None, Transaction | None, CategorizationResult | None]:
+    """Recompute eligibility for a single transaction.
+
+    Never trusts the frontend. Returns (eligible, reason, tx, latest)
+    so the caller can both reject ineligible rows and apply changes
+    to eligible ones without re-querying.
+    """
+    tx = db.query(Transaction).filter(Transaction.id == transaction_id).one_or_none()
+    if tx is None:
+        return False, "transaction not found", None, None
+    match = find_rule_match(tx, db)
+    if match.verdict != "apply" or match.rule is None or match.rule.intent != intent:
+        return False, "rule layer no longer matches this intent for this transaction", tx, None
+    latest = (
+        db.query(CategorizationResult)
+        .filter(CategorizationResult.transaction_id == tx.id)
+        .order_by(CategorizationResult.created_at.desc())
+        .first()
+    )
+    if latest is None:
+        return False, "no categorization result on this transaction yet", tx, None
+    from ledgerlens.services.mapping_preview import _latest_review
+
+    review = _latest_review(db, tx.id)
+    reason = _ineligibility_reason(latest, review)
+    return reason is None, reason, tx, latest
+
+
+@router.post("/apply-preview", response_model=MappingApplyOut)
+def apply_preview(
+    payload: MappingApplyPayload,
+    db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
+) -> MappingApplyOut:
+    """Apply a mapping change to **only** the explicitly-selected eligible
+    transactions. The server recalculates eligibility per row and rejects
+    everything that doesn't pass.
+
+    Protected categories (human-corrected, accountant-follow-up,
+    ACCOUNTANT_REVIEW_REQUIRED, UNCATEGORIZABLE, correction-memory) are
+    always rejected — the frontend cannot override this.
+    """
+    intent = payload.intent.strip()
+    if not intent:
+        raise ValidationFailed("intent is required.")
+    # Validate intent against the active business's rule map (same as
+    # /mapping/preview).
+    rule_map = get_business_rule_map(actor.business_id)
+    if intent not in rule_map.intent_to_code and intent not in rule_map.block_fallback_intents:
+        raise ValidationFailed(f"Unknown intent '{intent}' for the active business.")
+    # Validate proposed code if supplied.
+    if payload.proposed_category_code:
+        code = payload.proposed_category_code.strip()
+        if code:
+            exists = db.query(AccountCategory).filter(AccountCategory.code == code).one_or_none()
+            if exists is None:
+                raise ValidationFailed(
+                    f"Unknown category code '{code}'. Pick a code from the active COA.",
+                    code=code,
+                )
+    # De-dup selected ids.
+    selected = list(dict.fromkeys(payload.selected_transaction_ids))
+
+    applied: list[dict[str, object]] = []
+    rejected: list[MappingApplyRejectedRow] = []
+    for tx_id in selected:
+        eligible, reason, tx, latest = _server_side_eligibility(db, tx_id, intent)
+        if not eligible or tx is None or latest is None:
+            rejected.append(
+                MappingApplyRejectedRow(
+                    transaction_id=tx_id,
+                    reason=reason or "ineligible",
+                )
+            )
+            continue
+        old_code = latest.predicted_category_code
+        old_status = latest.status.value
+        if payload.block_fallback:
+            # Route to review rather than assign a code.
+            latest.status = ResultStatus.NEEDS_REVIEW
+            new_code = old_code  # category code preserved; status flips
+            new_status = ResultStatus.NEEDS_REVIEW.value
+        else:
+            new_code = payload.proposed_category_code or old_code
+            latest.predicted_category_code = new_code
+            # Predicted category name follows the code if the code changed.
+            if new_code != old_code:
+                cat = (
+                    db.query(AccountCategory).filter(AccountCategory.code == new_code).one_or_none()
+                )
+                if cat is not None:
+                    latest.predicted_category_name = cat.name
+            # Status stays AUTO_APPROVED — this is a deterministic
+            # re-application of a rule-mapped category.
+            if latest.status == ResultStatus.NEEDS_REVIEW:
+                latest.status = ResultStatus.AUTO_APPROVED
+            new_status = latest.status.value
+        applied.append(
+            {
+                "transaction_id": tx_id,
+                "old_category_code": old_code,
+                "new_category_code": new_code,
+                "old_status": old_status,
+                "new_status": new_status,
+            }
+        )
+    db.flush()
+
+    event = record_audit_event(
+        db,
+        actor=actor,
+        action="mapping_apply.selected_rows_applied",
+        entity_type="mapping_entry",
+        entity_id=intent,
+        metadata={
+            "proposed_category_code": payload.proposed_category_code,
+            "block_fallback": payload.block_fallback,
+            "requested_count": len(selected),
+            "applied_count": len(applied),
+            "rejected_count": len(rejected),
+            "applied": applied,
+            "rejected": [r.model_dump() for r in rejected],
+        },
+        commit=True,
+    )
+
+    return MappingApplyOut(
+        intent=intent,
+        requested_count=len(selected),
+        applied_count=len(applied),
+        rejected_count=len(rejected),
+        rejected_rows=rejected,
+        audit_event_id=event.id,
+        warnings=[
+            "Apply touched only the selected eligible rows; protected rows were rejected.",
+            "Trust metric semantics preserved — no row was silently marked verified.",
+            "Public demo — apply is recorded against the seeded demo user.",
+        ],
     )
 
 

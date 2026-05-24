@@ -8,9 +8,12 @@ fixtures and should stay separate from production data.
 
 from sqlalchemy.orm import Session
 
-from ledgerlens.models import AccountCategory, Business, Tenant
+from ledgerlens.models import AccountCategory, Business, Membership, MembershipRole, Tenant, User
 from ledgerlens.repositories import CategoryRepo
 from ledgerlens.tenant_context import DEMO_BUSINESS_SLUG, DEMO_TENANT_SLUG
+
+DEMO_USER_EMAIL = "demo-owner@example.invalid"
+DEMO_USER_DISPLAY_NAME = "Demo Owner"
 
 DEFAULT_COA: list[tuple[str, str, str, str]] = [
     # (code, name, type, description)
@@ -62,11 +65,13 @@ def seed_chart_of_accounts(db: Session) -> int:
 
 
 def seed_demo_tenant(db: Session) -> tuple[Tenant, Business]:
-    """Idempotently seed the public-demo tenant + business.
+    """Idempotently seed the public-demo tenant + business + user.
 
     Both rows use clearly demo-flavored slugs so a real deploy
-    can't accidentally collide. No user is seeded — Phase 2 will
-    add a demo user when login lands.
+    can't accidentally collide. Phase 2 also seeds a single
+    `Demo Owner` user with `demo-owner@example.invalid` and an
+    OWNER `Membership` on the demo tenant so the new session
+    foundation has a defensible actor to resolve.
     """
     tenant = db.query(Tenant).filter(Tenant.slug == DEMO_TENANT_SLUG).one_or_none()
     if tenant is None:
@@ -87,5 +92,26 @@ def seed_demo_tenant(db: Session) -> tuple[Tenant, Business]:
             industry="auto_repair",
         )
         db.add(business)
+        db.flush()
+
+    # Phase 2: demo user + OWNER membership on the demo tenant.
+    user = db.query(User).filter(User.email == DEMO_USER_EMAIL).one_or_none()
+    if user is None:
+        user = User(email=DEMO_USER_EMAIL, display_name=DEMO_USER_DISPLAY_NAME)
+        db.add(user)
+        db.flush()
+    membership = (
+        db.query(Membership)
+        .filter(Membership.user_id == user.id, Membership.tenant_id == tenant.id)
+        .one_or_none()
+    )
+    if membership is None:
+        db.add(
+            Membership(
+                user_id=user.id,
+                tenant_id=tenant.id,
+                role=MembershipRole.OWNER,
+            )
+        )
     db.commit()
     return tenant, business

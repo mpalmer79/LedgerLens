@@ -5,7 +5,13 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { Logomark } from "@/components/ui/Logomark";
-import { ApiError, getDemoReady, getHealth } from "@/lib/api/client";
+import {
+  ApiError,
+  getDemoReady,
+  getHealth,
+  getSession,
+  type SessionResponse,
+} from "@/lib/api/client";
 
 type NavItem = { href: string; label: string };
 
@@ -38,6 +44,7 @@ const ADVANCED_NAV: NavItem[] = [
   { href: "/rules", label: "Rules" },
   { href: "/ledger", label: "Ledger" },
   { href: "/evals", label: "Eval evidence" },
+  { href: "/audit", label: "Audit events" },
 ];
 
 /**
@@ -156,9 +163,58 @@ function ReadinessIndicator({ state }: { state: ReadinessState }) {
   );
 }
 
+function useSession(): SessionResponse | null {
+  const [session, setSession] = useState<SessionResponse | null>(null);
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const data = await getSession();
+        if (!cancelled) setSession(data);
+      } catch {
+        if (!cancelled) setSession(null);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+  return session;
+}
+
+function SessionBadge({ session }: { session: SessionResponse | null }) {
+  if (!session) {
+    return (
+      <span
+        className="hidden items-center gap-1.5 text-[11px] text-text-subtle sm:inline-flex"
+        data-testid="session-badge-loading"
+      >
+        Demo session…
+      </span>
+    );
+  }
+  return (
+    <span
+      className="hidden items-center gap-1.5 text-[11px] text-text-subtle sm:inline-flex"
+      data-testid="appshell-session-badge"
+      title="Fictional public demo context — not production authentication."
+    >
+      <span className="rounded-full bg-amber-100 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-amber-900">
+        Demo session
+      </span>
+      <span className="whitespace-nowrap text-text-secondary">{session.business.name}</span>
+      <span aria-hidden="true">·</span>
+      <span className="whitespace-nowrap text-text-subtle">
+        {session.user.display_name}
+      </span>
+    </span>
+  );
+}
+
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const readiness = useBackendReadiness();
+  const session = useSession();
 
   return (
     <div className="bg-surface-page text-text-primary min-h-screen">
@@ -173,6 +229,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               </span>
             </Link>
             <div className="flex items-center gap-4">
+              <SessionBadge session={session} />
               <ReadinessIndicator state={readiness} />
               <Link
                 href="/"
