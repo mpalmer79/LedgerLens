@@ -327,6 +327,15 @@ describe("evals page content", () => {
     expect(EVALS).toContain("Top unmapped intents");
     expect(EVALS).toContain("RULE_GAP_ANALYSIS.md");
   });
+
+  it("notes the Batch #1 parts-vendor rule addition + measured impact", () => {
+    expect(EVALS).toContain("Batch #1");
+    // JSX wraps "parts-vendor" across lines in the source.
+    expect(EVALS).toMatch(/parts-vendor\s+rules/);
+    // Honest before/after numbers stay in copy.
+    expect(EVALS).toContain("22.2%");
+    expect(EVALS).toContain("44.7%");
+  });
 });
 
 // ── App dashboard ─────────────────────────────────────────────────────────
@@ -624,5 +633,17 @@ describe("rules page content", () => {
     expect(RULES.toLowerCase()).toContain("auto repair");
     expect(RULES.toLowerCase()).toContain("coffee shop");
     expect(RULES.toLowerCase()).toContain("design agency");
+  });
+
+  it("describes the Batch #1 parts-vendor rules and intents", () => {
+    expect(RULES).toContain("Batch #1");
+    expect(RULES).toContain("NAPA");
+    expect(RULES).toContain("AutoZone");
+    expect(RULES).toContain("parts_inventory");
+    expect(RULES).toContain("tires_inventory");
+    // Safety language — ambiguous purchases still route to questions.
+    expect(RULES.toLowerCase()).toContain("home depot");
+    // JSX wraps "owner questions" across two lines in the source.
+    expect(RULES.toLowerCase()).toMatch(/owner\s+questions/);
   });
 });

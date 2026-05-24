@@ -10,6 +10,20 @@ on this business.
 
 Goal: turn the eval numbers into a concrete engineering roadmap.
 
+## Batch status (updated after each shipped batch)
+
+- **Batch #1 — auto-repair parts-vendor rules: ✅ shipped (PR #44).**
+  Auto-repair coverage 5% → 19%, mapped accuracy 40% → 84%,
+  auto-approve accuracy 22.2% → 44.7%, overall accuracy 2.32% →
+  6.95%. Coffee-shop / design-agency unchanged (expected). See
+  `docs/PARTS_VENDOR_RULE_BATCH_REVIEW.md` for the full
+  before/after.
+- **Batch #2 — payroll-service rules:** not started.
+- **Batch #3 — software intent split for design-agency:** not
+  started. Promoted to next-PR recommendation (biggest accuracy
+  lift available now).
+- **Batch #4 — utilities split:** not started.
+
 ## 1. Top unmapped intents overall
 
 After this sprint, the bundled rule set's intents are **fully
@@ -185,26 +199,32 @@ let `/questions` handle it):
 
 ## 10. Next-best rule work
 
-In priority order:
+In priority order (revised after Batch #1 measurement):
 
-1. **Batch #1 (auto-repair parts vendors):** NAPA, AutoZone,
-   O'Reilly, Advance Auto, LKQ. 5 rules. Will lift auto-repair
-   coverage from 5% to ~20%.
-2. **Batch #2 (payroll services):** ADP, Gusto, OnPay. 3 rules.
-   Hits all three businesses.
-3. **Batch #3 (software granularity for design-agency):** Split
-   `software_subscription` into 4 sub-intents; add Figma, Vercel,
-   Notion, Linear, Slack rules. Will lift design-agency
-   accuracy-when-mapped from 0% to ~50%.
-4. **Batch #4 (utilities):** Eversource + generic electric
+1. **✅ Batch #1 (auto-repair parts vendors): SHIPPED in PR #44.**
+   Result: auto-repair coverage 5% → 19% (close to the predicted
+   ~20%), mapped accuracy 40% → 84%, overall 2.3% → 6.95%.
+2. **Batch #3 (software granularity for design-agency):**
+   Promoted to next priority after Batch #1 measurement. Split
+   `software_subscription` into 4 sub-intents
+   (`software_design / software_hosting / software_project_mgmt /
+   software_communication`); add Figma, Vercel, Notion, Linear,
+   Slack rules. Predicted lift: design-agency
+   accuracy-when-mapped 0% → ~50%. Biggest accuracy lift
+   available now.
+3. **Batch #2 (payroll services):** ADP, Gusto, OnPay. 3 rules.
+   Hits all three businesses; modest per-business impact but
+   broad.
+4. **Batch #4 (utilities split):** Eversource + generic electric
    patterns. Hits auto-repair + coffee-shop.
 
-After all four batches, expect rules-only-mapped to reach ~10%
-overall accuracy on the v0 dataset (vs 2.3% today). That's still
-low because the **fundamental coverage ceiling** is the bundled
-rule set's scope; deterministic rules will never categorize
-adversarial / ambiguous rows. The route-to-review path remains
-the safety net.
+After Batch #1 the rules-only-mapped run sits at 6.95% overall
+accuracy on the v0 dataset (vs 2.3% before). After Batches #2 +
+#3 + #4, expect the rules-only-mapped run to reach 10-12% overall
+accuracy. That's still low because the **fundamental coverage
+ceiling** is the bundled rule set's scope; deterministic rules
+will never categorize adversarial / ambiguous rows. The
+route-to-review path remains the safety net.
 
 ## What this analysis does NOT recommend
 

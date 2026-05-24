@@ -217,6 +217,18 @@ export default function RulesPage() {
           business&apos;s mapping; missing intents safely route to review
           instead of forcing a wrong category.
         </p>
+        <p className="mt-2 text-[12px] text-text-secondary">
+          <strong>Batch #1 (parts vendors):</strong> NAPA, AutoZone, O&apos;Reilly,
+          Advance Auto, LKQ, Carquest, and tire distributors use the
+          <span className="mono"> parts_inventory</span> and
+          <span className="mono"> tires_inventory</span> intents. Each maps
+          through the active business&apos;s COA: auto-repair lands in
+          Inventory - Parts (1050) / Inventory - Tires (1070); other
+          businesses block the fallback so a NAPA charge never silently
+          becomes Green Coffee or office supplies. Ambiguous auto-related
+          purchases (Amazon, Home Depot, Lowe&apos;s) still route to owner
+          questions, not parts.
+        </p>
         <Link
           href="/evals#business-specific-rule-mapping"
           className="mt-3 inline-flex items-center gap-1 rounded-md bg-brand-600 px-3 py-1.5 text-[13px] font-medium text-white hover:bg-brand-500"

@@ -99,8 +99,11 @@ def test_granite_state_specific_overrides() -> None:
     assert GRANITE_STATE_INTENT_MAP.resolve("internet_telecom") == "6150"
     # Parts inventory routes to COGS for an auto shop.
     assert GRANITE_STATE_INTENT_MAP.resolve("parts_inventory") == "5010"
-    # The default map doesn't claim parts_inventory at all.
-    assert DEFAULT_INTENT_MAP.resolve("parts_inventory") is None
+    # As of Batch #1 (PR #44), the default map also resolves parts_inventory
+    # — it lands on the seed COA's COGS (5010) since the default seed has
+    # no separate Inventory - Parts account. Business-specific maps still
+    # win over the default when the dataset has a finer-grained bucket.
+    assert DEFAULT_INTENT_MAP.resolve("parts_inventory") == "5010"
 
 
 def test_active_business_id_resolves_to_granite_state() -> None:

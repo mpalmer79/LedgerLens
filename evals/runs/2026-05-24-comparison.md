@@ -1,14 +1,14 @@
 # LedgerLens eval comparison
 
-Generated 2026-05-24T04:10:56+00:00.
+Generated 2026-05-24T04:54:00+00:00.
 
 Pipeline order in production: **correction memory → deterministic rules → model fallback → confidence routing → human review → audit.** Each row below is a single eval mode; the hybrid mode mirrors the layered pipeline minus correction memory (memory simulation is a separate run).
 
 | Categorizer | Tx | Overall | Non-adv | Adversarial | Cost / 100 | p95 (ms) | Routing | Model calibration | Mapping |
 |---|---:|---:|---:|---:|---:|---:|---|---|---|
 | claude-haiku-v1 | 302 | 62.9% | 65.3% | 41.9% | $0.3351 | 5952 | — | — | — |
-| rule-categorizer-mapped-v1 | 302 | 2.3% | 1.8% | 6.5% | $0.0000 | 0 | auto 8.9% @ 22.2% acc · review 14.9% | no model calls | mapped 72 · fallback 0 · review 0 |
-| rule-categorizer-v1 | 302 | 0.0% | 0.0% | 0.0% | $0.0000 | 0 | auto 8.9% @ 0.0% acc · review 14.9% | no model calls | — |
+| rule-categorizer-mapped-v1 | 302 | 7.0% | 7.0% | 6.5% | $0.0000 | 0 | auto 12.6% @ 44.7% acc · review 15.9% | no model calls | mapped 86 · fallback 0 · review 0 |
+| rule-categorizer-v1 | 302 | 0.0% | 0.0% | 0.0% | $0.0000 | 0 | auto 12.6% @ 0.0% acc · review 15.9% | no model calls | — |
 | stub-v1 | 302 | 9.3% | 10.3% | 0.0% | $0.0000 | 0 | auto 0.0% @ 0.0% acc · review 100.0% | no model calls | — |
 
 ## Honest framing

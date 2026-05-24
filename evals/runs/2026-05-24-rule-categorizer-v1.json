@@ -2,9 +2,9 @@
   "run_metadata": {
     "dataset_version": "v0",
     "categorizer_name": "rule-categorizer-v1",
-    "model": "deterministic_rules_v1",
-    "timestamp_utc": "2026-05-24T04:10:02+00:00",
-    "git_sha": "db41d947a9b5e4e6032fe1ada72c0014caa033b2"
+    "model": "rule.napa.parts",
+    "timestamp_utc": "2026-05-24T04:53:33+00:00",
+    "git_sha": "033036315d722c518fbe7b4ebea1da135b0f15f9"
   },
   "metrics": {
     "overall": {
@@ -119,7 +119,7 @@
           "recall": 0.0,
           "f1": 0.0,
           "support": 5.0,
-          "false_positives": 0.0,
+          "false_positives": 14.0,
           "false_negatives": 5.0
         },
         "5020": {
@@ -327,14 +327,14 @@
           "recall": 0.0,
           "f1": 0.0,
           "support": 0.0,
-          "false_positives": 230.0,
+          "false_positives": 216.0,
           "false_negatives": 0.0
         }
       },
       "reliability_diagram": [
         {
           "bucket": "0.0-0.1",
-          "count": 230,
+          "count": 216,
           "predicted_confidence_mean": 0.0,
           "actual_accuracy": 0.0
         },
@@ -382,21 +382,21 @@
         },
         {
           "bucket": "0.8-0.9",
-          "count": 41,
-          "predicted_confidence_mean": 0.8792682926829268,
+          "count": 44,
+          "predicted_confidence_mean": 0.8793181818181818,
           "actual_accuracy": 0.0
         },
         {
           "bucket": "0.9-1.0",
-          "count": 27,
-          "predicted_confidence_mean": 0.9255555555555556,
+          "count": 38,
+          "predicted_confidence_mean": 0.9234210526315789,
           "actual_accuracy": 0.0
         }
       ],
       "latency_stats": {
-        "p50_ms": 0.014924999049981125,
-        "p95_ms": 0.028622000172617845,
-        "mean_ms": 0.018397639026363852
+        "p50_ms": 0.021424999999908323,
+        "p95_ms": 0.03492400003324292,
+        "mean_ms": 0.022347284772835013
       },
       "total_cost": 0.0,
       "cost_per_100": 0.0,
@@ -427,12 +427,6 @@
           "percentage_of_actual": 0.35
         },
         {
-          "actual": "1050",
-          "predicted": "UNCATEGORIZABLE",
-          "count": 13,
-          "percentage_of_actual": 1.0
-        },
-        {
           "actual": "6020",
           "predicted": "UNCATEGORIZABLE",
           "count": 12,
@@ -443,6 +437,12 @@
           "predicted": "UNCATEGORIZABLE",
           "count": 12,
           "percentage_of_actual": 0.8571428571428571
+        },
+        {
+          "actual": "1050",
+          "predicted": "5010",
+          "count": 11,
+          "percentage_of_actual": 0.8461538461538461
         },
         {
           "actual": "6110",
@@ -507,13 +507,14 @@
         ],
         "categories_in_truth_count": 39,
         "categories_predicted": [
+          "5010",
           "6060",
           "6070",
           "6100",
           "6120",
           "UNCATEGORIZABLE"
         ],
-        "categories_predicted_count": 5,
+        "categories_predicted_count": 6,
         "never_predicted": [
           "1020",
           "1030",
@@ -528,7 +529,6 @@
           "4020",
           "4030",
           "4040",
-          "5010",
           "5020",
           "5040",
           "6010",
@@ -595,20 +595,20 @@
       },
       "routing": {
         "total": 302,
-        "auto_approved": 27,
-        "needs_review": 45,
-        "uncategorizable": 230,
+        "auto_approved": 38,
+        "needs_review": 48,
+        "uncategorizable": 216,
         "failed": 0,
-        "auto_approved_rate": 0.08940397350993377,
-        "review_rate": 0.1490066225165563,
+        "auto_approved_rate": 0.12582781456953643,
+        "review_rate": 0.15894039735099338,
         "auto_approved_accuracy": 0.0,
         "model_called": 0,
         "model_called_rate": 0.0,
         "zero_cost": 302,
         "zero_cost_rate": 1.0,
         "by_provider": {
-          "deterministic_other": 230,
-          "rule_categorizer": 72
+          "rule_categorizer": 86,
+          "deterministic_other": 216
         },
         "cost_per_100": 0.0,
         "cost_per_100_model_only_baseline": null,
@@ -618,12 +618,12 @@
         "overall": {
           "label": "overall",
           "count": 302,
-          "ece": 0.2074,
-          "mce": 0.9256,
+          "ece": 0.2496,
+          "mce": 0.9234,
           "buckets": [
             {
               "bucket": "0.0-0.1",
-              "count": 230,
+              "count": 216,
               "predicted_confidence_mean": 0.0,
               "actual_accuracy": 0.0
             },
@@ -671,18 +671,18 @@
             },
             {
               "bucket": "0.8-0.9",
-              "count": 41,
-              "predicted_confidence_mean": 0.8792682926829268,
+              "count": 44,
+              "predicted_confidence_mean": 0.8793181818181818,
               "actual_accuracy": 0.0
             },
             {
               "bucket": "0.9-1.0",
-              "count": 27,
-              "predicted_confidence_mean": 0.9255555555555556,
+              "count": 38,
+              "predicted_confidence_mean": 0.9234210526315789,
               "actual_accuracy": 0.0
             }
           ],
-          "warning": "High-confidence bucket (0.9-1.0, n=27) actual accuracy 0.00% is materially below the 90% expectation. Auto-approved predictions in this range cannot be trusted blindly."
+          "warning": "High-confidence bucket (0.9-1.0, n=38) actual accuracy 0.00% is materially below the 90% expectation. Auto-approved predictions in this range cannot be trusted blindly."
         },
         "model_only": {
           "label": "model_only",
@@ -756,12 +756,12 @@
         "deterministic": {
           "label": "deterministic",
           "count": 302,
-          "ece": 0.2074,
-          "mce": 0.9256,
+          "ece": 0.2496,
+          "mce": 0.9234,
           "buckets": [
             {
               "bucket": "0.0-0.1",
-              "count": 230,
+              "count": 216,
               "predicted_confidence_mean": 0.0,
               "actual_accuracy": 0.0
             },
@@ -809,18 +809,18 @@
             },
             {
               "bucket": "0.8-0.9",
-              "count": 41,
-              "predicted_confidence_mean": 0.8792682926829268,
+              "count": 44,
+              "predicted_confidence_mean": 0.8793181818181818,
               "actual_accuracy": 0.0
             },
             {
               "bucket": "0.9-1.0",
-              "count": 27,
-              "predicted_confidence_mean": 0.9255555555555556,
+              "count": 38,
+              "predicted_confidence_mean": 0.9234210526315789,
               "actual_accuracy": 0.0
             }
           ],
-          "warning": "High-confidence bucket (0.9-1.0, n=27) actual accuracy 0.00% is materially below the 90% expectation. Auto-approved predictions in this range cannot be trusted blindly."
+          "warning": "High-confidence bucket (0.9-1.0, n=38) actual accuracy 0.00% is materially below the 90% expectation. Auto-approved predictions in this range cannot be trusted blindly."
         }
       },
       "mapping": {
@@ -984,7 +984,7 @@
           "recall": 0.0,
           "f1": 0.0,
           "support": 5.0,
-          "false_positives": 0.0,
+          "false_positives": 14.0,
           "false_negatives": 5.0
         },
         "5020": {
@@ -1184,14 +1184,14 @@
           "recall": 0.0,
           "f1": 0.0,
           "support": 0.0,
-          "false_positives": 209.0,
+          "false_positives": 195.0,
           "false_negatives": 0.0
         }
       },
       "reliability_diagram": [
         {
           "bucket": "0.0-0.1",
-          "count": 209,
+          "count": 195,
           "predicted_confidence_mean": 0.0,
           "actual_accuracy": 0.0
         },
@@ -1239,21 +1239,21 @@
         },
         {
           "bucket": "0.8-0.9",
-          "count": 38,
+          "count": 41,
           "predicted_confidence_mean": 0.88,
           "actual_accuracy": 0.0
         },
         {
           "bucket": "0.9-1.0",
-          "count": 24,
-          "predicted_confidence_mean": 0.9270833333333334,
+          "count": 35,
+          "predicted_confidence_mean": 0.9242857142857143,
           "actual_accuracy": 0.0
         }
       ],
       "latency_stats": {
-        "p50_ms": 0.014924999049981125,
-        "p95_ms": 0.029584000003524125,
-        "mean_ms": 0.01859069736947209
+        "p50_ms": 0.021412999899439455,
+        "p95_ms": 0.03585799993288674,
+        "mean_ms": 0.022326398528352123
       },
       "total_cost": 0.0,
       "cost_per_100": 0.0,
@@ -1278,12 +1278,6 @@
           "percentage_of_actual": 0.6578947368421053
         },
         {
-          "actual": "1050",
-          "predicted": "UNCATEGORIZABLE",
-          "count": 13,
-          "percentage_of_actual": 1.0
-        },
-        {
           "actual": "4010",
           "predicted": "UNCATEGORIZABLE",
           "count": 13,
@@ -1300,6 +1294,12 @@
           "predicted": "UNCATEGORIZABLE",
           "count": 12,
           "percentage_of_actual": 1.0
+        },
+        {
+          "actual": "1050",
+          "predicted": "5010",
+          "count": 11,
+          "percentage_of_actual": 0.8461538461538461
         },
         {
           "actual": "6170",
@@ -1362,12 +1362,13 @@
         ],
         "categories_in_truth_count": 37,
         "categories_predicted": [
+          "5010",
           "6060",
           "6070",
           "6100",
           "UNCATEGORIZABLE"
         ],
-        "categories_predicted_count": 4,
+        "categories_predicted_count": 5,
         "never_predicted": [
           "1020",
           "1050",
@@ -1381,7 +1382,6 @@
           "4020",
           "4030",
           "4040",
-          "5010",
           "5020",
           "5040",
           "6010",
@@ -1446,20 +1446,20 @@
       },
       "routing": {
         "total": 271,
-        "auto_approved": 24,
-        "needs_review": 38,
-        "uncategorizable": 209,
+        "auto_approved": 35,
+        "needs_review": 41,
+        "uncategorizable": 195,
         "failed": 0,
-        "auto_approved_rate": 0.08856088560885608,
-        "review_rate": 0.14022140221402213,
+        "auto_approved_rate": 0.12915129151291513,
+        "review_rate": 0.15129151291512916,
         "auto_approved_accuracy": 0.0,
         "model_called": 0,
         "model_called_rate": 0.0,
         "zero_cost": 271,
         "zero_cost_rate": 1.0,
         "by_provider": {
-          "deterministic_other": 209,
-          "rule_categorizer": 62
+          "rule_categorizer": 76,
+          "deterministic_other": 195
         },
         "cost_per_100": 0.0,
         "cost_per_100_model_only_baseline": null,
@@ -1469,12 +1469,12 @@
         "overall": {
           "label": "overall",
           "count": 271,
-          "ece": 0.2055,
-          "mce": 0.9271,
+          "ece": 0.2525,
+          "mce": 0.9243,
           "buckets": [
             {
               "bucket": "0.0-0.1",
-              "count": 209,
+              "count": 195,
               "predicted_confidence_mean": 0.0,
               "actual_accuracy": 0.0
             },
@@ -1522,18 +1522,18 @@
             },
             {
               "bucket": "0.8-0.9",
-              "count": 38,
+              "count": 41,
               "predicted_confidence_mean": 0.88,
               "actual_accuracy": 0.0
             },
             {
               "bucket": "0.9-1.0",
-              "count": 24,
-              "predicted_confidence_mean": 0.9270833333333334,
+              "count": 35,
+              "predicted_confidence_mean": 0.9242857142857143,
               "actual_accuracy": 0.0
             }
           ],
-          "warning": "High-confidence bucket (0.9-1.0, n=24) actual accuracy 0.00% is materially below the 90% expectation. Auto-approved predictions in this range cannot be trusted blindly."
+          "warning": "High-confidence bucket (0.9-1.0, n=35) actual accuracy 0.00% is materially below the 90% expectation. Auto-approved predictions in this range cannot be trusted blindly."
         },
         "model_only": {
           "label": "model_only",
@@ -1607,12 +1607,12 @@
         "deterministic": {
           "label": "deterministic",
           "count": 271,
-          "ece": 0.2055,
-          "mce": 0.9271,
+          "ece": 0.2525,
+          "mce": 0.9243,
           "buckets": [
             {
               "bucket": "0.0-0.1",
-              "count": 209,
+              "count": 195,
               "predicted_confidence_mean": 0.0,
               "actual_accuracy": 0.0
             },
@@ -1660,18 +1660,18 @@
             },
             {
               "bucket": "0.8-0.9",
-              "count": 38,
+              "count": 41,
               "predicted_confidence_mean": 0.88,
               "actual_accuracy": 0.0
             },
             {
               "bucket": "0.9-1.0",
-              "count": 24,
-              "predicted_confidence_mean": 0.9270833333333334,
+              "count": 35,
+              "predicted_confidence_mean": 0.9242857142857143,
               "actual_accuracy": 0.0
             }
           ],
-          "warning": "High-confidence bucket (0.9-1.0, n=24) actual accuracy 0.00% is materially below the 90% expectation. Auto-approved predictions in this range cannot be trusted blindly."
+          "warning": "High-confidence bucket (0.9-1.0, n=35) actual accuracy 0.00% is materially below the 90% expectation. Auto-approved predictions in this range cannot be trusted blindly."
         }
       },
       "mapping": {
@@ -1906,9 +1906,9 @@
         }
       ],
       "latency_stats": {
-        "p50_ms": 0.014880000890116207,
-        "p95_ms": 0.025841000024229288,
-        "mean_ms": 0.016709935446288588
+        "p50_ms": 0.0215180000395776,
+        "p95_ms": 0.034290000030523515,
+        "mean_ms": 0.02252987097460479
       },
       "total_cost": 0.0,
       "cost_per_100": 0.0,
@@ -2283,13 +2283,13 @@
   "predictions": [
     {
       "transaction_id": "auto-repair-tx-001",
-      "predicted_category_code": "UNCATEGORIZABLE",
-      "confidence": 0.0,
-      "reasoning": "rule_categorizer: no rule matched",
+      "predicted_category_code": "5010",
+      "confidence": 0.92,
+      "reasoning": "rule_categorizer: matched rule.napa.parts (keyword_any)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02648800000315532,
-      "model": "deterministic_rules_v1",
+      "latency_ms": 0.03585799993288674,
+      "model": "rule.napa.parts",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
@@ -2300,7 +2300,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.019960001736762933,
+      "latency_ms": 0.02485500010607211,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2312,7 +2312,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01685999995970633,
+      "latency_ms": 0.023090000013326062,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2324,7 +2324,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.019746999896597117,
+      "latency_ms": 0.022884000031808682,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2336,7 +2336,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01536799936729949,
+      "latency_ms": 0.021784000068691967,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2348,7 +2348,7 @@
       "reasoning": "rule_categorizer: matched rule.amazon.review (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015225999959511682,
+      "latency_ms": 0.023349999992205994,
       "model": "rule.amazon.review",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2360,20 +2360,20 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014688999726786278,
+      "latency_ms": 0.021489999994628306,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
     {
       "transaction_id": "auto-repair-tx-008",
-      "predicted_category_code": "UNCATEGORIZABLE",
-      "confidence": 0.0,
-      "reasoning": "rule_categorizer: no rule matched",
+      "predicted_category_code": "5010",
+      "confidence": 0.92,
+      "reasoning": "rule_categorizer: matched rule.napa.parts (keyword_any)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01507600063632708,
-      "model": "deterministic_rules_v1",
+      "latency_ms": 0.02175899999201647,
+      "model": "rule.napa.parts",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
@@ -2384,7 +2384,7 @@
       "reasoning": "rule_categorizer: matched rule.dunkin.meals (keyword_any)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014880000890116207,
+      "latency_ms": 0.021660000015799596,
       "model": "rule.dunkin.meals",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2396,7 +2396,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014376999388332479,
+      "latency_ms": 0.021537999941756425,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2408,7 +2408,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02312800097570289,
+      "latency_ms": 0.029264999966471805,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2420,20 +2420,20 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015482999515370466,
+      "latency_ms": 0.022445000013249228,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
     {
       "transaction_id": "auto-repair-tx-013",
-      "predicted_category_code": "UNCATEGORIZABLE",
-      "confidence": 0.0,
-      "reasoning": "rule_categorizer: no rule matched",
+      "predicted_category_code": "5010",
+      "confidence": 0.92,
+      "reasoning": "rule_categorizer: matched rule.napa.parts (keyword_any)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015110999811440706,
-      "model": "deterministic_rules_v1",
+      "latency_ms": 0.021627000023727305,
+      "model": "rule.napa.parts",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
@@ -2444,7 +2444,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014575998648069799,
+      "latency_ms": 0.021004000018365332,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2456,7 +2456,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015910998627077788,
+      "latency_ms": 0.02245100006348366,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2468,7 +2468,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016093999875010923,
+      "latency_ms": 0.022736999994776852,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2480,7 +2480,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01505900036136154,
+      "latency_ms": 0.021258000060697668,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2492,7 +2492,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016187001165235415,
+      "latency_ms": 0.02276100008202775,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2504,7 +2504,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02420700002403464,
+      "latency_ms": 0.021865000007892377,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2516,7 +2516,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.024893999579944648,
+      "latency_ms": 0.02072200004477054,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2528,7 +2528,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02779600072244648,
+      "latency_ms": 0.021400999912657426,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2540,7 +2540,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.021780999304610305,
+      "latency_ms": 0.022338000007948722,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2552,7 +2552,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.027853000574395992,
+      "latency_ms": 0.02250000000003638,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2564,7 +2564,7 @@
       "reasoning": "rule_categorizer: matched rule.intuit.software (keyword_any)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016320000213454477,
+      "latency_ms": 0.022661999992124038,
       "model": "rule.intuit.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2576,7 +2576,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015764000636409037,
+      "latency_ms": 0.02226000003702211,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2588,7 +2588,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017202999515575357,
+      "latency_ms": 0.022291999925982964,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2600,7 +2600,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.021621999621856958,
+      "latency_ms": 0.05512999996426515,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2612,7 +2612,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015030998838483356,
+      "latency_ms": 0.02247500003704772,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2624,32 +2624,32 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014957000530557707,
+      "latency_ms": 0.022825999963060895,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
     {
       "transaction_id": "auto-repair-tx-030",
-      "predicted_category_code": "UNCATEGORIZABLE",
-      "confidence": 0.0,
-      "reasoning": "rule_categorizer: no rule matched",
+      "predicted_category_code": "5010",
+      "confidence": 0.92,
+      "reasoning": "rule_categorizer: matched rule.napa.parts (keyword_any)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015407000319100916,
-      "model": "deterministic_rules_v1",
+      "latency_ms": 0.02248700002382975,
+      "model": "rule.napa.parts",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
     {
       "transaction_id": "auto-repair-tx-031",
-      "predicted_category_code": "UNCATEGORIZABLE",
-      "confidence": 0.0,
-      "reasoning": "rule_categorizer: no rule matched",
+      "predicted_category_code": "5010",
+      "confidence": 0.9,
+      "reasoning": "rule_categorizer: matched rule.carquest.parts (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015276998965418898,
-      "model": "deterministic_rules_v1",
+      "latency_ms": 0.02264500005821901,
+      "model": "rule.carquest.parts",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
@@ -2660,7 +2660,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014916000509401783,
+      "latency_ms": 0.021761999960290268,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2672,20 +2672,20 @@
       "reasoning": "rule_categorizer: matched rule.staples.office (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01533299837319646,
+      "latency_ms": 0.022247999936553242,
       "model": "rule.staples.office",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
     {
       "transaction_id": "auto-repair-tx-034",
-      "predicted_category_code": "UNCATEGORIZABLE",
-      "confidence": 0.0,
-      "reasoning": "rule_categorizer: no rule matched",
+      "predicted_category_code": "5010",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.tire_distributor.tires (keyword_any)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015197998436633497,
-      "model": "deterministic_rules_v1",
+      "latency_ms": 0.021322000065993052,
+      "model": "rule.tire_distributor.tires",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
@@ -2696,7 +2696,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014168001143843867,
+      "latency_ms": 0.021014000026298163,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2708,7 +2708,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01497999983257614,
+      "latency_ms": 0.02269599997362093,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2720,7 +2720,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01451800017093774,
+      "latency_ms": 0.02169199990476045,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2732,7 +2732,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014413000826607458,
+      "latency_ms": 0.021220000007815543,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2744,7 +2744,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014002998796058819,
+      "latency_ms": 0.02085800008444494,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2756,7 +2756,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.04138799886277411,
+      "latency_ms": 0.022188000002643093,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2768,7 +2768,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014899000234436244,
+      "latency_ms": 0.020888999983981194,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2780,7 +2780,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015876999896136113,
+      "latency_ms": 0.023076999923432595,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2792,7 +2792,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01464100023440551,
+      "latency_ms": 0.0239790000478024,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2804,20 +2804,20 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.017645999832893722,
+      "latency_ms": 0.02174899998408364,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
     {
       "transaction_id": "auto-repair-tx-045",
-      "predicted_category_code": "UNCATEGORIZABLE",
-      "confidence": 0.0,
-      "reasoning": "rule_categorizer: no rule matched",
+      "predicted_category_code": "5010",
+      "confidence": 0.92,
+      "reasoning": "rule_categorizer: matched rule.napa.parts (keyword_any)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014457000361289829,
-      "model": "deterministic_rules_v1",
+      "latency_ms": 0.021629000002576504,
+      "model": "rule.napa.parts",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
@@ -2828,7 +2828,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014246001228457317,
+      "latency_ms": 0.021412999899439455,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2840,7 +2840,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014447001376538537,
+      "latency_ms": 0.0215180000395776,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2852,7 +2852,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015383999198093079,
+      "latency_ms": 0.022209000007933355,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2864,7 +2864,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01393000093230512,
+      "latency_ms": 0.02088099995489756,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2876,7 +2876,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014614000974688679,
+      "latency_ms": 0.022445000013249228,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2888,7 +2888,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01422199966327753,
+      "latency_ms": 0.020841000036853075,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2900,7 +2900,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014131999705568887,
+      "latency_ms": 0.021070999991934514,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2912,7 +2912,7 @@
       "reasoning": "rule_categorizer: matched rule.amazon.review (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014133000149740838,
+      "latency_ms": 0.020862999917881098,
       "model": "rule.amazon.review",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2924,7 +2924,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016014000721042976,
+      "latency_ms": 0.023375999944619252,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2936,7 +2936,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014582999938284047,
+      "latency_ms": 0.021287999970809324,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2948,7 +2948,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015240000720950775,
+      "latency_ms": 0.02283900005295436,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2960,7 +2960,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014299999747890979,
+      "latency_ms": 0.04886500005341077,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2972,7 +2972,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015032999726827256,
+      "latency_ms": 0.022336000029099523,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2984,7 +2984,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01471699943067506,
+      "latency_ms": 0.022458999978880456,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -2996,7 +2996,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014744999134563841,
+      "latency_ms": 0.02294499995514343,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3008,7 +3008,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014711000403622165,
+      "latency_ms": 0.030530000003636815,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3020,7 +3020,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01730399890220724,
+      "latency_ms": 0.021623000066028908,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3032,20 +3032,20 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014514000213239342,
+      "latency_ms": 0.023016999989522446,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
     {
       "transaction_id": "auto-repair-tx-064",
-      "predicted_category_code": "UNCATEGORIZABLE",
-      "confidence": 0.0,
-      "reasoning": "rule_categorizer: no rule matched",
+      "predicted_category_code": "5010",
+      "confidence": 0.92,
+      "reasoning": "rule_categorizer: matched rule.napa.parts (keyword_any)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01416300074197352,
-      "model": "deterministic_rules_v1",
+      "latency_ms": 0.022127000079308345,
+      "model": "rule.napa.parts",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
@@ -3056,7 +3056,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01410300137649756,
+      "latency_ms": 0.02149400006601354,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3068,7 +3068,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014385999747901224,
+      "latency_ms": 0.022199000000000524,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3080,7 +3080,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014843000826658681,
+      "latency_ms": 0.0225479999471645,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3092,7 +3092,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014824998288531788,
+      "latency_ms": 0.021687999947062053,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3104,20 +3104,20 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01846799932536669,
+      "latency_ms": 0.025628999992477475,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
     {
       "transaction_id": "auto-repair-tx-070",
-      "predicted_category_code": "UNCATEGORIZABLE",
-      "confidence": 0.0,
-      "reasoning": "rule_categorizer: no rule matched",
+      "predicted_category_code": "5010",
+      "confidence": 0.92,
+      "reasoning": "rule_categorizer: matched rule.napa.parts (keyword_any)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.013943999874754809,
-      "model": "deterministic_rules_v1",
+      "latency_ms": 0.024177999989660748,
+      "model": "rule.napa.parts",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
@@ -3128,20 +3128,20 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01457899998058565,
+      "latency_ms": 0.034290000030523515,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
     {
       "transaction_id": "auto-repair-tx-072",
-      "predicted_category_code": "UNCATEGORIZABLE",
-      "confidence": 0.0,
-      "reasoning": "rule_categorizer: no rule matched",
+      "predicted_category_code": "5010",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.tire_distributor.tires (keyword_any)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01491699913458433,
-      "model": "deterministic_rules_v1",
+      "latency_ms": 0.02171200003431295,
+      "model": "rule.tire_distributor.tires",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
@@ -3152,7 +3152,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014121000276645645,
+      "latency_ms": 0.022527000055561075,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3164,7 +3164,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014479999663308263,
+      "latency_ms": 0.021774000060759136,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3176,7 +3176,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014061999536352232,
+      "latency_ms": 0.020964999976058607,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3188,7 +3188,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014365999959409237,
+      "latency_ms": 0.028681999992841156,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3200,7 +3200,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014764000297873281,
+      "latency_ms": 0.022686999955112697,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3212,7 +3212,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014114999430603348,
+      "latency_ms": 0.025811000000430795,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3224,7 +3224,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.013855000361218117,
+      "latency_ms": 0.02329899996311724,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3236,20 +3236,20 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015627001630491577,
+      "latency_ms": 0.022381000007953844,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
     {
       "transaction_id": "auto-repair-tx-081",
-      "predicted_category_code": "UNCATEGORIZABLE",
-      "confidence": 0.0,
-      "reasoning": "rule_categorizer: no rule matched",
+      "predicted_category_code": "5010",
+      "confidence": 0.92,
+      "reasoning": "rule_categorizer: matched rule.napa.parts (keyword_any)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.013689001207239926,
-      "model": "deterministic_rules_v1",
+      "latency_ms": 0.021675999960280024,
+      "model": "rule.napa.parts",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
@@ -3260,7 +3260,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.013842000043950975,
+      "latency_ms": 0.02110600007654284,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3272,7 +3272,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.04050700044899713,
+      "latency_ms": 0.022039999976186664,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3284,7 +3284,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01485699976910837,
+      "latency_ms": 0.056837999977688014,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3296,7 +3296,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01541199890198186,
+      "latency_ms": 0.023611999949935125,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3308,20 +3308,20 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014561001080437563,
+      "latency_ms": 0.022812999986854265,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
     {
       "transaction_id": "auto-repair-tx-087",
-      "predicted_category_code": "UNCATEGORIZABLE",
-      "confidence": 0.0,
-      "reasoning": "rule_categorizer: no rule matched",
+      "predicted_category_code": "5010",
+      "confidence": 0.88,
+      "reasoning": "rule_categorizer: matched rule.tire_distributor.tires (keyword_any)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014391000149771571,
-      "model": "deterministic_rules_v1",
+      "latency_ms": 0.02148600003692991,
+      "model": "rule.tire_distributor.tires",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
@@ -3332,7 +3332,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014118000763119198,
+      "latency_ms": 0.021356000047489943,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3344,7 +3344,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015339999663410708,
+      "latency_ms": 0.02251000000796921,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3356,7 +3356,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.0142680000863038,
+      "latency_ms": 0.02400300002136646,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3368,7 +3368,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.013644999853568152,
+      "latency_ms": 0.020679000044765417,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3380,7 +3380,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014514000213239342,
+      "latency_ms": 0.02241900006083597,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3392,20 +3392,20 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014217999705579132,
+      "latency_ms": 0.022594000029130257,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
     {
       "transaction_id": "auto-repair-tx-094",
-      "predicted_category_code": "UNCATEGORIZABLE",
-      "confidence": 0.0,
-      "reasoning": "rule_categorizer: no rule matched",
+      "predicted_category_code": "5010",
+      "confidence": 0.92,
+      "reasoning": "rule_categorizer: matched rule.napa.parts (keyword_any)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01408400021318812,
-      "model": "deterministic_rules_v1",
+      "latency_ms": 0.021638000021084736,
+      "model": "rule.napa.parts",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
@@ -3416,7 +3416,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014002000170876272,
+      "latency_ms": 0.02101999996284576,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3428,7 +3428,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.013673001376446337,
+      "latency_ms": 0.02074499991522316,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3440,20 +3440,20 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015318999430746771,
+      "latency_ms": 0.024579000069024914,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
     {
       "transaction_id": "auto-repair-tx-098",
-      "predicted_category_code": "UNCATEGORIZABLE",
-      "confidence": 0.0,
-      "reasoning": "rule_categorizer: no rule matched",
+      "predicted_category_code": "5010",
+      "confidence": 0.92,
+      "reasoning": "rule_categorizer: matched rule.napa.parts (keyword_any)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015478999557672068,
-      "model": "deterministic_rules_v1",
+      "latency_ms": 0.021277999962876493,
+      "model": "rule.napa.parts",
       "matched_rule_intent": null,
       "mapping_outcome": null
     },
@@ -3464,7 +3464,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01921800139825791,
+      "latency_ms": 0.021293000031619158,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3476,7 +3476,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014150000424706377,
+      "latency_ms": 0.021258000060697668,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3488,7 +3488,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014340999769046903,
+      "latency_ms": 0.02096200000778481,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3500,7 +3500,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015055000403663144,
+      "latency_ms": 0.022210999986782554,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3512,7 +3512,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014072998965275474,
+      "latency_ms": 0.020976999962840637,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3524,7 +3524,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015657000403734855,
+      "latency_ms": 0.022678000050291303,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3536,7 +3536,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014683000699733384,
+      "latency_ms": 0.02179499995236256,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3548,7 +3548,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015173000065260567,
+      "latency_ms": 0.02212499998677231,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3560,7 +3560,7 @@
       "reasoning": "rule_categorizer: matched rule.amazon.review (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014146999092190526,
+      "latency_ms": 0.033916000006684044,
       "model": "rule.amazon.review",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3572,7 +3572,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014627999917138368,
+      "latency_ms": 0.024852000024111476,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3584,7 +3584,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014567000107490458,
+      "latency_ms": 0.02128100004483713,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3596,7 +3596,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015082001482369378,
+      "latency_ms": 0.021971000023768283,
       "model": "rule.stripe.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3608,7 +3608,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015581001207465306,
+      "latency_ms": 0.021880999952372804,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3620,7 +3620,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.020417000996530987,
+      "latency_ms": 0.021638000021084736,
       "model": "rule.square.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3632,7 +3632,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014901999747962691,
+      "latency_ms": 0.02971300000353949,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3644,7 +3644,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01460599924030248,
+      "latency_ms": 0.022605000026487687,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3656,7 +3656,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.013922999642090872,
+      "latency_ms": 0.02248700002382975,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3668,7 +3668,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01720200089039281,
+      "latency_ms": 0.02325399998426292,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3680,7 +3680,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014446000932366587,
+      "latency_ms": 0.021466000021064247,
       "model": "rule.square.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3692,7 +3692,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014777000615140423,
+      "latency_ms": 0.02223700005288265,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3704,7 +3704,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014532999557559378,
+      "latency_ms": 0.021368999910009734,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3716,7 +3716,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014273999113356695,
+      "latency_ms": 0.021481999965544674,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3728,7 +3728,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.013998000213177875,
+      "latency_ms": 0.021328000002540648,
       "model": "rule.square.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3740,7 +3740,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.013885999578633346,
+      "latency_ms": 0.020738999978675565,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3752,7 +3752,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.013900000340072438,
+      "latency_ms": 0.020792000100300356,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3764,7 +3764,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.013794999176752754,
+      "latency_ms": 0.020839000058003876,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3776,7 +3776,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.020297000446589664,
+      "latency_ms": 0.022048000005270296,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3788,7 +3788,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015243000234477222,
+      "latency_ms": 0.02123499996287137,
       "model": "rule.square.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3800,7 +3800,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015825999071239494,
+      "latency_ms": 0.02297799994721572,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3812,7 +3812,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014490999092231505,
+      "latency_ms": 0.02061899999716843,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3824,7 +3824,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014782999642193317,
+      "latency_ms": 0.022353000076691387,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3836,7 +3836,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014299999747890979,
+      "latency_ms": 0.021263999997245264,
       "model": "rule.square.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3848,7 +3848,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014552999346051365,
+      "latency_ms": 0.022551000029125134,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3860,7 +3860,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.013708000551559962,
+      "latency_ms": 0.02085800008444494,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3872,7 +3872,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014213001122698188,
+      "latency_ms": 0.022516000058203645,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3884,7 +3884,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015649999113520607,
+      "latency_ms": 0.02116400003160379,
       "model": "rule.square.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3896,7 +3896,7 @@
       "reasoning": "rule_categorizer: matched rule.intuit.software (keyword_any)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01538800097478088,
+      "latency_ms": 0.022753000052944117,
       "model": "rule.intuit.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3908,7 +3908,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014467001165030524,
+      "latency_ms": 0.021409000055427896,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3920,7 +3920,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.013986000340082683,
+      "latency_ms": 0.020924999944327283,
       "model": "rule.square.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3932,7 +3932,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014045999705558643,
+      "latency_ms": 0.021309999965524185,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3944,7 +3944,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.05324199992173817,
+      "latency_ms": 0.020683999991888413,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3956,7 +3956,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016526000763406046,
+      "latency_ms": 0.022288999957709166,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3968,7 +3968,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01478100057283882,
+      "latency_ms": 0.02077900001040689,
       "model": "rule.square.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3980,7 +3980,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015301000530598685,
+      "latency_ms": 0.022423000018534367,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -3992,7 +3992,7 @@
       "reasoning": "rule_categorizer: matched rule.staples.office (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014998999176896177,
+      "latency_ms": 0.02695400007723947,
       "model": "rule.staples.office",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4004,7 +4004,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.013977998605696484,
+      "latency_ms": 0.021083999968141143,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4016,7 +4016,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014802999430685304,
+      "latency_ms": 0.022744000034435885,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4028,7 +4028,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014617000488215126,
+      "latency_ms": 0.022650999994766607,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4040,7 +4040,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014372000805451535,
+      "latency_ms": 0.02144000006865099,
       "model": "rule.square.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4052,7 +4052,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014520999684464186,
+      "latency_ms": 0.021352999965529307,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4064,7 +4064,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015466999684576876,
+      "latency_ms": 0.022994999994807586,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4076,7 +4076,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014100000043981709,
+      "latency_ms": 0.0209930000210079,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4088,7 +4088,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.013949000276625156,
+      "latency_ms": 0.022571999920728558,
       "model": "rule.square.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4100,7 +4100,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.0186930010386277,
+      "latency_ms": 0.021373999970819568,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4112,7 +4112,7 @@
       "reasoning": "rule_categorizer: matched rule.intuit.software (keyword_any)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01511000118625816,
+      "latency_ms": 0.022866999984216818,
       "model": "rule.intuit.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4124,7 +4124,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014651001038146205,
+      "latency_ms": 0.021866999986741575,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4136,7 +4136,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014712000847794116,
+      "latency_ms": 0.021898999989389267,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4148,7 +4148,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.013958999261376448,
+      "latency_ms": 0.02532500002416782,
       "model": "rule.square.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4160,7 +4160,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01386700023431331,
+      "latency_ms": 0.020612999946933996,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4172,7 +4172,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014772998838452622,
+      "latency_ms": 0.0217729999576477,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4184,7 +4184,7 @@
       "reasoning": "rule_categorizer: matched rule.amazon.review (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015711999367340468,
+      "latency_ms": 0.03609400005188945,
       "model": "rule.amazon.review",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4196,7 +4196,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015019000784377567,
+      "latency_ms": 0.03804499999660038,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4208,7 +4208,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014817998817306943,
+      "latency_ms": 0.03373799995642912,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4220,7 +4220,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014180999642121606,
+      "latency_ms": 0.04045299999688723,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4232,7 +4232,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014082999769016169,
+      "latency_ms": 0.04023000008146482,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4244,7 +4244,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014843999451841228,
+      "latency_ms": 0.022231000002648216,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4256,7 +4256,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.03783200008911081,
+      "latency_ms": 0.02104299994698522,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4268,7 +4268,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014884999472997151,
+      "latency_ms": 0.0216530000898274,
       "model": "rule.square.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4280,7 +4280,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.0141889995575184,
+      "latency_ms": 0.02097399999456684,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4292,7 +4292,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01563800105941482,
+      "latency_ms": 0.06817600001340907,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4304,7 +4304,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014471001122728921,
+      "latency_ms": 0.026729000069281028,
       "model": "rule.square.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4316,7 +4316,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014357001418829896,
+      "latency_ms": 0.02162200007660431,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4328,7 +4328,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015678000636398792,
+      "latency_ms": 0.07240400009322912,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4340,7 +4340,7 @@
       "reasoning": "rule_categorizer: matched rule.intuit.software (keyword_any)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014913999621057883,
+      "latency_ms": 0.029643999937434273,
       "model": "rule.intuit.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4352,7 +4352,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014539000403601676,
+      "latency_ms": 0.02155599997877289,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4364,7 +4364,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.013820001186104491,
+      "latency_ms": 0.02158899997084518,
       "model": "rule.square.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4376,7 +4376,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.022880998585605994,
+      "latency_ms": 0.020876000007774564,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4388,7 +4388,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014342000213218853,
+      "latency_ms": 0.02081399998132838,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4400,7 +4400,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01567299841553904,
+      "latency_ms": 0.021096999944347772,
       "model": "rule.square.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4412,7 +4412,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014635999832535163,
+      "latency_ms": 0.021424999999908323,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4424,7 +4424,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014286999430623837,
+      "latency_ms": 0.026087999913215754,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4436,7 +4436,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014452998584602028,
+      "latency_ms": 0.021453000044857617,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4448,7 +4448,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01478100057283882,
+      "latency_ms": 0.022687999944537296,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4460,7 +4460,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02353699892410077,
+      "latency_ms": 0.022776000037083577,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4472,7 +4472,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.025953999283956364,
+      "latency_ms": 0.021490999984052905,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4484,7 +4484,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02174900146201253,
+      "latency_ms": 0.02073400003155257,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4496,7 +4496,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.026462999812792987,
+      "latency_ms": 0.021464000042215048,
       "model": "rule.square.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4508,7 +4508,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02667900116648525,
+      "latency_ms": 0.023392000002786517,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4520,7 +4520,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02757800029939972,
+      "latency_ms": 0.0225459999683153,
       "model": "rule.square.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4532,7 +4532,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.031844998375163414,
+      "latency_ms": 0.02064199998130789,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4544,7 +4544,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.025957000616472214,
+      "latency_ms": 0.020796999933736515,
       "model": "rule.square.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4556,7 +4556,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.028024998755427077,
+      "latency_ms": 0.022239000031731848,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4568,7 +4568,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02771499930531718,
+      "latency_ms": 0.07558799995877052,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4580,7 +4580,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02526199932617601,
+      "latency_ms": 0.03492400003324292,
       "model": "rule.square.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4592,7 +4592,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02640699858602602,
+      "latency_ms": 0.04824600000574719,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4604,7 +4604,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.027603000489762053,
+      "latency_ms": 0.040298000044458604,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4616,7 +4616,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.05267000051389914,
+      "latency_ms": 0.021741999944424606,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4628,7 +4628,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.029584000003524125,
+      "latency_ms": 0.02178299996558053,
       "model": "rule.square.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4640,7 +4640,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.09204400157614145,
+      "latency_ms": 0.02292299996042857,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4652,7 +4652,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.027988000510958955,
+      "latency_ms": 0.021183000058044854,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4664,7 +4664,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02517500070098322,
+      "latency_ms": 0.023375999944619252,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4676,7 +4676,7 @@
       "reasoning": "rule_categorizer: matched rule.square.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.025585999537725,
+      "latency_ms": 0.021262000018396066,
       "model": "rule.square.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4688,7 +4688,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.028467000447562896,
+      "latency_ms": 0.022467999997388688,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4700,7 +4700,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02518499968573451,
+      "latency_ms": 0.021821000018462655,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4712,7 +4712,7 @@
       "reasoning": "rule_categorizer: matched rule.adobe.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02766900070128031,
+      "latency_ms": 0.017639000020608364,
       "model": "rule.adobe.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4724,7 +4724,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.024836001102812588,
+      "latency_ms": 0.01733700003114791,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4736,7 +4736,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02382300044700969,
+      "latency_ms": 0.024502999963260663,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4748,7 +4748,7 @@
       "reasoning": "rule_categorizer: matched rule.github.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.031472998671233654,
+      "latency_ms": 0.017920999994203157,
       "model": "rule.github.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4760,7 +4760,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02663200029928703,
+      "latency_ms": 0.016978000076051103,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4772,7 +4772,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02527899960114155,
+      "latency_ms": 0.01833700002862315,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4784,7 +4784,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02406699968560133,
+      "latency_ms": 0.01701700000467099,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4796,7 +4796,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.025706998712848872,
+      "latency_ms": 0.017645000070842798,
       "model": "rule.stripe.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4808,7 +4808,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01400499968440272,
+      "latency_ms": 0.02058500001567154,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4820,7 +4820,7 @@
       "reasoning": "rule_categorizer: matched rule.adobe.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01440800042473711,
+      "latency_ms": 0.0176209999835919,
       "model": "rule.adobe.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4832,7 +4832,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014781999198021367,
+      "latency_ms": 0.017342999967695505,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4844,7 +4844,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014274999557528645,
+      "latency_ms": 0.017296999999416585,
       "model": "rule.stripe.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4856,7 +4856,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016847998267621733,
+      "latency_ms": 0.01700400002846436,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4868,7 +4868,7 @@
       "reasoning": "rule_categorizer: matched rule.github.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.025626999558880925,
+      "latency_ms": 0.01716700000997662,
       "model": "rule.github.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4880,7 +4880,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02726099955907557,
+      "latency_ms": 0.016508000044268556,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4892,7 +4892,7 @@
       "reasoning": "rule_categorizer: matched rule.dropbox.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02729299922066275,
+      "latency_ms": 0.01731400004700845,
       "model": "rule.dropbox.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4904,7 +4904,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.036317000194685534,
+      "latency_ms": 0.016805999962343776,
       "model": "rule.stripe.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4916,7 +4916,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.027428999601397663,
+      "latency_ms": 0.017157000002043787,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4928,7 +4928,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.025841000024229288,
+      "latency_ms": 0.01716400004170282,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4940,7 +4940,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.029596998501801863,
+      "latency_ms": 0.017446000015297614,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4952,7 +4952,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.026792999051394872,
+      "latency_ms": 0.025525999944875366,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4964,7 +4964,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.028622000172617845,
+      "latency_ms": 0.01772300004176941,
       "model": "rule.stripe.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4976,7 +4976,7 @@
       "reasoning": "rule_categorizer: matched rule.zoom.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02859800042642746,
+      "latency_ms": 0.01720900002055714,
       "model": "rule.zoom.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -4988,7 +4988,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.028250999093870632,
+      "latency_ms": 0.019111000028715353,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5000,7 +5000,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02412799949524924,
+      "latency_ms": 0.01682399999936024,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5012,7 +5012,7 @@
       "reasoning": "rule_categorizer: matched rule.adobe.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.026961999537888914,
+      "latency_ms": 0.017476000039096107,
       "model": "rule.adobe.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5024,7 +5024,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.027134999982081354,
+      "latency_ms": 0.017206000052283343,
       "model": "rule.stripe.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5036,7 +5036,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.024089998987619765,
+      "latency_ms": 0.017196999920088274,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5048,7 +5048,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.028648999432334676,
+      "latency_ms": 0.018906000036622572,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5060,7 +5060,7 @@
       "reasoning": "rule_categorizer: matched rule.github.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02850599958037492,
+      "latency_ms": 0.017361999994136568,
       "model": "rule.github.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5072,7 +5072,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02421200042590499,
+      "latency_ms": 0.017055000057553116,
       "model": "rule.stripe.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5084,7 +5084,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.0239609998970991,
+      "latency_ms": 0.01713200003905513,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5096,7 +5096,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.032078000003821217,
+      "latency_ms": 0.017743999933372834,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5108,7 +5108,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.023177999537438154,
+      "latency_ms": 0.018877999991673278,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5120,7 +5120,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014045001080376096,
+      "latency_ms": 0.016933999972934544,
       "model": "rule.stripe.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5132,7 +5132,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014061000911169685,
+      "latency_ms": 0.01725999993595906,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5144,7 +5144,7 @@
       "reasoning": "rule_categorizer: matched rule.zoom.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015658999473089352,
+      "latency_ms": 0.017008999975587358,
       "model": "rule.zoom.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5156,7 +5156,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014448000001721084,
+      "latency_ms": 0.01756500000738015,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5168,7 +5168,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015257999621098861,
+      "latency_ms": 0.018370000020695443,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5180,7 +5180,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014893999832565896,
+      "latency_ms": 0.017688999946585682,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5192,7 +5192,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014511000699712895,
+      "latency_ms": 0.01721299997825554,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5204,7 +5204,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.013703998774872161,
+      "latency_ms": 0.016773999959696084,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5216,7 +5216,7 @@
       "reasoning": "rule_categorizer: matched rule.adobe.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014100000043981709,
+      "latency_ms": 0.01719900001262431,
       "model": "rule.adobe.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5228,7 +5228,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014166998880682513,
+      "latency_ms": 0.017057000036402314,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5240,7 +5240,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.048089001211337745,
+      "latency_ms": 0.017296000009991985,
       "model": "rule.stripe.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5252,7 +5252,7 @@
       "reasoning": "rule_categorizer: matched rule.github.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01992599936784245,
+      "latency_ms": 0.01715200005492079,
       "model": "rule.github.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5264,7 +5264,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016075000530690886,
+      "latency_ms": 0.018130000057681173,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5276,7 +5276,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014562998330802657,
+      "latency_ms": 0.01710899994122883,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5288,7 +5288,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014090999684412964,
+      "latency_ms": 0.017075000073418778,
       "model": "rule.stripe.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5300,7 +5300,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014420000297832303,
+      "latency_ms": 0.01734800002850534,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5312,7 +5312,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.013951999790151604,
+      "latency_ms": 0.016802999994069978,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5324,7 +5324,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01497899938840419,
+      "latency_ms": 0.017196000044350512,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5336,7 +5336,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015558000086457469,
+      "latency_ms": 0.01875199995993171,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5348,7 +5348,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014274999557528645,
+      "latency_ms": 0.017308999986198614,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5360,7 +5360,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.013965998732601292,
+      "latency_ms": 0.042245000031471136,
       "model": "rule.stripe.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5372,7 +5372,7 @@
       "reasoning": "rule_categorizer: matched rule.zoom.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.013999000657349825,
+      "latency_ms": 0.020940000013069948,
       "model": "rule.zoom.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5384,7 +5384,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014924999049981125,
+      "latency_ms": 0.018709999949351186,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5396,7 +5396,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.016080000932561234,
+      "latency_ms": 0.018072999978357984,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5408,7 +5408,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.019469000108074397,
+      "latency_ms": 0.018368999917584006,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5420,7 +5420,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015035999240353703,
+      "latency_ms": 0.01689199996235402,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5432,7 +5432,7 @@
       "reasoning": "rule_categorizer: matched rule.adobe.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014249000741983764,
+      "latency_ms": 0.017361999994136568,
       "model": "rule.adobe.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5444,7 +5444,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014237000868888572,
+      "latency_ms": 0.017307999996774015,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5456,7 +5456,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01422199966327753,
+      "latency_ms": 0.017049000007318682,
       "model": "rule.stripe.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5468,7 +5468,7 @@
       "reasoning": "rule_categorizer: matched rule.github.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014353001461131498,
+      "latency_ms": 0.017226999943886767,
       "model": "rule.github.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5480,7 +5480,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01592700027686078,
+      "latency_ms": 0.01886400002604205,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5492,7 +5492,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014351999197970144,
+      "latency_ms": 0.017797000054997625,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5504,7 +5504,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014151999494060874,
+      "latency_ms": 0.016967000078693673,
       "model": "rule.stripe.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5516,7 +5516,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014232000467018224,
+      "latency_ms": 0.0173720000020694,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5528,7 +5528,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01428500036126934,
+      "latency_ms": 0.017274000015277124,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5540,7 +5540,7 @@
       "reasoning": "rule_categorizer: matched rule.dropbox.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014548999388352968,
+      "latency_ms": 0.017311999954472412,
       "model": "rule.dropbox.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5552,7 +5552,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014146999092190526,
+      "latency_ms": 0.021773000071334536,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5564,7 +5564,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.018242999431095086,
+      "latency_ms": 0.016964999986157636,
       "model": "rule.stripe.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5576,7 +5576,7 @@
       "reasoning": "rule_categorizer: matched rule.zoom.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014491000911220908,
+      "latency_ms": 0.016770999991422286,
       "model": "rule.zoom.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5588,7 +5588,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015776999134686776,
+      "latency_ms": 0.018581000063022657,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5600,7 +5600,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014612000086344779,
+      "latency_ms": 0.019499000018186052,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5612,7 +5612,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01598800008650869,
+      "latency_ms": 0.017567999975653947,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5624,7 +5624,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014349998309626244,
+      "latency_ms": 0.016898000012588454,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5636,7 +5636,7 @@
       "reasoning": "rule_categorizer: matched rule.adobe.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014309000107459724,
+      "latency_ms": 0.01756599999680475,
       "model": "rule.adobe.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5648,7 +5648,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.023684999177930877,
+      "latency_ms": 0.017173000060211052,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5660,7 +5660,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.0255920003837673,
+      "latency_ms": 0.01700500001788896,
       "model": "rule.stripe.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5672,7 +5672,7 @@
       "reasoning": "rule_categorizer: matched rule.github.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014323999494081363,
+      "latency_ms": 0.01682300000993564,
       "model": "rule.github.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5684,7 +5684,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014019000445841812,
+      "latency_ms": 0.01685699999143253,
       "model": "rule.stripe.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5696,7 +5696,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014195999028743245,
+      "latency_ms": 0.017272999912165687,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5708,7 +5708,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.05072599924460519,
+      "latency_ms": 0.01689299995177862,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5720,7 +5720,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01625299955776427,
+      "latency_ms": 0.018912000086857006,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5732,7 +5732,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014413000826607458,
+      "latency_ms": 0.016722000054869568,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5744,7 +5744,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014139999620965682,
+      "latency_ms": 0.01693600006547058,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5756,7 +5756,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01460599924030248,
+      "latency_ms": 0.01680000002579618,
       "model": "rule.stripe.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5768,7 +5768,7 @@
       "reasoning": "rule_categorizer: matched rule.zoom.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.013995999324833974,
+      "latency_ms": 0.016692000031071075,
       "model": "rule.zoom.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5780,7 +5780,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.015473999155801721,
+      "latency_ms": 0.04699099997651501,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5792,7 +5792,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01569699998071883,
+      "latency_ms": 0.020138999957453052,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5804,7 +5804,7 @@
       "reasoning": "rule_categorizer: matched rule.adobe.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.019809000150416978,
+      "latency_ms": 0.017505999949207762,
       "model": "rule.adobe.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5816,7 +5816,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.025669998649391346,
+      "latency_ms": 0.01744199994391238,
       "model": "rule.stripe.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5828,7 +5828,7 @@
       "reasoning": "rule_categorizer: matched rule.github.software (merchant_contains)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02471799962222576,
+      "latency_ms": 0.017377000062879233,
       "model": "rule.github.software",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5840,7 +5840,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02494200089131482,
+      "latency_ms": 0.023151000050347648,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5852,7 +5852,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02506500095478259,
+      "latency_ms": 0.01751900003910123,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5864,7 +5864,7 @@
       "reasoning": "rule_categorizer: matched rule.stripe.fees (keyword_all)",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.027134001356898807,
+      "latency_ms": 0.017510000020592997,
       "model": "rule.stripe.fees",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5876,7 +5876,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.02325899913557805,
+      "latency_ms": 0.019632999965324416,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5888,7 +5888,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.014437999197980389,
+      "latency_ms": 0.01713000006020593,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null
@@ -5900,7 +5900,7 @@
       "reasoning": "rule_categorizer: no rule matched",
       "alternative_category_code": null,
       "cost_usd": 0.0,
-      "latency_ms": 0.01440699998056516,
+      "latency_ms": 0.016864000031091564,
       "model": "deterministic_rules_v1",
       "matched_rule_intent": null,
       "mapping_outcome": null

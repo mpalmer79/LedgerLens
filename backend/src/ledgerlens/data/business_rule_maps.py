@@ -109,6 +109,12 @@ DEFAULT_INTENT_MAP = BusinessRuleMap(
         # Owner-side movement
         "owner_draw": "3030",
         "owner_contribution": "3010",
+        # Auto-parts / tires intents (introduced by Batch #1) — the seed
+        # COA has only "Cost of Goods Sold" (5010); both intents land there
+        # on the default map. Business-specific maps (auto-repair-eval,
+        # Granite State demo) carry their own COA-correct overrides.
+        "parts_inventory": "5010",
+        "tires_inventory": "5010",
         # Intentionally blank — these should never auto-categorize without
         # an owner question. The rule_categorizer will see `None` here and
         # leave the rule's own category_code in place; if the rule's own
@@ -129,6 +135,7 @@ GRANITE_STATE_INTENT_MAP = BusinessRuleMap(
     intent_to_code={
         # Auto-shop-specific
         "parts_inventory": "5010",  # Cost of Goods Sold
+        "tires_inventory": "5010",  # Demo's COGS bucket (Batch #1)
         "tools_equipment": "6170",
         "vehicle_maintenance": "6140",  # Repairs & Maintenance
         # Operating expenses (overrides where the auto shop's preference
@@ -172,6 +179,9 @@ AUTO_REPAIR_EVAL_INTENT_MAP = BusinessRuleMap(
         # Parts go to inventory first; COGS only after they're consumed on a
         # work order. The auto-repair COA models this explicitly.
         "parts_inventory": "1050",
+        # Tires get their own inventory bucket (1070) — separate from parts
+        # (1050) — per the auto-repair eval COA. Batch #1 adds this intent.
+        "tires_inventory": "1070",
         "tools_equipment": "6150",  # Small Tools (Expensed)
         # Utilities split into electric vs gas/water vs telecom on this COA.
         "utilities": "6020",  # Electric (default — the rule may match gas too)
@@ -244,6 +254,11 @@ COFFEE_SHOP_EVAL_INTENT_MAP = BusinessRuleMap(
             "meals_entertainment",
             # rule default 6110 = Bank Service Charges on this COA. Route to review.
             "travel",
+            # Batch #1 parts-vendor rules — a coffee shop should not auto-
+            # categorize NAPA/AutoZone/etc. as Green Coffee or any COGS.
+            # Rule default 5010 on coffee-shop COA = "COGS - Green Coffee".
+            "parts_inventory",
+            "tires_inventory",
         }
     ),
 )
@@ -293,6 +308,12 @@ DESIGN_AGENCY_EVAL_INTENT_MAP = BusinessRuleMap(
             "repairs_maintenance",
             "supplies_general",
             "waste_services",
+            # Batch #1 parts-vendor intents — design agency has no parts
+            # or tires concept. Rule default 5010 doesn't exist on this COA
+            # so the fallback would already drop, but listing explicitly
+            # for safety + clarity.
+            "parts_inventory",
+            "tires_inventory",
         }
     ),
 )
