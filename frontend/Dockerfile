@@ -1,8 +1,12 @@
 # LedgerLens frontend.
 # Single-stage Node 20 image. Build context = repo root (set in railway.toml
 # at the repo root). All COPY directives are relative to the repo root.
+#
+# Pinned to node:20.19-slim because Vite 8 (pulled in via vitest 4) declares
+# `@types/node ^20.19.0 || >=22.12.0` as a peer dependency. The unpinned
+# `node:20-slim` tag worked in practice but made the floor invisible.
 
-FROM node:20-slim AS runtime
+FROM node:20.19-slim AS runtime
 
 WORKDIR /app
 
