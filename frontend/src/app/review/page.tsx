@@ -11,6 +11,7 @@ import {
   correctReview,
   getReviewQueue,
   listCategories,
+  markForAccountantReview,
   markUncategorizable,
 } from "@/lib/api/client";
 import type { Category, ReviewQueueItem } from "@/lib/api/types";
@@ -87,15 +88,16 @@ export default function ReviewPage() {
   return (
     <AppShell>
       <header className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h1 className="font-display text-[28px] font-medium text-text-primary">
+        <div className="min-w-0 flex-1">
+          <h1 className="font-display text-[clamp(22px,5vw,28px)] font-medium leading-tight text-text-primary">
             Review is the safety layer.
           </h1>
           <p className="mt-1 max-w-3xl text-[14px] text-text-secondary">
-            LedgerLens does not silently guess on uncertain financial transactions. Items land
-            here when correction memory, deterministic rules, and the configured fallback
-            cannot safely finalize them. Approve to accept the predicted category, correct to
-            override, or mark uncategorizable to exclude the row from the ledger.
+            Items land here when correction memory, deterministic rules, and the configured
+            fallback cannot safely finalize them. Pick one explicit action per row:{" "}
+            <strong>Approve prediction</strong>, <strong>Correct</strong>,{" "}
+            <strong>Needs accountant review</strong>, or{" "}
+            <strong>Exclude / non-business</strong>.
           </p>
         </div>
         <span className="rounded-full bg-amber-100 px-3 py-1 text-[12px] font-medium text-amber-900">
@@ -103,13 +105,23 @@ export default function ReviewPage() {
         </span>
       </header>
 
+      {!loading && items && items.length > 0 && (
+        <p
+          className="mt-2 text-[12px] text-text-subtle"
+          aria-live="polite"
+          data-testid="review-progress"
+        >
+          {items.length} pending — pick an explicit action per card.
+        </p>
+      )}
+
       <aside className="mt-4 rounded border border-brand-200 bg-brand-100 p-3 text-[12px] text-brand-800">
         <p className="font-medium">What happens when you correct?</p>
         <ul className="mt-1 list-disc space-y-0.5 pl-5 text-text-secondary">
           <li>The correction is stored as a deterministic memory rule.</li>
           <li>Similar future transactions are categorized from memory at zero cost.</li>
           <li>The audit trail records the decision with reviewer and timestamp.</li>
-          <li>The final ledger export uses your reviewed category, not the prediction.</li>
+          <li>The reviewed categorization export uses your reviewed category, not the prediction.</li>
         </ul>
       </aside>
 
@@ -216,12 +228,14 @@ export default function ReviewPage() {
                   </div>
                 </div>
 
-                <div className="mt-3 flex flex-wrap gap-2">
+                <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
                   <button
                     type="button"
                     disabled={rs.busy}
-                    onClick={() => runAction(tx.id, "Approve", () => approveReview(tx.id, rs.note || undefined))}
-                    className="rounded bg-brand-600 px-3 py-1.5 text-[13px] font-medium text-white hover:bg-brand-500 disabled:opacity-50"
+                    onClick={() =>
+                      runAction(tx.id, "Approve", () => approveReview(tx.id, rs.note || undefined))
+                    }
+                    className="min-h-[44px] rounded bg-brand-600 px-3 py-2 text-[13px] font-medium text-white hover:bg-brand-500 disabled:opacity-50"
                   >
                     Approve prediction
                   </button>
@@ -233,7 +247,7 @@ export default function ReviewPage() {
                         correctReview(tx.id, rs.correctCode, rs.note || undefined),
                       )
                     }
-                    className="rounded border-2 border-brand-600 bg-surface-panel px-3 py-1.5 text-[13px] font-medium text-brand-700 hover:bg-brand-50 disabled:opacity-50"
+                    className="min-h-[44px] rounded border-2 border-brand-600 bg-surface-panel px-3 py-2 text-[13px] font-medium text-brand-700 hover:bg-brand-50 disabled:opacity-50"
                   >
                     Correct
                   </button>
@@ -241,13 +255,28 @@ export default function ReviewPage() {
                     type="button"
                     disabled={rs.busy}
                     onClick={() =>
-                      runAction(tx.id, "Mark uncategorizable", () =>
+                      runAction(tx.id, "Needs accountant review", () =>
+                        markForAccountantReview(tx.id, rs.note || undefined, {
+                          accountant_follow_up_required: true,
+                        }),
+                      )
+                    }
+                    title="Defer to an accountant. Does not finalize the predicted category."
+                    className="min-h-[44px] rounded border border-amber-400 bg-amber-50 px-3 py-2 text-[13px] font-medium text-amber-900 hover:bg-amber-100 disabled:opacity-50"
+                  >
+                    Needs accountant review
+                  </button>
+                  <button
+                    type="button"
+                    disabled={rs.busy}
+                    onClick={() =>
+                      runAction(tx.id, "Exclude / non-business", () =>
                         markUncategorizable(tx.id, rs.note || undefined),
                       )
                     }
-                    className="rounded border border-surface-border bg-surface-panel px-3 py-1.5 text-[13px] text-text-secondary hover:bg-surface-sunken disabled:opacity-50"
+                    className="min-h-[44px] rounded border border-surface-border bg-surface-panel px-3 py-2 text-[13px] text-text-secondary hover:bg-surface-sunken disabled:opacity-50"
                   >
-                    Mark uncategorizable
+                    Exclude / non-business
                   </button>
                 </div>
               </li>

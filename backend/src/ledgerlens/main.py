@@ -20,8 +20,10 @@ from ledgerlens.api import (
 )
 from ledgerlens.config import get_settings
 from ledgerlens.db import _get_sessionmaker, init_db
+from ledgerlens.observability import RequestIdMiddleware, configure_logging
 from ledgerlens.seed import seed_chart_of_accounts
 
+configure_logging()
 logger = logging.getLogger("ledgerlens.startup")
 
 
@@ -56,12 +58,17 @@ def create_app() -> FastAPI:
         lifespan=lifespan,
     )
 
+    # Request-ID middleware first so request_id is bound for the CORS
+    # preflight responses too.
+    application.add_middleware(RequestIdMiddleware)
+
     application.add_middleware(
         CORSMiddleware,
         allow_origins=settings.cors_origins,
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
+        expose_headers=["X-Request-ID"],
     )
 
     application.include_router(health.router)

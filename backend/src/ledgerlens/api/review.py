@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from ledgerlens.api.schemas import (
+    AccountantReviewRequest,
     ApproveReview,
     CategorizationOut,
     CorrectReview,
@@ -79,6 +80,15 @@ def approve(
     db: Session = Depends(get_db),
 ) -> ReviewDecisionOut:
     tx, latest = _latest_or_404(db, transaction_id)
+    # Safety backstop: an answer flagged for accountant follow-up must not
+    # silently finalize the predicted category. The /questions UI should
+    # route such answers to the accountant-review endpoint instead. This
+    # 422 keeps the trust boundary intact even if the frontend regresses.
+    if payload.accountant_follow_up_required:
+        raise ValidationFailed(
+            "Accountant-follow-up answers cannot approve a predicted category. "
+            "Use POST /review-queue/{transaction_id}/accountant-review instead."
+        )
     decision = ReviewDecision(
         transaction_id=tx.id,
         categorization_result_id=latest.id,
@@ -203,6 +213,56 @@ def mark_uncategorizable(
     AuditRepo(db).record(
         entity_type="review_decision",
         action="mark_uncategorizable",
+        entity_id=decision.id,
+        details={
+            "transaction_id": tx.id,
+            "categorization_result_id": latest.id,
+        },
+    )
+    db.commit()
+    db.refresh(decision)
+    return ReviewDecisionOut.model_validate(decision)
+
+
+@router.post(
+    "/{transaction_id}/accountant-review",
+    response_model=ReviewDecisionOut,
+    status_code=201,
+)
+def mark_for_accountant_review(
+    transaction_id: str,
+    payload: AccountantReviewRequest,
+    db: Session = Depends(get_db),
+) -> ReviewDecisionOut:
+    """Defer a row to an accountant.
+
+    The categorization result transitions to ACCOUNTANT_REVIEW_REQUIRED.
+    No predicted category is adopted. The row will not appear in the
+    handoff's `ready_for_accountant` section; it will appear in the
+    accountant-review follow-up section with the owner's question +
+    answer label inline.
+    """
+    tx, latest = _latest_or_404(db, transaction_id)
+    decision = ReviewDecision(
+        transaction_id=tx.id,
+        categorization_result_id=latest.id,
+        reviewer_action=ReviewerAction.MARK_FOR_ACCOUNTANT_REVIEW,
+        selected_category_code=None,
+        reviewer_note=payload.reviewer_note,
+        owner_question_key=payload.owner_question_key,
+        owner_question_text=payload.owner_question_text,
+        owner_answer_label=payload.owner_answer_label,
+        owner_note=payload.owner_note,
+        suggested_resolution=payload.suggested_resolution,
+        # Force True — this path means "needs accountant follow-up" by
+        # definition, regardless of the inbound payload value.
+        accountant_follow_up_required=True,
+    )
+    ReviewRepo(db).add(decision)
+    latest.status = ResultStatus.ACCOUNTANT_REVIEW_REQUIRED
+    AuditRepo(db).record(
+        entity_type="review_decision",
+        action="mark_for_accountant_review",
         entity_id=decision.id,
         details={
             "transaction_id": tx.id,

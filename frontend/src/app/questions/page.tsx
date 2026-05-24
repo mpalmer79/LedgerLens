@@ -10,6 +10,7 @@ import {
   approveReview,
   correctReview,
   getReviewQueue,
+  markForAccountantReview,
   markUncategorizable,
 } from "@/lib/api/client";
 import type { ReviewQueueItem } from "@/lib/api/types";
@@ -18,27 +19,37 @@ import { formatAmount } from "@/lib/format";
 /**
  * Owner Questions — plain-English projection of the review queue.
  *
- * For each review item we pick a small question template and 4–6 multiple-
- * choice answers. The chosen answer is recorded as a `reviewer_note` on the
- * resulting ReviewDecision so the handoff page surfaces it verbatim to the
- * accountant. When the answer maps to a specific category code, the row is
- * corrected via `/review-queue/{tx}/correct`; otherwise it's approved with
- * the answer as the note ("Not sure / needs accountant review" still
- * resolves the queue item but tags it for follow-up).
+ * Each answer carries an explicit `resolutionAction` that the handler
+ * branches on. The previous behavior — infer from `categoryCode`
+ * presence — could silently route "Needs accountant review" answers
+ * through the approve endpoint, finalizing the model's predicted
+ * category. The action enum makes the intent explicit:
+ *
+ *   correct                 → POST /review-queue/{tx}/correct (needs categoryCode)
+ *   approve_prediction      → POST /review-queue/{tx}/approve
+ *   needs_accountant_review → POST /review-queue/{tx}/accountant-review
+ *   exclude                 → POST /review-queue/{tx}/uncategorizable
  */
+
+type ResolutionAction =
+  | "correct"
+  | "approve_prediction"
+  | "needs_accountant_review"
+  | "exclude";
 
 type Answer = {
   label: string;
   // The plain-English answer recorded as reviewer_note (kept for backward
   // compat — the handoff still surfaces this string verbatim).
   note: string;
-  // Optional category code. When set, we use /correct; otherwise /approve.
+  // Required: the explicit resolution path. No inference from categoryCode.
+  resolutionAction: ResolutionAction;
+  // Category code. Required when resolutionAction === "correct".
   categoryCode?: string;
   // Owner Answers v2 — structured metadata persisted on ReviewDecision.
-  // `accountantFollowUp: true` lights up the inline warning + flags the row
-  // in the handoff. `suggestedResolution` is a small enum hint surfaced in
-  // the markdown export ("vendor_payment", "owner_draw", etc.).
-  accountantFollowUp?: boolean;
+  // `suggestedResolution` is a small enum hint surfaced in the markdown
+  // export ("vendor_payment", "owner_draw", etc.). The accountant-follow-up
+  // flag is now derived from `resolutionAction === "needs_accountant_review"`.
   suggestedResolution?: string;
 };
 
@@ -62,30 +73,33 @@ const TEMPLATES: QuestionTemplate[] = [
       {
         label: "Customer payment (revenue)",
         note: "Owner: customer payment.",
+        resolutionAction: "correct",
         categoryCode: "4010",
         suggestedResolution: "customer_revenue",
       },
       {
         label: "Service revenue",
         note: "Owner: service revenue.",
+        resolutionAction: "correct",
         categoryCode: "4020",
         suggestedResolution: "service_revenue",
       },
       {
         label: "Refund of a business expense",
         note: "Owner: refund — confirm with accountant.",
-        accountantFollowUp: true,
+        resolutionAction: "needs_accountant_review",
         suggestedResolution: "expense_refund",
       },
       {
         label: "Personal deposit / non-business",
         note: "Owner: personal deposit — exclude from books.",
+        resolutionAction: "exclude",
         suggestedResolution: "personal",
       },
       {
         label: "Needs accountant review",
         note: "Owner: needs accountant review.",
-        accountantFollowUp: true,
+        resolutionAction: "needs_accountant_review",
       },
     ],
   },
@@ -99,30 +113,33 @@ const TEMPLATES: QuestionTemplate[] = [
       {
         label: "Owner draw",
         note: "Owner: owner draw / distribution.",
+        resolutionAction: "correct",
         categoryCode: "3030",
         suggestedResolution: "owner_draw",
       },
       {
         label: "Owner contribution",
         note: "Owner: owner contribution.",
+        resolutionAction: "correct",
         categoryCode: "3010",
         suggestedResolution: "owner_contribution",
       },
       {
         label: "Reimbursement for a business expense",
         note: "Owner: reimbursement — confirm receipt with accountant.",
-        accountantFollowUp: true,
+        resolutionAction: "needs_accountant_review",
         suggestedResolution: "reimbursement",
       },
       {
         label: "Personal / non-business",
         note: "Owner: personal — exclude from books.",
+        resolutionAction: "exclude",
         suggestedResolution: "personal",
       },
       {
         label: "Needs accountant review",
         note: "Owner: needs accountant review.",
-        accountantFollowUp: true,
+        resolutionAction: "needs_accountant_review",
       },
     ],
   },
@@ -136,36 +153,39 @@ const TEMPLATES: QuestionTemplate[] = [
       {
         label: "Vendor payment",
         note: "Owner: vendor payment.",
+        resolutionAction: "correct",
         categoryCode: "6080",
         suggestedResolution: "vendor_payment",
       },
       {
         label: "Loan payment",
         note: "Owner: loan payment — needs accountant review.",
-        accountantFollowUp: true,
+        resolutionAction: "needs_accountant_review",
         suggestedResolution: "loan_payment",
       },
       {
         label: "Owner draw",
         note: "Owner: owner draw / distribution.",
+        resolutionAction: "correct",
         categoryCode: "3030",
         suggestedResolution: "owner_draw",
       },
       {
         label: "Payroll-related",
         note: "Owner: payroll-related.",
+        resolutionAction: "correct",
         categoryCode: "6030",
         suggestedResolution: "payroll",
       },
       {
         label: "Needs accountant review",
         note: "Owner: needs accountant review.",
-        accountantFollowUp: true,
+        resolutionAction: "needs_accountant_review",
       },
       {
         label: "Not sure",
         note: "Owner: not sure — flagged for review.",
-        accountantFollowUp: true,
+        resolutionAction: "needs_accountant_review",
       },
     ],
   },
@@ -181,30 +201,34 @@ const TEMPLATES: QuestionTemplate[] = [
       {
         label: "Shop inventory",
         note: "Owner: shop parts inventory.",
+        resolutionAction: "correct",
         categoryCode: "5010",
         suggestedResolution: "parts_inventory",
       },
       {
         label: "Customer job",
         note: "Owner: parts for a customer job.",
+        resolutionAction: "correct",
         categoryCode: "5010",
         suggestedResolution: "parts_inventory",
       },
       {
         label: "Tools / equipment",
         note: "Owner: shop tools / equipment.",
+        resolutionAction: "correct",
         categoryCode: "6170",
         suggestedResolution: "tools_equipment",
       },
       {
         label: "Personal / non-business",
         note: "Owner: personal — exclude from books.",
+        resolutionAction: "exclude",
         suggestedResolution: "personal",
       },
       {
         label: "Needs accountant review",
         note: "Owner: needs accountant review.",
-        accountantFollowUp: true,
+        resolutionAction: "needs_accountant_review",
       },
     ],
   },
@@ -218,30 +242,34 @@ const TEMPLATES: QuestionTemplate[] = [
       {
         label: "Shop supplies",
         note: "Owner: shop supplies.",
+        resolutionAction: "correct",
         categoryCode: "6180",
         suggestedResolution: "supplies_general",
       },
       {
         label: "Equipment",
         note: "Owner: equipment.",
+        resolutionAction: "correct",
         categoryCode: "6170",
         suggestedResolution: "tools_equipment",
       },
       {
         label: "Building repair",
         note: "Owner: building repair.",
+        resolutionAction: "correct",
         categoryCode: "6140",
         suggestedResolution: "repairs_maintenance",
       },
       {
         label: "Personal / non-business",
         note: "Owner: personal — exclude from books.",
+        resolutionAction: "exclude",
         suggestedResolution: "personal",
       },
       {
         label: "Needs accountant review",
         note: "Owner: needs accountant review.",
-        accountantFollowUp: true,
+        resolutionAction: "needs_accountant_review",
       },
     ],
   },
@@ -256,36 +284,40 @@ const TEMPLATES: QuestionTemplate[] = [
       {
         label: "Office supplies",
         note: "Owner: office supplies.",
+        resolutionAction: "correct",
         categoryCode: "6060",
         suggestedResolution: "office_supplies",
       },
       {
         label: "Equipment",
         note: "Owner: equipment.",
+        resolutionAction: "correct",
         categoryCode: "6170",
         suggestedResolution: "tools_equipment",
       },
       {
         label: "Inventory",
         note: "Owner: inventory — confirm with accountant.",
-        accountantFollowUp: true,
+        resolutionAction: "needs_accountant_review",
         suggestedResolution: "parts_inventory",
       },
       {
         label: "Meals or staff expense",
         note: "Owner: meals / staff expense.",
+        resolutionAction: "correct",
         categoryCode: "6120",
         suggestedResolution: "meals_entertainment",
       },
       {
         label: "Personal / non-business",
         note: "Owner: personal — exclude from books.",
+        resolutionAction: "exclude",
         suggestedResolution: "personal",
       },
       {
         label: "Needs accountant review",
         note: "Owner: needs accountant review.",
-        accountantFollowUp: true,
+        resolutionAction: "needs_accountant_review",
       },
     ],
   },
@@ -300,24 +332,27 @@ const TEMPLATES: QuestionTemplate[] = [
       {
         label: "Business fuel",
         note: "Owner: business fuel.",
+        resolutionAction: "correct",
         categoryCode: "6130",
         suggestedResolution: "fuel_vehicle",
       },
       {
         label: "Vehicle maintenance",
         note: "Owner: vehicle maintenance.",
+        resolutionAction: "correct",
         categoryCode: "6140",
         suggestedResolution: "vehicle_maintenance",
       },
       {
         label: "Personal / non-business",
         note: "Owner: personal vehicle expense — exclude.",
+        resolutionAction: "exclude",
         suggestedResolution: "personal",
       },
       {
         label: "Needs accountant review",
         note: "Owner: needs accountant review.",
-        accountantFollowUp: true,
+        resolutionAction: "needs_accountant_review",
       },
     ],
   },
@@ -332,30 +367,34 @@ const TEMPLATES: QuestionTemplate[] = [
       {
         label: "Software subscription",
         note: "Owner: business software subscription.",
+        resolutionAction: "correct",
         categoryCode: "6070",
         suggestedResolution: "software_subscription",
       },
       {
         label: "Internet / telecom",
         note: "Owner: business internet / telecom.",
+        resolutionAction: "correct",
         categoryCode: "6150",
         suggestedResolution: "internet_telecom",
       },
       {
         label: "Advertising / marketing tool",
         note: "Owner: marketing / advertising tool.",
+        resolutionAction: "correct",
         categoryCode: "6090",
         suggestedResolution: "marketing_advertising",
       },
       {
         label: "Personal / non-business",
         note: "Owner: personal — exclude from books.",
+        resolutionAction: "exclude",
         suggestedResolution: "personal",
       },
       {
         label: "Needs accountant review",
         note: "Owner: needs accountant review.",
-        accountantFollowUp: true,
+        resolutionAction: "needs_accountant_review",
       },
     ],
   },
@@ -369,21 +408,23 @@ const DEFAULT_TEMPLATE: QuestionTemplate = {
     {
       label: "It's a normal business expense — approve the predicted category",
       note: "Owner: approved predicted category.",
+      resolutionAction: "approve_prediction",
     },
     {
       label: "Personal / non-business",
       note: "Owner: personal — exclude from books.",
+      resolutionAction: "exclude",
       suggestedResolution: "personal",
     },
     {
       label: "Needs accountant review",
       note: "Owner: needs accountant review.",
-      accountantFollowUp: true,
+      resolutionAction: "needs_accountant_review",
     },
     {
       label: "Not sure",
       note: "Owner: not sure — flagged for review.",
-      accountantFollowUp: true,
+      resolutionAction: "needs_accountant_review",
     },
   ],
 };
@@ -454,21 +495,35 @@ export default function QuestionsPage() {
     setState((s) => ({ ...s, busyId: id }));
     clearSaveError(id);
     const trimmedNote = (state.ownerNotes[id] ?? "").trim();
+    const isFollowUp = answer.resolutionAction === "needs_accountant_review";
     const ownerFields = {
       owner_question_key: template.key,
       owner_question_text: template.question,
       owner_answer_label: answer.label,
       owner_note: trimmedNote ? trimmedNote : null,
       suggested_resolution: answer.suggestedResolution ?? null,
-      accountant_follow_up_required: Boolean(answer.accountantFollowUp),
+      accountant_follow_up_required: isFollowUp,
     };
     try {
-      if (answer.categoryCode) {
-        await correctReview(id, answer.categoryCode, answer.note, ownerFields);
-      } else {
-        // No specific category mapping — approve with the answer recorded as
-        // a note so the accountant sees the explanation in the handoff.
-        await approveReview(id, answer.note, ownerFields);
+      switch (answer.resolutionAction) {
+        case "correct":
+          if (!answer.categoryCode) {
+            throw new Error("correct action missing categoryCode");
+          }
+          await correctReview(id, answer.categoryCode, answer.note, ownerFields);
+          break;
+        case "approve_prediction":
+          // Only used when the answer label clearly says the owner is
+          // approving the predicted category.
+          await approveReview(id, answer.note, ownerFields);
+          break;
+        case "needs_accountant_review":
+          // SAFE PATH — does not finalize the predicted category.
+          await markForAccountantReview(id, answer.note, ownerFields);
+          break;
+        case "exclude":
+          await markUncategorizable(id, answer.note, ownerFields);
+          break;
       }
       await load();
       // Clear the per-card textarea after a successful save.
@@ -610,18 +665,18 @@ export default function QuestionsPage() {
                       disabled={busy}
                       onClick={() => void handleAnswer(item, tmpl, answer)}
                       title={
-                        answer.accountantFollowUp
+                        answer.resolutionAction === "needs_accountant_review"
                           ? "This will be flagged for accountant review."
                           : undefined
                       }
                       className={
-                        answer.accountantFollowUp
+                        answer.resolutionAction === "needs_accountant_review"
                           ? "rounded border border-amber-300 bg-amber-50 px-3 py-2 text-left text-[13px] text-amber-900 hover:bg-amber-100 disabled:opacity-50"
                           : "rounded border border-surface-border bg-surface-page px-3 py-2 text-left text-[13px] text-text-primary hover:bg-brand-100 disabled:opacity-50"
                       }
                     >
                       {answer.label}
-                      {answer.accountantFollowUp && (
+                      {answer.resolutionAction === "needs_accountant_review" && (
                         <span className="ml-1 text-[10px] uppercase tracking-wide text-amber-700">
                           · accountant review
                         </span>

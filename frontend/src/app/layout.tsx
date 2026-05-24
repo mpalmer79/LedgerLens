@@ -51,7 +51,7 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         alt:
-          'LedgerLens — verified AI-assisted bookkeeping workflow. Messy transactions → memory + rules → review routing → verified ledger.',
+          "LedgerLens — workflow-verified AI-assisted bookkeeping cleanup. Messy transactions → memory + rules → review routing → reviewed accountant handoff.",
       },
     ],
   },

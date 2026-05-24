@@ -76,7 +76,13 @@ class CsvImportSummary(BaseModel):
 
 
 CategorizationStatus = Literal[
-    "auto_approved", "needs_review", "uncategorizable", "corrected", "rejected", "failed"
+    "auto_approved",
+    "needs_review",
+    "uncategorizable",
+    "corrected",
+    "rejected",
+    "failed",
+    "accountant_review_required",
 ]
 
 
@@ -158,6 +164,18 @@ class UncategorizableReview(OwnerAnswerFields):
     reviewer_note: str | None = None
 
 
+class AccountantReviewRequest(OwnerAnswerFields):
+    """Mark a transaction as deferred to an accountant.
+
+    The categorization result transitions to ACCOUNTANT_REVIEW_REQUIRED.
+    No category code is selected. `accountant_follow_up_required` is
+    forced to True regardless of the inbound value so this path is
+    unambiguous.
+    """
+
+    reviewer_note: str | None = None
+
+
 class ReviewDecisionOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
@@ -196,6 +214,14 @@ class LedgerRow(BaseModel):
     # never been categorized. Used by the trust-metric panel to distinguish
     # deterministic (memory / rule) decisions from model fallback.
     model_provider: str | None = None
+    # True when the latest review decision flagged this row for accountant
+    # follow-up. Such rows are never counted as verified finalized.
+    accountant_follow_up_required: bool = False
+    # The owner-answer label and free-text note from the latest review
+    # decision, surfaced so the handoff and follow-up exports can render
+    # the owner's plain-English context inline.
+    owner_answer_label: str | None = None
+    owner_note: str | None = None
 
 
 class LedgerTrust(BaseModel):
@@ -303,6 +329,11 @@ class HandoffOut(BaseModel):
 
     ready_for_accountant: list[LedgerRow]
     needs_review: list[LedgerRow]
+    # Rows that a human explicitly deferred to an accountant. Subset
+    # surfaced separately so the markdown / CSV export shows them as a
+    # follow-up bucket the accountant can act on, separate from rows
+    # the model has not finalized yet.
+    accountant_review_required: list[LedgerRow] = []
     owner_answers: list[HandoffOwnerAnswer]
     corrections_learned: list["CorrectionMemoryOut"]
     scenario: HandoffScenario | None = None
@@ -391,6 +422,14 @@ class BusinessRuleMapOut(BaseModel):
     business_id: str
     business_name: str | None = None
     entries: list["BusinessRuleMapEntry"]
+    # Intents this business explicitly refuses to auto-categorize from
+    # the rule's own default code. Listed so the mapping explorer can
+    # surface "blocked fallback" rows.
+    block_fallback_intents: list[str] = []
+    # Intents that appear on rules but are not mapped here (no override,
+    # and not blocked). The rule layer falls back to the rule's own
+    # category_code. Surfaced so the explorer can warn the owner.
+    unmapped_intents: list[str] = []
 
 
 class BusinessRuleMapEntry(BaseModel):

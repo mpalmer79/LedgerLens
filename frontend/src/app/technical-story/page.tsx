@@ -283,7 +283,7 @@ export default function TechnicalStoryPage() {
             />
             <ProofCard
               title="Human-in-the-loop workflows"
-              body="Review queue, correction memory from real human decisions, audit trail on every state change, ledger export reflects review state."
+              body="Review queue, correction memory from real human decisions, audit trail on every state change, accountant handoff export reflects review state."
             />
             <ProofCard
               title="Evaluation discipline"

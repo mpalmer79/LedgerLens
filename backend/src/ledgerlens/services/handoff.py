@@ -170,7 +170,23 @@ def build_handoff(db: Session) -> HandoffOut:
     trust = _compute_trust(rows)
 
     ready = [r for r in rows if _is_verified(r)]
-    needs_review = [r for r in rows if r.categorization_status == "needs_review"]
+    # Both "model has not finalized yet" (needs_review) and "human said
+    # accountant must look at this" (accountant_review_required) belong in
+    # the needs-review bucket. The markdown splits them visually so the
+    # accountant sees which ones the owner explicitly flagged.
+    needs_review = [
+        r for r in rows if r.categorization_status in ("needs_review", "accountant_review_required")
+    ]
+    accountant_review = [r for r in rows if r.categorization_status == "accountant_review_required"]
+    # Defensive: any row finalized as auto_approved / corrected that still
+    # carries a follow-up flag belongs in the follow-up bucket too, not
+    # silently in ready.
+    accountant_review.extend(
+        r
+        for r in rows
+        if r.accountant_follow_up_required
+        and r.categorization_status in ("auto_approved", "corrected")
+    )
 
     answers = _owner_answers(db)
     corrections = _recent_corrections(db)
@@ -184,6 +200,7 @@ def build_handoff(db: Session) -> HandoffOut:
         impact=_impact(rows, corrections_learned_count=len(corrections_out)),
         ready_for_accountant=ready,
         needs_review=needs_review,
+        accountant_review_required=accountant_review,
         owner_answers=answers,
         corrections_learned=corrections_out,
         scenario=scenario,
@@ -244,14 +261,34 @@ def render_markdown(handoff: HandoffOut) -> str:
             out.append(f"| {r.transaction_date} | {r.description} | {amount} | {cat} | {source} |")
     out.append("")
 
-    out.append("## Needs owner / accountant review")
+    # Owner explicitly deferred to accountant — first because it's the
+    # actionable bucket the accountant should look at.
+    out.append("## Owner flagged for accountant review")
     out.append("")
-    if not handoff.needs_review:
-        out.append("_No outstanding review items. Nothing blocking finalization._")
+    if not handoff.accountant_review_required:
+        out.append("_No rows flagged for accountant follow-up._")
+    else:
+        out.append("| Date | Description | Amount | Owner answer | Owner note |")
+        out.append("|---|---|---:|---|---|")
+        for r in handoff.accountant_review_required:
+            amount = f"{r.amount_cents / 100:.2f} {r.currency}"
+            label = r.owner_answer_label or "(unlabelled)"
+            note = (r.owner_note or "").replace("\n", " ").strip() or "—"
+            out.append(f"| {r.transaction_date} | {r.description} | {amount} | {label} | {note} |")
+    out.append("")
+
+    # Rows the model could not finalize on its own. May overlap with the
+    # accountant-flagged bucket above; the section header makes it clear
+    # those are the ones a human already flagged.
+    pending_rows = [r for r in handoff.needs_review if r.categorization_status == "needs_review"]
+    out.append("## Pending — model could not finalize")
+    out.append("")
+    if not pending_rows:
+        out.append("_No outstanding pending rows. Nothing blocking finalization._")
     else:
         out.append("| Date | Description | Amount | Predicted | Reason |")
         out.append("|---|---|---:|---|---|")
-        for r in handoff.needs_review:
+        for r in pending_rows:
             cat = f"[{r.category_code}] {r.category_name}" if r.category_code else "—"
             amount = f"{r.amount_cents / 100:.2f} {r.currency}"
             status = r.categorization_status

@@ -54,6 +54,9 @@ def _build_rows(db: Session) -> list[LedgerRow]:
                         reviewer_note=None,
                         source=tx.source,
                         model_provider=None,
+                        accountant_follow_up_required=False,
+                        owner_answer_label=None,
+                        owner_note=None,
                     )
                 )
                 continue
@@ -88,6 +91,13 @@ def _build_rows(db: Session) -> list[LedgerRow]:
                     reviewer_note=(latest_review.reviewer_note if latest_review else None),
                     source=tx.source,
                     model_provider=latest.model_provider,
+                    accountant_follow_up_required=bool(
+                        latest_review.accountant_follow_up_required if latest_review else False
+                    ),
+                    owner_answer_label=(
+                        latest_review.owner_answer_label if latest_review else None
+                    ),
+                    owner_note=(latest_review.owner_note if latest_review else None),
                 )
             )
         page += 1
@@ -96,14 +106,26 @@ def _build_rows(db: Session) -> list[LedgerRow]:
 
 
 def _unresolved_count(rows: list[LedgerRow]) -> int:
-    return sum(1 for r in rows if r.categorization_status in ("needs_review", "pending", "failed"))
+    return sum(
+        1
+        for r in rows
+        if r.categorization_status
+        in (
+            "needs_review",
+            "pending",
+            "failed",
+            "accountant_review_required",
+        )
+    )
 
 
 def _is_finalized(row: LedgerRow) -> bool:
     """A row is finalized when it has a category and is not in a review or
     error state. Uncategorizable rows are intentionally excluded — they were
     explicitly removed from the bookkeeping output by a human or by the
-    pipeline's safety check."""
+    pipeline's safety check. Rows in `accountant_review_required` are also
+    excluded: a human reviewed them and explicitly deferred to an
+    accountant, so they are not yet finalized."""
     return row.categorization_status in {"auto_approved", "corrected"}
 
 
@@ -111,8 +133,16 @@ def _is_verified(row: LedgerRow) -> bool:
     """A finalized row counts as verified iff it came through a defensible
     path: human review, correction memory, or a rule-layer auto-approval.
     Auto-approved demo-stub / anthropic rows that were never touched by a
-    human are explicitly NOT verified."""
+    human are explicitly NOT verified.
+
+    Defensive backstop: a row whose latest review decision carries
+    `accountant_follow_up_required=True` is NOT verified, even if the
+    row's status is `auto_approved` / `corrected`. The approve endpoint
+    rejects such payloads now, but this check protects any pre-existing
+    data or any non-API persistence path."""
     if not _is_finalized(row):
+        return False
+    if row.accountant_follow_up_required:
         return False
     if row.reviewed:
         return True
@@ -127,7 +157,9 @@ def _is_verified(row: LedgerRow) -> bool:
 def _compute_trust(rows: list[LedgerRow]) -> LedgerTrust:
     finalized = [r for r in rows if _is_finalized(r)]
     verified = [r for r in finalized if _is_verified(r)]
-    review_required = sum(1 for r in rows if r.categorization_status == "needs_review")
+    review_required = sum(
+        1 for r in rows if r.categorization_status in ("needs_review", "accountant_review_required")
+    )
     deterministic = sum(
         1 for r in rows if (r.model_provider or "") in {"correction_memory", "rule_categorizer"}
     )

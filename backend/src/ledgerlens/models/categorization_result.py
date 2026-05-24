@@ -15,6 +15,11 @@ class ResultStatus(enum.StrEnum):
     CORRECTED = "corrected"
     REJECTED = "rejected"
     FAILED = "failed"
+    # A human reviewed the row and explicitly deferred to an accountant.
+    # The row is NOT finalized and NOT verified. The associated
+    # ReviewDecision carries the structured owner-answer context the
+    # handoff surfaces to the accountant.
+    ACCOUNTANT_REVIEW_REQUIRED = "accountant_review_required"
 
 
 def _new_id() -> str:

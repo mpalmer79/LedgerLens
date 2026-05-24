@@ -12,6 +12,11 @@ class ReviewerAction(enum.StrEnum):
     APPROVE = "approve"
     CORRECT = "correct"
     MARK_UNCATEGORIZABLE = "mark_uncategorizable"
+    # The reviewer explicitly deferred this row to an accountant. The
+    # categorization result's status becomes ACCOUNTANT_REVIEW_REQUIRED;
+    # selected_category_code stays None; accountant_follow_up_required
+    # is recorded as True on the ReviewDecision.
+    MARK_FOR_ACCOUNTANT_REVIEW = "mark_for_accountant_review"
 
 
 def _new_id() -> str:

@@ -142,7 +142,7 @@ export default function DashboardPage() {
             >
               Try guided demo →
               <p className="mt-1 text-[12px] font-normal text-text-secondary">
-                Three minutes. Ends at a verified ledger export.
+                Three minutes. Ends at a reviewed accountant handoff.
               </p>
             </Link>
             <Link
@@ -151,7 +151,8 @@ export default function DashboardPage() {
             >
               Import transactions →
               <p className="mt-1 text-[12px] font-normal text-text-secondary">
-                Bring a real bank export. Sample CSV is on the import page.
+                Use the sample CSV or synthetic test data. Public demo — do
+                not upload real bank data.
               </p>
             </Link>
             <Link

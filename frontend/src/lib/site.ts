@@ -25,7 +25,7 @@ export const LOOM_SCRIPT_DOC_URL = `${REPO_URL}/blob/main/docs/LOOM_WALKTHROUGH_
  */
 export const LOOM_URL: string = process.env.NEXT_PUBLIC_LOOM_URL?.trim() ?? "";
 
-export const SITE_TITLE = "LedgerLens | Verified AI-Assisted Bookkeeping Workflow";
+export const SITE_TITLE = "LedgerLens | Workflow-Verified AI-Assisted Bookkeeping Cleanup";
 export const SITE_DESCRIPTION =
-  "Turn messy small-business bank transactions into a verified ledger with deterministic rules, correction memory, review routing, and audit trails.";
-export const SITE_TAGLINE = "Verified AI-assisted bookkeeping workflow";
+  "Turn messy small-business bank transactions into a workflow-verified accountant handoff with deterministic rules, correction memory, review routing, and audit trails. Not production accounting software.";
+export const SITE_TAGLINE = "Workflow-verified AI-assisted bookkeeping cleanup";

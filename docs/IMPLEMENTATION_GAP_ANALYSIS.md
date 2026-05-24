@@ -220,3 +220,46 @@ A reasonable order after this PR:
 6. **Demo data + seed flow.** Reset endpoint, demo-mode banner on the frontend, scripted walkthrough. (Phase 15.)
 7. **CI and deployment hardening.** No-placeholder check, schema validation for eval artifacts, env-var docs by mode. (Phases 17–18.)
 8. **Final self-review.** `docs/FINAL_ENGINEERING_REVIEW.md`, README pointer. (Phase 20.)
+
+---
+
+## 8. Review safety + mobile queue + production foundations sprint
+
+What landed in this sprint (see also
+`docs/REVIEW_SAFETY_AND_MOBILE_QUEUE.md`,
+`docs/OBSERVABILITY_AND_REDACTION.md`,
+`docs/CATEGORY_MAPPING_WIZARD.md`,
+`docs/ACCOUNTANT_CSV_EXPORTS.md`,
+`docs/AUTH_TENANT_FOUNDATION.md`,
+`docs/REVIEW_SAFETY_SEMANTICS_AUDIT.md`):
+
+- **Review safety bug fixed.** `/questions` can no longer silently
+  finalize a row the owner flagged for accountant follow-up. New
+  `ACCOUNTANT_REVIEW_REQUIRED` status + new `/accountant-review`
+  endpoint. `/approve` rejects follow-up payloads with 422.
+- **Trust metric defended.** `_is_verified()` excludes
+  follow-up rows and the new status. Handoff splits review buckets.
+- **Mobile-first /review.** Four explicit primary actions, 44px tap
+  targets, 1/2/4 responsive grid, progress indicator.
+- **Category mapping explorer at /mapping.** Read-only.
+- **Accountant CSV exports.** `/handoff/export.reviewed.csv` +
+  `/handoff/export.followup.csv` + clear "not QuickBooks" copy.
+- **Request IDs + structured logging + redaction utility.** Foundation
+  for production logging without a vendor.
+- **Auth / tenant foundation doc** (design-only).
+- **Claims regression sweep.** No live route says "verified ledger",
+  "real bank export", or bare "Postgres-ready". Test suite locks
+  this in.
+- **Eval workflow** supports `rules-only-mapped` (no-cost default),
+  `rules-only`, `stub`, and the hybrid / Claude-Haiku modes.
+
+What is still **explicitly not** in scope:
+
+- Auth, sessions, tenant scoping at the data layer.
+- Editable per-business category mapping.
+- A dedicated one-card-per-viewport mobile review queue.
+- QBO / IIF / Xero exports.
+- Bulk review actions.
+- Two-way accountant collaboration inside LedgerLens.
+- Split transactions.
+- JSON-structured logging + log shipping.

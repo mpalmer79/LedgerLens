@@ -9,12 +9,21 @@ on:
         default: 'v0'
         type: string
       categorizer:
-        description: 'Categorizer to run'
+        # NOTE: claude-haiku-v1 and hybrid-rules-model require a valid
+        # ANTHROPIC_API_KEY and will incur API spend. The default is
+        # rules-only-mapped which is deterministic, free, and exercises
+        # the per-business intent → category mapping layer. Use the
+        # deterministic modes for routine artifact refreshes.
+        description: 'Categorizer to run (rules-only-mapped is the no-cost default; *-v1 / hybrid-* modes require ANTHROPIC_API_KEY and incur cost)'
         required: true
-        default: 'claude-haiku-v1'
+        default: 'rules-only-mapped'
         type: choice
         options:
           - stub
+          - rules-only
+          - rules-only-mapped
+          - hybrid-rules-model
+          - hybrid-rules-model-mapped
           - claude-haiku-v1
 
 permissions:
