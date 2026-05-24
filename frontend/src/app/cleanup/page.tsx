@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ArrowRight, CheckCircle2, Circle, Clock3 } from "lucide-react";
 
 import { AppShell } from "@/components/app/AppShell";
 import { CleanupImpactSummary } from "@/components/app/CleanupImpactSummary";
+import { ErrorState, LoadingState } from "@/components/ui/DataState";
 import {
-  ApiError,
   getHandoff,
   getReviewQueue,
   listTransactions,
@@ -26,7 +26,7 @@ type Step = {
 
 type State = {
   loading: boolean;
-  error: string | null;
+  error: unknown;
   transactionsTotal: number;
   reviewTotal: number;
   ownerAnswersOpen: number;
@@ -45,41 +45,30 @@ const INITIAL: State = {
 export default function CleanupPage() {
   const [state, setState] = useState<State>(INITIAL);
 
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const [tx, queue, handoff] = await Promise.all([
-          listTransactions({ limit: 1 }),
-          getReviewQueue({ limit: 1 }),
-          getHandoff(),
-        ]);
-        if (cancelled) return;
-        setState({
-          loading: false,
-          error: null,
-          transactionsTotal: tx.total,
-          reviewTotal: queue.total,
-          ownerAnswersOpen: queue.total, // questions = review items pending owner input
-          handoff,
-        });
-      } catch (err) {
-        if (!cancelled) {
-          setState({
-            ...INITIAL,
-            loading: false,
-            error:
-              err instanceof ApiError
-                ? `${err.message}${err.status ? ` (HTTP ${err.status})` : ""}`
-                : String(err),
-          });
-        }
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
+  const load = useCallback(async () => {
+    setState((s) => ({ ...s, loading: true, error: null }));
+    try {
+      const [tx, queue, handoff] = await Promise.all([
+        listTransactions({ limit: 1 }),
+        getReviewQueue({ limit: 1 }),
+        getHandoff(),
+      ]);
+      setState({
+        loading: false,
+        error: null,
+        transactionsTotal: tx.total,
+        reviewTotal: queue.total,
+        ownerAnswersOpen: queue.total,
+        handoff,
+      });
+    } catch (err) {
+      setState({ ...INITIAL, loading: false, error: err });
+    }
   }, []);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
 
   const handoff = state.handoff;
   const trust = handoff?.trust;
@@ -237,11 +226,22 @@ export default function CleanupPage() {
         )}
       </header>
 
-      {state.error && (
-        <div className="mt-6 rounded-md border border-red-200 bg-red-50 p-4 text-[14px] text-red-700">
-          {state.error}
-        </div>
+      {state.error !== null && (
+        <ErrorState
+          error={state.error}
+          onRetry={() => void load()}
+          secondaryAction={
+            <Link
+              href="/technical-story"
+              className="text-[13px] font-medium text-text-secondary hover:text-text-primary"
+            >
+              Read the technical story →
+            </Link>
+          }
+        />
       )}
+
+      {state.loading && <LoadingState label="Loading cleanup status…" />}
 
       {/* Empty-state shortcut for first-time visitors */}
       {!state.loading && state.transactionsTotal === 0 && !state.error && (

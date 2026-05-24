@@ -43,27 +43,138 @@ export class ApiError extends Error {
   readonly status: number;
   readonly code: string | undefined;
   readonly details: Record<string, unknown> | undefined;
+  /** Whether the failure is plausibly transient (network blip, 503, 504, timeout). */
+  readonly retryable: boolean;
+  /** Plain-English message safe to render to a small-business owner. */
+  readonly userMessage: string;
 
   constructor(
     message: string,
     status: number,
     code?: string,
     details?: Record<string, unknown>,
+    opts?: { retryable?: boolean; userMessage?: string },
   ) {
     super(message);
     this.name = "ApiError";
     this.status = status;
     this.code = code;
     this.details = details;
+    this.retryable = opts?.retryable ?? isRetryableStatus(status, code);
+    this.userMessage = opts?.userMessage ?? userMessageFor(status, code, message);
   }
 }
 
-async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
+function isRetryableStatus(status: number, code: string | undefined): boolean {
+  if (code === "network_error" || code === "timeout") return true;
+  // 408 Request Timeout, 425 Too Early, 429 Too Many, 5xx server errors.
+  return status === 408 || status === 425 || status === 429 || status >= 500;
+}
+
+function userMessageFor(status: number, code: string | undefined, fallback: string): string {
+  if (code === "network_error") {
+    return "LedgerLens could not reach the demo backend. Please try again in a moment.";
+  }
+  if (code === "timeout") {
+    return "The demo backend is taking longer than expected to respond. Please try again.";
+  }
+  if (status === 503) {
+    return "The demo backend is temporarily unavailable. Please try again in a moment.";
+  }
+  if (status === 404) {
+    return "We couldn’t find what you were looking for.";
+  }
+  if (status >= 500) {
+    return "The backend responded with an error. Please try again, or open the technical story.";
+  }
+  if (status === 400 || status === 422) {
+    // Most validation errors carry a useful backend message; surface that.
+    return fallback;
+  }
+  return fallback;
+}
+
+/** Defaults for the public demo deploy. Generous, not infinite. */
+const DEFAULT_TIMEOUT_MS = 10_000;
+const DEFAULT_RETRY_COUNT = 1;
+const DEFAULT_RETRY_DELAY_MS = 600;
+
+export type ApiFetchOptions = RequestInit & {
+  /** Timeout in milliseconds. Default 10s. Pass 0 to disable. */
+  timeoutMs?: number;
+  /**
+   * Max retries on transient failures (network error, timeout, 5xx, 408, 425,
+   * 429). Default 1 for GET / HEAD, 0 for everything else — mutations are
+   * never retried automatically.
+   */
+  retries?: number;
+  /** Delay between retries. Default 600ms. */
+  retryDelayMs?: number;
+  /** External abort signal; merged with the internal timeout signal. */
+  signal?: AbortSignal;
+};
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function methodOf(init?: RequestInit): string {
+  return (init?.method ?? "GET").toUpperCase();
+}
+
+function isSafeMethod(method: string): boolean {
+  return method === "GET" || method === "HEAD";
+}
+
+async function apiFetch<T>(path: string, init?: ApiFetchOptions): Promise<T> {
   const url = `${getApiBaseUrl()}${path}`;
+  const method = methodOf(init);
+  const timeoutMs = init?.timeoutMs ?? DEFAULT_TIMEOUT_MS;
+  const maxAttempts =
+    1 + (init?.retries ?? (isSafeMethod(method) ? DEFAULT_RETRY_COUNT : 0));
+  const retryDelay = init?.retryDelayMs ?? DEFAULT_RETRY_DELAY_MS;
+
+  let lastError: ApiError | undefined;
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      return await apiFetchOnce<T>(url, init, timeoutMs);
+    } catch (err) {
+      if (!(err instanceof ApiError)) throw err;
+      lastError = err;
+      // Stop on non-retryable failures, on the last attempt, or if the caller's
+      // signal was aborted (e.g. the user navigated away).
+      if (!err.retryable || attempt === maxAttempts) throw err;
+      if (init?.signal?.aborted) throw err;
+      await sleep(retryDelay);
+    }
+  }
+  // Unreachable — the loop above either returns or throws — but TS doesn't see it.
+  throw lastError ?? new ApiError("Unknown error", 0);
+}
+
+async function apiFetchOnce<T>(
+  url: string,
+  init: ApiFetchOptions | undefined,
+  timeoutMs: number,
+): Promise<T> {
+  // Compose a timeout signal with the caller's signal (if any).
+  const timeoutController = new AbortController();
+  const timer =
+    timeoutMs > 0
+      ? setTimeout(() => timeoutController.abort(), timeoutMs)
+      : undefined;
+  const externalSignal = init?.signal;
+  const onExternalAbort = () => timeoutController.abort();
+  if (externalSignal) {
+    if (externalSignal.aborted) timeoutController.abort();
+    else externalSignal.addEventListener("abort", onExternalAbort);
+  }
+
   let res: Response;
   try {
     res = await fetch(url, {
       ...init,
+      signal: timeoutController.signal,
       headers: {
         Accept: "application/json",
         ...(init?.body && !(init.body instanceof FormData)
@@ -72,12 +183,23 @@ async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
         ...(init?.headers ?? {}),
       },
     });
-  } catch (cause) {
+  } catch {
+    // Differentiate timeout-induced abort from a "real" network error.
+    if (timeoutController.signal.aborted && !externalSignal?.aborted) {
+      throw new ApiError(
+        `Request timed out after ${timeoutMs}ms: ${url}`,
+        0,
+        "timeout",
+      );
+    }
     throw new ApiError(
       `Network error: could not reach ${url}. Is the backend running?`,
       0,
       "network_error",
     );
+  } finally {
+    if (timer !== undefined) clearTimeout(timer);
+    if (externalSignal) externalSignal.removeEventListener("abort", onExternalAbort);
   }
 
   if (res.status === 204) {

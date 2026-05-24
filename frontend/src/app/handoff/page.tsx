@@ -1,13 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { AppShell } from "@/components/app/AppShell";
 import { CleanupImpactSummary } from "@/components/app/CleanupImpactSummary";
 import { TrustPanel } from "@/components/app/TrustPanel";
+import { EmptyState, ErrorState, LoadingState } from "@/components/ui/DataState";
 import {
-  ApiError,
   getHandoff,
   getHandoffMarkdownUrl,
   getLedgerExportUrl,
@@ -17,8 +17,10 @@ import { formatAmount } from "@/lib/format";
 
 type State = {
   loading: boolean;
-  error: string | null;
+  error: unknown;
   handoff: HandoffResponse | null;
+  /** "markdown" | "csv" — set when the user clicks a download link. */
+  downloadStatus: { kind: "markdown" | "csv"; ok: boolean | null } | null;
 };
 
 export default function HandoffPage() {
@@ -26,32 +28,41 @@ export default function HandoffPage() {
     loading: true,
     error: null,
     handoff: null,
+    downloadStatus: null,
   });
 
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const data = await getHandoff();
-        if (!cancelled)
-          setState({ loading: false, error: null, handoff: data });
-      } catch (err) {
-        if (!cancelled) {
-          setState({
-            loading: false,
-            error:
-              err instanceof ApiError
-                ? `${err.message}${err.status ? ` (HTTP ${err.status})` : ""}`
-                : String(err),
-            handoff: null,
-          });
-        }
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
+  const load = useCallback(async () => {
+    setState((s) => ({ ...s, loading: true, error: null }));
+    try {
+      const data = await getHandoff();
+      setState({ loading: false, error: null, handoff: data, downloadStatus: null });
+    } catch (err) {
+      setState({ loading: false, error: err, handoff: null, downloadStatus: null });
+    }
   }, []);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
+
+  /** Probe the export URL with a HEAD request so we can show an inline error
+   *  if the backend would 500 instead of letting the browser silently fail. */
+  const handleDownload = useCallback(
+    async (kind: "markdown" | "csv", url: string) => {
+      setState((s) => ({ ...s, downloadStatus: { kind, ok: null } }));
+      try {
+        const probe = await fetch(url, { method: "HEAD" });
+        if (!probe.ok) throw new Error(`HTTP ${probe.status}`);
+        // Trigger the actual download in a new tab/window so the browser
+        // handles Content-Disposition.
+        window.location.assign(url);
+        setState((s) => ({ ...s, downloadStatus: { kind, ok: true } }));
+      } catch {
+        setState((s) => ({ ...s, downloadStatus: { kind, ok: false } }));
+      }
+    },
+    [],
+  );
 
   const handoff = state.handoff;
 
@@ -83,15 +94,52 @@ export default function HandoffPage() {
         </p>
       </header>
 
-      {state.error && (
-        <div className="mt-6 rounded-md border border-red-200 bg-red-50 p-4 text-[14px] text-red-700">
-          {state.error}
-        </div>
+      {state.error !== null && (
+        <ErrorState
+          error={state.error}
+          onRetry={() => void load()}
+          secondaryAction={
+            <Link
+              href="/cleanup"
+              className="text-[13px] font-medium text-text-secondary hover:text-text-primary"
+            >
+              Back to cleanup checklist →
+            </Link>
+          }
+        />
       )}
 
-      {state.loading && (
-        <p className="mt-6 text-[14px] text-text-subtle">Loading…</p>
-      )}
+      {state.loading && <LoadingState label="Loading the handoff package…" />}
+
+      {/* No-handoff empty state when the DB is empty (zero finalized rows AND
+       *  zero needs-review items). The trust block still renders fine, but
+       *  the "0 of 0" reads as broken to a casual visitor. */}
+      {!state.loading &&
+        state.error === null &&
+        handoff !== null &&
+        handoff.trust.finalized_count === 0 &&
+        handoff.needs_review.length === 0 && (
+          <EmptyState
+            title="No handoff package yet"
+            message="Seed the sample scenario or import a CSV to produce a verified handoff package."
+            action={
+              <Link
+                href="/cleanup"
+                className="inline-flex items-center rounded-md bg-brand-600 px-4 py-2 text-[13px] font-medium text-white hover:bg-brand-500"
+              >
+                Start monthly cleanup →
+              </Link>
+            }
+            secondaryAction={
+              <Link
+                href="/demo"
+                className="inline-flex items-center rounded-md border border-surface-border-strong px-4 py-2 text-[13px] font-medium text-text-primary hover:bg-surface-sunken"
+              >
+                Try the sample scenario
+              </Link>
+            }
+          />
+        )}
 
       {handoff && (
         <>
@@ -102,32 +150,52 @@ export default function HandoffPage() {
 
           <section className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="rounded-md border border-surface-border bg-surface-panel p-4">
-              <a
-                href={getHandoffMarkdownUrl()}
-                download
-                className="inline-flex items-center rounded-md bg-brand-600 px-4 py-2 text-[13px] font-medium text-white hover:bg-brand-500"
+              <button
+                type="button"
+                onClick={() => void handleDownload("markdown", getHandoffMarkdownUrl())}
+                disabled={state.downloadStatus?.kind === "markdown" && state.downloadStatus.ok === null}
+                className="inline-flex items-center rounded-md bg-brand-600 px-4 py-2 text-[13px] font-medium text-white hover:bg-brand-500 disabled:opacity-60"
               >
                 Download handoff summary (markdown)
-              </a>
+              </button>
               <p className="mt-2 text-[12px] text-text-secondary">
                 Use this for accountant context or email handoff. Includes the cleanup
                 summary, ready-for-accountant rows, unresolved items, owner answers, and
                 corrections learned.
               </p>
+              {state.downloadStatus?.kind === "markdown" && state.downloadStatus.ok === false && (
+                <p
+                  role="alert"
+                  className="mt-2 rounded border border-red-200 bg-red-50 p-2 text-[12px] text-red-800"
+                >
+                  Could not download the markdown handoff. Please try again, or use the CSV
+                  export.
+                </p>
+              )}
             </div>
             <div className="rounded-md border border-surface-border bg-surface-panel p-4">
-              <a
-                href={getLedgerExportUrl()}
-                download
-                className="inline-flex items-center rounded-md border border-surface-border-strong px-4 py-2 text-[13px] font-medium text-text-primary hover:bg-surface-sunken"
+              <button
+                type="button"
+                onClick={() => void handleDownload("csv", getLedgerExportUrl())}
+                disabled={state.downloadStatus?.kind === "csv" && state.downloadStatus.ok === null}
+                className="inline-flex items-center rounded-md border border-surface-border-strong px-4 py-2 text-[13px] font-medium text-text-primary hover:bg-surface-sunken disabled:opacity-60"
               >
                 Download full ledger CSV
-              </a>
+              </button>
               <p className="mt-2 text-[12px] text-text-secondary">
                 Use this for ledger import or spreadsheet review. Every row carries a
                 per-row <span className="mono">verified</span> column so downstream tooling
                 can filter unverified rows.
               </p>
+              {state.downloadStatus?.kind === "csv" && state.downloadStatus.ok === false && (
+                <p
+                  role="alert"
+                  className="mt-2 rounded border border-red-200 bg-red-50 p-2 text-[12px] text-red-800"
+                >
+                  Could not download the ledger CSV. Please try again, or use the markdown
+                  handoff.
+                </p>
+              )}
             </div>
           </section>
 

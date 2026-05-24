@@ -1,6 +1,14 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { ApiError, getApiBaseUrl, getReviewQueue, importCsv, listTransactions } from "./client";
+import {
+  ApiError,
+  getApiBaseUrl,
+  getReviewQueue,
+  importCsv,
+  listTransactions,
+  resetDemo,
+  seedDemo,
+} from "./client";
 
 const originalFetch = global.fetch;
 
@@ -81,6 +89,116 @@ describe("apiFetch error parsing", () => {
     mockJsonOnce({ total: 0, items: [] });
     const out = await listTransactions();
     expect(out).toEqual({ total: 0, items: [] });
+  });
+});
+
+describe("ApiError envelope", () => {
+  it("carries userMessage + retryable for network errors", async () => {
+    global.fetch = vi.fn(async () => {
+      throw new TypeError("fetch failed");
+    }) as unknown as typeof fetch;
+    try {
+      await listTransactions();
+      throw new Error("expected ApiError");
+    } catch (err) {
+      expect(err).toBeInstanceOf(ApiError);
+      const apiErr = err as ApiError;
+      expect(apiErr.code).toBe("network_error");
+      expect(apiErr.retryable).toBe(true);
+      expect(apiErr.userMessage).toContain("could not reach the demo backend");
+    }
+  });
+
+  it("marks 503 as retryable but 404 as not retryable", () => {
+    expect(new ApiError("nope", 503).retryable).toBe(true);
+    expect(new ApiError("nope", 504).retryable).toBe(true);
+    expect(new ApiError("nope", 429).retryable).toBe(true);
+    expect(new ApiError("nope", 404).retryable).toBe(false);
+    expect(new ApiError("nope", 400).retryable).toBe(false);
+    expect(new ApiError("nope", 200).retryable).toBe(false);
+  });
+
+  it("uses a plain-English userMessage for common failure modes", () => {
+    expect(new ApiError("x", 0, "network_error").userMessage).toContain(
+      "could not reach the demo backend",
+    );
+    expect(new ApiError("x", 0, "timeout").userMessage).toContain("taking longer");
+    expect(new ApiError("x", 503).userMessage).toContain("temporarily unavailable");
+    expect(new ApiError("x", 404).userMessage).toContain("couldn’t find");
+    expect(new ApiError("x", 500).userMessage).toContain("backend responded with an error");
+  });
+});
+
+describe("retry behavior", () => {
+  it("retries safe GETs once on network error then throws", async () => {
+    const fn = vi.fn(async () => {
+      throw new TypeError("fetch failed");
+    });
+    global.fetch = fn as unknown as typeof fetch;
+    await expect(listTransactions()).rejects.toBeInstanceOf(ApiError);
+    // Default: 1 retry → 2 attempts total.
+    expect(fn.mock.calls.length).toBe(2);
+  });
+
+  it("retries safe GETs on 503 then throws", async () => {
+    const fn = vi.fn(async () =>
+      new Response(JSON.stringify({ detail: "down" }), {
+        status: 503,
+        headers: { "Content-Type": "application/json" },
+      }),
+    );
+    global.fetch = fn as unknown as typeof fetch;
+    await expect(listTransactions()).rejects.toMatchObject({ status: 503 });
+    expect(fn.mock.calls.length).toBe(2);
+  });
+
+  it("does NOT retry POST mutations on 5xx", async () => {
+    const fn = vi.fn(async () =>
+      new Response(JSON.stringify({ detail: "kaboom" }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      }),
+    );
+    global.fetch = fn as unknown as typeof fetch;
+    await expect(seedDemo()).rejects.toBeInstanceOf(ApiError);
+    expect(fn.mock.calls.length).toBe(1);
+  });
+
+  it("does NOT retry POST mutations on network error", async () => {
+    const fn = vi.fn(async () => {
+      throw new TypeError("fetch failed");
+    });
+    global.fetch = fn as unknown as typeof fetch;
+    await expect(resetDemo()).rejects.toBeInstanceOf(ApiError);
+    expect(fn.mock.calls.length).toBe(1);
+  });
+
+  it("does NOT retry GETs on 404 (non-retryable status)", async () => {
+    const fn = vi.fn(async () =>
+      new Response(JSON.stringify({ detail: "not found" }), {
+        status: 404,
+        headers: { "Content-Type": "application/json" },
+      }),
+    );
+    global.fetch = fn as unknown as typeof fetch;
+    await expect(listTransactions()).rejects.toMatchObject({ status: 404 });
+    expect(fn.mock.calls.length).toBe(1);
+  });
+
+  it("succeeds on the second attempt when the first fails", async () => {
+    let attempt = 0;
+    const fn = vi.fn(async () => {
+      attempt++;
+      if (attempt === 1) throw new TypeError("fetch failed");
+      return new Response(JSON.stringify({ total: 0, items: [] }), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+    });
+    global.fetch = fn as unknown as typeof fetch;
+    const out = await listTransactions();
+    expect(out).toEqual({ total: 0, items: [] });
+    expect(fn.mock.calls.length).toBe(2);
   });
 });
 

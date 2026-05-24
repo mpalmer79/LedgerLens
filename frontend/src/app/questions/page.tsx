@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 
 import { AppShell } from "@/components/app/AppShell";
+import { EmptyState, ErrorState, LoadingState } from "@/components/ui/DataState";
 import {
   ApiError,
   approveReview,
@@ -193,9 +194,11 @@ function pickTemplate(item: ReviewQueueItem): QuestionTemplate {
 
 type State = {
   loading: boolean;
-  error: string | null;
+  error: unknown;
   items: ReviewQueueItem[];
   busyId: string | null;
+  /** Per-item save errors so one bad save doesn't blank the page. */
+  saveErrors: Record<string, unknown>;
 };
 
 export default function QuestionsPage() {
@@ -204,9 +207,11 @@ export default function QuestionsPage() {
     error: null,
     items: [],
     busyId: null,
+    saveErrors: {},
   });
 
   const load = useCallback(async () => {
+    setState((s) => ({ ...s, loading: true, error: null }));
     try {
       const queue = await getReviewQueue({ limit: 50 });
       setState((s) => ({
@@ -216,14 +221,7 @@ export default function QuestionsPage() {
         items: queue.items,
       }));
     } catch (err) {
-      setState((s) => ({
-        ...s,
-        loading: false,
-        error:
-          err instanceof ApiError
-            ? `${err.message}${err.status ? ` (HTTP ${err.status})` : ""}`
-            : String(err),
-      }));
+      setState((s) => ({ ...s, loading: false, error: err }));
     }
   }, []);
 
@@ -231,15 +229,26 @@ export default function QuestionsPage() {
     void load();
   }, [load]);
 
+  function clearSaveError(id: string) {
+    setState((s) => {
+      if (!(id in s.saveErrors)) return s;
+      const next = { ...s.saveErrors };
+      delete next[id];
+      return { ...s, saveErrors: next };
+    });
+  }
+
   async function handleAnswer(item: ReviewQueueItem, answer: Answer) {
-    setState((s) => ({ ...s, busyId: item.transaction.id, error: null }));
+    const id = item.transaction.id;
+    setState((s) => ({ ...s, busyId: id }));
+    clearSaveError(id);
     try {
       if (answer.categoryCode) {
-        await correctReview(item.transaction.id, answer.categoryCode, answer.note);
+        await correctReview(id, answer.categoryCode, answer.note);
       } else {
         // No specific category mapping — approve with the answer recorded as
         // a note so the accountant sees the explanation in the handoff.
-        await approveReview(item.transaction.id, answer.note);
+        await approveReview(id, answer.note);
       }
       await load();
       setState((s) => ({ ...s, busyId: null }));
@@ -247,28 +256,24 @@ export default function QuestionsPage() {
       setState((s) => ({
         ...s,
         busyId: null,
-        error:
-          err instanceof ApiError
-            ? `${err.message}${err.status ? ` (HTTP ${err.status})` : ""}`
-            : String(err),
+        saveErrors: { ...s.saveErrors, [id]: err },
       }));
     }
   }
 
   async function handleSkip(item: ReviewQueueItem) {
-    setState((s) => ({ ...s, busyId: item.transaction.id, error: null }));
+    const id = item.transaction.id;
+    setState((s) => ({ ...s, busyId: id }));
+    clearSaveError(id);
     try {
-      await markUncategorizable(item.transaction.id, "Owner: skipped — exclude from books.");
+      await markUncategorizable(id, "Owner: skipped — exclude from books.");
       await load();
       setState((s) => ({ ...s, busyId: null }));
     } catch (err) {
       setState((s) => ({
         ...s,
         busyId: null,
-        error:
-          err instanceof ApiError
-            ? `${err.message}${err.status ? ` (HTTP ${err.status})` : ""}`
-            : String(err),
+        saveErrors: { ...s.saveErrors, [id]: err },
       }));
     }
   }
@@ -289,28 +294,44 @@ export default function QuestionsPage() {
         </p>
       </header>
 
-      {state.error && (
-        <div className="mt-6 rounded-md border border-red-200 bg-red-50 p-4 text-[14px] text-red-700">
-          {state.error}
-        </div>
-      )}
-
-      {state.loading && (
-        <p className="mt-6 text-[14px] text-text-subtle">Loading…</p>
-      )}
-
-      {!state.loading && state.items.length === 0 && !state.error && (
-        <section className="mt-8 rounded-lg border border-brand-200 bg-brand-100 p-6 text-center">
-          <p className="font-display text-[18px] font-medium text-text-primary">
-            No open questions.
-          </p>
-          <p className="mt-2 text-[13px] text-text-secondary">
-            Everything is either auto-categorized or already reviewed.{" "}
-            <Link href="/handoff" className="text-brand-700 underline">
-              Open the accountant handoff →
+      {state.error !== null && (
+        <ErrorState
+          error={state.error}
+          onRetry={() => void load()}
+          secondaryAction={
+            <Link
+              href="/cleanup"
+              className="text-[13px] font-medium text-text-secondary hover:text-text-primary"
+            >
+              Back to cleanup checklist →
             </Link>
-          </p>
-        </section>
+          }
+        />
+      )}
+
+      {state.loading && <LoadingState label="Loading owner questions…" />}
+
+      {!state.loading && state.items.length === 0 && state.error === null && (
+        <EmptyState
+          title="No owner questions right now"
+          message="Everything is either auto-categorized or already reviewed."
+          action={
+            <Link
+              href="/handoff"
+              className="inline-flex items-center rounded-md bg-brand-600 px-4 py-2 text-[13px] font-medium text-white hover:bg-brand-500"
+            >
+              View accountant handoff →
+            </Link>
+          }
+          secondaryAction={
+            <Link
+              href="/cleanup"
+              className="inline-flex items-center rounded-md border border-surface-border-strong px-4 py-2 text-[13px] font-medium text-text-primary hover:bg-surface-sunken"
+            >
+              Open cleanup checklist
+            </Link>
+          }
+        />
       )}
 
       {!state.loading && state.items.length > 0 && (
@@ -318,6 +339,13 @@ export default function QuestionsPage() {
           {state.items.map((item) => {
             const tmpl = pickTemplate(item);
             const busy = state.busyId === item.transaction.id;
+            const saveError = state.saveErrors[item.transaction.id];
+            const saveMessage =
+              saveError instanceof ApiError
+                ? saveError.userMessage
+                : saveError instanceof Error
+                  ? saveError.message
+                  : null;
             return (
               <li
                 key={item.transaction.id}
@@ -367,6 +395,21 @@ export default function QuestionsPage() {
                     Skip — exclude from books
                   </button>
                 </div>
+                {saveMessage && (
+                  <div
+                    role="alert"
+                    className="mt-3 rounded border border-red-200 bg-red-50 p-2 text-[12px] text-red-800"
+                  >
+                    Could not save this answer: {saveMessage}{" "}
+                    <button
+                      type="button"
+                      onClick={() => clearSaveError(item.transaction.id)}
+                      className="underline"
+                    >
+                      Dismiss
+                    </button>
+                  </div>
+                )}
               </li>
             );
           })}

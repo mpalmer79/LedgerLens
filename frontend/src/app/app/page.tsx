@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { AppShell } from "@/components/app/AppShell";
+import { ErrorState } from "@/components/ui/DataState";
 import {
-  ApiError,
   getLedger,
   getReady,
   getReviewQueue,
@@ -30,7 +30,7 @@ type State = {
   events: AuditEvent[] | null;
   corrections: CorrectionMemoryList | null;
   ready: ReadyResponse | null;
-  error: string | null;
+  error: unknown;
   loading: boolean;
 };
 
@@ -48,46 +48,35 @@ const INITIAL: State = {
 export default function DashboardPage() {
   const [state, setState] = useState<State>(INITIAL);
 
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const [transactions, queue, ledger, events, corrections, ready] = await Promise.all([
-          listTransactions({ limit: 5 }),
-          getReviewQueue({ limit: 5 }),
-          getLedger(),
-          listAuditEvents({ limit: 8 }),
-          listCorrections({ active: true, limit: 1 }),
-          getReady().catch(() => null as ReadyResponse | null),
-        ]);
-        if (!cancelled)
-          setState({
-            ready,
-            transactions,
-            queue,
-            ledger,
-            events,
-            corrections,
-            error: null,
-            loading: false,
-          });
-      } catch (err) {
-        if (!cancelled) {
-          setState({
-            ...INITIAL,
-            loading: false,
-            error:
-              err instanceof ApiError
-                ? `${err.message}${err.status ? ` (HTTP ${err.status})` : ""}`
-                : String(err),
-          });
-        }
-      }
-    })();
-    return () => {
-      cancelled = true;
-    };
+  const load = useCallback(async () => {
+    setState((s) => ({ ...s, loading: true, error: null }));
+    try {
+      const [transactions, queue, ledger, events, corrections, ready] = await Promise.all([
+        listTransactions({ limit: 5 }),
+        getReviewQueue({ limit: 5 }),
+        getLedger(),
+        listAuditEvents({ limit: 8 }),
+        listCorrections({ active: true, limit: 1 }),
+        getReady().catch(() => null as ReadyResponse | null),
+      ]);
+      setState({
+        ready,
+        transactions,
+        queue,
+        ledger,
+        events,
+        corrections,
+        error: null,
+        loading: false,
+      });
+    } catch (err) {
+      setState({ ...INITIAL, loading: false, error: err });
+    }
   }, []);
+
+  useEffect(() => {
+    void load();
+  }, [load]);
 
   const total = state.transactions?.total ?? 0;
   const reviewing = state.queue?.total ?? 0;
@@ -188,16 +177,19 @@ export default function DashboardPage() {
         </ul>
       </section>
 
-      {state.error && (
-        <div className="mt-6 rounded-md border border-red-200 bg-red-50 p-4 text-[14px] text-red-700">
-          <p className="font-medium">Backend unreachable</p>
-          <p className="mt-1">{state.error}</p>
-          <p className="mt-2 text-[12px] text-red-600">
-            Start the backend with{" "}
-            <code className="mono">uvicorn ledgerlens.main:app --reload</code> from{" "}
-            <code className="mono">backend/</code>, then refresh.
-          </p>
-        </div>
+      {state.error !== null && (
+        <ErrorState
+          error={state.error}
+          onRetry={() => void load()}
+          secondaryAction={
+            <Link
+              href="/cleanup"
+              className="text-[13px] font-medium text-text-secondary hover:text-text-primary"
+            >
+              Open cleanup checklist →
+            </Link>
+          }
+        />
       )}
 
       <section className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">

@@ -278,6 +278,8 @@ The categorize endpoints run in **portfolio demo mode** by default (`CATEGORIZER
 
 Evals run via the [`Run eval`](.github/workflows/eval.yml) GitHub Actions workflow — manually triggered for cost control.
 
+CI runs backend tests + ruff + mypy + format check **and** frontend tests + lint + production build on every PR and push to `main`. See [`.github/workflows/ci.yml`](.github/workflows/ci.yml). The public-demo reliability layer (API client timeout / retry, shared loading / empty / error components, smoke checklist) is documented in [`docs/PUBLIC_DEMO_RELIABILITY.md`](docs/PUBLIC_DEMO_RELIABILITY.md) and [`docs/DEPLOYMENT_SMOKE_TEST.md`](docs/DEPLOYMENT_SMOKE_TEST.md).
+
 ## What's not in this project (yet)
 
 Calling out gaps because honesty beats overclaiming:
