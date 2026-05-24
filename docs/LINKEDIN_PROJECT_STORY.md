@@ -93,6 +93,12 @@ It deliberately isn't. Raw model accuracy on adversarial bookkeeping data is aro
 >
 > Three-minute guided demo + the live cleanup + handoff pages at the link. GitHub in the comments.
 
+## 9c. Sample-scenario hook (optional addition)
+
+If the post lands and a recruiter asks for a more concrete example, this paragraph fits as a follow-up comment or quote-tweet:
+
+> The guided demo runs on a fictional **independent auto repair shop in New Hampshire** cleaning up March 2026 books — 42 realistic transactions covering parts (NAPA, AutoZone, O'Reilly), payroll (ADP), utilities (Eversource, Comcast), software (QuickBooks, Mitchell1), fuel, insurance, customer deposits, and the ambiguous rows a real cleanup turns up (OWNER TRANSFER, paper checks, Home Depot, Costco, ATM withdrawals). The owner answers ten plain-English questions, four items get flagged for accountant review, and five corrections get learned for next month. Sample data only — the business isn't real — but the cleanup mechanics are.
+
 ## 10. First comment with GitHub link
 
 > Source, ADRs, eval artifacts, and the trust-metric doc: https://github.com/mpalmer79/LedgerLens

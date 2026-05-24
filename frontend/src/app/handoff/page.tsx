@@ -62,12 +62,24 @@ export default function HandoffPage() {
           Accountant handoff package
         </p>
         <h1 className="mt-2 font-display text-[clamp(24px,5vw,32px)] font-medium leading-tight text-text-primary">
-          {handoff?.cleanup_period_label ?? "Accountant handoff package"}
+          {handoff?.scenario
+            ? `${handoff.scenario.business_name} — ${handoff.scenario.cleanup_month} handoff`
+            : (handoff?.cleanup_period_label ?? "Accountant handoff package")}
         </h1>
+        {handoff?.scenario && (
+          <p className="mt-2 inline-flex flex-wrap items-center gap-2 rounded-md border border-surface-border bg-surface-panel px-3 py-1.5 text-[12px] text-text-secondary">
+            <span className="rounded-full bg-brand-100 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-brand-800">
+              Sample data
+            </span>
+            <span>
+              {handoff.scenario.business_type} · {handoff.scenario.location}
+            </span>
+          </p>
+        )}
         <p className="mt-2 max-w-3xl text-[14px] text-text-secondary">
-          A reviewed ledger summary with unresolved questions, review notes, and the
-          correction memory you saved this month. Paste it into an email or download the
-          markdown to forward to your bookkeeper or accountant.
+          {handoff?.scenario
+            ? "This demo handoff shows how verified rows, owner answers, unresolved items, and learned corrections would be packaged for accountant review."
+            : "A reviewed ledger summary with unresolved questions, review notes, and the correction memory you saved this month. Paste it into an email or download the markdown to forward to your bookkeeper or accountant."}
         </p>
       </header>
 

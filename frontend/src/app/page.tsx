@@ -210,59 +210,62 @@ export default function Page() {
           <div className="rounded-lg bg-surface-page p-5">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <p className="text-[11px] font-medium uppercase tracking-wide text-brand-700">
-                Example handoff preview
+                Example: Granite State Auto Repair
               </p>
               <span className="rounded-full bg-surface-sunken px-2 py-0.5 text-[10px] uppercase tracking-wide text-text-subtle">
-                illustrative
+                Fictional sample scenario
               </span>
             </div>
             <h3 className="mt-2 font-display text-[20px] font-medium text-text-primary">
-              Accountant handoff package — March 2026
+              March 2026 cleanup before accountant handoff
             </h3>
+            <p className="mt-1 text-[12px] text-text-secondary">
+              Independent auto repair shop, New Hampshire · fictional sample data.
+            </p>
             <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
-              <PreviewTile label="Transactions imported" value="24" />
-              <PreviewTile label="Verified finalized rows" value="18" tone="good" />
-              <PreviewTile label="Owner questions answered" value="4" />
-              <PreviewTile label="Still needs review" value="2" tone="warn" />
-              <PreviewTile label="Corrections learned" value="3" />
+              <PreviewTile label="Transactions imported" value="42" />
+              <PreviewTile label="Verified finalized rows" value="28" tone="good" />
+              <PreviewTile label="Owner questions answered" value="10" />
+              <PreviewTile label="Accountant follow-up items" value="4" tone="warn" />
+              <PreviewTile label="Corrections learned" value="5" />
               <PreviewTile label="Verification rate" value="100%" tone="good" />
             </div>
             <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
               <PreviewBlock title="Ready for accountant">
-                Verified rows backed by review, memory, or a deterministic rule.
-                Export as CSV or copy from the markdown summary.
+                Verified parts purchases, payroll runs, utilities, and software
+                subscriptions — backed by review, memory, or a deterministic rule.
               </PreviewBlock>
               <PreviewBlock title="Needs review">
-                Two items the owner flagged for accountant follow-up — explained in the
-                owner-answers section, never silently finalized.
+                Items like an OWNER TRANSFER, a paper check, and an ATM withdrawal —
+                flagged for accountant follow-up, never silently finalized.
               </PreviewBlock>
               <PreviewBlock title="Owner answers">
-                Plain-English notes captured during the questions workflow. Forwarded
-                with the handoff so the accountant has business context.
+                Plain-English notes the owner attached during the questions workflow —
+                e.g. &ldquo;Home Depot was shop supplies, not personal.&rdquo;
               </PreviewBlock>
               <PreviewBlock title="Corrections learned">
-                New (merchant → category) rules saved this month. The system will reuse
-                them next month at zero model cost.
+                NAPA → Cost of goods sold, AutoZone → Cost of goods sold, ADP → Payroll.
+                These auto-apply on next month&apos;s cleanup at zero model cost.
               </PreviewBlock>
             </div>
             <div className="mt-5 flex flex-wrap gap-3">
               <Link
-                href="/handoff"
+                href="/demo"
                 className="inline-flex items-center rounded-md bg-brand-600 px-4 py-2 text-[13px] font-medium text-white hover:bg-brand-500"
               >
-                Open the live handoff page →
+                Try the sample cleanup →
               </Link>
               <Link
-                href="/cleanup"
+                href="/handoff"
                 className="inline-flex items-center rounded-md border border-surface-border-strong px-4 py-2 text-[13px] font-medium text-text-primary hover:bg-surface-sunken"
               >
-                Start monthly cleanup
+                Open the live handoff page
               </Link>
             </div>
             <p className="mt-3 text-[11px] text-text-subtle">
               The numbers above are illustrative. The live{" "}
               <Link href="/handoff" className="underline">/handoff</Link>{" "}
-              page is driven by the actual database.
+              page is driven by the actual database once the demo is seeded.
             </p>
           </div>
         </div>

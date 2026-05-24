@@ -208,3 +208,55 @@ def test_handoff_markdown_writes_audit_event(client: TestClient, fake_factory: M
     events = client.get("/audit/events?entity_type=handoff").json()
     actions = [e["action"] for e in events]
     assert "exported" in actions
+
+
+# ── Sample-business scenario surfacing ─────────────────────────────────────
+
+
+def _force_demo_mode(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setenv("CATEGORIZER_MODE", "demo_stub")
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "")
+    get_settings.cache_clear()
+
+
+def test_handoff_scenario_is_none_without_demo_data(
+    client: TestClient, fake_factory: MagicMock
+) -> None:
+    """When the handoff only contains non-demo transactions the scenario
+    field is null and the markdown heading falls back to the generic
+    title."""
+    fake_factory.return_value = _fake_cat("9999", 0.0)
+    _categorize(client, _create_tx(client, description="ZOOM.US MONTHLY", merchant="Zoom"))
+    body = client.get("/handoff").json()
+    assert body["scenario"] is None
+    md = client.get("/handoff/export.md").text
+    assert "# LedgerLens — accountant handoff package" in md
+
+
+def test_handoff_scenario_surfaces_for_demo_seeded_rows(
+    client: TestClient, fake_factory: MagicMock, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """When demo-seeded rows are part of the handoff the scenario object
+    surfaces the fictional business name and the markdown heading uses it."""
+    fake_factory.return_value = _fake_cat("9999", 0.0)
+    _force_demo_mode(monkeypatch)
+    seed = client.post("/demo/seed").json()
+    # Categorize one row so it has at least one ledger entry.
+    client.post("/categorize", json={"transaction_id": seed["created"][0]["id"]})
+
+    body = client.get("/handoff").json()
+    scenario = body["scenario"]
+    assert scenario is not None
+    assert scenario["business_name"] == "Granite State Auto Repair"
+    assert scenario["cleanup_month"] == "March 2026"
+    assert scenario["handoff_filename"] == "handoff-granite-state-auto-repair-2026-03.md"
+
+    res = client.get("/handoff/export.md")
+    md = res.text
+    assert "Granite State Auto Repair — March 2026 accountant handoff" in md
+    assert "Independent auto repair shop" in md
+    assert "fictional sample scenario" in md.lower()
+    # Disclaimer is always present.
+    assert "not tax advice" in md.lower()
+    # Filename in Content-Disposition uses the scenario filename.
+    assert "handoff-granite-state-auto-repair-2026-03.md" in res.headers["content-disposition"]

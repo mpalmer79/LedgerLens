@@ -42,8 +42,36 @@ type QuestionTemplate = {
 
 const TEMPLATES: QuestionTemplate[] = [
   {
+    // Deposits / customer payments — revenue side, not expense.
     match: (item) =>
-      /ach\s+transfer|ach\s+debit|wire\s+transfer/i.test(item.transaction.description) ||
+      /customer\s+check\s+deposit|cash\s+deposit|deposit\s+payout|square\s+deposit|stripe\s+deposit/i.test(
+        item.transaction.description,
+      ),
+    question: "Is this a customer deposit or other revenue?",
+    answers: [
+      { label: "Customer payment (revenue)", note: "Owner: customer payment.", categoryCode: "4010" },
+      { label: "Service revenue", note: "Owner: service revenue.", categoryCode: "4020" },
+      { label: "Refund of a business expense", note: "Owner: refund — confirm with accountant." },
+      { label: "Personal deposit / non-business", note: "Owner: personal deposit — exclude from books." },
+      { label: "Needs accountant review", note: "Owner: needs accountant review." },
+    ],
+  },
+  {
+    // Owner-side transfers — owner draws, contributions, ATM cash.
+    match: (item) =>
+      /owner\s+transfer|venmo\s+payment|atm\s+withdrawal/i.test(item.transaction.description),
+    question: "What was this transfer?",
+    answers: [
+      { label: "Owner draw", note: "Owner: owner draw / distribution.", categoryCode: "3030" },
+      { label: "Owner contribution", note: "Owner: owner contribution.", categoryCode: "3010" },
+      { label: "Reimbursement for a business expense", note: "Owner: reimbursement — confirm receipt with accountant." },
+      { label: "Personal / non-business", note: "Owner: personal — exclude from books." },
+      { label: "Needs accountant review", note: "Owner: needs accountant review." },
+    ],
+  },
+  {
+    match: (item) =>
+      /ach\s+transfer|ach\s+debit|wire\s+transfer|check\s*#/i.test(item.transaction.description) ||
       !item.transaction.merchant,
     question: "What was this transfer for?",
     answers: [
@@ -53,6 +81,34 @@ const TEMPLATES: QuestionTemplate[] = [
       { label: "Payroll-related", note: "Owner: payroll-related.", categoryCode: "6030" },
       { label: "Needs accountant review", note: "Owner: needs accountant review." },
       { label: "Not sure", note: "Owner: not sure — flagged for review." },
+    ],
+  },
+  {
+    // Auto-shop parts vendors — common monthly cleanup item.
+    match: (item) =>
+      /napa|autozone|o'?reilly|advance\s+auto|lkq|tire\s+dist/i.test(
+        item.transaction.merchant ?? item.transaction.description,
+      ),
+    question: "What were these parts for?",
+    answers: [
+      { label: "Shop inventory", note: "Owner: shop parts inventory.", categoryCode: "5010" },
+      { label: "Customer job", note: "Owner: parts for a customer job.", categoryCode: "5010" },
+      { label: "Tools / equipment", note: "Owner: shop tools / equipment.", categoryCode: "6170" },
+      { label: "Personal / non-business", note: "Owner: personal — exclude from books." },
+      { label: "Needs accountant review", note: "Owner: needs accountant review." },
+    ],
+  },
+  {
+    // Home improvement stores — shop supplies vs personal building repair.
+    match: (item) =>
+      /home\s*depot|lowe'?s/i.test(item.transaction.merchant ?? item.transaction.description),
+    question: "What was this purchase mainly for?",
+    answers: [
+      { label: "Shop supplies", note: "Owner: shop supplies.", categoryCode: "6180" },
+      { label: "Equipment", note: "Owner: equipment.", categoryCode: "6170" },
+      { label: "Building repair", note: "Owner: building repair.", categoryCode: "6140" },
+      { label: "Personal / non-business", note: "Owner: personal — exclude from books." },
+      { label: "Needs accountant review", note: "Owner: needs accountant review." },
     ],
   },
   {

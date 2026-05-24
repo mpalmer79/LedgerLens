@@ -244,6 +244,22 @@ class HandoffOwnerAnswer(BaseModel):
     reviewer_action: str  # "approve" | "correct" | "mark_uncategorizable"
 
 
+class HandoffScenario(BaseModel):
+    """Sample-business-scenario context attached to the handoff package.
+
+    Populated when the handoff includes any demo-sourced rows so the UI
+    can render the fictional business name and the demo disclaimer.
+    `None` when the handoff is built from non-demo data.
+    """
+
+    business_name: str
+    business_type: str
+    location: str
+    cleanup_month: str
+    handoff_filename: str
+    demo_disclaimer: str
+
+
 class HandoffOut(BaseModel):
     generated_at: datetime
     cleanup_period_label: str
@@ -254,6 +270,7 @@ class HandoffOut(BaseModel):
     needs_review: list[LedgerRow]
     owner_answers: list[HandoffOwnerAnswer]
     corrections_learned: list["CorrectionMemoryOut"]
+    scenario: HandoffScenario | None = None
 
 
 # ── Audit ───────────────────────────────────────────────────────────────────

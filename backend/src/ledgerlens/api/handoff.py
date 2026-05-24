@@ -28,6 +28,7 @@ def get_handoff(db: Session = Depends(get_db)) -> HandoffOut:
 def export_handoff_markdown(db: Session = Depends(get_db)) -> PlainTextResponse:
     handoff = build_handoff(db)
     body = render_markdown(handoff)
+    filename = handoff.scenario.handoff_filename if handoff.scenario else "handoff.md"
     AuditRepo(db).record(
         entity_type="handoff",
         action="exported",
@@ -38,11 +39,12 @@ def export_handoff_markdown(db: Session = Depends(get_db)) -> PlainTextResponse:
             "needs_review": len(handoff.needs_review),
             "owner_answers": len(handoff.owner_answers),
             "format": "markdown",
+            "filename": filename,
         },
     )
     db.commit()
     return PlainTextResponse(
         body,
         media_type="text/markdown; charset=utf-8",
-        headers={"Content-Disposition": 'attachment; filename="handoff.md"'},
+        headers={"Content-Disposition": f'attachment; filename="{filename}"'},
     )

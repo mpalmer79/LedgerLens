@@ -309,7 +309,22 @@ export type DemoResetResult = {
   deleted_memories?: number;
 };
 
+export type DemoScenario = {
+  business_name: string;
+  business_type: string;
+  location: string;
+  cleanup_month: string;
+  cleanup_period_start: string;
+  cleanup_period_end: string;
+  scenario_summary: string;
+  accountant_handoff_goal: string;
+  demo_disclaimer: string;
+  handoff_filename: string;
+};
+
 export const getDemoStatus = () => apiFetch<DemoStatus>("/demo/status");
+
+export const getDemoScenario = () => apiFetch<DemoScenario>("/demo/scenario");
 
 export const getDemoSampleTransactions = () =>
   apiFetch<DemoSampleTransaction[]>("/demo/sample-transactions");
@@ -340,6 +355,15 @@ export type HandoffOwnerAnswer = {
   reviewer_action: string;
 };
 
+export type HandoffScenario = {
+  business_name: string;
+  business_type: string;
+  location: string;
+  cleanup_month: string;
+  handoff_filename: string;
+  demo_disclaimer: string;
+};
+
 export type HandoffResponse = {
   generated_at: string;
   cleanup_period_label: string;
@@ -349,6 +373,7 @@ export type HandoffResponse = {
   needs_review: LedgerRow[];
   owner_answers: HandoffOwnerAnswer[];
   corrections_learned: CorrectionMemory[];
+  scenario: HandoffScenario | null;
 };
 
 export const getHandoff = () => apiFetch<HandoffResponse>("/handoff");
