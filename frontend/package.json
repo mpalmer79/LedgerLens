@@ -6,32 +6,33 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint src",
     "test": "vitest run",
     "format": "prettier --write ."
   },
   "dependencies": {
     "@types/three": "^0.160.0",
     "lucide-react": "^1.16.0",
-    "next": "^14.2.35",
+    "next": "^16.2.6",
     "papaparse": "^5.4.1",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
     "recharts": "^2.15.4",
     "three": "^0.160.1"
   },
   "devDependencies": {
     "@types/node": "20.14.10",
     "@types/papaparse": "^5.3.15",
-    "@types/react": "18.3.3",
-    "@types/react-dom": "18.3.0",
+    "@types/react": "19.2.15",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "^6.0.2",
     "autoprefixer": "10.4.19",
-    "eslint": "8.57.0",
-    "eslint-config-next": "14.2.5",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "16.2.6",
     "postcss": "8.4.39",
     "prettier": "3.3.3",
     "tailwindcss": "3.4.6",
     "typescript": "5.5.3",
-    "vitest": "^2.1.9"
+    "vitest": "^4.1.7"
   }
 }

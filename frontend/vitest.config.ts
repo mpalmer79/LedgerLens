@@ -1,16 +1,13 @@
 import { defineConfig } from "vitest/config";
+import react from "@vitejs/plugin-react";
 import path from "node:path";
 
 export default defineConfig({
+  plugins: [react()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
-  },
-  // Use the modern JSX runtime so component tests can render JSX without
-  // a manual `import React from "react"` line in every file.
-  esbuild: {
-    jsx: "automatic",
   },
   test: {
     environment: "node",
