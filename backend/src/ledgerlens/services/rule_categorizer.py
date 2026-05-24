@@ -85,6 +85,11 @@ class Rule:
     confidence: float
     explanation: str
     notes: str
+    # Per-business rule mapping (intent). Optional. When set, the
+    # `business_rule_map` layer can override `category_code` with the
+    # mapped code for the active business. When unset, behavior is
+    # exactly as v1: the rule's `category_code` is used directly.
+    intent: str | None = None
 
 
 @dataclass
@@ -166,6 +171,9 @@ def _coerce_rule(raw: dict[str, object]) -> Rule | None:
     if not merchant_patterns and not description_patterns:
         return None
 
+    intent_raw = raw.get("intent")
+    intent = str(intent_raw).strip() if isinstance(intent_raw, str) and intent_raw.strip() else None
+
     return Rule(
         id=rule_id,
         name=name,
@@ -178,6 +186,7 @@ def _coerce_rule(raw: dict[str, object]) -> Rule | None:
         confidence=confidence,
         explanation=str(raw.get("explanation", "")),
         notes=str(raw.get("notes", "")),
+        intent=intent,
     )
 
 

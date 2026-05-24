@@ -4,10 +4,18 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from ledgerlens.api.schemas import (
+    BusinessRuleMapEntry,
+    BusinessRuleMapOut,
     RuleListOut,
     RuleMatchOut,
     RuleOut,
 )
+from ledgerlens.data.business_rule_maps import (
+    active_business_id,
+    get_business_rule_map,
+    resolve_category_for_intent,
+)
+from ledgerlens.data.sample_scenario import SAMPLE_SCENARIO
 from ledgerlens.db import get_db
 from ledgerlens.errors import NotFound
 from ledgerlens.repositories import CategoryRepo, TransactionRepo
@@ -18,7 +26,15 @@ rule_match_router = APIRouter(tags=["rules"])
 
 
 def _to_rule_out(rule: Rule, db: Session) -> RuleOut:
-    cat = CategoryRepo(db).get(rule.category_code)
+    cat_repo = CategoryRepo(db)
+    cat = cat_repo.get(rule.category_code)
+    mapped_code: str | None = None
+    mapped_name: str | None = None
+    if rule.intent:
+        candidate = resolve_category_for_intent(rule.intent, fallback_code=rule.category_code)
+        mapped_code = candidate
+        mapped_cat = cat_repo.get(candidate)
+        mapped_name = mapped_cat.name if mapped_cat else None
     return RuleOut(
         id=rule.id,
         name=rule.name,
@@ -31,15 +47,42 @@ def _to_rule_out(rule: Rule, db: Session) -> RuleOut:
         category_name=cat.name if cat else "",
         confidence=float(rule.confidence),
         explanation=rule.explanation,
+        intent=rule.intent,
+        mapped_category_code=mapped_code,
+        mapped_category_name=mapped_name,
+    )
+
+
+def _build_mapping_snapshot(db: Session) -> BusinessRuleMapOut:
+    cat_repo = CategoryRepo(db)
+    bid = active_business_id()
+    rule_map = get_business_rule_map(bid)
+    entries: list[BusinessRuleMapEntry] = []
+    for intent, code in sorted(rule_map.intent_to_code.items()):
+        cat = cat_repo.get(code)
+        entries.append(
+            BusinessRuleMapEntry(
+                intent=intent,
+                category_code=code,
+                category_name=cat.name if cat else None,
+            )
+        )
+    return BusinessRuleMapOut(
+        business_id=bid,
+        business_name=SAMPLE_SCENARIO["business_name"]
+        if bid == "granite_state_auto_repair"
+        else None,
+        entries=entries,
     )
 
 
 @router.get("", response_model=RuleListOut)
 def list_rules(db: Session = Depends(get_db)) -> RuleListOut:
-    """Return the active, COA-validated rule set in priority order."""
+    """Return the active, COA-validated rule set in priority order, with the
+    active business's intent → category mapping snapshot attached."""
     rules = load_rules(db)
     items = [_to_rule_out(r, db) for r in rules]
-    return RuleListOut(total=len(items), items=items)
+    return RuleListOut(total=len(items), items=items, mapping=_build_mapping_snapshot(db))
 
 
 @rule_match_router.get(

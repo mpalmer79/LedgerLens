@@ -1,7 +1,7 @@
 {
   "$schema": "https://ledgerlens.local/schemas/category-rules-v1.json",
   "version": "v1",
-  "description": "Deterministic merchant/keyword rules. Categories must exist in the default seed chart of accounts. Rules are exact, case-insensitive, and intentionally conservative — anything genuinely ambiguous (Amazon, Apple, Costco) is routed to review instead of auto-applied.",
+  "description": "Deterministic merchant/keyword rules. Categories must exist in the active business's chart of accounts. Rules are exact, case-insensitive, and intentionally conservative — anything genuinely ambiguous (Amazon, Apple, Costco) is routed to review instead of auto-applied. Each rule carries an optional `intent` so the per-business mapping layer (see `ledgerlens.data.business_rule_maps`) can resolve to the correct COA code for the active business.",
   "rules": [
     {
       "id": "rule.adobe.software",
@@ -12,6 +12,7 @@
       "merchant_patterns": ["ADOBE"],
       "description_patterns": [],
       "category_code": "6070",
+      "intent": "software_subscription",
       "confidence": 0.95,
       "explanation": "Adobe charges are almost always Creative Cloud or Acrobat — recurring software.",
       "notes": "Covers ADOBE.COM, ADOBE CREATIVE CLOUD, ADOBE INC."
@@ -25,6 +26,7 @@
       "merchant_patterns": ["MICROSOFT", "MSFT"],
       "description_patterns": ["MICROSOFT", "OFFICE 365", "OFFICE365", "MSFT*"],
       "category_code": "6070",
+      "intent": "software_subscription",
       "confidence": 0.93,
       "explanation": "Microsoft 365 / Office subscriptions.",
       "notes": "Excludes Microsoft Azure intentionally — handle separately if relevant."
@@ -38,6 +40,7 @@
       "merchant_patterns": [],
       "description_patterns": ["GOOGLE", "WORKSPACE"],
       "category_code": "6070",
+      "intent": "software_subscription",
       "confidence": 0.95,
       "explanation": "Google Workspace seat subscription.",
       "notes": "Plain 'Google' alone is too ambiguous — must include WORKSPACE."
@@ -51,6 +54,7 @@
       "merchant_patterns": ["INTUIT", "QUICKBOOKS"],
       "description_patterns": ["INTUIT", "QUICKBOOKS", "QBO"],
       "category_code": "6070",
+      "intent": "software_subscription",
       "confidence": 0.95,
       "explanation": "QuickBooks Online / Intuit subscription.",
       "notes": ""
@@ -64,6 +68,7 @@
       "merchant_patterns": ["ZOOM"],
       "description_patterns": [],
       "category_code": "6070",
+      "intent": "software_subscription",
       "confidence": 0.92,
       "explanation": "Zoom Video subscription.",
       "notes": "ZOOM.US, ZOOM VIDEO."
@@ -77,6 +82,7 @@
       "merchant_patterns": ["DROPBOX"],
       "description_patterns": [],
       "category_code": "6070",
+      "intent": "software_subscription",
       "confidence": 0.92,
       "explanation": "Dropbox storage subscription.",
       "notes": ""
@@ -90,6 +96,7 @@
       "merchant_patterns": ["SLACK"],
       "description_patterns": [],
       "category_code": "6070",
+      "intent": "software_subscription",
       "confidence": 0.9,
       "explanation": "Slack workspace subscription.",
       "notes": ""
@@ -103,6 +110,7 @@
       "merchant_patterns": ["GITHUB"],
       "description_patterns": [],
       "category_code": "6070",
+      "intent": "software_subscription",
       "confidence": 0.9,
       "explanation": "GitHub team / org plan.",
       "notes": ""
@@ -116,6 +124,7 @@
       "merchant_patterns": ["STAPLES"],
       "description_patterns": [],
       "category_code": "6060",
+      "intent": "office_supplies",
       "confidence": 0.9,
       "explanation": "Staples purchases — office supplies.",
       "notes": ""
@@ -129,6 +138,7 @@
       "merchant_patterns": ["OFFICE DEPOT", "OFFICEMAX"],
       "description_patterns": ["OFFICE DEPOT", "OFFICEMAX"],
       "category_code": "6060",
+      "intent": "office_supplies",
       "confidence": 0.9,
       "explanation": "Office Depot / OfficeMax — office supplies.",
       "notes": ""
@@ -142,6 +152,7 @@
       "merchant_patterns": ["SHELL OIL", "SHELL GAS", "SHELL "],
       "description_patterns": [],
       "category_code": "6130",
+      "intent": "fuel_vehicle",
       "confidence": 0.88,
       "explanation": "Shell fuel purchase.",
       "notes": "Bare 'SHELL' is intentionally kept as a token-with-space to avoid false matches on 'EGGSHELL', 'SEASHELL'."
@@ -155,6 +166,7 @@
       "merchant_patterns": ["EXXON", "EXXONMOBIL", "MOBIL"],
       "description_patterns": ["EXXON", "EXXONMOBIL"],
       "category_code": "6130",
+      "intent": "fuel_vehicle",
       "confidence": 0.88,
       "explanation": "Exxon / Mobil fuel purchase.",
       "notes": "MOBIL alone matches 'T-MOBILE' if used as substring; we use it only as a merchant token, not description substring."
@@ -168,6 +180,7 @@
       "merchant_patterns": ["CHEVRON"],
       "description_patterns": [],
       "category_code": "6130",
+      "intent": "fuel_vehicle",
       "confidence": 0.88,
       "explanation": "Chevron fuel purchase.",
       "notes": ""
@@ -181,6 +194,7 @@
       "merchant_patterns": ["BP", "BP GAS", "BP STATION"],
       "description_patterns": [],
       "category_code": "6130",
+      "intent": "fuel_vehicle",
       "confidence": 0.85,
       "explanation": "BP fuel purchase.",
       "notes": "Two-letter merchant — exact match only to avoid false positives."
@@ -194,6 +208,7 @@
       "merchant_patterns": ["UBER", "UBER TRIP", "UBER *TRIP"],
       "description_patterns": ["UBER TRIP", "UBER *TRIP"],
       "category_code": "6110",
+      "intent": "travel",
       "confidence": 0.88,
       "explanation": "Uber ride — business travel.",
       "notes": "UBER EATS is intentionally not matched here — separate rule for meals."
@@ -207,6 +222,7 @@
       "merchant_patterns": [],
       "description_patterns": ["UBER", "EATS"],
       "category_code": "6120",
+      "intent": "meals_entertainment",
       "confidence": 0.9,
       "explanation": "Uber Eats — meals.",
       "notes": "Higher priority than rule.uber.travel so it wins on UBER EATS rows."
@@ -220,6 +236,7 @@
       "merchant_patterns": ["LYFT"],
       "description_patterns": [],
       "category_code": "6110",
+      "intent": "travel",
       "confidence": 0.9,
       "explanation": "Lyft ride — business travel.",
       "notes": ""
@@ -233,6 +250,7 @@
       "merchant_patterns": ["DELTA AIR", "DELTA AIRLINES", "DELTA AIR LINES"],
       "description_patterns": ["DELTA AIR", "DELTA AIRLINES"],
       "category_code": "6110",
+      "intent": "travel",
       "confidence": 0.92,
       "explanation": "Delta Airlines fare.",
       "notes": "'Delta' alone is ambiguous (Delta Faucet, Delta Dental); patterns require AIR/AIRLINES."
@@ -246,6 +264,7 @@
       "merchant_patterns": ["UNITED AIR", "UNITED AIRLINES"],
       "description_patterns": ["UNITED AIR", "UNITED AIRLINES"],
       "category_code": "6110",
+      "intent": "travel",
       "confidence": 0.92,
       "explanation": "United Airlines fare.",
       "notes": "'United' alone is ambiguous (United Healthcare, etc.); patterns require AIR/AIRLINES."
@@ -259,6 +278,7 @@
       "merchant_patterns": ["SOUTHWEST AIR", "SOUTHWEST AIRLINES", "SOUTHWES "],
       "description_patterns": ["SOUTHWEST AIR", "SOUTHWES"],
       "category_code": "6110",
+      "intent": "travel",
       "confidence": 0.92,
       "explanation": "Southwest Airlines fare.",
       "notes": "Many bank feeds truncate to 'SOUTHWES'."
@@ -272,6 +292,7 @@
       "merchant_patterns": ["STARBUCKS"],
       "description_patterns": [],
       "category_code": "6120",
+      "intent": "meals_entertainment",
       "confidence": 0.85,
       "explanation": "Starbucks — meals & entertainment.",
       "notes": "If the business is a coffee shop, the bookkeeper will deactivate this rule and correct."
@@ -285,6 +306,7 @@
       "merchant_patterns": ["DUNKIN", "DUNKIN DONUTS", "DUNKIN'"],
       "description_patterns": ["DUNKIN"],
       "category_code": "6120",
+      "intent": "meals_entertainment",
       "confidence": 0.85,
       "explanation": "Dunkin — meals & entertainment.",
       "notes": ""
@@ -298,6 +320,7 @@
       "merchant_patterns": [],
       "description_patterns": ["STRIPE", "FEE"],
       "category_code": "6100",
+      "intent": "merchant_fees",
       "confidence": 0.88,
       "explanation": "Stripe processing fee deduction.",
       "notes": "'Stripe' alone could be a payout deposit (revenue side); only fee-tagged lines auto-categorize."
@@ -311,6 +334,7 @@
       "merchant_patterns": [],
       "description_patterns": ["SQUARE", "FEE"],
       "category_code": "6100",
+      "intent": "merchant_fees",
       "confidence": 0.88,
       "explanation": "Square processing fee deduction.",
       "notes": "Same reasoning as Stripe."
@@ -324,6 +348,7 @@
       "merchant_patterns": ["AMAZON", "AMZN"],
       "description_patterns": [],
       "category_code": "6060",
+      "intent": "office_supplies",
       "confidence": 0.4,
       "explanation": "Amazon purchases could be office supplies, equipment, software, or personal — routed to review.",
       "notes": "Intentionally low confidence so it never auto-applies; only surfaces a suggested category in /review."

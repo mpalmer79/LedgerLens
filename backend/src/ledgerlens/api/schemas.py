@@ -132,16 +132,29 @@ class ReviewQueueOut(BaseModel):
     items: list[ReviewQueueItem]
 
 
-class ApproveReview(BaseModel):
+class OwnerAnswerFields(BaseModel):
+    """Owner Answers v2 — structured fields the `/questions` UI sends
+    alongside the v1 reviewer_note. All optional for backward compatibility
+    with the v1 `/review` page that doesn't know about question keys."""
+
+    owner_question_key: str | None = Field(default=None, max_length=64)
+    owner_question_text: str | None = Field(default=None, max_length=256)
+    owner_answer_label: str | None = Field(default=None, max_length=128)
+    owner_note: str | None = Field(default=None, max_length=1024)
+    suggested_resolution: str | None = Field(default=None, max_length=64)
+    accountant_follow_up_required: bool = False
+
+
+class ApproveReview(OwnerAnswerFields):
     reviewer_note: str | None = None
 
 
-class CorrectReview(BaseModel):
+class CorrectReview(OwnerAnswerFields):
     selected_category_code: str
     reviewer_note: str | None = None
 
 
-class UncategorizableReview(BaseModel):
+class UncategorizableReview(OwnerAnswerFields):
     reviewer_note: str | None = None
 
 
@@ -154,6 +167,12 @@ class ReviewDecisionOut(BaseModel):
     reviewer_action: str
     selected_category_code: str | None
     reviewer_note: str | None
+    owner_question_key: str | None = None
+    owner_question_text: str | None = None
+    owner_answer_label: str | None = None
+    owner_note: str | None = None
+    suggested_resolution: str | None = None
+    accountant_follow_up_required: bool = False
     created_at: datetime
 
 
@@ -234,14 +253,30 @@ class CleanupImpact(BaseModel):
 
 
 class HandoffOwnerAnswer(BaseModel):
-    """An owner's plain-English answer captured during the review flow."""
+    """An owner's plain-English answer captured during the review flow.
+
+    v1 answers populate `answer` (which mirrors `ReviewDecision.reviewer_note`).
+    v2 answers, recorded via the new `/questions` workflow, additionally
+    populate the structured fields below (question key, labelled answer,
+    optional free-text owner note, accountant follow-up flag).
+    """
 
     transaction_id: str
+    transaction_date: date
     transaction_description: str
-    answer: str  # reviewer_note text
+    amount_cents: int
+    currency: str
+    answer: str  # legacy reviewer_note text; kept for backward compat
     selected_category_code: str | None
     selected_category_name: str | None
     reviewer_action: str  # "approve" | "correct" | "mark_uncategorizable"
+    # Owner Answers v2 — null on pre-v2 rows.
+    owner_question_key: str | None = None
+    owner_question_text: str | None = None
+    owner_answer_label: str | None = None
+    owner_note: str | None = None
+    suggested_resolution: str | None = None
+    accountant_follow_up_required: bool = False
 
 
 class HandoffScenario(BaseModel):
@@ -342,11 +377,32 @@ class RuleOut(BaseModel):
     category_name: str
     confidence: float
     explanation: str
+    # Per-business rule mapping (intent) — null if the rule has no intent
+    # declared. When set, `mapped_category_code` shows the active business's
+    # resolved code; equal to `category_code` if no override exists.
+    intent: str | None = None
+    mapped_category_code: str | None = None
+    mapped_category_name: str | None = None
+
+
+class BusinessRuleMapOut(BaseModel):
+    """Per-business intent → category mapping snapshot exposed by /rules/mapping."""
+
+    business_id: str
+    business_name: str | None = None
+    entries: list["BusinessRuleMapEntry"]
+
+
+class BusinessRuleMapEntry(BaseModel):
+    intent: str
+    category_code: str
+    category_name: str | None = None
 
 
 class RuleListOut(BaseModel):
     total: int
     items: list[RuleOut]
+    mapping: BusinessRuleMapOut | None = None
 
 
 class RuleMatchOut(BaseModel):

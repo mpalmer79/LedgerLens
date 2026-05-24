@@ -314,29 +314,51 @@ export const getReviewQueue = (params: { limit?: number; offset?: number } = {})
   return apiFetch<ReviewQueue>(`/review-queue${qs ? `?${qs}` : ""}`);
 };
 
-export const approveReview = (transactionId: string, note?: string) =>
+/** Owner Answers v2 — structured fields the /questions UI attaches to
+ *  review-queue submissions. All optional so /review (v1 callers) keep
+ *  working without sending any of them. */
+export type OwnerAnswerFields = {
+  owner_question_key?: string | null;
+  owner_question_text?: string | null;
+  owner_answer_label?: string | null;
+  owner_note?: string | null;
+  suggested_resolution?: string | null;
+  accountant_follow_up_required?: boolean;
+};
+
+export const approveReview = (
+  transactionId: string,
+  note?: string,
+  ownerFields: OwnerAnswerFields = {},
+) =>
   apiFetch<ReviewDecision>(`/review-queue/${transactionId}/approve`, {
     method: "POST",
-    body: JSON.stringify({ reviewer_note: note ?? null }),
+    body: JSON.stringify({ reviewer_note: note ?? null, ...ownerFields }),
   });
 
 export const correctReview = (
   transactionId: string,
   selectedCategoryCode: string,
   note?: string,
+  ownerFields: OwnerAnswerFields = {},
 ) =>
   apiFetch<ReviewDecision>(`/review-queue/${transactionId}/correct`, {
     method: "POST",
     body: JSON.stringify({
       selected_category_code: selectedCategoryCode,
       reviewer_note: note ?? null,
+      ...ownerFields,
     }),
   });
 
-export const markUncategorizable = (transactionId: string, note?: string) =>
+export const markUncategorizable = (
+  transactionId: string,
+  note?: string,
+  ownerFields: OwnerAnswerFields = {},
+) =>
   apiFetch<ReviewDecision>(`/review-queue/${transactionId}/uncategorizable`, {
     method: "POST",
-    body: JSON.stringify({ reviewer_note: note ?? null }),
+    body: JSON.stringify({ reviewer_note: note ?? null, ...ownerFields }),
   });
 
 // ── Ledger ─────────────────────────────────────────────────────────────────
@@ -470,11 +492,21 @@ export type CleanupImpact = {
 
 export type HandoffOwnerAnswer = {
   transaction_id: string;
+  transaction_date: string;
   transaction_description: string;
+  amount_cents: number;
+  currency: string;
   answer: string;
   selected_category_code: string | null;
   selected_category_name: string | null;
   reviewer_action: string;
+  // Owner Answers v2 — null on legacy v1 rows.
+  owner_question_key: string | null;
+  owner_question_text: string | null;
+  owner_answer_label: string | null;
+  owner_note: string | null;
+  suggested_resolution: string | null;
+  accountant_follow_up_required: boolean;
 };
 
 export type HandoffScenario = {

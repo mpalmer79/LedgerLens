@@ -85,6 +85,12 @@ def approve(
         reviewer_action=ReviewerAction.APPROVE,
         selected_category_code=latest.predicted_category_code,
         reviewer_note=payload.reviewer_note,
+        owner_question_key=payload.owner_question_key,
+        owner_question_text=payload.owner_question_text,
+        owner_answer_label=payload.owner_answer_label,
+        owner_note=payload.owner_note,
+        suggested_resolution=payload.suggested_resolution,
+        accountant_follow_up_required=payload.accountant_follow_up_required,
     )
     ReviewRepo(db).add(decision)
     latest.status = ResultStatus.AUTO_APPROVED
@@ -122,6 +128,12 @@ def correct(
         reviewer_action=ReviewerAction.CORRECT,
         selected_category_code=payload.selected_category_code,
         reviewer_note=payload.reviewer_note,
+        owner_question_key=payload.owner_question_key,
+        owner_question_text=payload.owner_question_text,
+        owner_answer_label=payload.owner_answer_label,
+        owner_note=payload.owner_note,
+        suggested_resolution=payload.suggested_resolution,
+        accountant_follow_up_required=payload.accountant_follow_up_required,
     )
     ReviewRepo(db).add(decision)
     latest.status = ResultStatus.CORRECTED
@@ -179,6 +191,12 @@ def mark_uncategorizable(
         reviewer_action=ReviewerAction.MARK_UNCATEGORIZABLE,
         selected_category_code=None,
         reviewer_note=payload.reviewer_note,
+        owner_question_key=payload.owner_question_key,
+        owner_question_text=payload.owner_question_text,
+        owner_answer_label=payload.owner_answer_label,
+        owner_note=payload.owner_note,
+        suggested_resolution=payload.suggested_resolution,
+        accountant_follow_up_required=payload.accountant_follow_up_required,
     )
     ReviewRepo(db).add(decision)
     latest.status = ResultStatus.UNCATEGORIZABLE

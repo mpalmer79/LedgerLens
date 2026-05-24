@@ -76,24 +76,35 @@ def _impact(rows: list[LedgerRow], corrections_learned_count: int) -> CleanupImp
 
 
 def _owner_answers(db: Session) -> list[HandoffOwnerAnswer]:
-    """Surface review decisions that carry a reviewer note.
+    """Surface review decisions that carry owner context.
 
-    The `/questions` flow stores the owner's plain-English answer as the
-    `reviewer_note` text on the resulting ReviewDecision row. Anything
-    without a note is omitted — accountants only need the explanations.
+    Owner Answers v2: a decision qualifies if it carries either a
+    structured `owner_question_key` (the new path, set by the
+    `/questions` workflow) OR a non-empty `reviewer_note` (the legacy
+    path). Either way the accountant gets a labelled record of the
+    owner's input.
     """
+    from sqlalchemy import or_
+
     tx_repo = TransactionRepo(db)
     cat_repo = CategoryRepo(db)
     decisions: list[ReviewDecision] = (
         db.query(ReviewDecision)
-        .filter(ReviewDecision.reviewer_note.isnot(None))
+        .filter(
+            or_(
+                ReviewDecision.reviewer_note.isnot(None),
+                ReviewDecision.owner_question_key.isnot(None),
+            )
+        )
         .order_by(ReviewDecision.created_at.desc())
         .limit(200)
         .all()
     )
     answers: list[HandoffOwnerAnswer] = []
     for d in decisions:
-        if not d.reviewer_note or not d.reviewer_note.strip():
+        has_v2 = d.owner_question_key is not None
+        has_v1 = d.reviewer_note is not None and d.reviewer_note.strip()
+        if not (has_v2 or has_v1):
             continue
         tx = tx_repo.get(d.transaction_id)
         if tx is None:
@@ -105,13 +116,22 @@ def _owner_answers(db: Session) -> list[HandoffOwnerAnswer]:
         answers.append(
             HandoffOwnerAnswer(
                 transaction_id=d.transaction_id,
+                transaction_date=tx.transaction_date,
                 transaction_description=tx.description,
-                answer=d.reviewer_note,
+                amount_cents=tx.amount_cents,
+                currency=tx.currency,
+                answer=d.reviewer_note or "",
                 selected_category_code=d.selected_category_code,
                 selected_category_name=cat_name,
                 reviewer_action=str(d.reviewer_action.value)
                 if hasattr(d.reviewer_action, "value")
                 else str(d.reviewer_action),
+                owner_question_key=d.owner_question_key,
+                owner_question_text=d.owner_question_text,
+                owner_answer_label=d.owner_answer_label,
+                owner_note=d.owner_note,
+                suggested_resolution=d.suggested_resolution,
+                accountant_follow_up_required=bool(d.accountant_follow_up_required),
             )
         )
     return answers
@@ -243,13 +263,48 @@ def render_markdown(handoff: HandoffOut) -> str:
     if not handoff.owner_answers:
         out.append("_No owner notes captured this period._")
     else:
-        for a in handoff.owner_answers:
-            cat = (
-                f" → [{a.selected_category_code}] {a.selected_category_name}"
-                if a.selected_category_code
-                else ""
-            )
-            out.append(f"- **{a.transaction_description}** ({a.reviewer_action}{cat}): {a.answer}")
+        # Split v2 (structured) answers from legacy v1 reviewer_note answers
+        # so the accountant sees a labelled question/answer block first.
+        v2 = [a for a in handoff.owner_answers if a.owner_question_key is not None]
+        v1 = [a for a in handoff.owner_answers if a.owner_question_key is None]
+
+        if v2:
+            for a in v2:
+                amount = f"{a.amount_cents / 100:.2f} {a.currency}"
+                cat = (
+                    f" → [{a.selected_category_code}] {a.selected_category_name}"
+                    if a.selected_category_code
+                    else ""
+                )
+                flag = (
+                    " **[needs accountant follow-up]**" if a.accountant_follow_up_required else ""
+                )
+                out.append(
+                    f"- **{a.transaction_date} · {a.transaction_description}** "
+                    f"({amount}){cat}{flag}"
+                )
+                if a.owner_question_text:
+                    out.append(f"    - Question: {a.owner_question_text}")
+                if a.owner_answer_label:
+                    out.append(f"    - Owner answer: **{a.owner_answer_label}**")
+                if a.owner_note and a.owner_note.strip():
+                    out.append(f"    - Owner note: {a.owner_note.strip()}")
+                if a.suggested_resolution:
+                    out.append(f"    - Suggested resolution: `{a.suggested_resolution}`")
+        if v1:
+            if v2:
+                out.append("")
+                out.append("### Legacy review notes (pre-v2)")
+                out.append("")
+            for a in v1:
+                cat = (
+                    f" → [{a.selected_category_code}] {a.selected_category_name}"
+                    if a.selected_category_code
+                    else ""
+                )
+                out.append(
+                    f"- **{a.transaction_description}** ({a.reviewer_action}{cat}): {a.answer}"
+                )
     out.append("")
 
     out.append("## Corrections learned this month")

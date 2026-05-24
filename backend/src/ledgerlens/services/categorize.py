@@ -364,8 +364,24 @@ def categorize_transaction(
     )
 
     if rule_match.verdict == "apply" and rule_match.rule is not None:
+        from dataclasses import replace as _dc_replace
+
+        from ledgerlens.data.business_rule_maps import resolve_category_for_intent
+
         rule = rule_match.rule
-        matched_cat = cat_repo.get(rule.category_code)
+        # Per-business intent mapping: if the rule carries an intent and the
+        # active business has a mapped category code, swap to that code.
+        # Falls back to the rule's own category_code when no mapping exists.
+        mapped_code = resolve_category_for_intent(rule.intent, fallback_code=rule.category_code)
+        # Validate the mapped code resolves to a real, active COA category.
+        # If not, drop back to the rule's original code (which the rules
+        # loader already validated at load time).
+        matched_cat = cat_repo.get(mapped_code)
+        if matched_cat is None and mapped_code != rule.category_code:
+            mapped_code = rule.category_code
+            matched_cat = cat_repo.get(mapped_code)
+        if mapped_code != rule.category_code:
+            rule = _dc_replace(rule, category_code=mapped_code)
         if rule.confidence >= settings.ledgerlens_auto_queue_threshold:
             status = ResultStatus.AUTO_APPROVED
             reason = ""
