@@ -4,13 +4,15 @@
 
 LedgerLens advertises one product-level metric:
 
-> **100% of finalized guided-demo ledger rows are verified before export.**
+> **100% of finalized guided-demo rows are procedurally verified before handoff.**
 
 That is **not** a claim about Claude Haiku's raw accuracy on adversarial bookkeeping data. Raw model accuracy is reported honestly on `/evals` (model-only ≈ 63% on the synthetic dataset, ≈ 42% on the adversarial slice) and is intentionally not the trust boundary anywhere else in the product.
 
-## What "verified" means
+## What "procedurally verified" means
 
-A ledger row counts as **verified** iff it is **finalized** *and* its category came through one of three defensible paths:
+Verification is **procedural**: a defensible authority signed off on each finalized row before handoff. This is a **workflow trust boundary**, not a guarantee of accounting or tax correctness, and not a substitute for CPA review. See [`docs/ACCOUNTING_DOMAIN_BOUNDARY.md`](ACCOUNTING_DOMAIN_BOUNDARY.md) for the full domain boundary.
+
+A row counts as **verified** iff it is **finalized** *and* its category came through one of three defensible paths:
 
 1. **Human review** — a reviewer approved or corrected this specific row.
 2. **Correction memory** — the row was categorized by `correction_memory`. Every memory rule was originally seeded by a real human correction, so a replay inherits that authority.

@@ -46,7 +46,7 @@ const LLM_VS_LEDGER: { capability: string; wrapper: string; ledger: string }[] =
   {
     capability: "Trust metric",
     wrapper: "Model accuracy (if measured at all)",
-    ledger: "Verified finalized ledger — workflow-level guarantee",
+    ledger: "Procedurally verified rows — workflow trust boundary, not CPA-correct",
   },
   {
     capability: "Cost control on public demo",
@@ -60,7 +60,7 @@ const STACK: string[] = [
   "TypeScript",
   "FastAPI",
   "SQLAlchemy 2.0",
-  "Postgres-ready (SQLite for demo)",
+  "SQLAlchemy 2.0 models (SQLite for demo, Postgres-compatible in principle)",
   "Docker",
   "Railway",
   "Anthropic Claude Haiku 4.5 (opt-in)",
@@ -238,10 +238,10 @@ export default function TechnicalStoryPage() {
             <div className="rounded-lg border-2 border-brand-600 bg-brand-100 p-5">
               <p className="field-label">Product metric</p>
               <p className="mt-1 font-display text-[18px] font-medium text-brand-900">
-                Verified finalized ledger
+                Procedurally verified rows
               </p>
               <p className="mt-2 text-[13px] text-brand-800">
-                Workflow-level guarantee: a finalized row is verified iff it came from a
+                Workflow trust boundary (not a CPA guarantee): a finalized row is verified iff it came from a
                 deterministic rule auto-approval, a correction-memory replay, or an
                 explicit human review.{" "}
                 <a
@@ -271,7 +271,7 @@ export default function TechnicalStoryPage() {
             />
             <ProofCard
               title="Full-stack software engineering"
-              body="FastAPI + SQLAlchemy + Postgres-ready. Next.js + typed client. Dockerfile-based Railway deploys for both services."
+              body="FastAPI + SQLAlchemy 2.0 models that can run against Postgres in principle. Next.js + typed client. Dockerfile-based Railway deploys for both services. Production migration management, backups, and retention policies are documented as roadmap items."
             />
             <ProofCard
               title="Practical product thinking"
@@ -289,6 +289,77 @@ export default function TechnicalStoryPage() {
               title="Evaluation discipline"
               body="Routing metrics. ECE / MCE per slice. Separated model-only vs deterministic calibration. Per-tenant COA caveat documented, not hidden."
             />
+          </ul>
+        </Section>
+
+        <Section number="11" title="Production-readiness boundary">
+          <p className="mt-2 max-w-3xl text-[14px] text-text-secondary">
+            LedgerLens is a <strong>portfolio-grade workflow demo</strong>, not production accounting software. The engineering is real, the eval numbers are honest, the trust metric is defensible — but several production gaps are intentionally documented rather than half-built:
+          </p>
+          <ul className="mt-3 list-disc space-y-1 pl-5 text-[13px] text-text-secondary">
+            <li>
+              No authentication, no tenant model, no tenant-scoped row queries.
+              Single-tenant public demo only.
+            </li>
+            <li>
+              No production migration management (Alembic isn&apos;t wired);
+              <span className="mono"> init_db()</span> uses{" "}
+              <span className="mono">create_all()</span>.
+            </li>
+            <li>
+              No PII redaction before LLM calls; demo-stub mode is the only
+              firewall on the public deploy.
+            </li>
+            <li>
+              No double-entry bookkeeping, no bank reconciliation, no split
+              transactions, no sales-tax handling.
+            </li>
+            <li>
+              &ldquo;Verified&rdquo; is procedural — a defensible authority
+              signed off on the row. Not CPA-correct.
+            </li>
+          </ul>
+          <p className="mt-3 max-w-3xl text-[13px] text-text-secondary">
+            Two boundary docs spell it out without hand-waving:
+          </p>
+          <ul className="mt-2 list-disc space-y-1 pl-5 text-[13px]">
+            <li>
+              <a
+                href={`${REPO_URL}/blob/main/docs/SECURITY_AND_PRODUCTION_READINESS.md`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-brand-700 underline"
+              >
+                docs/SECURITY_AND_PRODUCTION_READINESS.md
+              </a>{" "}
+              — auth / tenancy / rate-limiting / observability / migrations /
+              backups / retention roadmap (Phase A → E).
+            </li>
+            <li>
+              <a
+                href={`${REPO_URL}/blob/main/docs/ACCOUNTING_DOMAIN_BOUNDARY.md`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-brand-700 underline"
+              >
+                docs/ACCOUNTING_DOMAIN_BOUNDARY.md
+              </a>{" "}
+              — what LedgerLens does and does not do in accounting-domain
+              terms; what would be required for production accounting
+              correctness.
+            </li>
+            <li>
+              <a
+                href={`${REPO_URL}/blob/main/docs/SMALL_BUSINESS_UX_ROADMAP.md`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-brand-700 underline"
+              >
+                docs/SMALL_BUSINESS_UX_ROADMAP.md
+              </a>{" "}
+              — CSV mapping wizard, account-mapping wizard, mobile-first
+              review queue.
+            </li>
           </ul>
         </Section>
 

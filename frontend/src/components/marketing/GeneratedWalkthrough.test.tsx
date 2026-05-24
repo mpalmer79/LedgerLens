@@ -40,7 +40,7 @@ describe("GeneratedWalkthrough — content", () => {
 
   it("renders the workflow-trust phrasing on the final scene", () => {
     expect(html).toContain("100%");
-    expect(html).toContain("verified finalized demo ledger");
+    expect(html).toContain("procedurally verified demo rows");
     expect(html).toContain("workflow-level trust metric");
     expect(html).toContain("0 uncertain rows silently finalized");
   });

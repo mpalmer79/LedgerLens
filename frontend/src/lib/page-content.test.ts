@@ -44,6 +44,7 @@ const APP_DASH = readPage("app/page.tsx");
 const CLEANUP = readPage("cleanup/page.tsx");
 const QUESTIONS = readPage("questions/page.tsx");
 const HANDOFF = readPage("handoff/page.tsx");
+const IMPORT = readPage("transactions/import/page.tsx");
 
 // ── Homepage ──────────────────────────────────────────────────────────────
 
@@ -112,6 +113,18 @@ describe("homepage content", () => {
   it("includes the Granite State Auto Repair sample scenario on the homepage", () => {
     expect(HOMEPAGE).toContain("Granite State Auto Repair");
     expect(HOMEPAGE.toLowerCase()).toContain("fictional sample");
+  });
+
+  it("explicitly disclaims accounting-software framing", () => {
+    // The only "accounting software" reference must be the negation.
+    expect(HOMEPAGE).toContain("not accounting software");
+    // No standalone positive claim like "AI accounting software".
+    expect(HOMEPAGE.toLowerCase()).not.toMatch(/\bai accounting software\b/);
+  });
+
+  it("frames the headline as procedural verification, not CPA-correct", () => {
+    expect(HOMEPAGE).toContain("procedurally verified");
+    expect(HOMEPAGE).toMatch(/not\s+a\s+substitute\s+for\s+CPA/);
   });
 });
 
@@ -196,6 +209,35 @@ describe("technical-story content", () => {
     expect(TECH_STORY).toContain("GITHUB_PROFILE_URL");
     expect(TECH_STORY).toContain("TRUST_METRIC_DOC_URL");
   });
+
+  it("includes the production-readiness boundary section + boundary docs", () => {
+    expect(TECH_STORY).toContain("Production-readiness boundary");
+    expect(TECH_STORY).toContain("SECURITY_AND_PRODUCTION_READINESS.md");
+    expect(TECH_STORY).toContain("ACCOUNTING_DOMAIN_BOUNDARY.md");
+    expect(TECH_STORY).toContain("SMALL_BUSINESS_UX_ROADMAP.md");
+    expect(TECH_STORY).toContain("portfolio-grade workflow demo");
+    // JSX wraps the disclaimer phrase across lines, check for tokens.
+    expect(TECH_STORY).toMatch(/not\s+production\s+accounting\s+software/);
+  });
+});
+
+// ── Transactions import — demo upload guardrails ─────────────────────────
+
+
+describe("transactions/import page content", () => {
+  it("warns against uploading real bank / customer / employee data", () => {
+    expect(IMPORT).toContain("Public demo");
+    expect(IMPORT.toLowerCase()).toMatch(/do\s+not\s+upload\s+real\s+bank/);
+    expect(IMPORT.toLowerCase()).toContain("synthetic");
+    expect(IMPORT.toLowerCase()).toMatch(/customer\s+information/);
+    expect(IMPORT.toLowerCase()).toMatch(/employee\s+information/);
+    expect(IMPORT.toLowerCase()).toMatch(/account\s+numbers/);
+  });
+
+  it("notes there is no authentication or tenant isolation", () => {
+    expect(IMPORT.toLowerCase()).toMatch(/no\s+authentication/);
+    expect(IMPORT.toLowerCase()).toMatch(/no\s+tenant\s+isolation/);
+  });
 });
 
 // ── Demo ──────────────────────────────────────────────────────────────────
@@ -221,7 +263,9 @@ describe("demo page content", () => {
   });
 
   it('renders the "verified, not an AI answer" headline on step 6', () => {
-    expect(DEMO).toContain("verified ledger, not an AI answer");
+    expect(DEMO).toContain(
+      "procedurally verified categorization, not an AI answer",
+    );
   });
 
   it("renders the sample-cleanup-scenario card driven by /demo/scenario", () => {
@@ -289,7 +333,7 @@ describe("evals page content", () => {
   it("contrasts the model metric vs the product metric explicitly", () => {
     expect(EVALS).toContain("Model metric");
     expect(EVALS).toContain("Product metric");
-    expect(EVALS).toContain("Verified finalized ledger");
+    expect(EVALS).toContain("Procedurally verified rows");
   });
 
   it("preserves the production pipeline summary", () => {
@@ -537,6 +581,13 @@ describe("handoff page content", () => {
   it("renders TrustPanel + CleanupImpactSummary", () => {
     expect(HANDOFF).toContain("TrustPanel");
     expect(HANDOFF).toContain("CleanupImpactSummary");
+  });
+
+  it("clarifies that the handoff is not CPA-reviewed books", () => {
+    expect(HANDOFF.toLowerCase()).toContain("not cpa-reviewed");
+    expect(HANDOFF.toLowerCase()).toContain("procedural");
+    // JSX wraps "accounting\n          review" across lines.
+    expect(HANDOFF.toLowerCase()).toMatch(/not\s+a\s+substitute\s+for\s+accounting\s+review/);
   });
 
   it("offers both markdown handoff and CSV ledger downloads", () => {

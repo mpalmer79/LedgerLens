@@ -29,8 +29,8 @@ export function TrustPanel({
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h3 className="font-display text-[18px] font-medium text-text-primary">
           {variant === "demo"
-            ? "Trust metric — finalized demo ledger"
-            : "Trust metric — finalized ledger"}
+            ? "Workflow trust metric — finalized demo rows"
+            : "Workflow trust metric — finalized rows"}
         </h3>
         <span
           className={`mono text-[22px] font-medium ${
@@ -38,15 +38,21 @@ export function TrustPanel({
           }`}
         >
           {headlineRate}
-          <span className="ml-1 text-[12px] font-normal text-text-subtle">verified</span>
+          <span className="ml-1 text-[12px] font-normal text-text-subtle">
+            procedurally verified
+          </span>
         </span>
       </div>
       <p className="mt-1 max-w-3xl text-[13px] text-text-secondary">
-        A finalized row counts as verified <em>only</em> when it was decided through a
-        defensible path: a deterministic rule auto-approval, a correction-memory replay
-        of a prior human decision, or an explicit human review on this row. Unreviewed
-        model auto-approvals and demo-stub results are <strong>not</strong> verified — even when
-        the model returns high confidence.
+        Verification is <strong>procedural</strong>: a finalized row counts only when it
+        was decided through a defensible path — a deterministic rule auto-approval, a
+        correction-memory replay of a prior human decision, or an explicit human review.
+        Unreviewed model auto-approvals and demo-stub results are <strong>not</strong>{" "}
+        verified, even when the model returns high confidence.{" "}
+        <em>
+          This is a workflow trust boundary, not a guarantee of accounting or tax
+          correctness, and not a substitute for CPA review.
+        </em>
       </p>
       <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
         <Tile label="Finalized rows" value={trust.finalized_count} />
@@ -82,7 +88,7 @@ export function TrustPanel({
           {trust.unverified_finalized_count === 1 ? "" : "s"} ended in{" "}
           <span className="mono">auto_approved</span> without going through a deterministic
           rule, correction memory, or human review. Send these to the review queue before
-          treating the ledger as final.
+          treating the categorization as final.
         </p>
       )}
     </section>
