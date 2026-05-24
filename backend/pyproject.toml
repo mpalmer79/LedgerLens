@@ -49,6 +49,7 @@ select = ["E", "F", "I", "B", "UP", "N"]
 # FastAPI's Depends/File/Body must be called in argument defaults; B008
 # flags this generically but it's the framework's standard pattern.
 "src/ledgerlens/api/*.py" = ["B008"]
+"src/ledgerlens/actor.py" = ["B008"]
 # SessionLocal is the canonical sessionmaker variable name in SQLAlchemy docs.
 "tests/api/conftest.py" = ["N806"]
 

@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from ledgerlens.api import (
     admin,
     audit,
+    audit_events,
     categories,
     categorize,
     corrections,
@@ -19,6 +20,7 @@ from ledgerlens.api import (
     mapping,
     review,
     rules,
+    session,
     transactions,
 )
 from ledgerlens.config import get_settings
@@ -91,6 +93,8 @@ def create_app() -> FastAPI:
     application.include_router(admin.router)
     application.include_router(mapping.router)
     application.include_router(import_profiles.router)
+    application.include_router(session.router)
+    application.include_router(audit_events.router)
 
     return application
 

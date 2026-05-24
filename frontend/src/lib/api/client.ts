@@ -750,3 +750,80 @@ export const previewMappingChange = (payload: {
     method: "POST",
     body: JSON.stringify(payload),
   });
+
+// ── Session ──────────────────────────────────────────────────────────────
+
+export type SessionResponse = {
+  authenticated: boolean;
+  mode: string;
+  user: { id: string; display_name: string; role_hint: string };
+  business: { id: string; name: string; slug: string; is_demo: boolean };
+  warnings: string[];
+};
+
+export const getSession = () => apiFetch<SessionResponse>("/session");
+export const createDemoSession = () =>
+  apiFetch<SessionResponse>("/session/demo", { method: "POST" });
+
+// ── Audit events ─────────────────────────────────────────────────────────
+
+export type AuditEventRow = {
+  id: string;
+  business_id: string | null;
+  actor_user_id: string | null;
+  actor_display_name: string | null;
+  request_id: string | null;
+  action: string;
+  entity_type: string;
+  entity_id: string | null;
+  details: Record<string, unknown>;
+  created_at: string;
+};
+
+export type AuditEventList = {
+  total: number;
+  business_id: string;
+  events: AuditEventRow[];
+  warnings: string[];
+};
+
+export const listAuditEventsScoped = (params: {
+  limit?: number;
+  entity_type?: string;
+  action?: string;
+} = {}) => {
+  const q = new URLSearchParams();
+  if (params.limit) q.set("limit", String(params.limit));
+  if (params.entity_type) q.set("entity_type", params.entity_type);
+  if (params.action) q.set("action", params.action);
+  const qs = q.toString();
+  return apiFetch<AuditEventList>(`/audit-events${qs ? `?${qs}` : ""}`);
+};
+
+// ── Mapping apply (selected eligible rows) ──────────────────────────────
+
+export type MappingApplyRejection = {
+  transaction_id: string;
+  reason: string;
+};
+
+export type MappingApplyResult = {
+  intent: string;
+  requested_count: number;
+  applied_count: number;
+  rejected_count: number;
+  rejected_rows: MappingApplyRejection[];
+  audit_event_id: string | null;
+  warnings: string[];
+};
+
+export const applyMappingPreview = (payload: {
+  intent: string;
+  proposed_category_code: string | null;
+  block_fallback: boolean;
+  selected_transaction_ids: string[];
+}) =>
+  apiFetch<MappingApplyResult>("/mapping/apply-preview", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });

@@ -1288,10 +1288,8 @@ describe("mapping recategorization preview (Workstream C)", () => {
     expect(MAPPING).toContain("previewMappingChange");
   });
 
-  it("labels the section as preview-only with no apply", () => {
-    expect(MAPPING).toContain(
-      "Preview impact — apply flow not implemented yet",
-    );
+  it("labels the section as preview with selected-row apply (Phase 2 upgrade)", () => {
+    expect(MAPPING).toContain("Preview impact (apply selected rows only)");
     expect(MAPPING).toContain("Nothing has been changed yet");
     expect(MAPPING).toContain(
       "Human-corrected and accountant-follow-up rows are protected",
@@ -1309,11 +1307,19 @@ describe("mapping recategorization preview (Workstream C)", () => {
     expect(MAPPING).toContain("Protected");
   });
 
-  it("does not introduce a silent apply CTA", () => {
-    // No button literally labelled "Apply" appears in the preview UI.
-    expect(MAPPING).not.toMatch(/>\s*Apply\s*</);
-    expect(MAPPING).not.toContain("Apply selected");
+  it("apply CTA exists, requires selection, and routes through confirmation", () => {
+    // Apply button is selection-gated (Phase 2 shipped the safe apply).
+    expect(MAPPING).toContain("Apply selected eligible rows");
+    expect(MAPPING).toContain("Route selected rows to review");
+    expect(MAPPING).toContain('data-testid={`apply-selected-${intent}`}');
+    expect(MAPPING).toContain('data-testid={`apply-confirm-${intent}`}');
+    // No "apply everything" CTA.
+    expect(MAPPING).not.toContain("Apply all");
     expect(MAPPING).not.toContain("Recategorize all");
+    // Confirmation dialog repeats the protection guarantee.
+    expect(MAPPING).toMatch(
+      /Human-corrected and\s+accountant-follow-up rows will remain protected/,
+    );
   });
 
   it("does not overclaim production safety or accounting correctness", () => {
@@ -1322,5 +1328,86 @@ describe("mapping recategorization preview (Workstream C)", () => {
     expect(MAPPING.toLowerCase()).not.toMatch(/100\s*%\s*ai/);
     expect(MAPPING).not.toMatch(/href="mailto:/);
     expect(MAPPING).not.toMatch(/href="tel:/);
+  });
+});
+
+const AUDIT_PAGE = readPage("audit/page.tsx");
+
+describe("AppShell session badge (Phase 2)", () => {
+  it("calls /session and renders a labelled badge", () => {
+    expect(APP_SHELL).toContain("getSession");
+    expect(APP_SHELL).toContain('data-testid="appshell-session-badge"');
+    expect(APP_SHELL).toContain("Demo session");
+    expect(APP_SHELL).toContain("Fictional public demo context");
+    expect(APP_SHELL).toContain("not production authentication");
+  });
+
+  it("exposes the audit page in the technical nav", () => {
+    expect(APP_SHELL).toContain('href: "/audit"');
+    expect(APP_SHELL).toContain('label: "Audit events"');
+  });
+});
+
+describe("/audit page (Phase 2)", () => {
+  it("renders honest workflow-traceability copy", () => {
+    expect(AUDIT_PAGE).toContain('data-testid="audit-warning"');
+    expect(AUDIT_PAGE).toContain("workflow traceability in the demo");
+    expect(AUDIT_PAGE).toContain("not regulatory compliance");
+    expect(AUDIT_PAGE).toContain("stripped before storage");
+  });
+
+  it("ships filters + an empty state + a refresh button", () => {
+    expect(AUDIT_PAGE).toContain('data-testid="audit-filters"');
+    expect(AUDIT_PAGE).toContain('data-testid="audit-events-list"');
+    expect(AUDIT_PAGE).toContain("No audit events yet");
+    expect(AUDIT_PAGE).toContain("Refresh");
+  });
+
+  it("calls the audit-events client function", () => {
+    expect(AUDIT_PAGE).toContain("listAuditEventsScoped");
+  });
+
+  it("does not dump raw sensitive payload contents", () => {
+    // The page summarizes details; it does not render the JSON
+    // blob as-is. Quick negative checks.
+    expect(AUDIT_PAGE.toLowerCase()).not.toContain("raw_csv");
+    expect(AUDIT_PAGE.toLowerCase()).not.toContain("account_number");
+    expect(AUDIT_PAGE.toLowerCase()).not.toMatch(/json\.stringify\(\s*e\.details\s*\)/);
+    expect(AUDIT_PAGE).not.toMatch(/href="mailto:/);
+    expect(AUDIT_PAGE).not.toMatch(/href="tel:/);
+  });
+
+  it("does not overclaim production auth or compliance", () => {
+    expect(AUDIT_PAGE.toLowerCase()).not.toContain("production auth");
+    expect(AUDIT_PAGE.toLowerCase()).not.toMatch(/soc\s*2|hipaa|pci/);
+    expect(AUDIT_PAGE.toLowerCase()).not.toContain("safe for real bank");
+  });
+});
+
+describe("mapping apply UI (Phase 2)", () => {
+  it("renders a selection-gated apply CTA with confirmation", () => {
+    expect(MAPPING).toContain('data-testid={`apply-selected-${intent}`}');
+    expect(MAPPING).toContain('data-testid={`apply-confirm-${intent}`}');
+    expect(MAPPING).toContain('data-testid={`apply-confirm-button-${intent}`}');
+    expect(MAPPING).toContain("Confirm and apply");
+  });
+
+  it("offers select-all-eligible + clear-selection helpers", () => {
+    expect(MAPPING).toContain('data-testid={`preview-select-all-${intent}`}');
+    expect(MAPPING).toContain("Select all eligible");
+    expect(MAPPING).toContain("Clear selection");
+  });
+
+  it("disables checkboxes for protected rows", () => {
+    // The row checkbox is `disabled={!r.eligible || applying}` inline.
+    expect(MAPPING).toContain("disabled={!r.eligible || applying}");
+  });
+
+  it("calls the apply API and renders audit-link result", () => {
+    expect(MAPPING).toContain("applyMappingPreview");
+    expect(MAPPING).toContain('data-testid={`apply-result-${intent}`}');
+    expect(MAPPING).toContain("Audit event recorded");
+    // Result panel links to /audit for the full event.
+    expect(MAPPING).toContain('href="/audit"');
   });
 });

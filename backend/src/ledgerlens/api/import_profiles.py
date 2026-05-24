@@ -12,9 +12,11 @@ from pydantic import AliasChoices, BaseModel, ConfigDict, Field
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from ledgerlens.actor import DemoActor, get_demo_actor
 from ledgerlens.data.business_rule_maps import active_business_id
 from ledgerlens.db import get_db
 from ledgerlens.errors import NotFound, ValidationFailed
+from ledgerlens.services.audit_log import record_audit_event
 from ledgerlens.services.csv_import_profiles import (
     SEED_SAMPLE_PROFILE_NAME,
     ProfileInput,
@@ -150,7 +152,9 @@ def list_import_profiles(db: Session = Depends(get_db)) -> CsvImportProfileListO
 
 @router.post("", response_model=CsvImportProfileOut, status_code=201)
 def create_import_profile(
-    payload: CsvImportProfilePayload, db: Session = Depends(get_db)
+    payload: CsvImportProfilePayload,
+    db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
 ) -> CsvImportProfileOut:
     try:
         profile = create_profile(db, payload.to_input())
@@ -163,6 +167,15 @@ def create_import_profile(
         raise ValidationFailed(
             f"A profile named {payload.name!r} already exists for this business."
         ) from e
+    record_audit_event(
+        db,
+        actor=actor,
+        action="import_profile.created",
+        entity_type="csv_import_profile",
+        entity_id=profile.id,
+        after={"name": profile.name, "amount_mode": profile.amount_mode},
+        commit=True,
+    )
     return _to_out(profile)
 
 
@@ -171,27 +184,52 @@ def update_import_profile(
     profile_id: str,
     payload: CsvImportProfilePayload,
     db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
 ) -> CsvImportProfileOut:
     from ledgerlens.services.csv_import_profiles import update_profile
 
     existing = get_profile(db, profile_id)
     if existing is None:
         raise NotFound("csv_import_profile", profile_id)
+    before = {"name": existing.name, "amount_mode": existing.amount_mode}
     try:
         profile = update_profile(db, profile_id, payload.to_input())
     except ProfileValidationError as e:
         raise ValidationFailed(str(e)) from e
+    record_audit_event(
+        db,
+        actor=actor,
+        action="import_profile.updated",
+        entity_type="csv_import_profile",
+        entity_id=profile.id,
+        before=before,
+        after={"name": profile.name, "amount_mode": profile.amount_mode},
+        commit=True,
+    )
     return _to_out(profile)
 
 
 @router.delete("/{profile_id}", response_model=CsvImportProfileOut)
-def delete_import_profile(profile_id: str, db: Session = Depends(get_db)) -> CsvImportProfileOut:
+def delete_import_profile(
+    profile_id: str,
+    db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
+) -> CsvImportProfileOut:
     try:
         profile = delete_profile(db, profile_id)
     except LookupError as e:
         raise NotFound("csv_import_profile", profile_id) from e
     except PermissionError as e:
         raise ValidationFailed(str(e)) from e
+    record_audit_event(
+        db,
+        actor=actor,
+        action="import_profile.deleted",
+        entity_type="csv_import_profile",
+        entity_id=profile.id,
+        before={"name": profile.name, "amount_mode": profile.amount_mode},
+        commit=True,
+    )
     return _to_out(profile)
 
 
@@ -217,8 +255,19 @@ def validate_profile_headers(
 
 
 @router.post("/reset", response_model=CsvImportProfileOut)
-def reset_seed_profile(db: Session = Depends(get_db)) -> CsvImportProfileOut:
+def reset_seed_profile(
+    db: Session = Depends(get_db),
+    actor: DemoActor = Depends(get_demo_actor),
+) -> CsvImportProfileOut:
     profile = reset_to_seed(db)
+    record_audit_event(
+        db,
+        actor=actor,
+        action="import_profile.reset",
+        entity_type="csv_import_profile",
+        entity_id=profile.id,
+        commit=True,
+    )
     return _to_out(profile)
 
 

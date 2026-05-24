@@ -425,3 +425,44 @@ Still explicitly not in scope:
   (depends on auth Phase 2).
 - Smart header-rename suggester on profile validation.
 - JSON-formatted log shipping / external log sink.
+
+---
+
+## 14. Auth/Tenant Phase 2 sprint
+
+What landed (see `docs/AUTH_TENANT_PHASE_2_REVIEW.md`):
+
+- **Demo-safe session foundation.** `GET /session`, `POST /session/demo`,
+  `POST /session/logout`. New `DemoActor` dataclass + `get_demo_actor()`
+  dependency. Seeded `Demo Owner` user + OWNER membership on the
+  demo tenant.
+- **Actor-aware audit events.** `AuditEvent` extended with
+  `business_id`, `actor_user_id`, `actor_display_name`,
+  `request_id`. New `services.audit_log.record_audit_event()`
+  service strips forbidden keys before storage. New
+  `GET /audit-events` business-scoped read endpoint.
+- **Mutation routes record audit events.** import profile
+  create/update/delete/reset, mapping profile update/reset,
+  mapping preview generation, mapping apply.
+- **Safe selected-row mapping apply.** `POST /mapping/apply-preview`
+  applies only the explicitly-selected eligible rows. Server-side
+  eligibility recomputation rejects protected categories
+  (human-corrected, accountant-follow-up, ACCOUNTANT_REVIEW_REQUIRED,
+  UNCATEGORIZABLE, correction-memory) no matter what the frontend
+  sends.
+- **Frontend integration.** AppShell `SessionBadge`. New `/audit`
+  page. `/mapping` preview panel upgraded with checkbox selection,
+  Select all eligible, confirmation dialog, Apply CTA, audit-link
+  result panel.
+
+Counts: backend 295 → 315 (+20). Frontend 279 → 290 (+11).
+
+Still explicitly not in scope:
+
+- Real cookie-based session + password auth.
+- `business_id` backfill onto `Transaction` /
+  `CategorizationResult` / `ReviewDecision` / `CorrectionMemory`
+  (deferred to Phase 3 — closes the largest remaining tenant
+  isolation gap).
+- Apply undo / revert flow.
+- CSRF + rate limiting on session/apply routes.
