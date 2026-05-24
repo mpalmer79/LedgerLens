@@ -1,14 +1,16 @@
 /**
  * GeneratedWalkthrough — a six-scene, ~30-second animated story of the
- * LedgerLens workflow, driven by CSS keyframes (see the sibling .module.css).
+ * LedgerLens monthly cleanup → accountant handoff workflow, driven by
+ * CSS keyframes (see the sibling .module.css).
  *
  * Honesty: this is *not* a screen recording. It's a generated animation
  * intended to replace the static "coming soon" tile until Michael records
  * the real Loom. The host component (`VideoDemo`) marks the surface with
  * a "Generated walkthrough" badge so no one mistakes it for a live capture.
  *
- * The wording is deliberately the same as the Loom script
- * (docs/LOOM_WALKTHROUGH_SCRIPT.md) so the two assets are interchangeable.
+ * The narration matches `docs/LOOM_WALKTHROUGH_SCRIPT.md` so the two
+ * assets are interchangeable. Final card still uses the workflow-level
+ * trust phrasing — never a raw-model-accuracy claim.
  */
 
 import styles from "./GeneratedWalkthrough.module.css";
@@ -18,12 +20,53 @@ const MESSY_TRANSACTIONS: { description: string; amount: string }[] = [
   { description: "QUICKBOOKS ONLINE PLUS", amount: "-$80.00" },
   { description: "ADP PAYROLL BI-WEEKLY", amount: "-$7,423.80" },
   { description: "SHELL FUEL 03801", amount: "-$78.21" },
+  { description: "AMAZON MARKETPLACE", amount: "-$214.47" },
   { description: "ACH TRANSFER VENDOR REF 99812", amount: "-$421.00" },
+];
+
+const OBVIOUS_VENDORS: { description: string; via: string; category: string }[] = [
+  { description: "COMCAST BUSINESS INTERNET", via: "Rule", category: "Utilities" },
+  { description: "QUICKBOOKS ONLINE PLUS", via: "Rule", category: "Software" },
+  { description: "ADP PAYROLL BI-WEEKLY", via: "Rule", category: "Payroll" },
+  { description: "SHELL FUEL 03801", via: "Memory", category: "Vehicle expense" },
+];
+
+const QUESTION_CHOICES: string[] = [
+  "Vendor payment",
+  "Owner draw",
+  "Office supplies",
+  "Needs accountant review",
+  "Not sure",
+];
+
+const ANSWER_NOTES: { description: string; answer: string }[] = [
+  {
+    description: "ACH TRANSFER VENDOR REF 99812",
+    answer: "Needs accountant review",
+  },
+  {
+    description: "AMAZON MARKETPLACE",
+    answer: "Office supplies",
+  },
+];
+
+const READY_ROWS: { description: string; category: string }[] = [
+  { description: "COMCAST BUSINESS INTERNET", category: "Utilities" },
+  { description: "QUICKBOOKS ONLINE PLUS", category: "Software" },
+  { description: "ADP PAYROLL BI-WEEKLY", category: "Payroll" },
+  { description: "AMAZON MARKETPLACE", category: "Office supplies" },
+];
+
+const NEEDS_REVIEW_ROWS: { description: string; note: string }[] = [
+  { description: "ACH TRANSFER VENDOR REF 99812", note: "Needs accountant review" },
 ];
 
 export function GeneratedWalkthrough() {
   return (
-    <div className={styles.root} aria-label="LedgerLens 30-second product walkthrough">
+    <div
+      className={styles.root}
+      aria-label="LedgerLens 30-second monthly-cleanup-to-handoff walkthrough"
+    >
       <div className={styles.grid} aria-hidden="true" />
 
       <div className={styles.brand}>
@@ -35,19 +78,12 @@ export function GeneratedWalkthrough() {
       <span className={styles.stepBadge}>30-second walkthrough</span>
 
       <div className={styles.stage}>
-        {/* Scene 1 — intro */}
+        {/* Scene 1 — monthly bookkeeping cleanup intro */}
         <div className={`${styles.scene} ${styles.scene1}`}>
-          <p className={styles.sceneTitle}>LedgerLens</p>
+          <p className={styles.stepLabel}>Step 1 of 6</p>
+          <p className={styles.sceneTitle}>Monthly bookkeeping cleanup</p>
           <p className={styles.sceneSub}>
-            AI-assisted bookkeeping workflow for small businesses.
-          </p>
-        </div>
-
-        {/* Scene 2 — the mess */}
-        <div className={`${styles.scene} ${styles.scene2}`}>
-          <p className={styles.sceneTitle}>Messy bank activity</p>
-          <p className={styles.sceneSub}>
-            Payroll, subscriptions, fuel, vendors, and vague ACH transfers.
+            Start with messy bank activity from this month.
           </p>
           <ul className={styles.txList} aria-hidden="true">
             {MESSY_TRANSACTIONS.map((tx) => (
@@ -59,68 +95,119 @@ export function GeneratedWalkthrough() {
           </ul>
         </div>
 
-        {/* Scene 3 — layered decisioning */}
+        {/* Scene 2 — obvious vendors handled first */}
+        <div className={`${styles.scene} ${styles.scene2}`}>
+          <p className={styles.stepLabel}>Step 2 of 6</p>
+          <p className={styles.sceneTitle}>Obvious vendors handled first</p>
+          <p className={styles.sceneSub}>
+            Rules and correction memory classify repeatable items before AI fallback.
+          </p>
+          <ul className={styles.obviousList} aria-hidden="true">
+            {OBVIOUS_VENDORS.map((row) => (
+              <li key={row.description} className={styles.obviousRow}>
+                <span className={styles.obviousDesc}>{row.description}</span>
+                <span className={styles.obviousVia}>{row.via}</span>
+                <span className={styles.obviousCat}>{row.category}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Scene 3 — uncertain rows become owner questions */}
         <div className={`${styles.scene} ${styles.scene3}`}>
-          <p className={styles.sceneTitle}>Layered decisioning</p>
+          <p className={styles.stepLabel}>Step 3 of 6</p>
+          <p className={styles.sceneTitle}>Uncertain rows become owner questions</p>
           <p className={styles.sceneSub}>
-            Correction memory and deterministic rules run before any model fallback.
+            AI should not guess what the owner knows.
           </p>
-          <div className={styles.pipeline} aria-hidden="true">
-            <div className={styles.pipeNode}>
-              <b>Memory</b>
-              <span>prior correction</span>
-            </div>
-            <span className={styles.pipeArrow}>→</span>
-            <div className={styles.pipeNode}>
-              <b>Rules</b>
-              <span>matched rule</span>
-            </div>
-            <span className={styles.pipeArrow}>→</span>
-            <div className={styles.pipeNode}>
-              <b>Review</b>
-              <span>needs review</span>
-            </div>
+          <div className={styles.questionCard} aria-hidden="true">
+            <p className={styles.qContext}>
+              ACH TRANSFER VENDOR REF 99812 · −$421.00
+            </p>
+            <p className={styles.qPrompt}>What was this ACH transfer for?</p>
+            <ul className={styles.qChoices}>
+              {QUESTION_CHOICES.map((choice) => (
+                <li key={choice} className={styles.qChoice}>
+                  {choice}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
-        {/* Scene 4 — review is the safety layer */}
+        {/* Scene 4 — answers create accountant context */}
         <div className={`${styles.scene} ${styles.scene4}`}>
-          <p className={styles.sceneTitle}>Review is the safety layer</p>
+          <p className={styles.stepLabel}>Step 4 of 6</p>
+          <p className={styles.sceneTitle}>Answers create accountant context</p>
           <p className={styles.sceneSub}>
-            Uncertain rows are routed to a human instead of being silently finalized.
+            Plain-English answers are saved as review notes for the handoff.
           </p>
-          <div className={styles.reviewCard} aria-hidden="true">
-            <p className={styles.reviewLine}>2026-03-20</p>
-            <p className={styles.reviewLineMain}>ACH TRANSFER VENDOR REF 99812</p>
-            <p className={styles.reviewLine}>amount −$421.00 · merchant unknown</p>
-            <span className={styles.pill}>Needs Review</span>
-          </div>
+          <ul className={styles.answerList} aria-hidden="true">
+            {ANSWER_NOTES.map((row) => (
+              <li key={row.description} className={styles.answerRow}>
+                <span className={styles.answerDesc}>{row.description}</span>
+                <span className={styles.answerArrow}>→</span>
+                <span className={styles.answerNote}>{row.answer}</span>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        {/* Scene 5 — corrections become memory */}
+        {/* Scene 5 — verified rows stay separated from unresolved items */}
         <div className={`${styles.scene} ${styles.scene5}`}>
-          <p className={styles.sceneTitle}>Corrections become memory</p>
-          <p className={styles.sceneSub}>
-            Human decisions can be reused for similar future transactions.
+          <p className={styles.stepLabel}>Step 5 of 6</p>
+          <p className={styles.sceneTitle}>
+            Verified rows stay separated from unresolved items
           </p>
-          <div className={styles.memoryCard} aria-hidden="true">
-            <p className={styles.memLabel}>New memory rule</p>
-            <p className={styles.memMapping}>
-              UNKNOWN VENDOR <span className={styles.memArrow}>→</span> [6140] Repairs &amp;
-              Maintenance
-            </p>
-            <p className={styles.memNote}>
-              Future matching transactions categorize from this rule at zero model cost.
-            </p>
-          </div>
-        </div>
-
-        {/* Scene 6 — verified ledger export */}
-        <div className={`${styles.scene} ${styles.scene6}`}>
-          <p className={styles.sceneTitle}>Verified ledger export</p>
           <p className={styles.sceneSub}>
             Finalized rows are backed by review, rules, or correction memory.
           </p>
+          <div className={styles.splitGrid} aria-hidden="true">
+            <div className={styles.splitColumn}>
+              <p className={styles.splitHeading}>Ready for accountant</p>
+              <ul className={styles.splitList}>
+                {READY_ROWS.map((row) => (
+                  <li key={row.description} className={styles.splitRow}>
+                    <span className={styles.splitDesc}>{row.description}</span>
+                    <span className={styles.splitCategory}>{row.category}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className={`${styles.splitColumn} ${styles.splitColumnReview}`}>
+              <p className={styles.splitHeading}>Needs review</p>
+              <ul className={styles.splitList}>
+                {NEEDS_REVIEW_ROWS.map((row) => (
+                  <li key={row.description} className={styles.splitRow}>
+                    <span className={styles.splitDesc}>{row.description}</span>
+                    <span className={styles.splitNote}>{row.note}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <p className={styles.splitFooter}>
+            Workflow-level verification, not raw model accuracy.
+          </p>
+        </div>
+
+        {/* Scene 6 — export the accountant handoff package */}
+        <div className={`${styles.scene} ${styles.scene6}`}>
+          <p className={styles.stepLabel}>Step 6 of 6</p>
+          <p className={styles.sceneTitle}>Export the accountant handoff package</p>
+          <p className={styles.sceneSub}>
+            Verified ledger, owner answers, unresolved items, and learned corrections in
+            one package.
+          </p>
+          <div className={styles.handoffPreview} aria-hidden="true">
+            <p className={styles.handoffFile}>handoff-2026-03.md</p>
+            <ul className={styles.handoffSections}>
+              <li>Ready for accountant · 4 rows</li>
+              <li>Needs review · 1 row + owner note</li>
+              <li>Owner answers this month</li>
+              <li>Corrections learned</li>
+            </ul>
+          </div>
           <div className={styles.trustCard}>
             <p className={styles.trustLabel}>Trust boundary</p>
             <p className={styles.trustNumber}>100%</p>

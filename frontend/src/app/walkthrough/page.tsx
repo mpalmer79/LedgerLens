@@ -25,7 +25,7 @@ export default function WalkthroughPage() {
       <div className="w-full max-w-[1280px]">
         <div className="text-center">
           <p className="mb-2 text-[11px] uppercase tracking-[2px] text-zinc-500">
-            Recording helper · capture only the card below
+            Recording helper · monthly cleanup to accountant handoff
           </p>
         </div>
         <div

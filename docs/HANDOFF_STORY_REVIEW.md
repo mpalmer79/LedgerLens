@@ -60,7 +60,7 @@ The trust card on the homepage now says rows are verified *before they appear in
 
 ## 7. Remaining product weaknesses
 
-- **Generated walkthrough still narrates "verified ledger export," not "accountant handoff."** Updating the six-scene CSS-keyframe animation requires new SVG-timed visuals. Documented in `docs/GENERATED_WALKTHROUGH.md` as a follow-up; the existing animation still reads as honest workflow framing.
+- ~~**Generated walkthrough still narrates "verified ledger export," not "accountant handoff."**~~ **Resolved in PR #38** — the six-scene animation now ends on "Export the accountant handoff package" with the same trust card. See `docs/WALKTHROUGH_HANDOFF_RESCRIPT_AUDIT.md` and `docs/WALKTHROUGH_HANDOFF_STORY_REVIEW.md`.
 - **The handoff preview card uses static numbers.** Pulling live `/handoff` data into the homepage would mean a network call on a marketing page; the static preview with the "illustrative" badge is the right tradeoff for v1.
 - **No PDF handoff export.** Markdown is more useful for pasting into emails; PDF can come later if a user asks.
 - **No QuickBooks IIF / QBO XML export.** Out of scope for v1.

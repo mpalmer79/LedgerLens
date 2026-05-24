@@ -5,7 +5,9 @@
  *     walkthrough (not an iframe and not a "coming soon" tile).
  *   - The "Generated walkthrough" badge marks the surface so a viewer
  *     can't mistake the animation for a live screen recording.
- *   - The /demo and /technical-story CTAs are present.
+ *   - The primary CTAs point at /cleanup and /handoff (the product
+ *     workflow + deliverable); /technical-story is preserved as a
+ *     smaller secondary link for the recruiter doorway.
  *
  * The mock approach: vi.mock the `lib/site` module so we can control
  * LOOM_URL per test without env shenanigans.
@@ -61,20 +63,30 @@ describe("VideoDemo — fallback behavior", () => {
     expect(html).not.toContain("Generated walkthrough");
   });
 
-  it("renders the /demo and /technical-story CTAs", async () => {
+  it("renders the /cleanup and /handoff CTAs and the /technical-story link", async () => {
     const html = await renderWith("");
-    expect(html).toContain('href="/demo"');
+    expect(html).toContain('href="/cleanup"');
+    expect(html).toContain('href="/handoff"');
     expect(html).toContain('href="/technical-story"');
-    expect(html).toContain("Start the live demo");
+    expect(html).toContain("Start monthly cleanup");
+    expect(html).toContain("View accountant handoff");
     expect(html).toContain("Read the technical story");
   });
 
-  it("renders the mini storyboard regardless of Loom availability", async () => {
+  it("uses the cleanup-to-handoff section title", async () => {
+    const html = await renderWith("");
+    expect(html).toContain("Watch the cleanup-to-handoff flow");
+  });
+
+  it("renders the six-step storyboard regardless of Loom availability", async () => {
     const withoutLoom = await renderWith("");
     const withLoom = await renderWith("https://www.loom.com/embed/example");
     for (const html of [withoutLoom, withLoom]) {
-      expect(html).toContain("Import messy transactions");
-      expect(html).toContain("Export verified ledger");
+      expect(html).toContain("Import this month");
+      expect(html).toContain("Obvious vendors handled first");
+      expect(html).toContain("Uncertain rows become owner questions");
+      expect(html).toContain("Answers create accountant context");
+      expect(html).toContain("Export the accountant handoff package");
     }
   });
 });
