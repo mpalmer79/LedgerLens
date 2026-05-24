@@ -26,6 +26,7 @@ from fastapi.responses import JSONResponse
 from sqlalchemy import delete, text
 from sqlalchemy.orm import Session
 
+from ledgerlens.actor import DemoActor, get_demo_actor
 from ledgerlens.api.schemas import TransactionOut
 from ledgerlens.config import get_settings
 from ledgerlens.data.sample_scenario import SAMPLE_SCENARIO, SampleScenario
@@ -40,7 +41,6 @@ from ledgerlens.models import (
     ReviewDecision,
     Transaction,
 )
-from ledgerlens.actor import DemoActor, get_demo_actor
 from ledgerlens.observability import get_logger, get_request_id, sanitize_for_log
 from ledgerlens.repositories import AuditRepo, TransactionRepo
 from ledgerlens.services.normalize import normalize_description

@@ -28,6 +28,30 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.requests import Request
 from starlette.responses import Response
 
+from ledgerlens.services.sensitive_data import (  # noqa: F401
+    redact_account_number_like as redact_account_number_like,
+)
+from ledgerlens.services.sensitive_data import (
+    redact_card_like as redact_card_like,
+)
+from ledgerlens.services.sensitive_data import (
+    redact_email as redact_email,
+)
+from ledgerlens.services.sensitive_data import (
+    redact_phone as redact_phone,
+)
+from ledgerlens.services.sensitive_data import (
+    redact_pii_text as sanitize_for_log,
+)
+
+__all__ = [
+    "redact_account_number_like",
+    "redact_card_like",
+    "redact_email",
+    "redact_phone",
+    "sanitize_for_log",
+]
+
 # A request-scoped context var — log records can pull request_id from
 # here when the formatter or the call site asks for it.
 _request_id_ctx: ContextVar[str | None] = ContextVar("ledgerlens_request_id", default=None)
@@ -89,26 +113,9 @@ class RequestIdMiddleware(BaseHTTPMiddleware):
 
 
 # ── Redaction helpers ───────────────────────────────────────────────────
-# These now delegate to ledgerlens.services.sensitive_data, the single
-# source of truth for "do not store/log this verbatim." The names are
-# kept here for back-compat with the many call sites that import from
-# observability.
-
-from ledgerlens.services.sensitive_data import (  # noqa: E402
-    redact_account_number_like,
-    redact_card_like,
-    redact_email,
-    redact_phone,
-    redact_pii_text as sanitize_for_log,
-)
-
-__all_redactors__ = (
-    "redact_account_number_like",
-    "redact_card_like",
-    "redact_email",
-    "redact_phone",
-    "sanitize_for_log",
-)
+# Re-exported from ledgerlens.services.sensitive_data (the single source
+# of truth). The `as X = X` pattern above tells ruff these are intentional
+# re-exports. Callers (demo.py, test_observability.py) import from here.
 
 
 # ── Structured logging foundation ───────────────────────────────────────

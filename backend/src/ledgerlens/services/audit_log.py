@@ -22,6 +22,8 @@ from ledgerlens.actor import DemoActor
 from ledgerlens.models import AuditEvent
 from ledgerlens.services.sensitive_data import (
     FORBIDDEN_KEYS as _FORBIDDEN_KEYS,
+)
+from ledgerlens.services.sensitive_data import (
     redact_forbidden_keys as _redact,
 )
 
