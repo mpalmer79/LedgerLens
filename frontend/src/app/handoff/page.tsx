@@ -1,0 +1,311 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useState } from "react";
+
+import { AppShell } from "@/components/app/AppShell";
+import { CleanupImpactSummary } from "@/components/app/CleanupImpactSummary";
+import { TrustPanel } from "@/components/app/TrustPanel";
+import {
+  ApiError,
+  getHandoff,
+  getHandoffMarkdownUrl,
+  getLedgerExportUrl,
+  type HandoffResponse,
+} from "@/lib/api/client";
+import { formatAmount } from "@/lib/format";
+
+type State = {
+  loading: boolean;
+  error: string | null;
+  handoff: HandoffResponse | null;
+};
+
+export default function HandoffPage() {
+  const [state, setState] = useState<State>({
+    loading: true,
+    error: null,
+    handoff: null,
+  });
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const data = await getHandoff();
+        if (!cancelled)
+          setState({ loading: false, error: null, handoff: data });
+      } catch (err) {
+        if (!cancelled) {
+          setState({
+            loading: false,
+            error:
+              err instanceof ApiError
+                ? `${err.message}${err.status ? ` (HTTP ${err.status})` : ""}`
+                : String(err),
+            handoff: null,
+          });
+        }
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const handoff = state.handoff;
+
+  return (
+    <AppShell>
+      <header>
+        <p className="text-[11px] font-medium uppercase tracking-[0.5px] text-brand-600">
+          Accountant handoff package
+        </p>
+        <h1 className="mt-2 font-display text-[clamp(24px,5vw,32px)] font-medium leading-tight text-text-primary">
+          {handoff?.cleanup_period_label ?? "Accountant handoff package"}
+        </h1>
+        <p className="mt-2 max-w-3xl text-[14px] text-text-secondary">
+          A reviewed ledger summary with unresolved questions, review notes, and the
+          correction memory you saved this month. Paste it into an email or download the
+          markdown to forward to your bookkeeper or accountant.
+        </p>
+      </header>
+
+      {state.error && (
+        <div className="mt-6 rounded-md border border-red-200 bg-red-50 p-4 text-[14px] text-red-700">
+          {state.error}
+        </div>
+      )}
+
+      {state.loading && (
+        <p className="mt-6 text-[14px] text-text-subtle">Loading…</p>
+      )}
+
+      {handoff && (
+        <>
+          <section className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <TrustPanel trust={handoff.trust} />
+            <CleanupImpactSummary impact={handoff.impact} variant="compact" />
+          </section>
+
+          <section className="mt-8 flex flex-wrap gap-3">
+            <a
+              href={getHandoffMarkdownUrl()}
+              download
+              className="rounded-md bg-brand-600 px-4 py-2 text-[13px] font-medium text-white hover:bg-brand-500"
+            >
+              Download handoff summary (markdown)
+            </a>
+            <a
+              href={getLedgerExportUrl()}
+              download
+              className="rounded-md border border-surface-border-strong px-4 py-2 text-[13px] font-medium text-text-primary hover:bg-surface-sunken"
+            >
+              Download full ledger CSV
+            </a>
+          </section>
+
+          {/* Ready for accountant */}
+          <Section
+            title="Ready for accountant"
+            subtitle="Verified finalized rows — backed by review, correction memory, or a deterministic rule."
+            count={handoff.ready_for_accountant.length}
+          >
+            {handoff.ready_for_accountant.length === 0 ? (
+              <p className="text-[13px] text-text-subtle">
+                No finalized verified rows yet. Finish review and verification first.
+              </p>
+            ) : (
+              <ul className="divide-y divide-surface-border overflow-hidden rounded border border-surface-border">
+                {handoff.ready_for_accountant.slice(0, 25).map((r) => (
+                  <li key={r.transaction_id} className="flex flex-wrap items-baseline justify-between gap-2 px-3 py-2 text-[13px]">
+                    <span className="min-w-0 flex-1 truncate text-text-primary">
+                      <span className="mono text-text-subtle">{r.transaction_date}</span>{" "}
+                      {r.description}
+                    </span>
+                    <span className="mono text-text-subtle">
+                      [{r.category_code}] {r.category_name}
+                    </span>
+                    <span className="mono text-text-primary">
+                      {formatAmount(r.amount_cents, r.currency)}
+                    </span>
+                  </li>
+                ))}
+                {handoff.ready_for_accountant.length > 25 && (
+                  <li className="px-3 py-2 text-[12px] text-text-subtle">
+                    …and {handoff.ready_for_accountant.length - 25} more. Use the markdown
+                    export or CSV for the full list.
+                  </li>
+                )}
+              </ul>
+            )}
+          </Section>
+
+          {/* Needs review */}
+          <Section
+            title="Needs owner / accountant review"
+            subtitle="Transactions LedgerLens could not safely finalize. Resolve in the questions or review queue."
+            count={handoff.needs_review.length}
+            tone={handoff.needs_review.length > 0 ? "warn" : "default"}
+          >
+            {handoff.needs_review.length === 0 ? (
+              <p className="text-[13px] text-text-subtle">
+                No outstanding review items. Nothing blocking the handoff.
+              </p>
+            ) : (
+              <ul className="divide-y divide-amber-200/60 overflow-hidden rounded border border-amber-300 bg-amber-50/50">
+                {handoff.needs_review.slice(0, 25).map((r) => (
+                  <li
+                    key={r.transaction_id}
+                    className="flex flex-wrap items-baseline justify-between gap-2 px-3 py-2 text-[13px]"
+                  >
+                    <span className="min-w-0 flex-1 truncate text-text-primary">
+                      <span className="mono text-text-subtle">{r.transaction_date}</span>{" "}
+                      {r.description}
+                    </span>
+                    <span className="mono text-text-primary">
+                      {formatAmount(r.amount_cents, r.currency)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <div className="mt-3 flex flex-wrap gap-2">
+              <Link
+                href="/questions"
+                className="text-[12px] text-brand-700 underline hover:text-brand-800"
+              >
+                Open the questions workflow →
+              </Link>
+              <Link
+                href="/review"
+                className="text-[12px] text-brand-700 underline hover:text-brand-800"
+              >
+                Open the review queue →
+              </Link>
+            </div>
+          </Section>
+
+          {/* Owner answers */}
+          <Section
+            title="Questions answered by owner"
+            subtitle="Plain-English notes captured during review. Forward these along with the export so the accountant has context."
+            count={handoff.owner_answers.length}
+          >
+            {handoff.owner_answers.length === 0 ? (
+              <p className="text-[13px] text-text-subtle">
+                No owner notes captured this period.
+              </p>
+            ) : (
+              <ul className="space-y-2">
+                {handoff.owner_answers.map((a) => (
+                  <li
+                    key={a.transaction_id + a.answer}
+                    className="rounded border border-surface-border bg-surface-page p-3 text-[13px]"
+                  >
+                    <p className="font-medium text-text-primary">
+                      {a.transaction_description}
+                    </p>
+                    <p className="mt-1 text-text-secondary">
+                      {a.selected_category_code ? (
+                        <>
+                          <span className="mono text-text-subtle">
+                            [{a.selected_category_code}]
+                          </span>{" "}
+                          {a.selected_category_name}{" "}
+                          <span className="text-text-subtle">·</span>{" "}
+                        </>
+                      ) : null}
+                      <em>{a.answer}</em>
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </Section>
+
+          {/* Corrections */}
+          <Section
+            title="Corrections learned this month"
+            subtitle="Each row is a deterministic (merchant → category) rule the system will reuse for similar future transactions at zero model cost."
+            count={handoff.corrections_learned.length}
+          >
+            {handoff.corrections_learned.length === 0 ? (
+              <p className="text-[13px] text-text-subtle">
+                No new correction-memory rules saved this period.
+              </p>
+            ) : (
+              <ul className="divide-y divide-surface-border overflow-hidden rounded border border-surface-border">
+                {handoff.corrections_learned.map((c) => (
+                  <li
+                    key={c.id}
+                    className="flex flex-wrap items-baseline justify-between gap-2 px-3 py-2 text-[13px]"
+                  >
+                    <span className="mono text-text-primary">
+                      {c.merchant_key || "—"}
+                    </span>
+                    <span className="mono text-text-subtle">
+                      → [{c.selected_category_code}] · {c.match_count} matches
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </Section>
+
+          {/* Honesty footer */}
+          <section className="mt-8 rounded-md border border-surface-border bg-surface-panel p-4 text-[12px] text-text-secondary">
+            <p>
+              <strong>Trust metric is workflow-level, not raw model accuracy.</strong> A
+              row counts as verified only when it came from a rule auto-approval, a
+              correction-memory replay, or an explicit human review. Raw model
+              performance is reported separately on{" "}
+              <Link href="/evals" className="text-brand-700 underline">
+                /evals
+              </Link>
+              .
+            </p>
+            <p className="mt-2">
+              Estimated owner time saved is a conservative figure (1.5 min per
+              deterministic auto-approval, 2.0 min per memory replay). It is not a
+              financial guarantee.
+            </p>
+          </section>
+        </>
+      )}
+    </AppShell>
+  );
+}
+
+function Section({
+  title,
+  subtitle,
+  count,
+  tone = "default",
+  children,
+}: {
+  title: string;
+  subtitle: string;
+  count: number;
+  tone?: "default" | "warn";
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="mt-8">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <h2 className="font-display text-[18px] font-medium text-text-primary">{title}</h2>
+        <span
+          className={
+            tone === "warn"
+              ? "rounded-full bg-amber-100 px-2 py-0.5 text-[11px] font-medium text-amber-900"
+              : "rounded-full bg-brand-100 px-2 py-0.5 text-[11px] font-medium text-brand-800"
+          }
+        >
+          {count}
+        </span>
+      </div>
+      <p className="mt-1 max-w-3xl text-[13px] text-text-secondary">{subtitle}</p>
+      <div className="mt-3">{children}</div>
+    </section>
+  );
+}

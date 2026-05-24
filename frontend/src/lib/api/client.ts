@@ -17,6 +17,8 @@ import type {
   CsvImportSummary,
   HealthResponse,
   Ledger,
+  LedgerRow,
+  LedgerTrust,
   MemoryMatch,
   ReadyResponse,
   ReviewDecision,
@@ -317,3 +319,39 @@ export const seedDemo = () =>
 
 export const resetDemo = () =>
   apiFetch<DemoResetResult>("/demo/reset", { method: "POST" });
+
+// ── Handoff (small-business cleanup report) ────────────────────────────────
+
+export type CleanupImpact = {
+  transactions_imported: number;
+  handled_by_rules_or_memory: number;
+  handled_by_correction_memory: number;
+  routed_to_review: number;
+  corrections_learned: number;
+  estimated_minutes_saved: number;
+};
+
+export type HandoffOwnerAnswer = {
+  transaction_id: string;
+  transaction_description: string;
+  answer: string;
+  selected_category_code: string | null;
+  selected_category_name: string | null;
+  reviewer_action: string;
+};
+
+export type HandoffResponse = {
+  generated_at: string;
+  cleanup_period_label: string;
+  trust: LedgerTrust;
+  impact: CleanupImpact;
+  ready_for_accountant: LedgerRow[];
+  needs_review: LedgerRow[];
+  owner_answers: HandoffOwnerAnswer[];
+  corrections_learned: CorrectionMemory[];
+};
+
+export const getHandoff = () => apiFetch<HandoffResponse>("/handoff");
+
+export const getHandoffMarkdownUrl = () =>
+  `${getApiBaseUrl()}/handoff/export.md`;
