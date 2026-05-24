@@ -19,19 +19,26 @@ intent resolves to.
 
 ## 2. Current demo-safe implementation
 
-`/mapping` calls `GET /rules` and renders the `mapping` field of the
-response:
+`/mapping` is now an **editable wizard** backed by the persistent
+`CategoryMappingProfile` / `CategoryMappingEntry` tables. See
+[`PERSISTENT_CATEGORY_MAPPING.md`](PERSISTENT_CATEGORY_MAPPING.md)
+for the full v1 write-up. Highlights:
 
-- **Active business** — name + id.
-- **Mapped intents** — every intent the business has overridden.
-- **Blocked-fallback intents** — intents the business refuses to
-  auto-categorize from the rule's hard-coded default code. Matching
-  rows route to review.
-- **Unmapped intents** — intents that exist on rules but have no
-  override. The rule's own `category_code` is used as a fallback.
+- The page calls `GET /mapping/profile`, which seeds an active
+  profile per business from the Python registry on first read.
+- The owner can change `category_code`, toggle `block_fallback`,
+  and add a free-text note per intent. Saves go to
+  `PUT /mapping/profile/entries/{intent}`. Validation rejects
+  unknown intents and unknown COA codes with 422.
+- The reset button calls `POST /mapping/profile/reset` to restore
+  the seeded defaults.
+- The page surfaces an amber public-demo warning ("Public demo —
+  these settings are not protected by production authentication.")
+  and three more backend-supplied warnings.
 
-This is enough for a reviewer to understand the mapping layer
-without reading the Python source.
+The previous read-only explainer shape (status badges, missing
+intents) is preserved; the difference is that every row now has a
+dropdown, a checkbox, and a Save button.
 
 ## 3. Intent-to-category mapping explanation
 
@@ -78,17 +85,12 @@ the limitation:
 
 ## 6. Future editable / persistent mapping plan
 
-The schema foundation already exists as of Auth/Tenant Phase 1 (see
-[`AUTH_TENANT_PHASE_1.md`](AUTH_TENANT_PHASE_1.md)):
+**v1 shipped.** The persistent path is now wired up — see
+[`PERSISTENT_CATEGORY_MAPPING.md`](PERSISTENT_CATEGORY_MAPPING.md)
+for the implementation. The Python registry remains as the read-only
+baseline + reset target.
 
-- `CategoryMappingProfile(id, business_id, name, is_active, …)`
-- `CategoryMappingEntry(id, profile_id, intent, category_code,
-  category_name, block_fallback, …)`
-
-These tables are **created by the migration but not yet read or
-written by any code path.** The active mapping is still resolved
-from `backend/src/ledgerlens/data/business_rule_maps.py` so the
-public demo and existing tests are unchanged.
+What still needs the auth/tenant Phase 2 PR:
 
 Once login / sessions land in Phase 2:
 

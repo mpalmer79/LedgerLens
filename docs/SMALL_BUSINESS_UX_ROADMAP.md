@@ -52,12 +52,13 @@ the sections below.
    implementation and `docs/CSV_IMPORT_MAPPING_WIZARD_REVIEW.md`
    for the sprint review.
 2. **Account-mapping wizard** — owners or their accountant can
-   tweak the intent → COA map per business. **🟡 Partial — read-only
-   explorer shipped at `/mapping`. Schema foundation
-   (`CategoryMappingProfile`, `CategoryMappingEntry`) shipped in
-   Auth/Tenant Phase 1.** Editing requires login + sessions, which
-   land in Phase 2. See `docs/CATEGORY_MAPPING_WIZARD.md` and
-   `docs/AUTH_TENANT_PHASE_1.md`.
+   tweak the intent → COA map per business. **✅ Editable v1
+   shipped.** `/mapping` is now an editable wizard backed by
+   `CategoryMappingProfile` / `CategoryMappingEntry`. Public demo
+   has no auth on the writes — the page surfaces an amber warning
+   and a reset-to-defaults button. See
+   `docs/PERSISTENT_CATEGORY_MAPPING.md` for the contract and
+   `docs/CATEGORY_MAPPING_WIZARD.md` for the design.
 3. **Mobile-first review queue** — one card at a time, big
    buttons, sticky save/skip. **🟡 Partial — `/review` now offers
    four explicit primary actions on a 1-/2-/4-column responsive
