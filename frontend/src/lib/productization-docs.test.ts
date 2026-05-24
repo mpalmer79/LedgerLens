@@ -76,4 +76,25 @@ describe("productization-boundary docs", () => {
     expect(body).toContain("package-ecosystem: pip");
     expect(body).toContain("package-ecosystem: github-actions");
   });
+
+  it("public/samples/granite-state-bank-sample.csv exists and has Debit + Credit columns", () => {
+    const sample = join(
+      REPO_ROOT,
+      "frontend",
+      "public",
+      "samples",
+      "granite-state-bank-sample.csv",
+    );
+    expect(existsSync(sample)).toBe(true);
+    const body = readFileSync(sample, "utf-8");
+    const header = body.split("\n")[0];
+    // The sample uses debit/credit mode so the wizard exercises that path.
+    expect(header).toContain("Debit");
+    expect(header).toContain("Credit");
+    expect(header).toContain("Description");
+    // No real data — recognizable fictional vendor names from the
+    // Granite State Auto Repair scenario.
+    expect(body).toContain("NAPA");
+    expect(body).toContain("STRIPE");
+  });
 });
