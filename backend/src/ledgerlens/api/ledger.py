@@ -253,6 +253,9 @@ def export_csv(
     buf.seek(0)
     return StreamingResponse(
         iter([buf.getvalue()]),
-        media_type="text/csv",
-        headers={"Content-Disposition": 'attachment; filename="ledger.csv"'},
+        media_type="text/csv; charset=utf-8",
+        headers={
+            "Content-Disposition": 'attachment; filename="ledgerlens-demo-ledger.csv"',
+            "X-Content-Type-Options": "nosniff",
+        },
     )
