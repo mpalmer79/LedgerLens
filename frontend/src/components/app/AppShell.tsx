@@ -221,7 +221,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <header className="border-b border-surface-border bg-surface-panel">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 py-3">
           <div className="flex items-center justify-between">
-            <Link href="/app" className="flex items-center gap-2 text-text-primary">
+            <Link
+              href="/"
+              className="flex items-center gap-2 rounded-md px-2 py-1.5 -ml-2 text-text-primary active:bg-surface-sunken/60 hover:bg-surface-sunken/40 transition-colors"
+              aria-label="LedgerLens — return to homepage"
+            >
               <Logomark size={22} className="text-brand-600" />
               <span className="font-display text-[17px] font-medium">LedgerLens</span>
               <span className="ml-2 rounded-full bg-brand-100 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-brand-800">
