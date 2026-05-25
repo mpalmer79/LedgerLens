@@ -386,6 +386,51 @@ export const getLedger = () => apiFetch<Ledger>("/ledger");
 
 export const getLedgerExportUrl = () => `${getApiBaseUrl()}/ledger/export.csv`;
 
+/**
+ * Download a CSV export via fetch → blob → programmatic download.
+ *
+ * Unlike a plain `<a href>`, this:
+ * 1. Validates the response (status + content-type) before saving.
+ * 2. Controls the filename (branded, timestamped).
+ * 3. Provides error feedback via the returned promise.
+ * 4. Works reliably on mobile Chrome where cross-origin `<a>` downloads
+ *    can silently save error pages as the CSV.
+ */
+export async function downloadCsvExport(
+  path: string,
+  filename?: string,
+): Promise<void> {
+  const url = `${getApiBaseUrl()}${path}`;
+  const res = await fetch(url, { credentials: "omit" });
+  if (!res.ok) {
+    throw new ApiError(
+      `Export failed: ${res.status} ${res.statusText}`,
+      res.status,
+    );
+  }
+  const contentType = res.headers.get("content-type") || "";
+  if (!contentType.includes("csv") && !contentType.includes("text/plain")) {
+    throw new ApiError(
+      "Export returned unexpected content type: " + contentType,
+      res.status,
+    );
+  }
+  const blob = await res.blob();
+  if (blob.size === 0) {
+    throw new ApiError("Export returned an empty file", res.status);
+  }
+  const date = new Date().toISOString().slice(0, 10);
+  const name = filename ?? `ledgerlens-demo-ledger-${date}.csv`;
+  const objectUrl = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = objectUrl;
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(objectUrl);
+}
+
 // ── Audit ──────────────────────────────────────────────────────────────────
 
 export const listAuditEvents = (params: {

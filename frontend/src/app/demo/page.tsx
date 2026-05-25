@@ -10,12 +10,12 @@ import {
   categorize,
   categorizeBatch,
   correctReview,
+  downloadCsvExport,
   getDemoReady,
   getDemoSampleTransactions,
   getDemoScenario,
   getDemoStatus,
   getLedger,
-  getLedgerExportUrl,
   getReviewQueue,
   resetDemo,
   seedDemo,
@@ -580,12 +580,7 @@ export default function DemoPage() {
                 The CSV export carries the same verification status per row, so a
                 bookkeeper downstream can filter unverified rows before posting.
               </p>
-              <a
-                href={getLedgerExportUrl()}
-                className="mt-2 inline-block rounded bg-brand-600 px-3 py-1.5 text-[13px] font-medium text-white hover:bg-brand-500"
-              >
-                Export ledger CSV ↓
-              </a>
+              <ExportCsvButton />
             </div>
           </>
         )}
@@ -762,6 +757,58 @@ function ProofCard({ title, body }: { title: string; body: string }) {
       <p className="font-medium text-text-primary">{title}</p>
       <p className="mt-1 text-text-secondary">{body}</p>
     </li>
+  );
+}
+
+function ExportCsvButton() {
+  const [state, setState] = useState<"idle" | "loading" | "done" | "error">(
+    "idle",
+  );
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const handleClick = async () => {
+    if (state === "loading") return;
+    setState("loading");
+    setErrorMsg("");
+    try {
+      await downloadCsvExport("/ledger/export.csv");
+      setState("done");
+      setTimeout(() => setState("idle"), 3000);
+    } catch (err) {
+      setState("error");
+      setErrorMsg(
+        err instanceof Error ? err.message : "Export failed. Try again.",
+      );
+    }
+  };
+
+  return (
+    <div className="mt-2">
+      <button
+        onClick={handleClick}
+        disabled={state === "loading"}
+        className={`inline-block rounded px-3 py-1.5 text-[13px] font-medium text-white ${
+          state === "loading"
+            ? "cursor-wait bg-brand-400"
+            : state === "error"
+              ? "bg-red-600 hover:bg-red-500"
+              : state === "done"
+                ? "bg-brand-700"
+                : "bg-brand-600 hover:bg-brand-500"
+        }`}
+      >
+        {state === "loading"
+          ? "Downloading…"
+          : state === "done"
+            ? "Downloaded ✓"
+            : state === "error"
+              ? "Retry export ↓"
+              : "Export ledger CSV ↓"}
+      </button>
+      {state === "error" && errorMsg && (
+        <p className="mt-1 text-[12px] text-red-700">{errorMsg}</p>
+      )}
+    </div>
   );
 }
 

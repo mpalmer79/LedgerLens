@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { AppShell } from "@/components/app/AppShell";
 import { StatusBadge } from "@/components/app/StatusBadge";
 import { TrustPanel } from "@/components/app/TrustPanel";
-import { ApiError, getLedger, getLedgerExportUrl } from "@/lib/api/client";
+import { ApiError, downloadCsvExport, getLedger } from "@/lib/api/client";
 import type { Ledger } from "@/lib/api/types";
 import { formatAmount, formatConfidence, formatDate } from "@/lib/format";
 
@@ -52,16 +52,30 @@ export default function LedgerPage() {
 
   const hasUnverified = (ledger?.trust.unverified_finalized_count ?? 0) > 0;
 
-  const handleExport = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (!hasUnverified) return;
-    const ok = window.confirm(
-      "This ledger contains finalized rows that have not been verified by review, " +
-        "correction memory, or a deterministic rule. Export anyway?\n\n" +
-        "Recommended: review the unverified rows before treating this CSV as final " +
-        "bookkeeping output.",
-    );
-    if (!ok) {
-      e.preventDefault();
+  const [exporting, setExporting] = useState(false);
+  const [exportError, setExportError] = useState("");
+
+  const handleExport = async () => {
+    if (exporting) return;
+    if (hasUnverified) {
+      const ok = window.confirm(
+        "This ledger contains finalized rows that have not been verified by review, " +
+          "correction memory, or a deterministic rule. Export anyway?\n\n" +
+          "Recommended: review the unverified rows before treating this CSV as final " +
+          "bookkeeping output.",
+      );
+      if (!ok) return;
+    }
+    setExporting(true);
+    setExportError("");
+    try {
+      await downloadCsvExport("/ledger/export.csv");
+    } catch (err) {
+      setExportError(
+        err instanceof Error ? err.message : "Export failed. Try again.",
+      );
+    } finally {
+      setExporting(false);
     }
   };
 
@@ -80,16 +94,28 @@ export default function LedgerPage() {
             excluded from the finalized count.
           </p>
         </div>
-        <a
-          href={getLedgerExportUrl()}
-          download
-          onClick={handleExport}
-          className={`rounded-md px-4 py-2 text-[13px] font-medium text-white ${
-            hasUnverified ? "bg-amber-600 hover:bg-amber-500" : "bg-brand-600 hover:bg-brand-500"
-          }`}
-        >
-          {hasUnverified ? "Export CSV (warning) ↓" : "Export CSV ↓"}
-        </a>
+        <div>
+          <button
+            onClick={handleExport}
+            disabled={exporting}
+            className={`rounded-md px-4 py-2 text-[13px] font-medium text-white ${
+              exporting
+                ? "cursor-wait bg-brand-400"
+                : hasUnverified
+                  ? "bg-amber-600 hover:bg-amber-500"
+                  : "bg-brand-600 hover:bg-brand-500"
+            }`}
+          >
+            {exporting
+              ? "Downloading…"
+              : hasUnverified
+                ? "Export CSV (warning) ↓"
+                : "Export CSV ↓"}
+          </button>
+          {exportError && (
+            <p className="mt-1 text-[12px] text-red-700">{exportError}</p>
+          )}
+        </div>
       </header>
 
       {hasUnverified && ledger && (
