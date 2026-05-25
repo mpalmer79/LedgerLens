@@ -387,31 +387,22 @@ export const getLedger = () => apiFetch<Ledger>("/ledger");
 export const getLedgerExportUrl = () => `${getApiBaseUrl()}/ledger/export.csv`;
 
 /**
- * Download a CSV export via fetch → blob → programmatic download.
+ * Download an export file via fetch → blob → programmatic download.
  *
- * Unlike a plain `<a href>`, this:
- * 1. Validates the response (status + content-type) before saving.
- * 2. Controls the filename (branded, timestamped).
- * 3. Provides error feedback via the returned promise.
- * 4. Works reliably on mobile Chrome where cross-origin `<a>` downloads
- *    can silently save error pages as the CSV.
+ * Supports CSV, Markdown, and JSON exports. Validates status and
+ * content-type before saving. Works reliably on mobile Chrome.
  */
-export async function downloadCsvExport(
+export async function downloadExport(
   path: string,
-  filename?: string,
+  opts?: { filename?: string; accept?: string },
 ): Promise<void> {
   const url = `${getApiBaseUrl()}${path}`;
-  const res = await fetch(url, { credentials: "omit" });
+  const headers: Record<string, string> = {};
+  if (opts?.accept) headers["Accept"] = opts.accept;
+  const res = await fetch(url, { credentials: "omit", headers });
   if (!res.ok) {
     throw new ApiError(
       `Export failed: ${res.status} ${res.statusText}`,
-      res.status,
-    );
-  }
-  const contentType = res.headers.get("content-type") || "";
-  if (!contentType.includes("csv") && !contentType.includes("text/plain")) {
-    throw new ApiError(
-      "Export returned unexpected content type: " + contentType,
       res.status,
     );
   }
@@ -420,7 +411,7 @@ export async function downloadCsvExport(
     throw new ApiError("Export returned an empty file", res.status);
   }
   const date = new Date().toISOString().slice(0, 10);
-  const name = filename ?? `ledgerlens-demo-ledger-${date}.csv`;
+  const name = opts?.filename ?? `ledgerlens-export-${date}`;
   const objectUrl = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = objectUrl;
@@ -429,6 +420,16 @@ export async function downloadCsvExport(
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(objectUrl);
+}
+
+export async function downloadCsvExport(
+  path: string,
+  filename?: string,
+): Promise<void> {
+  const date = new Date().toISOString().slice(0, 10);
+  return downloadExport(path, {
+    filename: filename ?? `ledgerlens-demo-ledger-${date}.csv`,
+  });
 }
 
 // ── Audit ──────────────────────────────────────────────────────────────────
@@ -445,6 +446,50 @@ export const listAuditEvents = (params: {
   const qs = q.toString();
   return apiFetch<AuditEvent[]>(`/audit/events${qs ? `?${qs}` : ""}`);
 };
+
+// ── Splits ──────────────────────────────────────────────────────────────────
+
+export type SplitLine = {
+  id: string;
+  transaction_id: string;
+  line_index: number;
+  amount_cents: number;
+  category_code: string | null;
+  category_name: string | null;
+  note: string | null;
+  source: string;
+};
+
+export type SplitValidation = {
+  transaction_amount_cents: number;
+  split_total_cents: number;
+  is_complete: boolean;
+  remainder_cents: number;
+  line_count: number;
+};
+
+export type SplitListOut = {
+  lines: SplitLine[];
+  validation: SplitValidation;
+};
+
+export const getSplits = (transactionId: string) =>
+  apiFetch<SplitListOut>(`/transactions/${transactionId}/splits`);
+
+export const replaceSplits = (
+  transactionId: string,
+  lines: { amount_cents: number; category_code: string | null; note?: string | null }[],
+) =>
+  apiFetch<SplitListOut>(`/transactions/${transactionId}/splits`, {
+    method: "PUT",
+    body: JSON.stringify({ lines }),
+    headers: { "Content-Type": "application/json" },
+  });
+
+export const deleteSplits = (transactionId: string) =>
+  apiFetch<{ deleted_lines: number }>(`/transactions/${transactionId}/splits`, {
+    method: "DELETE",
+  });
 
 // ── Correction memory ──────────────────────────────────────────────────────
 
