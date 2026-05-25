@@ -145,9 +145,10 @@ def export_reviewed_csv(
     buf.seek(0)
     return StreamingResponse(
         iter([buf.getvalue()]),
-        media_type="text/csv",
+        media_type="text/csv; charset=utf-8",
         headers={
-            "Content-Disposition": 'attachment; filename="reviewed_categorization.csv"',
+            "Content-Disposition": 'attachment; filename="ledgerlens-reviewed.csv"',
+            "X-Content-Type-Options": "nosniff",
         },
     )
 
@@ -189,8 +190,9 @@ def export_followup_csv(
     buf.seek(0)
     return StreamingResponse(
         iter([buf.getvalue()]),
-        media_type="text/csv",
+        media_type="text/csv; charset=utf-8",
         headers={
-            "Content-Disposition": 'attachment; filename="followup_required.csv"',
+            "Content-Disposition": 'attachment; filename="ledgerlens-followup.csv"',
+            "X-Content-Type-Options": "nosniff",
         },
     )

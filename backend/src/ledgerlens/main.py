@@ -21,6 +21,7 @@ from ledgerlens.api import (
     review,
     rules,
     session,
+    splits,
     transactions,
 )
 from ledgerlens.config import get_settings
@@ -95,6 +96,7 @@ def create_app() -> FastAPI:
     application.include_router(import_profiles.router)
     application.include_router(session.router)
     application.include_router(audit_events.router)
+    application.include_router(splits.router)
 
     return application
 
