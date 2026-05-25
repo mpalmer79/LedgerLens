@@ -69,7 +69,7 @@ export const HOMEPAGE_IMAGES: ReadonlyArray<HomepageImage> = [
     alt:
       "Checklist and pen on a desk, representing procedural review " +
       "before accountant handoff",
-    enabled: false,
+    enabled: true,
     aspect: "3:2",
     placement: "trust boundary section",
     placeholderTitle: "Trust image slot",
