@@ -5,6 +5,8 @@
 [![Live demo](https://img.shields.io/badge/demo-ledgerlens.up.railway.app-2e5f32)](https://ledgerlens.up.railway.app)
 [![Guided demo](https://img.shields.io/badge/3--minute-guided%20demo-244c27)](https://ledgerlens.up.railway.app/demo)
 [![Trust metric](https://img.shields.io/badge/trust-100%25%20procedurally%20verified-2e5f32)](docs/TRUST_METRIC.md)
+[![GitHub](https://img.shields.io/badge/GitHub-mpalmer79-181717?logo=github&logoColor=white)](https://github.com/mpalmer79)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Michael%20Palmer-0A66C2?logo=linkedin&logoColor=white)](https://linkedin.com/in/michael-palmer)
 
 ## What LedgerLens is
 
@@ -17,15 +19,15 @@
 ## What LedgerLens is NOT
 
 - **Not production accounting software.** No double-entry, no accrual, no bank reconciliation, no tax handling, no split transactions, no multi-currency. See [`docs/ACCOUNTING_DOMAIN_BOUNDARY.md`](docs/ACCOUNTING_DOMAIN_BOUNDARY.md).
-- **Not multi-tenant SaaS.** No auth, no user model, no tenant model, no tenant-scoped row queries. See [`docs/SECURITY_AND_PRODUCTION_READINESS.md`](docs/SECURITY_AND_PRODUCTION_READINESS.md) for the production roadmap.
+- **Not production multi-tenant SaaS.** LedgerLens now has demo session context, actor-aware audit events, and business-scoped workflow tables, but it is still not production authentication or production tenant isolation. See [`docs/AUTH_TENANT_PHASE_2_REVIEW.md`](docs/AUTH_TENANT_PHASE_2_REVIEW.md) and [`docs/TENANT_BOUNDARY_AND_DATA_PROTECTION_REVIEW.md`](docs/TENANT_BOUNDARY_AND_DATA_PROTECTION_REVIEW.md).
 - **Not a substitute for a CPA.** "Verified" here is procedural (a defensible authority signed off on the row), not substantive (a CPA confirmed the books).
 - **Not safe for real bank data uploads.** The public demo is intended for synthetic / sample CSVs only. The `/transactions/import` page warns explicitly.
 
 ## Public demo warning
 
-> **The public demo runs on synthetic sample data and has no authentication, no tenant isolation, and no PII redaction.**
+> **The public demo runs on synthetic sample data with demo-only session context, not production authentication.**
 >
-> Do not upload real bank statements, customer information, employee information, account numbers, or sensitive financial data. Use the bundled sample CSV or invented data only.
+> LedgerLens now business-scopes core workflow rows and redacts obvious sensitive values from audit/log payloads, but this is still a portfolio demo — not production tenant isolation, not a compliance product, and not a safe place for real bank statements, customer information, employee information, account numbers, payroll data, or sensitive financial data. Use the bundled sample CSV or invented data only.
 
 ## Sample data disclaimer
 
@@ -39,18 +41,16 @@ Full boundary: [`docs/ACCOUNTING_DOMAIN_BOUNDARY.md`](docs/ACCOUNTING_DOMAIN_BOU
 
 ## Security and production-readiness status
 
-LedgerLens is a **portfolio-grade workflow demo**, not production SaaS. The following gaps are documented honestly, not hidden:
+LedgerLens is a **portfolio-grade workflow demo**, not production SaaS. The current repo is more mature than the original prototype, but the remaining gaps are still documented honestly.
 
-- **Auth/Tenant Foundation: Phase 1 schema shipped.** `User`, `Tenant`, `Membership`, `Business`, `CategoryMappingProfile`, `CategoryMappingEntry` models exist. Demo tenant + business are seeded. Honest `/admin` shell at the route of the same name renders the foundation status. **No production login, no protected routes, no tenant scoping on existing queries yet.** See [`docs/AUTH_TENANT_PHASE_1.md`](docs/AUTH_TENANT_PHASE_1.md).
-- **Editable category mapping (v1) shipped.** `/mapping` is now an editable wizard backed by the persistent profile tables. Edits affect future categorize calls; `block_fallback` routes matching rows to review. The wizard is unauthenticated on the public demo — an amber warning makes that explicit, and a "Reset demo defaults" button restores the seeded state. See [`docs/PERSISTENT_CATEGORY_MAPPING.md`](docs/PERSISTENT_CATEGORY_MAPPING.md).
-- **Public-demo deployment reliability hardened.** `CORS_ORIGINS` accepts a single origin, a comma-separated list, or the legacy JSON-array form. `/demo/status` returns a structured 503 instead of a raw "Internal Server Error" page on schema drift. New `/demo/ready` probes every demo-critical table independently. Container start script runs the safe Alembic bootstrap (opt-in via `RUN_MIGRATIONS_ON_START=true`); never silently stamps a drifted schema. Frontend `/app` and `/demo` render a polished "Demo dependencies temporarily unavailable" panel rather than letting a raw API error dominate. See [`docs/PUBLIC_DEMO_INCIDENT_HOTFIX_REVIEW.md`](docs/PUBLIC_DEMO_INCIDENT_HOTFIX_REVIEW.md).
-- **Owner onboarding + static handoff fallback + portfolio CTA shipped.** New `/start` page walks an owner through the five-step workflow (sample CSV → import → confirm mapping → owner questions → handoff). `/handoff` renders a polished static Granite State sample when the backend errors, so the money-shot page is never blank. AppShell nav is split into a labelled Owner path + a Technical group. Homepage gains a workflow FAQ + a hiring-manager portfolio CTA pointing at the technical story / GitHub / LinkedIn. No email / phone / resume / pricing / "request demo" copy. See [`docs/OWNER_ONBOARDING_AND_CONVERSION_REVIEW.md`](docs/OWNER_ONBOARDING_AND_CONVERSION_REVIEW.md).
-- **Release-readiness sprint: header readiness truth + saved CSV import profiles + mapping recategorization preview.** AppShell now separates process liveness (`/health`) from demo-data readiness (`/demo/ready`); the old misleading "API: ok" copy is gone. Saved `CsvImportProfile` rows let a returning owner skip the column mapping step on next month's bank export — profiles store header metadata only, never row data. Each `/mapping` row gains a read-only "Preview impact" panel that shows affected rows, eligible vs protected counts (human corrections, accountant-follow-up rows, ACCOUNTANT_REVIEW_REQUIRED, UNCATEGORIZABLE, and correction-memory rows are all protected). No silent recategorization; apply is deferred to Auth Phase 2. See [`docs/RELEASE_READINESS_NEXT_THREE_REVIEW.md`](docs/RELEASE_READINESS_NEXT_THREE_REVIEW.md).
-- **Auth/Tenant Phase 2 — demo session, actor-aware audit, safe selected-row apply.** `GET /session` returns the seeded `Demo Owner` + `Granite State Auto Repair` business + honesty warnings; AppShell renders a "Demo session" badge. `AuditEvent` gains `business_id` / `actor_user_id` / `actor_display_name` / `request_id`; new `services.audit_log` strips sensitive keys before storage; new `/audit` page surfaces the trail. `POST /mapping/apply-preview` applies the proposed mapping to **only** the explicitly-selected eligible rows — the server recomputes eligibility and rejects any human-corrected / accountant-follow-up / ACCOUNTANT_REVIEW_REQUIRED / UNCATEGORIZABLE / correction-memory row, no matter what the frontend sends. No production auth claim. See [`docs/AUTH_TENANT_PHASE_2_REVIEW.md`](docs/AUTH_TENANT_PHASE_2_REVIEW.md).
-- **No PII redaction before LLM calls.** Demo-stub mode is the only firewall today. Phase D.
-- **Alembic migration baseline shipped.** `alembic.ini`, `alembic/env.py`, and one baseline migration cover the full schema. The demo deploy still bootstraps via `Base.metadata.create_all()`; the production migration path is `alembic upgrade head`. No backups / retention policy / deletion endpoint yet — Phase C.
-- **Structured logging foundation + request IDs shipped.** `X-Request-ID` middleware + `configure_logging()` baseline + redaction utility. JSON formatter and log shipping are the next upgrade.
-- **No production login.** No `password_hash`, no `Session` table, no JWT, no protected routes.
+- **Demo-safe session + actor context shipped.** `GET /session` returns the seeded `Demo Owner` and `Granite State Auto Repair` business. AppShell shows the demo session badge. This is intentionally stateless demo context — no passwords, JWTs, OAuth, real signup, or production login. See [`docs/DEMO_SESSION_AND_BUSINESS_CONTEXT.md`](docs/DEMO_SESSION_AND_BUSINESS_CONTEXT.md).
+- **Actor-aware audit shipped.** Import-profile changes, mapping updates, previews, selected-row applies, and review actions write audit events with business, actor, display name, request id, action, and safe before/after metadata. See [`docs/AUDIT_EVENT_MODEL.md`](docs/AUDIT_EVENT_MODEL.md).
+- **Tenant-boundary foundation shipped.** `transactions`, `categorization_results`, `review_decisions`, and `correction_memory` now carry `business_id`; service and API reads/writes are scoped to the active business; cross-business leakage is covered by regression tests. This is a serious tenant-boundary foundation, but not a claim of production multi-tenancy. See [`docs/TENANT_BOUNDARY_AND_DATA_PROTECTION_REVIEW.md`](docs/TENANT_BOUNDARY_AND_DATA_PROTECTION_REVIEW.md).
+- **Sensitive-data guardrails shipped.** A shared redaction utility strips obvious emails, phone numbers, card-like groups, long digit runs, SSN/EIN-like patterns, database URLs, tokens, and forbidden audit keys. This is a guardrail for logs/audit payloads, not a complete PII/compliance pipeline. See [`docs/SECURITY_AND_PRODUCTION_READINESS.md`](docs/SECURITY_AND_PRODUCTION_READINESS.md).
+- **Public-demo deployment reliability hardened.** `CORS_ORIGINS` accepts single-origin, comma-separated, or legacy JSON-array forms. `/demo/status` fails safely with structured JSON. `/demo/ready` checks demo-critical dependencies. The backend start script can run Alembic on boot with `RUN_MIGRATIONS_ON_START=true` and refuses silent stamping. See [`docs/PUBLIC_DEMO_INCIDENT_HOTFIX_REVIEW.md`](docs/PUBLIC_DEMO_INCIDENT_HOTFIX_REVIEW.md).
+- **Data retention and backups are not production-ready.** A tenant-scoped deletion primitive and backup/restore runbook exist, but there is no customer-facing deletion workflow, no verified production backup/restore drill, no retention scheduler, and no disaster-recovery guarantee. See [`docs/BACKUP_RESTORE_AND_RETENTION_RUNBOOK.md`](docs/BACKUP_RESTORE_AND_RETENTION_RUNBOOK.md).
+- **Accounting-system integrations are not implemented.** LedgerLens exports reviewed/follow-up CSV and Markdown handoff files. It does not round-trip to QuickBooks/Xero and does not connect to Plaid/Finicity. See [`docs/ACCOUNTING_SYSTEM_EXPORT_READINESS.md`](docs/ACCOUNTING_SYSTEM_EXPORT_READINESS.md).
+- **Homepage visual refresh is in progress.** The homepage uses a manifest-driven local image system with no fake credits or remote hotlinks. Added images are local files with controlled slots, not icon/illustration packs. See [`docs/HOMEPAGE_VISUAL_REFRESH_REVIEW.md`](docs/HOMEPAGE_VISUAL_REFRESH_REVIEW.md).
 
 Full posture + roadmap: [`docs/SECURITY_AND_PRODUCTION_READINESS.md`](docs/SECURITY_AND_PRODUCTION_READINESS.md).
 
@@ -101,20 +101,22 @@ Because ambiguous bookkeeping data requires business context, and adversarial ca
 
 ## Current product status
 
-LedgerLens is a **working prototype** that demonstrates an end-to-end AI bookkeeping workflow on synthetic data. It is not production-ready and not connected to real bank or accounting systems.
+LedgerLens is a **working portfolio prototype** that demonstrates an end-to-end bookkeeping cleanup workflow on synthetic data. It is not production-ready and not connected to real bank or accounting systems.
 
 | Capability | Status |
 |---|---|
-| Eval harness (load dataset, run categorizer, persist metrics) | **Shipped** — committed JSON run artifacts under `evals/runs/` |
-| Claude Haiku 4.5 categorizer with tool_use structured output | **Shipped** — `backend/src/ledgerlens/categorizers/claude_haiku.py` |
-| Eval dashboard at `/evals` | **Shipped** — reads latest run JSON at build time |
-| Backend API: transactions, categorize, review queue, ledger export, audit | **Shipped** — see "API surface" below |
-| Persistent storage (SQLite for demo; Postgres-compatible models) | **Shipped** — SQLAlchemy 2.0 models that can run against Postgres in principle, idempotent table creation, seeded chart of accounts. **Production migration management (Alembic), backups, and retention policies are documented as roadmap items, not implemented.** |
-| Frontend workflow pages (`/app`, `/transactions`, `/transactions/import`, `/transactions/[id]`, `/review`, `/ledger`) | **Shipped** — typed API client, real backend calls |
-| **Correction memory** (deterministic merchant-keyed lookup) | **Shipped** — `/corrections` page, `services/correction_memory.py`, future similar transactions categorize from prior human corrections at zero model cost |
-| **Hybrid rules + model categorizer** (deterministic rule layer before the model) | **Shipped (this PR)** — `/rules` page, `services/rule_categorizer.py`, ~25 curated rules in `data/category_rules.json`; obvious transactions categorize at zero model cost; ambiguous rules route to review |
-| Pgvector / semantic retrieval | **Planned** — exact-key match is the v1 design; embeddings later |
-| Production multi-tenancy, real bank integration | **Not in scope for v0** |
+| Eval harness + committed run artifacts | **Shipped** — JSON/Markdown artifacts under `evals/runs/` |
+| Claude Haiku 4.5 categorizer with structured output | **Shipped for local/private testing** — public deploy runs `demo_stub` |
+| Zero-cost public demo mode | **Shipped** — regression-tested so the `anthropic` SDK is not imported in demo mode |
+| Deterministic rules + correction memory | **Shipped** — zero-cost layers run before fallback/model routing |
+| Saved CSV import profiles | **Shipped** — stores header/mapping metadata only, never row data |
+| Editable category mapping | **Shipped** — `/mapping` supports business-specific intent → COA mapping and `block_fallback` |
+| Mapping recategorization preview + selected-row apply | **Shipped** — read-only preview plus selected eligible-row apply with server-side eligibility checks and audit |
+| Demo session + actor-aware audit | **Shipped** — `Demo Owner`, business context, audit events, `/audit` page |
+| Business-scoped core workflow rows | **Shipped** — `business_id` on transactions/results/review/correction-memory with tenant-boundary tests |
+| Homepage local photography system | **Shipped/in progress** — manifest-driven image slots, local files, verification script, no fake credits |
+| QuickBooks/Xero/Plaid integrations | **Not implemented** — export readiness is documented, live integrations are future work |
+| Production auth, billing, backup SLAs, retention automation | **Not implemented** — documented roadmap items, not claims |
 
 Five-minute reviewer path through the working app: [`docs/DEMO_WALKTHROUGH.md`](docs/DEMO_WALKTHROUGH.md).
 
@@ -335,24 +337,23 @@ These aren't bugs — they're explicit non-goals documented in [`docs/IMPLEMENTA
 
 ## Production roadmap
 
-See [`docs/SECURITY_AND_PRODUCTION_READINESS.md`](docs/SECURITY_AND_PRODUCTION_READINESS.md) for the full phased roadmap. Summary:
+See [`docs/SECURITY_AND_PRODUCTION_READINESS.md`](docs/SECURITY_AND_PRODUCTION_READINESS.md), [`docs/IMPLEMENTATION_GAP_ANALYSIS.md`](docs/IMPLEMENTATION_GAP_ANALYSIS.md), and [`docs/MARKET_POSITIONING_AND_COMPETITIVE_WEDGE.md`](docs/MARKET_POSITIONING_AND_COMPETITIVE_WEDGE.md) for the full roadmap. The practical next work is:
 
-- **Phase A** — auth + tenant model + tenant-scoped row queries.
-- **Phase B** — rate limiting + request IDs + structured logging + log redaction.
-- **Phase C** — Alembic migrations + backup/restore + retention/deletion policy.
-- **Phase D** — PII detection / redaction before LLM + per-tenant model-spend controls.
-- **Phase E** — dependency scanning beyond Dependabot + SBOM + security CI.
+- **Authentication hardening** — real login/session model, protected routes, roles/permissions, and production-grade auth boundaries.
+- **Tenant isolation hardening** — continue converting demo assumptions into explicit business/account ownership, permission checks, and operational tests.
+- **Sensitive-data pipeline** — expand redaction/detection, add upload-time warnings/blocks, and define model-call safety before real LLM use.
+- **Backup/restore + retention** — verified Railway/Postgres backup plan, restore drill, retention scheduler, deletion workflow, and operator runbook.
+- **Accounting export readiness** — QBO/Xero-compatible export research, chart-of-accounts mapping requirements, vendor normalization, split-transaction support, and accountant import checklist.
+- **Workflow accuracy/efficiency** — per-business rule packs, intent-first categorization, calibration thresholds, correction-memory generalization, and reduced review burden without lowering trust.
 
-And the small-business UX roadmap ([`docs/SMALL_BUSINESS_UX_ROADMAP.md`](docs/SMALL_BUSINESS_UX_ROADMAP.md)):
-
-- CSV import mapping wizard (drop, preview, column mapping, debit/credit detection, save profile).
-- Account-mapping wizard (intent → COA per business).
-- Mobile-first review queue (one card at a time, big buttons, sticky save/skip, owner note above answers).
+And the small-business UX roadmap ([`docs/SMALL_BUSINESS_UX_ROADMAP.md`](docs/SMALL_BUSINESS_UX_ROADMAP.md)) continues through saved import profiles, mapping previews/apply, mobile review, static handoff fallback, and owner-first onboarding.
 
 ## Test / CI status
 
-- **Backend** — `pytest` (202 tests), `ruff check`, `ruff format --check`, `mypy --strict`. All gated by CI ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)).
-- **Frontend** — `npm test -- --run` (160+ tests, Vitest), `npm run lint` (ESLint), `npm run build`. All gated by CI.
+Recent local/CI proof points from the current repo lineage:
+
+- **Backend** — latest sprint reports **348 pytest tests** passing, plus `ruff check`, `ruff format --check`, and `mypy --strict`.
+- **Frontend** — latest homepage-image slot work reports **312 Vitest tests** passing, plus `npm run lint`, `npm run build`, and `npm run images:verify`.
 - **Evals** — `python -m ledgerlens.evals.run --categorizer <mode>` for rules-only / rules-only-mapped / claude-haiku-v1 / hybrid-rules-model / stub. Committed artifacts under [`evals/runs/`](evals/runs/) (see [`docs/MAPPED_RULE_EVALS.md`](docs/MAPPED_RULE_EVALS.md) + [`docs/MULTI_BUSINESS_MAPPED_RULE_EVALS.md`](docs/MULTI_BUSINESS_MAPPED_RULE_EVALS.md)).
 - **Dependabot** — weekly updates for npm (frontend) + pip (backend), monthly for GitHub Actions. Configured in [`.github/dependabot.yml`](.github/dependabot.yml).
 
