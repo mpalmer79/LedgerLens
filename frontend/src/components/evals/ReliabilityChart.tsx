@@ -95,11 +95,14 @@ export function ReliabilityChart({ data }: Props) {
               borderRadius: 6,
               fontSize: 13,
             }}
-            formatter={(value: number, name: string) => {
-              if (name === "predicted_confidence_mean") return [pct(value), "Predicted"];
-              if (name === "actual_accuracy") return [pct(value), "Actual"];
-              if (name === "count") return [String(value), "Predictions"];
-              return [String(value), name];
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            formatter={(value: any, name: any) => {
+              const v = Number(value);
+              const n = String(name);
+              if (n === "predicted_confidence_mean") return [pct(v), "Predicted"];
+              if (n === "actual_accuracy") return [pct(v), "Actual"];
+              if (n === "count") return [String(v), "Predictions"];
+              return [String(v), n];
             }}
           />
           <Scatter data={populated} fill="var(--brand-600)" />

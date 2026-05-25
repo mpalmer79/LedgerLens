@@ -52,7 +52,8 @@ export function ComparisonChart({ data }: Props) {
             width={120}
           />
           <Tooltip
-            formatter={(value: number) => pct(value)}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            formatter={(value: any) => pct(Number(value))}
             contentStyle={{
               background: "var(--surface-panel)",
               border: "1px solid var(--surface-border)",
