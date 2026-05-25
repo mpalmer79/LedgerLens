@@ -36,11 +36,12 @@ describe("HOMEPAGE_IMAGES manifest", () => {
     );
     expect(enabledSections).toContain("hero");
     expect(enabledSections).toContain("trust");
+    expect(enabledSections).toContain("auto-shop");
     expect(enabledSections).toContain("engineering");
     const disabledSections = HOMEPAGE_IMAGES.filter((i) => !i.enabled).map(
       (i) => i.section,
     );
-    for (const s of ["auto-shop", "faq"]) {
+    for (const s of ["faq"]) {
       expect(disabledSections).toContain(s);
     }
   });
