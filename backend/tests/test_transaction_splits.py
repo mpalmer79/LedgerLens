@@ -164,6 +164,34 @@ class TestSplitService:
         listed_b = list_splits(db, transaction_id=tx.id, business_id=biz_b.id)
         assert len(listed_b) == 0
 
+    def test_cross_business_validate_raises_not_found(self, db: Session) -> None:
+        """validate_split_total must not leak parent tx amount cross-business."""
+        from ledgerlens.errors import NotFound
+
+        biz_a = _biz(db, "val-a")
+        biz_b = _biz(db, "val-b")
+        tx = _tx(db, biz_a.id)
+        with pytest.raises(NotFound):
+            validate_split_total(db, transaction_id=tx.id, business_id=biz_b.id)
+
+    def test_cross_business_delete_raises_not_found(self, db: Session) -> None:
+        """delete_splits must not silently operate on another business's tx."""
+        from ledgerlens.errors import NotFound
+
+        biz_a = _biz(db, "del-a")
+        biz_b = _biz(db, "del-b")
+        tx = _tx(db, biz_a.id)
+        replace_splits(
+            db,
+            transaction_id=tx.id,
+            business_id=biz_a.id,
+            lines=[SplitLineInput(amount_cents=-5000, category_code="6060")],
+        )
+        with pytest.raises(NotFound):
+            delete_splits(db, transaction_id=tx.id, business_id=biz_b.id)
+        listed_a = list_splits(db, transaction_id=tx.id, business_id=biz_a.id)
+        assert len(listed_a) == 1
+
     def test_invalid_category_rejected(self, db: Session) -> None:
         biz = _biz(db)
         tx = _tx(db, biz.id)
