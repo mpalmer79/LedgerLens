@@ -38,12 +38,8 @@ describe("HOMEPAGE_IMAGES manifest", () => {
     expect(enabledSections).toContain("trust");
     expect(enabledSections).toContain("auto-shop");
     expect(enabledSections).toContain("engineering");
-    const disabledSections = HOMEPAGE_IMAGES.filter((i) => !i.enabled).map(
-      (i) => i.section,
-    );
-    for (const s of ["faq"]) {
-      expect(disabledSections).toContain(s);
-    }
+    expect(enabledSections).toContain("faq");
+    expect(enabledSections.length).toBe(5);
   });
 
   it("uses local /images/stock/ paths only — no remote URLs", () => {
