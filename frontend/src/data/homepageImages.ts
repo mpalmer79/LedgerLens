@@ -81,7 +81,7 @@ export const HOMEPAGE_IMAGES: ReadonlyArray<HomepageImage> = [
     alt:
       "Auto repair workshop representing the fictional Granite State " +
       "Auto Repair demo scenario",
-    enabled: false,
+    enabled: true,
     aspect: "16:9",
     placement: "Granite State Auto Repair sample scenario",
     placeholderTitle: "Auto shop scenario image slot",
