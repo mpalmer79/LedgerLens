@@ -307,7 +307,7 @@ def export_splits_csv(
     )
     for s in splits:
         if s.transaction_id not in tx_cache:
-            tx_cache[s.transaction_id] = db.get(Transaction, s.transaction_id)  # type: ignore[assignment]
+            tx_cache[s.transaction_id] = db.get(Transaction, s.transaction_id)
         tx = tx_cache.get(s.transaction_id)
         writer.writerow(
             [
