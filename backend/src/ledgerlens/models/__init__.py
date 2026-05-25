@@ -14,6 +14,7 @@ from ledgerlens.models.membership import Membership, MembershipRole
 from ledgerlens.models.review_decision import ReviewDecision, ReviewerAction
 from ledgerlens.models.tenant import Tenant
 from ledgerlens.models.transaction import Transaction
+from ledgerlens.models.transaction_split import TransactionSplitLine
 from ledgerlens.models.user import User
 
 __all__ = [
@@ -32,5 +33,6 @@ __all__ = [
     "ReviewerAction",
     "Tenant",
     "Transaction",
+    "TransactionSplitLine",
     "User",
 ]
