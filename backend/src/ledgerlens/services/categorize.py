@@ -321,7 +321,8 @@ def categorize_transaction(
     if match.verdict == "apply" and match.record is not None:
         matched = cat_repo.get(match.record.selected_category_code)
         latency_ms = int((datetime.now().timestamp() - started) * 1000)
-        return _persist_memory_result(tx, match.record, matched, db, latency_ms)
+        extra = f"(matched via {match.match_type})" if match.match_type != "exact" else ""
+        return _persist_memory_result(tx, match.record, matched, db, latency_ms, extra_note=extra)
 
     if match.verdict == "conflict":
         conflicting_codes = sorted({c.selected_category_code for c in match.candidates})

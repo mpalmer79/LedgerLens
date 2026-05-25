@@ -4,9 +4,20 @@ When a reviewer corrects a transaction, we capture a `(merchant_key,
 description_key) → category` row. Future transactions whose keys match
 get categorized from this lookup instead of from the model.
 
+Two match tiers:
+
+1. **Exact** — merchant_key + description_key match verbatim. Highest
+   confidence, used since v1.
+2. **Fingerprint** — the incoming transaction's normalized merchant
+   fingerprint matches the stored memory row's merchant_key after both
+   are normalized. Covers noisy bank-description variants (different
+   store numbers, trailing dates, ACH prefixes) from the same vendor.
+   Blocked for ambiguous vendors (Amazon, Costco, etc.) unless the
+   exact path already matched.
+
 Nothing here is statistical. No fuzzy matching, no embeddings, no
-training. The intent is exactly that: a rule lookup whose rules are
-written by humans, one correction at a time.
+training. The fingerprint tier is still deterministic regex-based
+normalization, not a learned model.
 """
 
 from dataclasses import dataclass
@@ -23,6 +34,10 @@ from ledgerlens.models import (
 from ledgerlens.repositories import (
     CategoryRepo,
     CorrectionMemoryRepo,
+)
+from ledgerlens.services.vendor_normalization import (
+    is_ambiguous_vendor,
+    merchant_fingerprint,
 )
 
 # Generic merchant tokens that must never anchor a memory match.
@@ -96,11 +111,13 @@ def _is_safe_anchor(merchant_key: str, description_key: str) -> bool:
 
 
 MatchVerdict = Literal["apply", "conflict", "none"]
+MatchType = Literal["exact", "merchant_fingerprint", "none"]
 
 
 @dataclass
 class MemoryMatch:
     verdict: MatchVerdict
+    match_type: MatchType
     record: CorrectionMemory | None
     candidates: list[CorrectionMemory]
     merchant_key: str
@@ -111,16 +128,22 @@ class MemoryMatch:
 def find_memory_match(tx: Transaction, db: Session) -> MemoryMatch:
     """Look for a correction-memory row that applies to this transaction.
 
-    Returns a `MemoryMatch` with a verdict:
+    Two-tier lookup:
 
-    - `apply` — one or more matching rows agree on the same category;
-      use that category.
-    - `conflict` — matches exist but disagree on the category; caller
-      should route the transaction to review rather than auto-applying.
-    - `none` — no safe match exists.
+    **Tier 1 — exact key match** (unchanged from v1):
+    Query by raw merchant_key / description_key. If a single-category
+    set of hits exists → ``apply``. If disagreeing categories → ``conflict``.
 
-    Inactive memory rows are filtered at the repo. Inactive categories
-    are filtered here.
+    **Tier 2 — merchant fingerprint match** (new):
+    If tier 1 returns ``none``, compute the normalized merchant
+    fingerprint for the incoming transaction, then scan existing memory
+    rows for the same business whose merchant_key normalizes to the same
+    fingerprint. Blocked for ambiguous vendors (Amazon, Costco, etc.)
+    to prevent incorrect auto-finalization.
+
+    Returns a `MemoryMatch` with:
+    - ``verdict``: apply | conflict | none
+    - ``match_type``: exact | merchant_fingerprint | none
     """
     merchant_key = build_merchant_key(tx)
     description_key = build_description_key(tx)
@@ -128,6 +151,7 @@ def find_memory_match(tx: Transaction, db: Session) -> MemoryMatch:
     if not _is_safe_anchor(merchant_key, description_key):
         return MemoryMatch(
             verdict="none",
+            match_type="none",
             record=None,
             candidates=[],
             merchant_key=merchant_key,
@@ -135,56 +159,117 @@ def find_memory_match(tx: Transaction, db: Session) -> MemoryMatch:
             reason="merchant or description key is too generic to be a safe anchor",
         )
 
+    # ── Tier 1: exact key match ──────────────────────────────────────
     repo = CorrectionMemoryRepo(db)
     candidates = repo.find_for_keys(
         merchant_key=merchant_key,
         description_key=description_key,
         business_id=tx.business_id,
     )
-    if not candidates:
-        return MemoryMatch(
-            verdict="none",
-            record=None,
-            candidates=[],
-            merchant_key=merchant_key,
-            description_key=description_key,
-            reason="no memory rows match",
-        )
 
-    # Filter out memory whose target category is inactive.
     category_repo = CategoryRepo(db)
-    safe = [c for c in candidates if _category_active(c.selected_category_code, category_repo)]
-    if not safe:
+
+    if candidates:
+        safe = [c for c in candidates if _category_active(c.selected_category_code, category_repo)]
+        if safe:
+            if merchant_key:
+                merchant_hits = [c for c in safe if c.merchant_key == merchant_key]
+                if merchant_hits:
+                    return _resolve_from_candidates(
+                        merchant_hits,
+                        merchant_key,
+                        description_key,
+                        anchor="merchant_key",
+                        match_type="exact",
+                    )
+
+            description_hits = [c for c in safe if c.description_key == description_key]
+            if description_hits:
+                return _resolve_from_candidates(
+                    description_hits,
+                    merchant_key,
+                    description_key,
+                    anchor="description_key",
+                    match_type="exact",
+                )
+
+    # ── Tier 2: merchant fingerprint match ───────────────────────────
+    # Compute fingerprints from both merchant and description — bank
+    # feeds sometimes abbreviate the merchant field, so the description
+    # may carry more information.
+    tx_desc = tx.normalized_description or tx.description or ""
+    tx_fp_merchant = merchant_fingerprint(tx_desc, tx.merchant) if tx.merchant else ""
+    tx_fp_desc = merchant_fingerprint(tx_desc, None)
+    tx_fingerprints = {fp for fp in (tx_fp_merchant, tx_fp_desc) if len(fp) >= MIN_MERCHANT_KEY_LEN}
+
+    if not tx_fingerprints:
         return MemoryMatch(
             verdict="none",
+            match_type="none",
             record=None,
-            candidates=candidates,
+            candidates=candidates or [],
             merchant_key=merchant_key,
             description_key=description_key,
-            reason="all matching memory rows target inactive categories",
+            reason="no exact match and fingerprints are too short",
         )
 
-    # Prefer merchant-key matches over description-key matches when both exist.
-    if merchant_key:
-        merchant_hits = [c for c in safe if c.merchant_key == merchant_key]
-        if merchant_hits:
-            return _resolve_from_candidates(
-                merchant_hits, merchant_key, description_key, anchor="merchant_key"
+    # Block ambiguous vendors from fingerprint matching — they need
+    # owner context, not a prior correction from a different purchase.
+    from ledgerlens.services.vendor_normalization import detect_vendor_family
+
+    for fp in tx_fingerprints:
+        vendor = detect_vendor_family(fp)
+        if vendor and is_ambiguous_vendor(vendor.family):
+            return MemoryMatch(
+                verdict="none",
+                match_type="none",
+                record=None,
+                candidates=candidates or [],
+                merchant_key=merchant_key,
+                description_key=description_key,
+                reason=(
+                    f"vendor family '{vendor.family}' is ambiguous — "
+                    "fingerprint memory blocked; route to review or owner questions"
+                ),
             )
 
-    description_hits = [c for c in safe if c.description_key == description_key]
-    if description_hits:
-        return _resolve_from_candidates(
-            description_hits, merchant_key, description_key, anchor="description_key"
+    # Scan active memory rows for this business; match any row whose
+    # merchant_key or description_key fingerprints overlap with the
+    # incoming transaction's fingerprints.
+    all_active = repo.list(
+        business_id=tx.business_id,
+        active=True,
+        limit=500,
+    )
+
+    fingerprint_hits: list[CorrectionMemory] = []
+    for mem in all_active:
+        mem_fps = set()
+        if mem.merchant_key:
+            mem_fps.add(merchant_fingerprint(mem.description_key, mem.merchant_key))
+        mem_fps.add(merchant_fingerprint(mem.description_key, None))
+        if mem_fps & tx_fingerprints and _category_active(
+            mem.selected_category_code, category_repo
+        ):
+            fingerprint_hits.append(mem)
+
+    if not fingerprint_hits:
+        return MemoryMatch(
+            verdict="none",
+            match_type="none",
+            record=None,
+            candidates=candidates or [],
+            merchant_key=merchant_key,
+            description_key=description_key,
+            reason="no exact or fingerprint match",
         )
 
-    return MemoryMatch(
-        verdict="none",
-        record=None,
-        candidates=safe,
-        merchant_key=merchant_key,
-        description_key=description_key,
-        reason="matches exist but none anchored on a safe key",
+    return _resolve_from_candidates(
+        fingerprint_hits,
+        merchant_key,
+        description_key,
+        anchor="merchant_fingerprint",
+        match_type="merchant_fingerprint",
     )
 
 
@@ -199,10 +284,10 @@ def _resolve_from_candidates(
     description_key: str,
     *,
     anchor: str,
+    match_type: MatchType,
 ) -> MemoryMatch:
     distinct_categories = {c.selected_category_code for c in hits}
     if len(distinct_categories) == 1:
-        # Prefer the most recently used row, then most recently updated.
         chosen = sorted(
             hits,
             key=lambda c: (c.last_used_at or c.updated_at, c.match_count),
@@ -210,14 +295,16 @@ def _resolve_from_candidates(
         )[0]
         return MemoryMatch(
             verdict="apply",
+            match_type=match_type,
             record=chosen,
             candidates=hits,
             merchant_key=merchant_key,
             description_key=description_key,
-            reason=f"matched on {anchor}",
+            reason=f"matched on {anchor} ({match_type})",
         )
     return MemoryMatch(
         verdict="conflict",
+        match_type=match_type,
         record=None,
         candidates=hits,
         merchant_key=merchant_key,
