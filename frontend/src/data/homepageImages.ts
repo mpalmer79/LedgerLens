@@ -93,7 +93,7 @@ export const HOMEPAGE_IMAGES: ReadonlyArray<HomepageImage> = [
     alt:
       "Person writing notes beside a computer, representing workflow " +
       "design and systems thinking",
-    enabled: false,
+    enabled: true,
     aspect: "16:9",
     placement: "AI workflow engineering section",
     placeholderTitle: "Workflow architecture image slot",
