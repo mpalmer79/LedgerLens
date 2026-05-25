@@ -12,7 +12,7 @@
 
 - **Who it's for** — small-business owners doing monthly bookkeeping cleanup; the engineering audience evaluating an AI-systems portfolio.
 - **The headline outcome** — a **handoff package** (markdown summary + CSV transaction export) that an owner can send to their bookkeeper or accountant for substantive review at month-end.
-- **The approach** — a layered pipeline (`correction memory → deterministic rules → fallback → confidence routing → human review → audit`) that only calls the model when the earlier layers can't decide safely.
+- **The approach** — a layered pipeline (`correction memory (exact + fingerprint) → 50 deterministic rules → fallback → confidence routing → human review → audit`) that only calls the model when the earlier layers can't decide safely.
 - **The headline number** — **100% of finalized guided-demo rows are procedurally verified before handoff.** A finalized row counts as verified only when it came through a deterministic rule auto-approval, a correction-memory replay, or an explicit human review. **Workflow trust boundary, not a guarantee of accounting or tax correctness.** See [`docs/TRUST_METRIC.md`](docs/TRUST_METRIC.md).
 - **The deployed instance** — runs in **zero-cost demo mode**. The `anthropic` SDK is never imported. A regression test asserts that.
 
@@ -50,7 +50,9 @@ LedgerLens is a **portfolio-grade workflow demo**, not production SaaS. The curr
 - **Public-demo deployment reliability hardened.** `CORS_ORIGINS` accepts single-origin, comma-separated, or legacy JSON-array forms. `/demo/status` fails safely with structured JSON. `/demo/ready` checks demo-critical dependencies. The backend start script can run Alembic on boot with `RUN_MIGRATIONS_ON_START=true` and refuses silent stamping. See [`docs/PUBLIC_DEMO_INCIDENT_HOTFIX_REVIEW.md`](docs/PUBLIC_DEMO_INCIDENT_HOTFIX_REVIEW.md).
 - **Data retention and backups are not production-ready.** A tenant-scoped deletion primitive and backup/restore runbook exist, but there is no customer-facing deletion workflow, no verified production backup/restore drill, no retention scheduler, and no disaster-recovery guarantee. See [`docs/BACKUP_RESTORE_AND_RETENTION_RUNBOOK.md`](docs/BACKUP_RESTORE_AND_RETENTION_RUNBOOK.md).
 - **Accounting-system integrations are not implemented.** LedgerLens exports reviewed/follow-up CSV and Markdown handoff files. It does not round-trip to QuickBooks/Xero and does not connect to Plaid/Finicity. See [`docs/ACCOUNTING_SYSTEM_EXPORT_READINESS.md`](docs/ACCOUNTING_SYSTEM_EXPORT_READINESS.md).
-- **Homepage visual refresh is in progress.** The homepage uses a manifest-driven local image system with no fake credits or remote hotlinks. Added images are local files with controlled slots, not icon/illustration packs. See [`docs/HOMEPAGE_VISUAL_REFRESH_REVIEW.md`](docs/HOMEPAGE_VISUAL_REFRESH_REVIEW.md).
+- **Homepage visual refresh shipped.** All five local-photography slots are live (hero, trust, auto shop, engineering, FAQ) via a manifest-driven system. No remote hotlinks, no fake credits, no icon substitutes. See [`docs/HOMEPAGE_VISUAL_REFRESH_PREP_REVIEW.md`](docs/HOMEPAGE_VISUAL_REFRESH_PREP_REVIEW.md).
+- **Vendor normalization shipped.** A deterministic, zero-cost module normalizes noisy bank-statement descriptions to stable vendor identifiers (45+ vendor families). Ambiguous vendors (Amazon, Costco, Home Depot) are detected but NOT auto-categorized. See [`docs/VENDOR_NORMALIZATION_AND_MEMORY_MATCHING.md`](docs/VENDOR_NORMALIZATION_AND_MEMORY_MATCHING.md).
+- **Correction memory supports fingerprint matching.** Tier-2 matching reuses prior human corrections across noisy description variants from the same vendor and business. Ambiguous vendors are blocked from fingerprint matching. See [`docs/CORRECTION_MEMORY_GENERALIZATION_AUDIT.md`](docs/CORRECTION_MEMORY_GENERALIZATION_AUDIT.md).
 
 Full posture + roadmap: [`docs/SECURITY_AND_PRODUCTION_READINESS.md`](docs/SECURITY_AND_PRODUCTION_READINESS.md).
 
@@ -108,13 +110,15 @@ LedgerLens is a **working portfolio prototype** that demonstrates an end-to-end 
 | Eval harness + committed run artifacts | **Shipped** — JSON/Markdown artifacts under `evals/runs/` |
 | Claude Haiku 4.5 categorizer with structured output | **Shipped for local/private testing** — public deploy runs `demo_stub` |
 | Zero-cost public demo mode | **Shipped** — regression-tested so the `anthropic` SDK is not imported in demo mode |
-| Deterministic rules + correction memory | **Shipped** — zero-cost layers run before fallback/model routing |
+| 50 deterministic rules + correction memory (exact + fingerprint) | **Shipped** — zero-cost layers with vendor normalization run before fallback/model routing |
 | Saved CSV import profiles | **Shipped** — stores header/mapping metadata only, never row data |
 | Editable category mapping | **Shipped** — `/mapping` supports business-specific intent → COA mapping and `block_fallback` |
 | Mapping recategorization preview + selected-row apply | **Shipped** — read-only preview plus selected eligible-row apply with server-side eligibility checks and audit |
 | Demo session + actor-aware audit | **Shipped** — `Demo Owner`, business context, audit events, `/audit` page |
 | Business-scoped core workflow rows | **Shipped** — `business_id` on transactions/results/review/correction-memory with tenant-boundary tests |
-| Homepage local photography system | **Shipped/in progress** — manifest-driven image slots, local files, verification script, no fake credits |
+| Homepage local photography system | **Shipped** — all 5/5 image slots live, manifest-driven, local files, verification script |
+| Vendor normalization + fingerprint memory | **Shipped** — 45+ vendor families, fingerprint-based correction reuse, ambiguous-vendor protection |
+| Eval safety + coverage + confusion reporting | **Shipped** — safety metrics, enriched confusion pairs, coverage by provider, unmatched vendor analysis, report generator |
 | QuickBooks/Xero/Plaid integrations | **Not implemented** — export readiness is documented, live integrations are future work |
 | Production auth, billing, backup SLAs, retention automation | **Not implemented** — documented roadmap items, not claims |
 
@@ -145,7 +149,7 @@ A transaction passes through three deterministic layers before any model can fir
 
 **Demo mode (default, `CATEGORIZER_MODE=demo_stub`)** — the portfolio deploy. Zero paid-API spend.
 
-1. **Correction memory** — exact-key lookup over rules built from prior human corrections. Zero cost. (See [`docs/CORRECTION_MEMORY_PLAN.md`](docs/CORRECTION_MEMORY_PLAN.md).)
+1. **Correction memory** — exact-key lookup over rules built from prior human corrections, plus tier-2 fingerprint matching across noisy bank-description variants (blocked for ambiguous vendors). Zero cost. (See [`docs/CORRECTION_MEMORY_PLAN.md`](docs/CORRECTION_MEMORY_PLAN.md) and [`docs/CORRECTION_MEMORY_GENERALIZATION_AUDIT.md`](docs/CORRECTION_MEMORY_GENERALIZATION_AUDIT.md).)
 2. **Deterministic rule layer** — a curated table of merchant / keyword rules in [`backend/src/ledgerlens/data/category_rules.json`](backend/src/ledgerlens/data/category_rules.json), validated against the active chart of accounts at server startup. Zero cost. (See [`docs/HYBRID_CATEGORIZER_PLAN.md`](docs/HYBRID_CATEGORIZER_PLAN.md).)
 3. **Demo stub** — implemented in `backend/src/ledgerlens/categorizers/demo_stub.py`. Returns `UNCATEGORIZABLE` with provider `demo_stub`, zero cost, and an explanation noting that the transaction was routed to review instead of calling a paid model. The `anthropic` SDK is **not** imported in this mode.
 4. **Human review queue.**
@@ -245,7 +249,7 @@ Browser (Next.js 14, Tailwind, Three.js)
    ↓
 FastAPI backend (Python 3.12)
    ├─ routers: transactions, categorize, review, ledger, audit, health, categories
-   ├─ SQLAlchemy 2.0 + SQLite (Postgres-compatible models; no Alembic yet)
+   ├─ SQLAlchemy 2.0 + SQLite/Postgres (Alembic migrations, business-scoped rows)
    ├─ confidence-threshold routing (auto / review / uncategorizable)
    └─ audit log on every state change
    ↓
@@ -327,11 +331,11 @@ CI runs backend tests + ruff + mypy + format check **and** frontend tests + lint
 Calling out gaps because honesty beats overclaiming:
 
 - **No real bank integration.** Synthetic dataset for evaluation, manual CSV import for the product. QuickBooks / Xero is intentionally out of scope for v0.
-- **Correction memory is exact-key, not semantic.** Future transactions categorize from memory only on an exact merchant-or-description match. Embedding-based / fuzzy retrieval is a deliberate v2 — the false-positive risk on financial data is not worth the lift until exact matching has proven its hit rate in practice. This is rule lookup over a model categorizer, not model fine-tuning.
-- **Rules are tenant-agnostic and manually curated.** The bundled rule set targets the default seed chart of accounts. A multi-tenant deployment will need per-tenant rules — that abstraction does not exist yet. Auto-learning rules from corrections is intentionally out of scope: corrections live in `CorrectionMemory`, rules live in the JSON file, and the two layers are deliberately separate.
+- **Correction memory uses exact + fingerprint matching, not semantic.** Tier-1 matches on raw merchant/description keys. Tier-2 normalizes both sides via vendor fingerprinting to reuse corrections across noisy bank-description variants. Ambiguous vendors (Amazon, Costco, Home Depot, Walmart, Lowe's, Target) are blocked from fingerprint matching. Embedding-based / fuzzy retrieval remains a deliberate v2.
+- **50 rules are manually curated and intent-mapped.** Rules target the default seed COA via intents; per-business maps resolve intents to business-specific COA codes. A multi-tenant deployment will need per-tenant rule packs — that work is documented but not built.
 - **Eval-metric upgrades pending.** Sliced per-category metrics, expected calibration error, and a baseline-rule comparison are partially addressed (rules-only run committed under `evals/runs/`, with a methodology caveat: the bundled rules target the default COA, so cross-business code mismatch against the synthetic dataset is expected). Full per-COA rule sets for the eval businesses are next-sprint work.
-- **No auth or multi-tenancy.** Single-tenant by data model; structurally room to add it without rewriting the persistence layer.
-- **No security baseline polish.** CSV size/row limits exist; structured logs with request IDs, log redaction utility, and narrow-CORS in prod are planned.
+- **Auth is foundation-only.** User, Tenant, Business, Membership models exist; demo session context works; but there is no login, no JWT, no protected routes, no production auth.
+- **Security is guardrail-level.** CSV size/row limits, structured logs with request IDs, PII redaction in audit/log payloads, and narrow-CORS in prod are shipped. This is not SOC2/PCI/HIPAA.
 
 These aren't bugs — they're explicit non-goals documented in [`docs/IMPLEMENTATION_GAP_ANALYSIS.md`](docs/IMPLEMENTATION_GAP_ANALYSIS.md). Each has a position in the priority list.
 
@@ -343,8 +347,8 @@ See [`docs/SECURITY_AND_PRODUCTION_READINESS.md`](docs/SECURITY_AND_PRODUCTION_R
 - **Tenant isolation hardening** — continue converting demo assumptions into explicit business/account ownership, permission checks, and operational tests.
 - **Sensitive-data pipeline** — expand redaction/detection, add upload-time warnings/blocks, and define model-call safety before real LLM use.
 - **Backup/restore + retention** — verified Railway/Postgres backup plan, restore drill, retention scheduler, deletion workflow, and operator runbook.
-- **Accounting export readiness** — QBO/Xero-compatible export research, chart-of-accounts mapping requirements, vendor normalization, split-transaction support, and accountant import checklist.
-- **Workflow accuracy/efficiency** — per-business rule packs, intent-first categorization, calibration thresholds, correction-memory generalization, and reduced review burden without lowering trust.
+- **Accounting export readiness** — QBO/Xero-compatible export research, split-transaction support, and accountant import checklist. Vendor normalization is shipped; chart-of-accounts mapping is shipped.
+- **Workflow accuracy/efficiency** — per-business rule packs, calibration threshold refinement, and reduced review burden without lowering trust. Vendor normalization, 50 deterministic rules, correction-memory fingerprint matching, and eval safety/coverage/confusion reporting are shipped.
 
 And the small-business UX roadmap ([`docs/SMALL_BUSINESS_UX_ROADMAP.md`](docs/SMALL_BUSINESS_UX_ROADMAP.md)) continues through saved import profiles, mapping previews/apply, mobile review, static handoff fallback, and owner-first onboarding.
 
@@ -352,8 +356,8 @@ And the small-business UX roadmap ([`docs/SMALL_BUSINESS_UX_ROADMAP.md`](docs/SM
 
 Recent local/CI proof points from the current repo lineage:
 
-- **Backend** — latest sprint reports **348 pytest tests** passing, plus `ruff check`, `ruff format --check`, and `mypy --strict`.
-- **Frontend** — latest homepage-image slot work reports **312 Vitest tests** passing, plus `npm run lint`, `npm run build`, and `npm run images:verify`.
+- **Backend** — **414 pytest tests** passing, plus `ruff check`, `ruff format --check`, and `mypy --strict`.
+- **Frontend** — **312 Vitest tests** passing, plus `npm run lint`, `npm run build`, and `npm run images:verify`.
 - **Evals** — `python -m ledgerlens.evals.run --categorizer <mode>` for rules-only / rules-only-mapped / claude-haiku-v1 / hybrid-rules-model / stub. Committed artifacts under [`evals/runs/`](evals/runs/) (see [`docs/MAPPED_RULE_EVALS.md`](docs/MAPPED_RULE_EVALS.md) + [`docs/MULTI_BUSINESS_MAPPED_RULE_EVALS.md`](docs/MULTI_BUSINESS_MAPPED_RULE_EVALS.md)).
 - **Dependabot** — weekly updates for npm (frontend) + pip (backend), monthly for GitHub Actions. Configured in [`.github/dependabot.yml`](.github/dependabot.yml).
 

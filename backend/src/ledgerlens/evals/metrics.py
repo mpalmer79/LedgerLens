@@ -606,3 +606,192 @@ def mapping_metrics(
         "top_unmapped_intents_overall": overall["top_unmapped_intents"],
     }
     return overall_with_breakdown
+
+
+# ── Safety metrics ───────────────────────────────────────────────────────
+
+
+def safety_metrics(
+    predictions: list[CategorizationResult],
+    ground_truth: dict[str, str],
+    *,
+    valid_codes: set[str] | None = None,
+    auto_threshold: float = 0.9,
+    review_threshold: float = 0.6,
+) -> dict[str, object]:
+    """Safety-oriented view: how many wrong rows were finalized vs caught.
+
+    The distinction matters because a wrong row that was routed to review
+    is the system working correctly — the safety net caught it. A wrong
+    row that was auto-approved is a real mistake the accountant might miss.
+    """
+    total = len(predictions)
+    correct_finalized = 0
+    incorrect_finalized = 0
+    correct_review = 0
+    incorrect_review = 0
+    review_would_be_dangerous = 0
+
+    for p in predictions:
+        status = classify_routing_outcome(
+            p,
+            valid_codes,
+            auto_threshold=auto_threshold,
+            review_threshold=review_threshold,
+        )
+        truth = ground_truth.get(p.transaction_id)
+        if truth is None:
+            continue
+        is_correct = p.predicted_category_code == truth
+        if status == "auto_approved":
+            if is_correct:
+                correct_finalized += 1
+            else:
+                incorrect_finalized += 1
+        elif status == "needs_review":
+            if is_correct:
+                correct_review += 1
+            else:
+                incorrect_review += 1
+                if p.confidence >= auto_threshold:
+                    review_would_be_dangerous += 1
+
+    return {
+        "total": total,
+        "correct_finalized": correct_finalized,
+        "incorrect_finalized": incorrect_finalized,
+        "correct_review_routed": correct_review,
+        "incorrect_review_routed": incorrect_review,
+        "review_routing_saved_from_mistake": incorrect_review,
+        "dangerous_auto_approval_avoided": review_would_be_dangerous,
+        "finalized_accuracy": (
+            correct_finalized / (correct_finalized + incorrect_finalized)
+            if (correct_finalized + incorrect_finalized)
+            else 1.0
+        ),
+    }
+
+
+# ── Enriched confusion pairs ─────────────────────────────────────────────
+
+
+def enriched_confusion_pairs(
+    predictions: list[CategorizationResult],
+    ground_truth: dict[str, str],
+    *,
+    valid_codes: set[str] | None = None,
+    auto_threshold: float = 0.9,
+    review_threshold: float = 0.6,
+    top_n: int = 15,
+) -> list[dict[str, object]]:
+    """Like confusion_pairs but also reports whether the error was finalized.
+
+    Each entry adds:
+    - finalized_count: how many of this confusion pair were auto-approved
+    - review_routed_count: how many were routed to review
+    - provider: which provider kind produced the confusion
+    """
+    pair_data: dict[tuple[str, str], dict[str, int]] = {}
+    actual_totals: dict[str, int] = {}
+
+    for p in predictions:
+        truth = ground_truth.get(p.transaction_id)
+        if truth is None or truth == p.predicted_category_code:
+            continue
+        key = (truth, p.predicted_category_code)
+        if key not in pair_data:
+            pair_data[key] = {"count": 0, "finalized": 0, "review_routed": 0}
+        pair_data[key]["count"] += 1
+        actual_totals[truth] = actual_totals.get(truth, 0) + 1
+
+        status = classify_routing_outcome(
+            p, valid_codes, auto_threshold=auto_threshold, review_threshold=review_threshold
+        )
+        if status == "auto_approved":
+            pair_data[key]["finalized"] += 1
+        else:
+            pair_data[key]["review_routed"] += 1
+
+    entries: list[dict[str, object]] = []
+    for (actual, predicted), data in pair_data.items():
+        total_actual = actual_totals.get(actual, 0)
+        entries.append(
+            {
+                "actual": actual,
+                "predicted": predicted,
+                "count": data["count"],
+                "finalized_count": data["finalized"],
+                "review_routed_count": data["review_routed"],
+                "percentage_of_actual": data["count"] / total_actual if total_actual else 0.0,
+            }
+        )
+    entries.sort(key=lambda e: -int(e["count"]))
+    return entries[:top_n]
+
+
+# ── Coverage by provider ─────────────────────────────────────────────────
+
+
+def coverage_by_provider(
+    predictions: list[CategorizationResult],
+) -> dict[str, object]:
+    """Break down prediction counts by provider kind with percentages."""
+    total = len(predictions)
+    counts: dict[str, int] = {}
+    for p in predictions:
+        kind = _provider_kind(p)
+        counts[kind] = counts.get(kind, 0) + 1
+
+    breakdown: dict[str, dict[str, object]] = {}
+    for kind, count in sorted(counts.items(), key=lambda kv: -kv[1]):
+        breakdown[kind] = {
+            "count": count,
+            "percentage": count / total if total else 0.0,
+        }
+
+    return {
+        "total": total,
+        "by_provider": breakdown,
+        "zero_cost_count": sum(1 for p in predictions if p.cost_usd == 0.0),
+        "zero_cost_percentage": (
+            sum(1 for p in predictions if p.cost_usd == 0.0) / total if total else 0.0
+        ),
+    }
+
+
+# ── Unmatched vendor analysis ────────────────────────────────────────────
+
+
+def unmatched_vendor_report(
+    predictions: list[CategorizationResult],
+    ground_truth: dict[str, str],
+    transactions: list[Transaction],
+    *,
+    top_n: int = 15,
+) -> list[dict[str, object]]:
+    """Identify vendors that fell through to model or review without a rule/memory hit.
+
+    These are candidates for new deterministic rules. Sorted by frequency.
+    """
+    tx_by_id = {t.id: t for t in transactions}
+    vendor_counts: dict[str, dict[str, int | str]] = {}
+
+    for p in predictions:
+        kind = _provider_kind(p)
+        if kind in {"correction_memory", "rule_categorizer"}:
+            continue
+        tx = tx_by_id.get(p.transaction_id)
+        if tx is None:
+            continue
+        desc = tx.raw_description[:60] if tx.raw_description else "(empty)"
+        vendor_key = desc.split()[0] if desc.strip() else "(empty)"
+        if vendor_key not in vendor_counts:
+            vendor_counts[vendor_key] = {
+                "count": 0,
+                "example_description": desc,
+                "expected_category": ground_truth.get(p.transaction_id, "?"),
+            }
+        vendor_counts[vendor_key]["count"] = int(vendor_counts[vendor_key]["count"]) + 1
+
+    entries = sorted(vendor_counts.values(), key=lambda e: -int(e["count"]))
+    return [dict(e) for e in entries[:top_n]]
