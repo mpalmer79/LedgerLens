@@ -109,7 +109,7 @@ def _coa_to_eval_accounts(db: Session) -> list[Account]:
             name=c.name,
             description=c.description,
             parent_code=None,
-            type=c.type,
+            type=c.type,  # type: ignore[arg-type]
         )
         for c in CategoryRepo(db).list_active()
     ]
