@@ -42,7 +42,11 @@ export function MarketingNav() {
   return (
     <nav className="relative border-b border-surface-border px-4 py-4 sm:px-6 lg:px-8">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3">
-        <Link href="/" className="flex shrink-0 items-center gap-2 text-text-primary">
+        <Link
+          href="/"
+          className="flex shrink-0 items-center gap-2 rounded-md px-2 py-1.5 -ml-2 text-text-primary active:bg-surface-sunken/60 hover:bg-surface-sunken/40 transition-colors"
+          aria-label="LedgerLens — return to homepage"
+        >
           <Logomark size={22} className="text-brand-600" />
           <span className="font-display text-[17px] font-medium sm:text-[18px]">LedgerLens</span>
         </Link>
