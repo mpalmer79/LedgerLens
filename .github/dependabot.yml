@@ -13,7 +13,35 @@ updates:
     commit-message:
       prefix: chore(deps)
       include: scope
+
+    # ── Major-version policy ──────────────────────────────────────────
+    # Major upgrades can break the build (Tailwind 3→4 broke PostCSS,
+    # TypeScript 5→6 changes type semantics). Ignore major bumps for
+    # critical dependencies — they require manual migration work, not
+    # a dependabot auto-PR.
+    #
+    # See docs/DEPENDENCY_UPDATE_POLICY.md for the full policy.
+    ignore:
+      - dependency-name: tailwindcss
+        update-types: ["version-update:semver-major"]
+      - dependency-name: typescript
+        update-types: ["version-update:semver-major"]
+      - dependency-name: react
+        update-types: ["version-update:semver-major"]
+      - dependency-name: react-dom
+        update-types: ["version-update:semver-major"]
+
     groups:
+      minor-patch:
+        update-types:
+          - minor
+          - patch
+        exclude-patterns:
+          - next
+          - react
+          - react-dom
+          - tailwindcss
+          - typescript
       next:
         patterns:
           - next
