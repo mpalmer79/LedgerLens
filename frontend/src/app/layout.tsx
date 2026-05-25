@@ -31,23 +31,31 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://ledgerlens.up.railway.app'),
   title: {
     default: SITE_TITLE,
     template: '%s | LedgerLens',
   },
   description: SITE_DESCRIPTION,
   icons: {
-    icon: '/favicon.svg',
-    shortcut: '/favicon.svg',
+    icon: [
+      { url: '/favicon/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    shortcut: '/favicon/favicon.ico',
+    apple: '/favicon/apple-touch-icon.png',
   },
+  manifest: '/favicon/site.webmanifest',
   openGraph: {
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
+    url: 'https://ledgerlens.up.railway.app',
     type: 'website',
     siteName: 'LedgerLens',
     images: [
       {
-        url: '/og-ledgerlens.png',
+        url: '/og/ledgerlens-og.png',
         width: 1200,
         height: 630,
         alt:
@@ -59,7 +67,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: ['/og-ledgerlens.png'],
+    images: ['/og/ledgerlens-og.png'],
   },
 };
 

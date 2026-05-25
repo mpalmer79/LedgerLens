@@ -9,7 +9,8 @@
     "lint": "eslint src",
     "test": "vitest run",
     "format": "prettier --write .",
-    "images:verify": "tsx scripts/verify-homepage-images.ts"
+    "images:verify": "tsx scripts/verify-homepage-images.ts",
+    "social:verify": "tsx scripts/verify-social-assets.ts"
   },
   "dependencies": {
     "@types/three": "^0.160.0",
