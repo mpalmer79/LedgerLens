@@ -389,12 +389,23 @@ export const getLedgerExportUrl = () => `${getApiBaseUrl()}/ledger/export.csv`;
 /**
  * Download an export file via fetch → blob → programmatic download.
  *
- * Supports CSV, Markdown, and JSON exports. Validates status and
- * content-type before saving. Works reliably on mobile Chrome.
+ * Supports CSV, Markdown, and JSON exports. Validates status,
+ * content-type, and non-empty body before saving. Works reliably on
+ * mobile Chrome where cross-origin `<a>` downloads can silently save
+ * error pages.
  */
+export type ExportKind = "csv" | "markdown" | "json" | "any";
+
+const _ALLOWED_CONTENT_TYPES: Record<ExportKind, string[]> = {
+  csv: ["text/csv", "application/csv", "text/plain"],
+  markdown: ["text/markdown", "text/plain"],
+  json: ["application/json"],
+  any: [],
+};
+
 export async function downloadExport(
   path: string,
-  opts?: { filename?: string; accept?: string },
+  opts?: { filename?: string; accept?: string; expectedKind?: ExportKind },
 ): Promise<void> {
   const url = `${getApiBaseUrl()}${path}`;
   const headers: Record<string, string> = {};
@@ -405,6 +416,25 @@ export async function downloadExport(
       `Export failed: ${res.status} ${res.statusText}`,
       res.status,
     );
+  }
+  const kind = opts?.expectedKind ?? "any";
+  const contentType = (res.headers.get("content-type") || "").toLowerCase();
+  if (kind !== "any") {
+    const allowed = _ALLOWED_CONTENT_TYPES[kind];
+    const matches = allowed.some((t) => contentType.includes(t));
+    if (!matches && contentType.includes("text/html")) {
+      throw new ApiError(
+        "Export returned an HTML error page instead of a file. " +
+          "The backend may be temporarily unavailable.",
+        res.status,
+      );
+    }
+    if (!matches) {
+      throw new ApiError(
+        `Export returned unexpected content type: ${contentType}`,
+        res.status,
+      );
+    }
   }
   const blob = await res.blob();
   if (blob.size === 0) {
@@ -429,6 +459,7 @@ export async function downloadCsvExport(
   const date = new Date().toISOString().slice(0, 10);
   return downloadExport(path, {
     filename: filename ?? `ledgerlens-demo-ledger-${date}.csv`,
+    expectedKind: "csv",
   });
 }
 

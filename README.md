@@ -18,7 +18,7 @@
 
 ## What LedgerLens is NOT
 
-- **Not production accounting software.** No double-entry, no accrual, no bank reconciliation, no tax handling, no split transactions, no multi-currency. See [`docs/ACCOUNTING_DOMAIN_BOUNDARY.md`](docs/ACCOUNTING_DOMAIN_BOUNDARY.md).
+- **Not production accounting software.** No double-entry, no accrual, no bank reconciliation, no tax handling, no multi-currency. Split-transaction foundation exists for reviewed accountant handoff, but this is not double-entry accounting and does not post to accounting systems. See [`docs/ACCOUNTING_DOMAIN_BOUNDARY.md`](docs/ACCOUNTING_DOMAIN_BOUNDARY.md).
 - **Not production multi-tenant SaaS.** LedgerLens now has demo session context, actor-aware audit events, and business-scoped workflow tables, but it is still not production authentication or production tenant isolation. See [`docs/AUTH_TENANT_PHASE_2_REVIEW.md`](docs/AUTH_TENANT_PHASE_2_REVIEW.md) and [`docs/TENANT_BOUNDARY_AND_DATA_PROTECTION_REVIEW.md`](docs/TENANT_BOUNDARY_AND_DATA_PROTECTION_REVIEW.md).
 - **Not a substitute for a CPA.** "Verified" here is procedural (a defensible authority signed off on the row), not substantive (a CPA confirmed the books).
 - **Not safe for real bank data uploads.** The public demo is intended for synthetic / sample CSVs only. The `/transactions/import` page warns explicitly.
@@ -68,16 +68,25 @@ LedgerLens does three things instead:
 
 ## What is the handoff package?
 
-A single, downloadable artifact at [`/handoff`](https://ledgerlens.up.railway.app/handoff) containing:
+A downloadable package at [`/handoff`](https://ledgerlens.up.railway.app/handoff) with **7 separated exports**:
+
+| # | Export | Path |
+|---|---|---|
+| 1 | Full ledger CSV | `/ledger/export.csv` |
+| 2 | Reviewed rows CSV | `/handoff/export.reviewed.csv` |
+| 3 | Accountant follow-up CSV | `/handoff/export.followup.csv` |
+| 4 | Owner questions CSV | `/handoff/export.owner-questions.csv` |
+| 5 | Split transaction lines CSV | `/handoff/export.splits.csv` |
+| 6 | Handoff summary Markdown | `/handoff/export.md` |
+| 7 | Package manifest JSON | `/handoff/export.package.json` |
 
 - **Procedurally verified rows** — finalized rows backed by a rule, memory, or human review.
 - **Unresolved review items** — anything that still needs accountant or owner follow-up, explicitly flagged.
-- **Owner answers** — the plain-English notes you wrote during the questions workflow, included for accountant context.
+- **Owner answers** — plain-English notes the owner wrote during the questions workflow.
+- **Split lines** — when a single transaction needs multiple categories (e.g. Amazon order = shop supplies + personal).
 - **Corrections learned** — new (merchant → category) rules saved this month for reuse next month.
-- **Markdown summary** — `/handoff/export.md`, paste-into-email format.
-- **Reviewed categorization CSV export** — `/ledger/export.csv`, with a per-row `verified` column. Not a true accounting ledger.
 
-The export is **not tax advice**. It's a cleanup and handoff aid that gives the accountant clean inputs.
+The export is **not tax advice**, not a QuickBooks/Xero import file, and not a true accounting ledger. It's a cleanup and handoff aid that gives the accountant clean inputs. All downloads use a reliable fetch→blob mechanism with content-type validation — no silent dud files on mobile.
 
 ## Try it / read about it
 
@@ -119,7 +128,10 @@ LedgerLens is a **working portfolio prototype** that demonstrates an end-to-end 
 | Homepage local photography system | **Shipped** — all 5/5 image slots live, manifest-driven, local files, verification script |
 | Vendor normalization + fingerprint memory | **Shipped** — 45+ vendor families, fingerprint-based correction reuse, ambiguous-vendor protection |
 | Eval safety + coverage + confusion reporting | **Shipped** — safety metrics, enriched confusion pairs, coverage by provider, unmatched vendor analysis, report generator |
+| Split transaction foundation | **Shipped** — model, service, API, validation, business-scoped; not double-entry accounting |
+| Accountant export package (7 exports) | **Shipped** — reviewed CSV, follow-up CSV, owner-questions CSV, splits CSV, full ledger CSV, markdown, package JSON |
 | QuickBooks/Xero/Plaid integrations | **Not implemented** — export readiness is documented, live integrations are future work |
+| Split transaction frontend UI | **Not implemented** — backend API ready, UI deferred |
 | Production auth, billing, backup SLAs, retention automation | **Not implemented** — documented roadmap items, not claims |
 
 Five-minute reviewer path through the working app: [`docs/DEMO_WALKTHROUGH.md`](docs/DEMO_WALKTHROUGH.md).
@@ -225,6 +237,12 @@ All endpoints are mounted on the FastAPI app at `backend/src/ledgerlens/main.py`
 | `GET` | `/rules` | List active deterministic rules |
 | `GET` | `/transactions/{id}/memory-matches` | Show what correction-memory would apply |
 | `GET` | `/transactions/{id}/rule-matches` | Show what the rule layer would apply |
+| `GET` | `/transactions/{id}/splits` | List split lines + validation status |
+| `PUT` | `/transactions/{id}/splits` | Replace split lines (atomic, audited) |
+| `DELETE` | `/transactions/{id}/splits` | Remove all split lines |
+| `GET` | `/handoff/export.owner-questions.csv` | Owner-question context CSV |
+| `GET` | `/handoff/export.splits.csv` | Split transaction lines CSV |
+| `GET` | `/handoff/export.package.json` | Export manifest with counts |
 
 Example:
 
