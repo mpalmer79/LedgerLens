@@ -71,7 +71,7 @@ jobs:
             --runs-dir ${{ github.workspace }}/evals/runs
 
       - name: Upload eval artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: eval-${{ inputs.dataset }}-${{ inputs.categorizer }}-${{ github.run_id }}
           path: evals/runs/*.json
