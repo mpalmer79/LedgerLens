@@ -1438,13 +1438,13 @@ describe("homepage stock photography (prep — disabled by default)", () => {
     }
   });
 
-  it("enables hero + trust + auto-shop + engineering; faq remains disabled", () => {
+  it("enables all five image slots", () => {
     const enabledMatches =
       HOMEPAGE_IMAGES_MODULE.match(/enabled:\s*true/g) ?? [];
-    expect(enabledMatches.length).toBe(4);
+    expect(enabledMatches.length).toBe(5);
     const disabledMatches =
       HOMEPAGE_IMAGES_MODULE.match(/enabled:\s*false/g) ?? [];
-    expect(disabledMatches.length).toBe(1);
+    expect(disabledMatches.length).toBe(0);
   });
 
   it("points each slot only at local /images/stock/ paths", () => {

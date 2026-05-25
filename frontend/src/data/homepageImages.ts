@@ -105,7 +105,7 @@ export const HOMEPAGE_IMAGES: ReadonlyArray<HomepageImage> = [
     alt:
       "Person reviewing documents at a desk, representing plain-English " +
       "owner review questions",
-    enabled: false,
+    enabled: true,
     aspect: "3:2",
     placement: "owner FAQ section",
     placeholderTitle: "Owner review image slot",
