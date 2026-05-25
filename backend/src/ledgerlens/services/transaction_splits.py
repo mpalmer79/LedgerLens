@@ -40,6 +40,18 @@ class SplitValidation:
     line_count: int
 
 
+def _get_tx_for_business(db: Session, transaction_id: str, business_id: str | None) -> Transaction:
+    """Load a transaction and verify it belongs to the active business.
+
+    Raises NotFound if the transaction doesn't exist OR belongs to a
+    different business — so callers never leak cross-business data.
+    """
+    tx = db.get(Transaction, transaction_id)
+    if tx is None or tx.business_id != business_id:
+        raise NotFound("transaction", transaction_id)
+    return tx
+
+
 def list_splits(
     db: Session, *, transaction_id: str, business_id: str | None
 ) -> list[TransactionSplitLine]:
@@ -69,11 +81,7 @@ def replace_splits(
     the total to match the transaction amount — incomplete splits are
     allowed but flagged.
     """
-    tx = db.get(Transaction, transaction_id)
-    if tx is None:
-        raise NotFound("transaction", transaction_id)
-    if tx.business_id != business_id:
-        raise NotFound("transaction", transaction_id)
+    _get_tx_for_business(db, transaction_id, business_id)
 
     cat_repo = CategoryRepo(db)
     for i, line in enumerate(lines):
@@ -113,6 +121,7 @@ def replace_splits(
 
 
 def delete_splits(db: Session, *, transaction_id: str, business_id: str | None) -> int:
+    _get_tx_for_business(db, transaction_id, business_id)
     if business_id is None:
         result = db.execute(
             delete(TransactionSplitLine).where(
@@ -134,9 +143,7 @@ def delete_splits(db: Session, *, transaction_id: str, business_id: str | None) 
 def validate_split_total(
     db: Session, *, transaction_id: str, business_id: str | None
 ) -> SplitValidation:
-    tx = db.get(Transaction, transaction_id)
-    if tx is None:
-        raise NotFound("transaction", transaction_id)
+    tx = _get_tx_for_business(db, transaction_id, business_id)
     lines = list_splits(db, transaction_id=transaction_id, business_id=business_id)
     split_total = sum(line.amount_cents for line in lines)
     remainder = tx.amount_cents - split_total
