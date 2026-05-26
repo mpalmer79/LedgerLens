@@ -85,7 +85,7 @@ class ClaudeHaikuCategorizer:
         )
 
     def _call_sdk(self, system: str, messages: list[dict[str, Any]]) -> anthropic.types.Message:
-        return self.client.messages.create(
+        return self.client.messages.create(  # type: ignore[call-overload]
             model=self.model,
             max_tokens=1024,
             system=system,
