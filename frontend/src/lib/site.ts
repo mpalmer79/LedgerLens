@@ -11,8 +11,7 @@
 export const REPO_URL = "https://github.com/mpalmer79/LedgerLens";
 export const GITHUB_PROFILE_URL = "https://github.com/mpalmer79";
 
-// TODO(michael): update if you change your LinkedIn slug.
-export const LINKEDIN_URL = "https://linkedin.com/in/michael-palmer";
+export const LINKEDIN_URL = "https://www.linkedin.com/in/mpalmer1234/";
 
 export const ARCHITECTURE_URL = `${REPO_URL}/blob/main/docs/ARCHITECTURE.md`;
 export const TRUST_METRIC_DOC_URL = `${REPO_URL}/blob/main/docs/TRUST_METRIC.md`;
