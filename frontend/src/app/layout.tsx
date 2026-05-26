@@ -71,13 +71,18 @@ export const metadata: Metadata = {
   },
 };
 
+import { ProjectAssistant } from '@/components/project-assistant/ProjectAssistant';
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
       className={`${newsreader.variable} ${inter.variable} ${ibmPlexMono.variable}`}
     >
-      <body className="font-sans">{children}</body>
+      <body className="font-sans">
+        {children}
+        <ProjectAssistant />
+      </body>
     </html>
   );
 }
