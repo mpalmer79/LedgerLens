@@ -17,8 +17,8 @@ const INTRO: Message = {
   text:
     "Hi, I'm the LedgerLens project guide. I can answer questions about " +
     "how this demo works, what the trust metric means, what the tech stack " +
-    "is, and what is intentionally out of scope. I do not use an external " +
-    "AI API — I answer from a curated internal knowledge base.",
+    "is, and what is intentionally out of scope. I don't use an external " +
+    "AI API. I am designed to answer from a curated internal knowledge base.",
 };
 
 export function ProjectAssistant() {
