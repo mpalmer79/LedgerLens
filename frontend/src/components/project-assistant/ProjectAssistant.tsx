@@ -46,6 +46,8 @@ export function ProjectAssistant() {
     return () => document.removeEventListener("keydown", onKey);
   }, []);
 
+  const [dynamicFollowUps, setDynamicFollowUps] = useState<string[]>([]);
+
   const ask = useCallback(
     (q: string) => {
       if (!q.trim()) return;
@@ -61,6 +63,7 @@ export function ProjectAssistant() {
             : undefined,
       };
       setMessages((prev) => [...prev, userMsg, assistantMsg]);
+      setDynamicFollowUps(result.followUps ?? []);
       setInput("");
     },
     [],
@@ -114,7 +117,11 @@ export function ProjectAssistant() {
                 : "bg-surface-sunken text-text-primary"
             }`}
           >
-            <p>{msg.text}</p>
+            <div className="space-y-2">
+              {msg.text.split("\n\n").map((para, pi) => (
+                <p key={pi}>{para}</p>
+              ))}
+            </div>
             {msg.qualifier && (
               <p className="mt-1 text-[11px] italic text-text-subtle">
                 {msg.qualifier}
@@ -151,9 +158,9 @@ export function ProjectAssistant() {
         <div ref={endRef} />
       </div>
 
-      {/* Suggestions */}
+      {/* Suggestions — prefer dynamic follow-ups from the last answer */}
       <div className="flex flex-wrap gap-1.5 border-t border-surface-border bg-surface-sunken/40 px-3 py-2">
-        {suggestions.map((q) => (
+        {(dynamicFollowUps.length > 0 ? dynamicFollowUps : suggestions).map((q) => (
           <button
             key={q}
             onClick={() => ask(q)}

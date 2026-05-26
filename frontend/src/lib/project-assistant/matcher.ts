@@ -1,15 +1,21 @@
 import { KNOWLEDGE_BASE, type KnowledgeEntry } from "./knowledge";
+import {
+  buildBusinessUseCaseAnswer,
+  isBusinessUseCaseQuery,
+} from "./business-use-cases";
 
 export type MatchResult = {
   entry: KnowledgeEntry | null;
   score: number;
   confidence: "high" | "medium" | "low";
+  followUps?: string[];
 };
 
 const FALLBACK_ANSWER =
   "I can only answer from the curated LedgerLens project knowledge base. " +
   "Try asking about the demo workflow, trust metric, exports, tech stack, " +
-  "correction memory, vendor normalization, or roadmap.";
+  "correction memory, vendor normalization, or how LedgerLens could " +
+  "apply to a specific small business.";
 
 const OUT_OF_SCOPE_ANSWER =
   "Good question, but I'm only designed to answer questions about the " +
@@ -65,7 +71,14 @@ export function matchQuery(query: string): MatchResult {
   }
 
   const norm = normalize(query);
-  if (OUT_OF_SCOPE_KEYWORDS.some((kw) => norm.includes(kw))) {
+
+  // Out-of-scope guard (tax, legal, etc.) — but only if it's NOT a
+  // business-use-case question. "How would this help a law office?"
+  // should route to the use-case answer, not the out-of-scope refusal.
+  if (
+    !isBusinessUseCaseQuery(query) &&
+    OUT_OF_SCOPE_KEYWORDS.some((kw) => norm.includes(kw))
+  ) {
     return {
       entry: {
         id: "out-of-scope",
@@ -80,6 +93,30 @@ export function matchQuery(query: string): MatchResult {
     };
   }
 
+  // Business-use-case adaptation — check before knowledge-base scoring
+  // so "How could this help a dentist?" doesn't fall to a weak KB match.
+  if (isBusinessUseCaseQuery(query)) {
+    const { answer, followUps } = buildBusinessUseCaseAnswer(query);
+    return {
+      entry: {
+        id: "business-use-case",
+        title: "Business use case",
+        keywords: [],
+        questions: [],
+        answer,
+        links: [
+          { label: "Try the demo", href: "/demo" },
+          { label: "See the handoff", href: "/handoff" },
+        ],
+        category: "business_use_case_adaptation",
+      },
+      score: 90,
+      confidence: "high",
+      followUps,
+    };
+  }
+
+  // Standard knowledge-base scoring
   let best: KnowledgeEntry | null = null;
   let bestScore = 0;
   for (const entry of KNOWLEDGE_BASE) {
