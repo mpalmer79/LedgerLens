@@ -68,7 +68,7 @@ In order of visibility from top to bottom:
 ## 7. What still needs manual work
 
 - Record the 30-second Loom using `docs/LOOM_WALKTHROUGH_SCRIPT.md` and set `NEXT_PUBLIC_LOOM_URL` on Railway.
-- Verify the LinkedIn URL slug at `lib/site.ts` is current (`https://linkedin.com/in/michael-palmer`); update if Michael's LinkedIn vanity URL changes before launch.
+- Verify the LinkedIn URL slug at `lib/site.ts` is current (`https://www.linkedin.com/in/mpalmer1234/`).
 - Publish the LinkedIn post from `docs/LINKEDIN_PROJECT_STORY.md`; drop GitHub link in the first comment.
 
 ## 8. Railway deployment checklist

@@ -6,7 +6,7 @@
 [![Guided demo](https://img.shields.io/badge/3--minute-guided%20demo-244c27)](https://ledgerlens.up.railway.app/demo)
 [![Trust metric](https://img.shields.io/badge/trust-100%25%20procedurally%20verified-2e5f32)](docs/TRUST_METRIC.md)
 [![GitHub](https://img.shields.io/badge/GitHub-mpalmer79-181717?logo=github&logoColor=white)](https://github.com/mpalmer79)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Michael%20Palmer-0A66C2?logo=linkedin&logoColor=white)](https://linkedin.com/in/michael-palmer)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Michael%20Palmer-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mpalmer1234/)
 
 ## What LedgerLens is
 
@@ -363,4 +363,4 @@ Recent local/CI proof points from the current repo lineage:
 
 ## About
 
-Built by [Michael Palmer](https://linkedin.com/in/michael-palmer) (PalmerAI Solutions) as a portfolio project demonstrating AI engineering practice: shipped systems, calibrated metrics, documented decisions, and honest failure modes. See also [VeriFlow](https://github.com/mpalmer79/VeriFlow) (compliance) and [AegisRange](https://github.com/mpalmer79/AegisRange) (SOC simulation).
+Built by [Michael Palmer](https://www.linkedin.com/in/mpalmer1234/) (PalmerAI Solutions) as a portfolio project demonstrating AI engineering practice: shipped systems, calibrated metrics, documented decisions, and honest failure modes. See also [VeriFlow](https://github.com/mpalmer79/VeriFlow) (compliance) and [AegisRange](https://github.com/mpalmer79/AegisRange) (SOC simulation).

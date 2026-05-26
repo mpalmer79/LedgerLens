@@ -28,7 +28,7 @@ async function renderWith(loomUrl: string): Promise<string> {
     // transitively — keeping the mock minimal but valid.
     GITHUB_PROFILE_URL: "https://github.com/mpalmer79",
     REPO_URL: "https://github.com/mpalmer79/LedgerLens",
-    LINKEDIN_URL: "https://linkedin.com/in/michael-palmer",
+    LINKEDIN_URL: "https://www.linkedin.com/in/mpalmer1234/",
     ARCHITECTURE_URL: "https://github.com/mpalmer79/LedgerLens/blob/main/docs/ARCHITECTURE.md",
     TRUST_METRIC_DOC_URL:
       "https://github.com/mpalmer79/LedgerLens/blob/main/docs/TRUST_METRIC.md",

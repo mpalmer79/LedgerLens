@@ -725,7 +725,7 @@ def enriched_confusion_pairs(
                 "percentage_of_actual": data["count"] / total_actual if total_actual else 0.0,
             }
         )
-    entries.sort(key=lambda e: -int(e["count"]))
+    entries.sort(key=lambda e: -int(e.get("count", 0)))  # type: ignore[call-overload]
     return entries[:top_n]
 
 
